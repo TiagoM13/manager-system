@@ -1,6 +1,18 @@
+import { Sidebar } from "@/app/components/sidebar"
+import { routes as Router } from "@/app/routes/app.routes"
+import { BrowserRouter } from "react-router-dom"
+
 const App = () => {
   return (
-    <h1 className="font-bold">Hello World</h1>
+    <BrowserRouter>
+      <div className="flex relative">
+        <Sidebar />
+
+        <div className="p-6">
+          <Router />
+        </div>
+      </div>
+    </BrowserRouter>
   )
 }
 
