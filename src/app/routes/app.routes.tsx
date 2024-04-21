@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Dashboard } from '@/app/pages/dashboard';
 import { Profile } from '@/app/pages/profile';
 import { Patients } from '@/app/pages/patients';
-import { Users } from '../pages/users';
+import { Users } from '@/app/pages/users';
 
 export const routes: React.FC = () => {
   return (

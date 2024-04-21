@@ -8,7 +8,7 @@ const App = () => {
       <div className="flex relative">
         <Sidebar />
 
-        <div className="p-6">
+        <div className="w-full p-6">
           <Router />
         </div>
       </div>
