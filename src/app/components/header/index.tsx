@@ -1,11 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Plus } from '@phosphor-icons/react';
 
 import { Button } from '../button';
 import { TextTitle } from '../text';
 
 import { HeaderContainer } from './styles';
-import { Link } from 'react-router-dom';
-import { Plus } from '@phosphor-icons/react';
 
 type HeaderProps = {
   title: string

@@ -1,6 +1,6 @@
 import React from 'react';
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = React.ComponentProps<'button'> & {
   label: string
   icon?: React.ReactNode
 }
