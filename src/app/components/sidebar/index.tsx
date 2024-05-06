@@ -12,9 +12,10 @@ import { UserProfile } from "../user-profile";
 
 export const Sidebar = () => {
   return (
-    <div className="h-screen bg-black p-4 w-screen max-w-[260px]">
+    <div className="h-screen bg-black p-4 max-w-[260px]">
       <div className="ml-2 p-2">
         <UserProfile
+          color="light"
           name="Tiago Mota"
           email="tiago.mota@gmail.com"
           imageUrl="https://avatars.githubusercontent.com/u/79538171?v=4"

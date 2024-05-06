@@ -6,14 +6,14 @@ import { routes as Router } from "@/app/routes/app.routes"
 const App = () => {
   return (
     <BrowserRouter>
-      <div className="flex relative bg-slate-50">
+      <div className="bg-slate-50 h-screen flex relative">
         <Sidebar />
 
-        <div className="w-full p-6">
+        <div className="w-full p-6 overflow-auto">
           <Router />
         </div>
       </div>
-    </BrowserRouter>
+    </BrowserRouter >
   )
 }
 

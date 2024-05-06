@@ -6,5 +6,6 @@ export const HeaderContainer = styled.header`
   align-items: center;
 
   position: relative;
+  margin-top: 0.75rem;
   margin-bottom: 0.5rem;
 `

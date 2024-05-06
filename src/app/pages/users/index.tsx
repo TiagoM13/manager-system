@@ -9,6 +9,7 @@ import {
 } from '@phosphor-icons/react';
 
 import { Header } from '@/app/components/header';
+import { UserProfile } from '@/app/components';
 
 export const Users: React.FC = () => {
   return (
@@ -42,10 +43,9 @@ export const Users: React.FC = () => {
         <table className='w-full'>
           <thead>
             <tr className='h-14 border-b border-b-slate-300'>
-              <th className='font-bold text-left text-sm p-2 text-wrap'>Nome</th>
+              <th className='font-bold text-left text-sm p-2 text-wrap'>Nome/E-mail</th>
               <th className='font-bold text-left text-sm p-2 text-wrap'>Tipo de usuário</th>
               <th className='font-bold text-left text-sm p-2 text-wrap'>Data de registro</th>
-              <th className='font-bold text-left text-sm p-2 text-wrap'>Email</th>
               <th className='font-bold text-left text-sm p-2 text-wrap'>Status</th>
               <th className='font-bold text-left text-sm p-2 text-wrap'>Último acesso</th>
               <td />
@@ -54,10 +54,17 @@ export const Users: React.FC = () => {
           <tbody>
             {Array.from({ length: 6 }).map((_, index) => (
               <tr key={index} className='h-14 border-b border-b-slate-300 hover:bg-sky-50 cursor-pointer'>
-                <td className='text-left text-sm p-2 text-wrap'>Tiago Mota</td>
+                <td className='text-left text-sm p-2 text-wrap'>
+                  <UserProfile
+                    small
+                    color='dark'
+                    name='Tiago Mota'
+                    imageUrl='https://avatars.githubusercontent.com/u/79538171?v=4'
+                    email='tiago.dev@gmail.com'
+                  />
+                </td>
                 <td className='text-left text-sm p-2 text-wrap'>SuperAdmin</td>
                 <td className='text-left text-sm p-2 text-wrap'>21/04/2024</td>
-                <td className='text-left text-sm p-2 text-wrap'>thyagomotha2000@gmail.com</td>
                 <td className='text-left text-sm p-2 text-wrap'>Ativo</td>
                 <td className='text-left text-sm p-2 text-wrap'>21 de abril às 18:19</td>
                 <td>
