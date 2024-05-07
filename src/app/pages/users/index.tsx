@@ -5,11 +5,15 @@ import {
   CaretLeft,
   CaretRight,
   DotsThreeOutline,
-  MagnifyingGlass
 } from '@phosphor-icons/react';
 
-import { Header } from '@/app/components/header';
+import { Card } from '@/app/components/card';
 import { UserProfile } from '@/app/components';
+import { Header } from '@/app/components/header';
+import { InputSearch } from '@/app/components/input-search';
+import { Badge } from '@/app/components/badge';
+import { UserTypes } from '@/app/enums/user-types';
+import { Status } from '@/app/enums/status';
 
 export const Users: React.FC = () => {
   return (
@@ -19,30 +23,16 @@ export const Users: React.FC = () => {
         labelAction='cadastrar usuário'
       />
 
-      {/* Filter */}
-      <div className='flex items-center mt-8'>
-        <input type="text" placeholder='Pesquisar...' className='border border-slate-500 py-1.5 px-4 rounded-l-lg h-10 outline-sky-500' />
-
-        <button
-          type='submit'
-          className='bg-sky-600 rounded-r-lg p-2 text-wrap h-10 outline-sky-500'
-        >
-          <MagnifyingGlass
-            weight='bold'
-            color='white'
-            className='size-6'
-          />
-        </button>
-      </div>
-
       {/* Sepate */}
-      <div className='h-[1px] bg-slate-200 my-4' />
+      <div className='h-[1px] bg-slate-200 m-8' />
 
       {/* Table */}
-      <div className='border border-slate-300 rounded-lg p-2'>
-        <table className='w-full'>
+      <Card>
+        <InputSearch />
+
+        <table className='w-full mt-8'>
           <thead>
-            <tr className='h-14 border-b border-b-slate-300'>
+            <tr className='h-16 border-b border-b-slate-300'>
               <th className='font-bold text-left text-sm p-2 text-wrap'>Nome/E-mail</th>
               <th className='font-bold text-left text-sm p-2 text-wrap'>Tipo de usuário</th>
               <th className='font-bold text-left text-sm p-2 text-wrap'>Data de registro</th>
@@ -63,9 +53,13 @@ export const Users: React.FC = () => {
                     email='tiago.dev@gmail.com'
                   />
                 </td>
-                <td className='text-left text-sm p-2 text-wrap'>SuperAdmin</td>
+                <td className='text-left text-sm p-2 text-wrap'>
+                  <Badge type={UserTypes.ADMIN} />
+                </td>
                 <td className='text-left text-sm p-2 text-wrap'>21/04/2024</td>
-                <td className='text-left text-sm p-2 text-wrap'>Ativo</td>
+                <td className='text-left text-sm p-2 text-wrap'>
+                  <Badge type={Status.ACTIVE} />
+                </td>
                 <td className='text-left text-sm p-2 text-wrap'>21 de abril às 18:19</td>
                 <td>
                   <button className='hover:bg-slate-200/50 border border-slate-400/50 rounded-md p-1.5'>
@@ -76,7 +70,7 @@ export const Users: React.FC = () => {
             ))}
           </tbody>
           <tfoot>
-            <tr>
+            <tr className='h-16'>
               <td className='text-left p-2 text-sm text-wrap' colSpan={3}>Mostrando 10 de 200 items</td>
               <td className='text-right p-2 text-sm text-wrap' colSpan={4}>
                 <div className='inline-flex items-center gap-8'>
@@ -101,7 +95,7 @@ export const Users: React.FC = () => {
             </tr>
           </tfoot>
         </table>
-      </div>
+      </Card>
     </>
   );
 }
