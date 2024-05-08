@@ -1,13 +1,16 @@
-name: Lint and Test
+name: ci
 
 on:
   push:
     branches:
-     - main
-     - develop
-     - 'feature/*'
-     - 'refactor/*'
-     - 'fix/*'
+      - main
+      - 'release/**'
+      - 'check_ci/**'
+  pull_request:
+    branches:
+      - main
+      - 'release/**'
+      - '**/**approved'
 
 jobs:
   build:
@@ -20,7 +23,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.13.x
+          node-version: 20.x
           cache: npm
 
       - name: Clear npm cache

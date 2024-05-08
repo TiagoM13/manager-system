@@ -16,9 +16,15 @@ import {
   InputSearch,
   T,
   UserProfile
-} from '@/app/components';
+} from '@/components';
 
-import { Status, UserTypes } from '@/app/enums';
+import { users } from '@/data/users';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/pt-br'
+
+dayjs.extend(relativeTime)
+dayjs.locale('pt-br')
 
 export const Users: React.FC = () => {
   return (
@@ -44,25 +50,25 @@ export const Users: React.FC = () => {
             </T.Row>
           </thead>
           <tbody>
-            {Array.from({ length: 10 }).map((_, index) => (
-              <T.Row hoverable key={index}>
+            {users.map((user) => (
+              <T.Row hoverable key={user.id}>
                 <T.Cell>
                   <UserProfile
                     small
                     color='dark'
-                    name='Tiago Mota'
+                    name={user.name}
                     imageUrl='https://avatars.githubusercontent.com/u/79538171?v=4'
-                    email='tiago.dev@gmail.com'
+                    email={user.email}
                   />
                 </T.Cell>
                 <T.Cell>
-                  <Badge type={UserTypes.ADMIN} />
+                  <Badge type={user.user_type} />
                 </T.Cell>
-                <T.Cell>21/04/2024</T.Cell>
+                <T.Cell>{new Date(user.created_at).toLocaleDateString()}</T.Cell>
                 <T.Cell>
-                  <Badge type={Status.ACTIVE} />
+                  <Badge type={user.status} />
                 </T.Cell>
-                <T.Cell>21 de abril às 18:19</T.Cell>
+                <T.Cell>{dayjs().to(user.last_access)}</T.Cell>
                 <T.Cell style={{ width: 50 }}>
                   <IconButton>
                     <DotsThreeOutline className='size-4 text-slate-800' weight='fill' />

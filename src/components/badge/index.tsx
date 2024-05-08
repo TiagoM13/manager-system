@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Status } from '@/app/enums/status';
-import { UserTypes } from '@/app/enums/user-types';
+import { Status, UserTypes } from '@/enums';
 
 type BadgeProps = {
   type: Status | UserTypes

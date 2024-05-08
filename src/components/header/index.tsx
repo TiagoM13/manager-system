@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Plus } from '@phosphor-icons/react';
 
-import { Button } from '../button';
-import { TextTitle } from '../text';
+import { Button, TextTitle } from '@/components';
 
 import { HeaderContainer } from './styles';
 

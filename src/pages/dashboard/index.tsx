@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TextTitle } from '@/app/components/text';
+import { TextTitle } from '@/components';
 
 export const Dashboard: React.FC = () => {
   return (

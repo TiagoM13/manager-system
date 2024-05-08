@@ -1,7 +1,7 @@
 import { BrowserRouter } from "react-router-dom"
 
-import { Sidebar } from "@/app/components"
-import { routes as Router } from "@/app/routes/app.routes"
+import { routes as Router } from "@/routes/app.routes"
+import { Sidebar } from "@/components"
 
 const App = () => {
   return (

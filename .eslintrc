@@ -27,12 +27,9 @@
     "eslint-plugin-import-helpers"
   ],
   "rules": {
-    "no-underscore-dangle": "off",
+    "no-param-reassign": "off",
     "no-bitwise": "off",
     "prettier/prettier": "error",
-    "no-restricted-syntax": "off",
-    "consistent-return": "off",
-    "react/jsx-one-expression-per-line": "off",
     "react/no-unknown-property": [
       2,
       {
@@ -58,6 +55,7 @@
     "react/jsx-curly-newline": "off",
     "no-useless-computed-key": "off",
     "react/jsx-wrap-multilines": "off",
+    "no-underscore-dangle": "off",
     "react/no-array-index-key": "off",
     "no-async-promise-executor": "off",
     "no-nested-ternary": "off",
@@ -84,33 +82,6 @@
       {
         "ts": "never",
         "tsx": "never"
-      }
-    ],
-    "import-helpers/order-imports": [
-      "warn",
-      {
-        "newlinesBetween": "always",
-        "groups": [
-          "/^react/",
-          "module",
-          "/^routes/",
-          "/^components/",
-          "/^context/",
-          "/^hooks/",
-          "/^interfaces/",
-          "/^services/",
-          "/^store/",
-          "/^utils/",
-          [
-            "parent",
-            "sibling",
-            "index"
-          ]
-        ],
-        "alphabetize": {
-          "order": "asc",
-          "ignoreCase": true
-        }
       }
     ]
   },
