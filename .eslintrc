@@ -47,6 +47,33 @@
         ]
       }
     ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always", // new line between groups
+        "groups": [
+          "/^react/",
+          "module",
+          "/^routes/",
+          "/^components/",
+          "/^context/",
+          "/^hooks/",
+          "/^interfaces/",
+          "/^services/",
+          "/^store/",
+          "/^utils/",
+          [
+            "parent",
+            "sibling",
+            "index"
+          ]
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "ignoreCase": true
+        }
+      }
+    ],
     "no-use-before-define": "off",
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
