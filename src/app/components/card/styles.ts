@@ -5,6 +5,7 @@ export const Container = styled.div`
   max-width: 100%;
   padding: 1.5rem 1rem;
   background: var(--white);
+  margin-bottom: 1.5rem;
 
   border-radius: 1rem;
 

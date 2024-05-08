@@ -20,7 +20,7 @@ export const Header: React.FC<HeaderProps> = ({ title, labelAction = 'Cadastrar'
       <Link to="new">
         <Button
           type='button'
-          icon={<Plus className="size-4" weight='bold' />}
+          icon={<Plus className="size-5" weight='bold' />}
           label={labelAction}
         />
       </Link>

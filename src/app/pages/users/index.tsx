@@ -7,13 +7,18 @@ import {
   DotsThreeOutline,
 } from '@phosphor-icons/react';
 
-import { Card } from '@/app/components/card';
-import { UserProfile } from '@/app/components';
-import { Header } from '@/app/components/header';
-import { InputSearch } from '@/app/components/input-search';
-import { Badge } from '@/app/components/badge';
-import { UserTypes } from '@/app/enums/user-types';
-import { Status } from '@/app/enums/status';
+import {
+  Badge,
+  Card,
+  Divider,
+  Header,
+  IconButton,
+  InputSearch,
+  T,
+  UserProfile
+} from '@/app/components';
+
+import { Status, UserTypes } from '@/app/enums';
 
 export const Users: React.FC = () => {
   return (
@@ -22,29 +27,26 @@ export const Users: React.FC = () => {
         title='Usuários'
         labelAction='cadastrar usuário'
       />
+      <Divider />
 
-      {/* Sepate */}
-      <div className='h-[1px] bg-slate-200 m-8' />
-
-      {/* Table */}
       <Card>
         <InputSearch />
 
-        <table className='w-full mt-8'>
+        <T.Container>
           <thead>
-            <tr className='h-16 border-b border-b-slate-300'>
-              <th className='font-bold text-left text-sm p-2 text-wrap'>Nome/E-mail</th>
-              <th className='font-bold text-left text-sm p-2 text-wrap'>Tipo de usuário</th>
-              <th className='font-bold text-left text-sm p-2 text-wrap'>Data de registro</th>
-              <th className='font-bold text-left text-sm p-2 text-wrap'>Status</th>
-              <th className='font-bold text-left text-sm p-2 text-wrap'>Último acesso</th>
+            <T.Row>
+              <T.Header>Nome/E-mail</T.Header>
+              <T.Header>Tipo de usuário</T.Header>
+              <T.Header>Data de registro</T.Header>
+              <T.Header>Status</T.Header>
+              <T.Header>Último acesso</T.Header>
               <td />
-            </tr>
+            </T.Row>
           </thead>
           <tbody>
-            {Array.from({ length: 6 }).map((_, index) => (
-              <tr key={index} className='h-14 border-b border-b-slate-300 hover:bg-sky-50 cursor-pointer'>
-                <td className='text-left text-sm p-2 text-wrap'>
+            {Array.from({ length: 10 }).map((_, index) => (
+              <T.Row hoverable key={index}>
+                <T.Cell>
                   <UserProfile
                     small
                     color='dark'
@@ -52,49 +54,63 @@ export const Users: React.FC = () => {
                     imageUrl='https://avatars.githubusercontent.com/u/79538171?v=4'
                     email='tiago.dev@gmail.com'
                   />
-                </td>
-                <td className='text-left text-sm p-2 text-wrap'>
+                </T.Cell>
+                <T.Cell>
                   <Badge type={UserTypes.ADMIN} />
-                </td>
-                <td className='text-left text-sm p-2 text-wrap'>21/04/2024</td>
-                <td className='text-left text-sm p-2 text-wrap'>
+                </T.Cell>
+                <T.Cell>21/04/2024</T.Cell>
+                <T.Cell>
                   <Badge type={Status.ACTIVE} />
-                </td>
-                <td className='text-left text-sm p-2 text-wrap'>21 de abril às 18:19</td>
-                <td>
-                  <button className='hover:bg-slate-200/50 border border-slate-400/50 rounded-md p-1.5'>
+                </T.Cell>
+                <T.Cell>21 de abril às 18:19</T.Cell>
+                <T.Cell style={{ width: 50 }}>
+                  <IconButton>
                     <DotsThreeOutline className='size-4 text-slate-800' weight='fill' />
-                  </button>
-                </td>
-              </tr>
+                  </IconButton>
+                </T.Cell>
+              </T.Row>
             ))}
           </tbody>
           <tfoot>
-            <tr className='h-16'>
-              <td className='text-left p-2 text-sm text-wrap' colSpan={3}>Mostrando 10 de 200 items</td>
-              <td className='text-right p-2 text-sm text-wrap' colSpan={4}>
+            <T.Row>
+              <T.Cell colSpan={3}>
+                Mostrando 10 de 100 items
+              </T.Cell>
+              <T.Cell className='text-right' colSpan={4}>
                 <div className='inline-flex items-center gap-8'>
                   <span>Página 1 de 20</span>
 
                   <div className='flex gap-1.5'>
-                    <button className='hover:bg-slate-200/50 border border-slate-400/50 rounded-md p-1.5'>
-                      <CaretDoubleLeft className='size-4 text-slate-800' weight='bold' />
-                    </button>
-                    <button className='hover:bg-slate-200/50 border border-slate-400/50 rounded-md p-1.5'>
-                      <CaretLeft className='size-4 text-slate-800' weight='bold' />
-                    </button>
-                    <button className='hover:bg-slate-200/50 border border-slate-400/50 rounded-md p-1.5'>
-                      <CaretRight className='size-4 text-slate-800' weight='bold' />
-                    </button>
-                    <button className='hover:bg-slate-200/50 border border-slate-400/50 rounded-md p-1.5'>
-                      <CaretDoubleRight className='size-4 text-slate-800' weight='bold' />
-                    </button>
+                    <IconButton>
+                      <CaretDoubleLeft
+                        className='size-4 text-slate-800'
+                        weight='bold'
+                      />
+                    </IconButton>
+                    <IconButton>
+                      <CaretLeft
+                        className='size-4 text-slate-800'
+                        weight='bold'
+                      />
+                    </IconButton>
+                    <IconButton>
+                      <CaretRight
+                        className='size-4 text-slate-800'
+                        weight='bold'
+                      />
+                    </IconButton>
+                    <IconButton>
+                      <CaretDoubleRight
+                        className='size-4 text-slate-800'
+                        weight='bold'
+                      />
+                    </IconButton>
                   </div>
                 </div>
-              </td>
-            </tr>
+              </T.Cell>
+            </T.Row>
           </tfoot>
-        </table>
+        </T.Container>
       </Card>
     </>
   );

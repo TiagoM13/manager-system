@@ -1,12 +1,12 @@
 import { BrowserRouter } from "react-router-dom"
 
-import { Sidebar } from "@/app/components/sidebar"
+import { Sidebar } from "@/app/components"
 import { routes as Router } from "@/app/routes/app.routes"
 
 const App = () => {
   return (
     <BrowserRouter>
-      <div className="bg-slate-50 h-screen flex relative">
+      <div className="bg-slate-100 h-screen flex relative">
         <Sidebar />
 
         <div className="w-full p-6 overflow-auto">
