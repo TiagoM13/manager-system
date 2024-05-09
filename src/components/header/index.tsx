@@ -7,22 +7,25 @@ import { Button, TextTitle } from '@/components';
 import { HeaderContainer } from './styles';
 
 type HeaderProps = {
-  title: string
-  labelAction?: string
-}
+  title: string;
+  labelAction?: string;
+};
 
-export const Header: React.FC<HeaderProps> = ({ title, labelAction = 'Cadastrar' }) => {
+export const Header: React.FC<HeaderProps> = ({
+  title,
+  labelAction = 'Cadastrar',
+}) => {
   return (
     <HeaderContainer>
       <TextTitle>{title}</TextTitle>
 
       <Link to="new">
         <Button
-          type='button'
-          icon={<Plus className="size-5" weight='bold' />}
+          type="button"
+          icon={<Plus className="size-5" weight="bold" />}
           label={labelAction}
         />
       </Link>
     </HeaderContainer>
   );
-}
+};

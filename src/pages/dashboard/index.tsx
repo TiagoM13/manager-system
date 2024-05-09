@@ -8,4 +8,4 @@ export const Dashboard: React.FC = () => {
       <TextTitle>Home</TextTitle>
     </>
   );
-}
+};

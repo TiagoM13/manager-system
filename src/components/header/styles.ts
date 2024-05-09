@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
   display: flex;
@@ -8,4 +8,4 @@ export const HeaderContainer = styled.header`
   position: relative;
   margin-top: 0.75rem;
   margin-bottom: 0.5rem;
-`
+`;

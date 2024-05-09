@@ -1,14 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 import {
   Icon,
   ChartBar,
   SignOut,
   User,
   Users,
-  UsersThree
-} from "@phosphor-icons/react";
+  UsersThree,
+} from '@phosphor-icons/react';
 
-import { UserProfile } from "../user-profile";
+import { UserProfile } from '../user-profile';
 
 export const Sidebar = () => {
   return (
@@ -35,26 +35,28 @@ export const Sidebar = () => {
       </div>
     </div>
   );
-}
+};
 
 type LinkProps = {
-  title: string
-  url: string
-  icon: Icon
-}
+  title: string;
+  url: string;
+  icon: Icon;
+};
 
 const Link = ({ title, icon: Icon, url }: LinkProps) => {
   return (
-    <NavLink to={url} className={
-      (({ isActive }) => isActive ?
-        "text-sky-600 text-sm font-medium flex items-center gap-3 ml-3"
-        : "text-zinc-400 text-sm flex hover:text-sky-500 items-center gap-3 ml-3 transition ease-in text-wrap")}
+    <NavLink
+      to={url}
+      className={({ isActive }) =>
+        isActive
+          ? 'text-sky-600 text-sm font-medium flex items-center gap-3 ml-3'
+          : 'text-zinc-400 text-sm flex hover:text-sky-500 items-center gap-3 ml-3 transition ease-in text-wrap'
+      }
     >
       <div className="flex flex-wrap">
         <Icon className="size-5" weight="regular" />
       </div>
       {title}
-    </NavLink >
-  )
-}
-
+    </NavLink>
+  );
+};
