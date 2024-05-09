@@ -17,7 +17,7 @@ export const Badge: React.FC<BadgeProps> = ({ type }) => {
   const is_status = type === Status.ACTIVE || type === Status.INACTIVE
 
   return (
-    <div className={`${bg_color} ${is_status ? 'font-normal' : 'text-white font-medium'} rounded-xl text-center text-xs px-3 py-1.5 w-fit`}>
+    <div className={`${bg_color} ${is_status ? 'text-black' : 'text-white'} font-medium rounded-xl text-center text-xs px-3 py-1.5 w-fit`}>
       <span className="capitalize">{type}</span>
     </div>
   );

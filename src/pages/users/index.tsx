@@ -14,17 +14,12 @@ import {
   Header,
   IconButton,
   InputSearch,
-  T,
+  Table as T,
   UserProfile
 } from '@/components';
 
 import { users } from '@/data/users';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime'
-import 'dayjs/locale/pt-br'
-
-dayjs.extend(relativeTime)
-dayjs.locale('pt-br')
+import { formatDate, formatDateTime } from '@/utils';
 
 export const Users: React.FC = () => {
   return (
@@ -50,9 +45,9 @@ export const Users: React.FC = () => {
             </T.Row>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {users.slice(0, 10).map((user) => (
               <T.Row hoverable key={user.id}>
-                <T.Cell>
+                <T.Cell style={{ maxWidth: 220 }}>
                   <UserProfile
                     small
                     color='dark'
@@ -64,11 +59,11 @@ export const Users: React.FC = () => {
                 <T.Cell>
                   <Badge type={user.user_type} />
                 </T.Cell>
-                <T.Cell>{new Date(user.created_at).toLocaleDateString()}</T.Cell>
+                <T.Cell>{formatDate(user.created_at)}</T.Cell>
                 <T.Cell>
                   <Badge type={user.status} />
                 </T.Cell>
-                <T.Cell>{dayjs().to(user.last_access)}</T.Cell>
+                <T.Cell>{formatDateTime(user.last_access)}</T.Cell>
                 <T.Cell style={{ width: 50 }}>
                   <IconButton>
                     <DotsThreeOutline className='size-4 text-slate-800' weight='fill' />
@@ -78,7 +73,7 @@ export const Users: React.FC = () => {
             ))}
           </tbody>
           <tfoot>
-            <T.Row>
+            <T.Row border={false}>
               <T.Cell colSpan={3}>
                 Mostrando 10 de 100 items
               </T.Cell>
