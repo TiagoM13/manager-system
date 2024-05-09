@@ -11,14 +11,15 @@
     "test:watch": "jest --watch --verbose",
     "test:coverage": "jest --coverage",
     "test:all": "yarn test && yarn test:coverage",
-    "lint": "eslint src --ext .ts --fix",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint src --fix",
     "lint-staged": "lint-staged",
     "prepare": "husky"
   },
   "lint-staged": {
     "src/**/*": [
-      "npm run lint -- --fix",
-      "npm test -- --findRelatedTests --passWithNoTests --bail"
+      "yarn run lint -- --fix",
+      "yarn test -- --findRelatedTests --passWithNoTests --bail"
     ]
   },
   "dependencies": {
