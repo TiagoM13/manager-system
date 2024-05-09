@@ -1,10 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { Dashboard } from '@/pages/dashboard';
-import { Profile } from '@/pages/profile';
-import { Patients } from '@/pages/patients';
-import { Users } from '@/pages/users';
+import { Dashboard, Patients, Profile, Users } from '@/pages';
 
 export const routes: React.FC = () => {
   return (

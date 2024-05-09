@@ -1,7 +1,14 @@
 import { BrowserRouter } from "react-router-dom"
 
-import { routes as Router } from "@/routes/app.routes"
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/pt-br'
+
 import { Sidebar } from "@/components"
+import { routes as Router } from "@/routes"
+
+dayjs.extend(relativeTime)
+dayjs.locale('pt-br')
 
 const App = () => {
   return (
