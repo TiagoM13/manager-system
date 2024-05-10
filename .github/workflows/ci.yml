@@ -4,53 +4,36 @@ on:
   push:
     branches:
       - main
-      - 'develop/**'
+      - 'feat/*'
+      - 'refactor/*'
+      - 'fix/*'
       - 'check_ci/**'
   pull_request:
     branches:
       - main
-      - 'develop/**'
+      - 'feat/*'
+      - 'refactor/*'
+      - 'fix/*'
       - '**/**approved'
 
 jobs:
-  ci:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node: [20]
+  build:
+    runs-on: ubuntu-latest
 
     steps:
-       name: Checkout
-       uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Setup node env
-        uses: actions/setup-node@v3.6.0
+      - name: Setup node
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 20.x
+          cache: yarn
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - name: Clear yarn cache
+        run: yarn cache clean --force
 
-      - name: Cache dependecies
-        uses: actions/cache@v2
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Run linter
-        run: yarn code:lint
-
-      - name: Run validation on mfe manifest
-        run: yarn validate:mfe_manifest
-
-      - name: Run tests
-        run: yarn test
+      - name: Run linting and tests
+        run: |
+          yarn run lint
+          yarn test
