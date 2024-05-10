@@ -5,10 +5,9 @@ on:
     branches:
       - main
       - develop
-      - 'feature/*'
+      - 'feat/*'
       - 'refactor/*'
       - 'fix/*'
-      - '**/**approved'
 
 jobs:
   build:
