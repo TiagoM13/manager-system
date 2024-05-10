@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,17 +17,16 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
+      "@/*": ["./src/*"]
+    }
   },
-  "exclude": [
-    "node_modules",
-    "**/*.tests.tsx"
-  ],
+  "exclude": ["node_modules", "**/*.tests.tsx"],
   "include": [
-    "src"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "./.eslintrc.*",
+    "./vite.config.ts",
+    "./jest/setup.ts"
   ],
   "references": [
     {

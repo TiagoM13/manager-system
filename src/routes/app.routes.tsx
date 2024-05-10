@@ -11,6 +11,5 @@ export const routes: React.FC = () => {
       <Route path="/users" element={<Users />} />
       <Route path="/patients" element={<Patients />} />
     </Routes>
-  )
-}
-
+  );
+};

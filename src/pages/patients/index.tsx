@@ -8,4 +8,4 @@ export const Patients: React.FC = () => {
       <TextTitle>Pacientes</TextTitle>
     </>
   );
-}
+};

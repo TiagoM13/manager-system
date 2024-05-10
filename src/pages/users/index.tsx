@@ -15,7 +15,7 @@ import {
   IconButton,
   InputSearch,
   Table as T,
-  UserProfile
+  UserProfile,
 } from '@/components';
 
 import { users } from '@/data/users';
@@ -24,10 +24,7 @@ import { formatDate, formatDateTime } from '@/utils';
 export const Users: React.FC = () => {
   return (
     <>
-      <Header
-        title='Usuários'
-        labelAction='cadastrar usuário'
-      />
+      <Header title="Usuários" labelAction="cadastrar usuário" />
       <Divider />
 
       <Card>
@@ -50,9 +47,9 @@ export const Users: React.FC = () => {
                 <T.Cell style={{ maxWidth: 220 }}>
                   <UserProfile
                     small
-                    color='dark'
+                    color="dark"
                     name={user.name}
-                    imageUrl='https://avatars.githubusercontent.com/u/79538171?v=4'
+                    imageUrl="https://avatars.githubusercontent.com/u/79538171?v=4"
                     email={user.email}
                   />
                 </T.Cell>
@@ -66,7 +63,10 @@ export const Users: React.FC = () => {
                 <T.Cell>{formatDateTime(user.last_access)}</T.Cell>
                 <T.Cell style={{ width: 50 }}>
                   <IconButton>
-                    <DotsThreeOutline className='size-4 text-slate-800' weight='fill' />
+                    <DotsThreeOutline
+                      className="size-4 text-slate-800"
+                      weight="fill"
+                    />
                   </IconButton>
                 </T.Cell>
               </T.Row>
@@ -74,36 +74,34 @@ export const Users: React.FC = () => {
           </tbody>
           <tfoot>
             <T.Row border={false}>
-              <T.Cell colSpan={3}>
-                Mostrando 10 de 100 items
-              </T.Cell>
-              <T.Cell className='text-right' colSpan={4}>
-                <div className='inline-flex items-center gap-8'>
+              <T.Cell colSpan={3}>Mostrando 10 de 100 items</T.Cell>
+              <T.Cell className="text-right" colSpan={4}>
+                <div className="inline-flex items-center gap-8">
                   <span>Página 1 de 20</span>
 
-                  <div className='flex gap-1.5'>
+                  <div className="flex gap-1.5">
                     <IconButton>
                       <CaretDoubleLeft
-                        className='size-4 text-slate-800'
-                        weight='bold'
+                        className="size-4 text-slate-800"
+                        weight="bold"
                       />
                     </IconButton>
                     <IconButton>
                       <CaretLeft
-                        className='size-4 text-slate-800'
-                        weight='bold'
+                        className="size-4 text-slate-800"
+                        weight="bold"
                       />
                     </IconButton>
                     <IconButton>
                       <CaretRight
-                        className='size-4 text-slate-800'
-                        weight='bold'
+                        className="size-4 text-slate-800"
+                        weight="bold"
                       />
                     </IconButton>
                     <IconButton>
                       <CaretDoubleRight
-                        className='size-4 text-slate-800'
-                        weight='bold'
+                        className="size-4 text-slate-800"
+                        weight="bold"
                       />
                     </IconButton>
                   </div>
@@ -115,4 +113,4 @@ export const Users: React.FC = () => {
       </Card>
     </>
   );
-}
+};

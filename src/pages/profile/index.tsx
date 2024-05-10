@@ -8,4 +8,4 @@ export const Profile: React.FC = () => {
       <TextTitle>Profile</TextTitle>
     </>
   );
-}
+};
