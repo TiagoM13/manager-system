@@ -21,7 +21,13 @@
     }
   },
   "exclude": ["node_modules", "**/*.tests.tsx"],
-  "include": ["src"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "./.eslintrc.*",
+    "./vite.config.ts",
+    "./jest/setup.ts",
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
