@@ -1,54 +1,83 @@
 {
   "env": {
     "browser": true,
-    "es2020": true,
-    "jest": true,
-    "node": true
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
+    "es2021": true,
+    "jest": true
   },
   "extends": [
-    "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "prettier",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 11,
+    "ecmaVersion": 2021,
     "sourceType": "module"
   },
   "plugins": [
     "react",
-    "react-hooks",
     "@typescript-eslint",
-    "eslint-plugin-import-helpers",
-    "no-only-tests"
+    "prettier",
+    "react-hooks",
+    "eslint-plugin-import-helpers"
   ],
   "rules": {
+    "no-param-reassign": "off",
+    "no-bitwise": "off",
+    "prettier/prettier": "error",
+    "react/no-unknown-property": [
+      2,
+      {
+        "ignore": [
+          "class",
+          "for"
+        ]
+      }
+    ],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".tsx"
+        ]
+      }
+    ],
+    "no-use-before-define": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "react/jsx-curly-newline": "off",
+    "no-useless-computed-key": "off",
+    "react/jsx-wrap-multilines": "off",
+    "no-underscore-dangle": "off",
+    "react/no-array-index-key": "off",
+    "no-async-promise-executor": "off",
+    "no-nested-ternary": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "camelcase": "off",
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "no-unused-vars": "off",
+    "no-shadow": "off",
+    "react/require-default-props": "off",
     "import-helpers/order-imports": [
       "warn",
       {
-        "newlinesBetween": "always", // new line between groups
+        "newlinesBetween": "always",
         "groups": [
           "/^react/",
           "module",
-          "/^routes/",
-          "/^components/",
-          "/^context/",
-          "/^hooks/",
-          "/^interfaces/",
-          "/^services/",
-          "/^store/",
-          "/^utils/",
-          "/styles.*/",
+          "/^@phosphor-icons/",
+          "/^@/",
           [
             "parent",
             "sibling",
@@ -61,18 +90,11 @@
           "ignoreCase": true
         }
       }
-    ],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/no-var-requires": "off",
-    "@typescript-eslint/no-unused-vars": "off",
-    "no-console": "warn",
-    "no-only-tests/no-only-tests": [
-      "error"
     ]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
   }
 }

@@ -1,5 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+
 import { faker } from '@faker-js/faker';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { Avatar } from '.';

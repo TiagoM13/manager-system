@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   CaretDoubleLeft,
   CaretDoubleRight,
@@ -17,7 +18,6 @@ import {
   Table as T,
   UserProfile,
 } from '@/components';
-
 import { users } from '@/data/users';
 import { formatDate, formatDateTime } from '@/utils';
 
