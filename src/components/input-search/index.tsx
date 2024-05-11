@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { MagnifyingGlass } from '@phosphor-icons/react';
 
 export const InputSearch: React.FC = () => {

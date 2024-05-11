@@ -1,6 +1,6 @@
 import { Table as TableContainer } from './table';
-import { TableHeader } from './table-header';
 import { TableCell } from './table-cell';
+import { TableHeader } from './table-header';
 import { TableRow } from './table-row';
 
 export const Table = {
