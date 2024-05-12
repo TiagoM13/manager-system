@@ -49,7 +49,7 @@ export const Users: React.FC = () => {
                     small
                     color="dark"
                     name={user.name}
-                    imageUrl="https://avatars.githubusercontent.com/u/79538171?v=4"
+                    imageUrl={user.image_url}
                     email={user.email}
                   />
                 </T.Cell>
