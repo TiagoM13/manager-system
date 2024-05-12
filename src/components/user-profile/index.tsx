@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Avatar } from '../avatar';
 
-export type AvatarProps = {
+export type UserProfileProps = {
   name: string;
   email: string;
   imageUrl: string;
@@ -10,7 +10,7 @@ export type AvatarProps = {
   color?: 'light' | 'dark';
 };
 
-export const UserProfile: React.FC<AvatarProps> = ({
+export const UserProfile: React.FC<UserProfileProps> = ({
   name,
   email,
   imageUrl,

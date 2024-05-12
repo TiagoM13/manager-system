@@ -3,7 +3,7 @@ import React from 'react';
 import { faker } from '@faker-js/faker';
 import { Meta, StoryFn } from '@storybook/react';
 
-import { UserProfile as Profile, AvatarProps } from '.';
+import { UserProfile as Profile, UserProfileProps } from '.';
 
 export default {
   title: 'Components/UserProfile',
@@ -19,7 +19,7 @@ const user = {
   avatar: faker.image.avatar(),
 };
 
-export const UserProfile: StoryFn<AvatarProps> = () => {
+export const UserProfile: StoryFn<UserProfileProps> = () => {
   return (
     <div className="flex gap-4">
       <div className="rounded-lg bg-slate-600 p-2">
