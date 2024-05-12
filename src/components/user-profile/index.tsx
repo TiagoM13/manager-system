@@ -18,7 +18,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({
   color,
 }) => {
   return (
-    <div className="flex items-center p-2 gap-3">
+    <div className="flex items-center py-2 gap-3">
       <Avatar name={name} imageUrl={imageUrl} small={small} color={color!} />
 
       <div className="break-words">
@@ -27,7 +27,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({
         >
           {name}
         </h4>
-        <span className="text-slate-400 text-[10px] break-words block">
+        <span className="text-slate-400 text-[10px] break-words block text-ellipsis overflow-hidden text-nowrap max-w-36">
           {email}
         </span>
       </div>

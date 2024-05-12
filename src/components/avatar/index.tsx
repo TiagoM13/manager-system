@@ -25,7 +25,7 @@ export const Avatar: React.FC<AvatarProps> = ({
         data-testid="image-tag"
         src={imageUrl}
         alt={name}
-        className="rounded-full"
+        className="rounded-full object-cover"
       />
     </div>
   );
