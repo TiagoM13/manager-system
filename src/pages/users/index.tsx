@@ -18,7 +18,7 @@ import {
   Table as T,
   UserProfile,
 } from '@/components';
-import { users } from '@/data/users';
+import { users } from '@/data';
 import { formatDate, formatDateTime } from '@/utils';
 
 export const Users: React.FC = () => {
@@ -49,7 +49,7 @@ export const Users: React.FC = () => {
                     small
                     color="dark"
                     name={user.name}
-                    imageUrl="https://avatars.githubusercontent.com/u/79538171?v=4"
+                    imageUrl={user.image_url}
                     email={user.email}
                   />
                 </T.Cell>

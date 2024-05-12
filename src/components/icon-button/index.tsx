@@ -1,6 +1,6 @@
 import React from 'react';
 
-type IconButtonProps = React.ComponentProps<'button'>;
+export type IconButtonProps = React.ComponentProps<'button'>;
 
 export const IconButton: React.FC<IconButtonProps> = ({ ...props }) => {
   return (

@@ -1,13 +1,18 @@
 import React from 'react';
 
-type Props = {
+export type AvatarProps = {
   imageUrl: string;
   name: string;
   small?: boolean;
   color: 'light' | 'dark';
 };
 
-export const Avatar: React.FC<Props> = ({ imageUrl, name, small, color }) => {
+export const Avatar: React.FC<AvatarProps> = ({
+  imageUrl,
+  name,
+  small,
+  color,
+}) => {
   return (
     <div
       data-testid="avatar-container"
@@ -20,7 +25,7 @@ export const Avatar: React.FC<Props> = ({ imageUrl, name, small, color }) => {
         data-testid="image-tag"
         src={imageUrl}
         alt={name}
-        className="rounded-full"
+        className="rounded-full object-cover"
       />
     </div>
   );
