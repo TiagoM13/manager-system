@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Avatar } from '../avatar';
 
-type AvatarProps = {
+export type AvatarProps = {
   name: string;
   email: string;
   imageUrl: string;
@@ -19,7 +19,7 @@ export const UserProfile: React.FC<AvatarProps> = ({
 }) => {
   return (
     <div className="flex items-center p-2 gap-3">
-      <Avatar name={name} imageUrl={imageUrl} small={small} color={color} />
+      <Avatar name={name} imageUrl={imageUrl} small={small} color={color!} />
 
       <div className="break-words">
         <h4

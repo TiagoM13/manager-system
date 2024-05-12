@@ -4,16 +4,11 @@ on:
   push:
     branches:
       - main
-      - 'feat/*'
-      - 'refactor/*'
-      - 'fix/*'
       - 'check_ci/**'
+      - '**/**approved'
   pull_request:
     branches:
       - main
-      - 'feat/*'
-      - 'refactor/*'
-      - 'fix/*'
       - '**/**approved'
 
 jobs:

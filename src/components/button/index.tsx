@@ -2,7 +2,7 @@ import React from 'react';
 
 import { twMerge } from 'tailwind-merge';
 
-type ButtonProps = React.ComponentProps<'button'> & {
+export type ButtonProps = React.ComponentProps<'button'> & {
   label: string;
   icon?: React.ReactNode;
   clasNames?: string;

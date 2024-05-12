@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Status, UserTypes } from '@/enums';
 
-type BadgeProps = {
+export type BadgeProps = {
   type: Status | UserTypes;
 };
 
