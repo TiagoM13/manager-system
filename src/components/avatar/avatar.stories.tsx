@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { faker } from '@faker-js/faker';
+import { user } from '@/data/users';
 import { Meta, StoryFn } from '@storybook/react';
 
 import { Avatar as AvatarComponent, AvatarProps } from '.';
@@ -13,17 +13,18 @@ export default {
   },
 } as Meta;
 
-const fakerAvatar = faker.image.avatar();
-const fakerName = faker.person.fullName();
-
 export const Avatar: StoryFn<AvatarProps> = () => {
   return (
     <div className="flex gap-4 items-center">
-      <AvatarComponent imageUrl={fakerAvatar} name={fakerName} color="dark" />
+      <AvatarComponent
+        imageUrl={user.image_url}
+        name={user.name}
+        color="dark"
+      />
 
       <AvatarComponent
-        imageUrl={fakerAvatar}
-        name={fakerName}
+        imageUrl={user.image_url}
+        name={user.name}
         color="light"
         small
       />

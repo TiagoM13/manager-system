@@ -10,17 +10,11 @@ import {
   UsersThree,
 } from '@phosphor-icons/react';
 
-import { faker } from '@faker-js/faker';
+import { user } from '@/data';
 
 import { UserProfile } from '../user-profile';
 
 export const Sidebar = () => {
-  const user = {
-    email: faker.internet.email().toLocaleLowerCase(),
-    name: faker.person.fullName(),
-    avatar: faker.image.avatar(),
-  };
-
   return (
     <div className="h-screen bg-black p-4 w-full max-w-[260px]">
       <div className="ml-2 p-2">
@@ -28,7 +22,7 @@ export const Sidebar = () => {
           color="light"
           name={user.name}
           email={user.email}
-          imageUrl={user.avatar}
+          imageUrl={user.image_url}
         />
 
         <div className="mt-12 space-y-6">

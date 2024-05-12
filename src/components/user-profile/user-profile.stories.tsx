@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { faker } from '@faker-js/faker';
+import { user } from '@/data';
 import { Meta, StoryFn } from '@storybook/react';
 
 import { UserProfile as Profile, UserProfileProps } from '.';
@@ -13,12 +13,6 @@ export default {
   },
 } as Meta;
 
-const user = {
-  email: faker.internet.email().toLocaleLowerCase(),
-  name: faker.person.fullName(),
-  avatar: faker.image.avatar(),
-};
-
 export const UserProfile: StoryFn<UserProfileProps> = () => {
   return (
     <div className="flex gap-4">
@@ -26,7 +20,7 @@ export const UserProfile: StoryFn<UserProfileProps> = () => {
         <Profile
           email={user.email}
           name={user.name}
-          imageUrl={user.avatar}
+          imageUrl={user.image_url}
           color="light"
         />
       </div>
@@ -35,7 +29,7 @@ export const UserProfile: StoryFn<UserProfileProps> = () => {
         <Profile
           email={user.email}
           name={user.name}
-          imageUrl={user.avatar}
+          imageUrl={user.image_url}
           color="dark"
         />
       </div>

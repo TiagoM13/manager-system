@@ -18,7 +18,7 @@ import {
   Table as T,
   UserProfile,
 } from '@/components';
-import { users } from '@/data/users';
+import { users } from '@/data';
 import { formatDate, formatDateTime } from '@/utils';
 
 export const Users: React.FC = () => {
