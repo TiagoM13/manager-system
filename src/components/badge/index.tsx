@@ -19,6 +19,7 @@ export const Badge: React.FC<BadgeProps> = ({ type }) => {
 
   return (
     <div
+      data-testid="badge-container"
       className={`${bg_color} ${is_status ? 'text-black' : 'text-white'} font-medium rounded-xl text-center text-xs px-3 py-1.5 w-fit`}
     >
       <span className="capitalize">{type}</span>
