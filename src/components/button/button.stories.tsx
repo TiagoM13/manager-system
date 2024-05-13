@@ -19,5 +19,5 @@ const meta = {
 export default meta;
 
 export const Button: StoryFn<ButtonProps> = () => {
-  return <ButtonComponent label="cadastrar" icon={<Plus />} />;
+  return <ButtonComponent id="story" label="cadastrar" icon={<Plus />} />;
 };
