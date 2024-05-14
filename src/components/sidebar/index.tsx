@@ -10,7 +10,7 @@ import {
   UsersThree,
 } from '@phosphor-icons/react';
 
-import { user } from '@/data';
+import { user } from '@/__mocks__';
 
 import { UserProfile } from '../user-profile';
 

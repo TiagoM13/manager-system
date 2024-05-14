@@ -1,9 +1,9 @@
-import { Status, UserTypes } from '@/enums';
+import { UserTypes, Status } from '@/enums';
 import { User } from '@/interfaces';
 import { sortEnum } from '@/utils';
 import { faker } from '@faker-js/faker';
 
-export const users: User[] = Array.from({ length: 100 }).map(() => ({
+export const user: User = {
   id: faker.number.int({ min: 10000, max: 20000 }),
   name: faker.person.fullName(),
   email: faker.internet.email().toLocaleLowerCase(),
@@ -12,4 +12,4 @@ export const users: User[] = Array.from({ length: 100 }).map(() => ({
   status: sortEnum(Status),
   created_at: faker.date.recent({ days: 30 }),
   last_access: faker.date.recent({ days: 7 }),
-}));
+};
