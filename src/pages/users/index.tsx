@@ -22,6 +22,27 @@ import { users } from '@/data';
 import { formatDate, formatDateTime } from '@/utils';
 
 export const Users: React.FC = () => {
+  const [page, setPage] = React.useState(1);
+
+  const totalPages = Math.ceil(users.length / 10);
+
+  // pagination actions
+  const goToNextPage = () => {
+    setPage(page + 1);
+  };
+
+  const goToPreviousPage = () => {
+    setPage(page - 1);
+  };
+
+  const goToFirstPage = () => {
+    setPage(1);
+  };
+
+  const goToLastPage = () => {
+    setPage(totalPages);
+  };
+
   return (
     <>
       <Header title="Usuários" labelAction="cadastrar usuário" />
@@ -42,7 +63,7 @@ export const Users: React.FC = () => {
             </T.Row>
           </thead>
           <tbody>
-            {users.slice(0, 10).map((user) => (
+            {users.slice((page - 1) * 10, page * 10).map((user) => (
               <T.Row hoverable key={user.id}>
                 <T.Cell style={{ maxWidth: 220 }}>
                   <UserProfile
@@ -74,31 +95,45 @@ export const Users: React.FC = () => {
           </tbody>
           <tfoot>
             <T.Row border={false}>
-              <T.Cell colSpan={3}>Mostrando 10 de 100 items</T.Cell>
+              <T.Cell colSpan={3}>
+                Mostrando {users.slice((page - 1) * 10, page * 10).length} de{' '}
+                {users.length} items
+              </T.Cell>
               <T.Cell className="text-right" colSpan={4}>
                 <div className="inline-flex items-center gap-8">
-                  <span>Página 1 de 20</span>
+                  <span>
+                    Página {page} de {totalPages}
+                  </span>
 
                   <div className="flex gap-1.5">
-                    <IconButton>
+                    <IconButton onClick={goToFirstPage} disabled={page === 1}>
                       <CaretDoubleLeft
                         className="size-4 text-slate-800"
                         weight="bold"
                       />
                     </IconButton>
-                    <IconButton>
+                    <IconButton
+                      onClick={goToPreviousPage}
+                      disabled={page === 1}
+                    >
                       <CaretLeft
                         className="size-4 text-slate-800"
                         weight="bold"
                       />
                     </IconButton>
-                    <IconButton>
+                    <IconButton
+                      onClick={goToNextPage}
+                      disabled={page === totalPages}
+                    >
                       <CaretRight
                         className="size-4 text-slate-800"
                         weight="bold"
                       />
                     </IconButton>
-                    <IconButton>
+                    <IconButton
+                      onClick={goToLastPage}
+                      disabled={page === totalPages}
+                    >
                       <CaretDoubleRight
                         className="size-4 text-slate-800"
                         weight="bold"
