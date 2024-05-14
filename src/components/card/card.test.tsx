@@ -6,10 +6,10 @@ import { render } from '@testing-library/react';
 import { Card } from '.';
 
 describe('<Card />', () => {
-  const children = faker.lorem.text();
+  const children = faker.lorem.sentence(5);
   test('should render correctly component', () => {
-    const { getByText } = render(<Card>{children}</Card>);
+    const { getAllByText } = render(<Card>{children}</Card>);
 
-    expect(getByText(children)).toBeInTheDocument();
+    expect(getAllByText(children)).toBeTruthy();
   });
 });

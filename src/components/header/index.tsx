@@ -22,6 +22,7 @@ export const Header: React.FC<HeaderProps> = ({
 
       <Link to="new">
         <Button
+          id="header"
           type="button"
           icon={<Plus className="size-5" weight="bold" />}
           label={labelAction}
