@@ -10,29 +10,21 @@ import {
 
 import { UserProfile, Badge, IconButton, Table as T } from '@/components';
 import { users } from '@/data';
+import { usePaginate } from '@/hooks';
 import { User } from '@/interfaces';
 import { formatDate, formatDateTime } from '@/utils';
 
 export const UsersTable: React.FC = () => {
-  const [page, setPage] = React.useState(1);
-
-  const totalPages = Math.ceil(users.length / 10);
-
-  const goToNextPage = () => {
-    setPage(page + 1);
-  };
-
-  const goToPreviousPage = () => {
-    setPage(page - 1);
-  };
-
-  const goToFirstPage = () => {
-    setPage(1);
-  };
-
-  const goToLastPage = () => {
-    setPage(totalPages);
-  };
+  const {
+    page,
+    totalPages,
+    totalItems,
+    currentPageData,
+    goToNextPage,
+    goToPreviousPage,
+    goToFirstPage,
+    goToLastPage,
+  } = usePaginate({ data: users, itemsPerPage: 10 });
 
   const renderRow = React.useCallback((user: User) => {
     return (
@@ -75,12 +67,11 @@ export const UsersTable: React.FC = () => {
           <td />
         </T.Row>
       </thead>
-      <tbody>{users.slice((page - 1) * 10, page * 10).map(renderRow)}</tbody>
+      <tbody>{currentPageData.map(renderRow)}</tbody>
       <tfoot>
         <T.Row border={false}>
           <T.Cell colSpan={3}>
-            Mostrando {users.slice((page - 1) * 10, page * 10).length} de{' '}
-            {users.length} items
+            Mostrando {currentPageData.length} de {totalItems} usuários
           </T.Cell>
           <T.Cell className="text-right" colSpan={4}>
             <div className="inline-flex items-center gap-8">
