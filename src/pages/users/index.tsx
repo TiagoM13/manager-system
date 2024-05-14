@@ -1,48 +1,10 @@
 import React from 'react';
 
-import {
-  CaretDoubleLeft,
-  CaretDoubleRight,
-  CaretLeft,
-  CaretRight,
-  DotsThreeOutline,
-} from '@phosphor-icons/react';
+import { Card, Divider, Header, InputSearch, Table as T } from '@/components';
 
-import {
-  Badge,
-  Card,
-  Divider,
-  Header,
-  IconButton,
-  InputSearch,
-  Table as T,
-  UserProfile,
-} from '@/components';
-import { users } from '@/data';
-import { formatDate, formatDateTime } from '@/utils';
+import { UsersTable } from './components';
 
 export const Users: React.FC = () => {
-  const [page, setPage] = React.useState(1);
-
-  const totalPages = Math.ceil(users.length / 10);
-
-  // pagination actions
-  const goToNextPage = () => {
-    setPage(page + 1);
-  };
-
-  const goToPreviousPage = () => {
-    setPage(page - 1);
-  };
-
-  const goToFirstPage = () => {
-    setPage(1);
-  };
-
-  const goToLastPage = () => {
-    setPage(totalPages);
-  };
-
   return (
     <>
       <Header title="Usuários" labelAction="cadastrar usuário" />
@@ -51,100 +13,7 @@ export const Users: React.FC = () => {
       <Card>
         <InputSearch />
 
-        <T.Container>
-          <thead>
-            <T.Row>
-              <T.Header>Nome/E-mail</T.Header>
-              <T.Header>Tipo de usuário</T.Header>
-              <T.Header>Data de registro</T.Header>
-              <T.Header>Status</T.Header>
-              <T.Header>Último acesso</T.Header>
-              <td />
-            </T.Row>
-          </thead>
-          <tbody>
-            {users.slice((page - 1) * 10, page * 10).map((user) => (
-              <T.Row hoverable key={user.id}>
-                <T.Cell style={{ maxWidth: 220 }}>
-                  <UserProfile
-                    small
-                    color="dark"
-                    name={user.name}
-                    imageUrl={user.image_url}
-                    email={user.email}
-                  />
-                </T.Cell>
-                <T.Cell>
-                  <Badge type={user.user_type} />
-                </T.Cell>
-                <T.Cell>{formatDate(user.created_at)}</T.Cell>
-                <T.Cell>
-                  <Badge type={user.status} />
-                </T.Cell>
-                <T.Cell>{formatDateTime(user.last_access)}</T.Cell>
-                <T.Cell style={{ width: 50 }}>
-                  <IconButton>
-                    <DotsThreeOutline
-                      className="size-4 text-slate-800"
-                      weight="fill"
-                    />
-                  </IconButton>
-                </T.Cell>
-              </T.Row>
-            ))}
-          </tbody>
-          <tfoot>
-            <T.Row border={false}>
-              <T.Cell colSpan={3}>
-                Mostrando {users.slice((page - 1) * 10, page * 10).length} de{' '}
-                {users.length} items
-              </T.Cell>
-              <T.Cell className="text-right" colSpan={4}>
-                <div className="inline-flex items-center gap-8">
-                  <span>
-                    Página {page} de {totalPages}
-                  </span>
-
-                  <div className="flex gap-1.5">
-                    <IconButton onClick={goToFirstPage} disabled={page === 1}>
-                      <CaretDoubleLeft
-                        className="size-4 text-slate-800"
-                        weight="bold"
-                      />
-                    </IconButton>
-                    <IconButton
-                      onClick={goToPreviousPage}
-                      disabled={page === 1}
-                    >
-                      <CaretLeft
-                        className="size-4 text-slate-800"
-                        weight="bold"
-                      />
-                    </IconButton>
-                    <IconButton
-                      onClick={goToNextPage}
-                      disabled={page === totalPages}
-                    >
-                      <CaretRight
-                        className="size-4 text-slate-800"
-                        weight="bold"
-                      />
-                    </IconButton>
-                    <IconButton
-                      onClick={goToLastPage}
-                      disabled={page === totalPages}
-                    >
-                      <CaretDoubleRight
-                        className="size-4 text-slate-800"
-                        weight="bold"
-                      />
-                    </IconButton>
-                  </div>
-                </div>
-              </T.Cell>
-            </T.Row>
-          </tfoot>
-        </T.Container>
+        <UsersTable />
       </Card>
     </>
   );
