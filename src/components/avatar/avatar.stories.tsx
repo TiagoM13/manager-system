@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { user } from '@/data/users';
+import { user } from '@/__mocks__';
 import { Meta, StoryFn } from '@storybook/react';
 
 import { Avatar as AvatarComponent, AvatarProps } from '.';

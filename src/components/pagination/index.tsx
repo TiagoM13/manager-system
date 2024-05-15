@@ -32,7 +32,7 @@ export const PaginationActions: React.FC<PaginationActionsProps> = ({
         Página {page} de {totalPages}
       </span>
 
-      <div className="flex gap-1.5">
+      <div data-testid="btn-actions" className="flex gap-1.5">
         <IconButton onClick={goToFirstPage} disabled={page === 1}>
           <CaretDoubleLeft className="size-4 text-slate-800" weight="bold" />
         </IconButton>
