@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Card, Divider, Header, InputSearch, Table as T } from '@/components';
+import { users } from '@/data';
 
 import { UsersTable } from './components';
 
@@ -13,7 +14,7 @@ export const Users: React.FC = () => {
       <Card>
         <InputSearch />
 
-        <UsersTable />
+        <UsersTable users={users} />
       </Card>
     </>
   );

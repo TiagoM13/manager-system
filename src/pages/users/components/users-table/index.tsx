@@ -1,20 +1,23 @@
 import React from 'react';
 
-import {
-  DotsThreeOutline,
-  CaretDoubleLeft,
-  CaretLeft,
-  CaretRight,
-  CaretDoubleRight,
-} from '@phosphor-icons/react';
+import { DotsThreeOutline } from '@phosphor-icons/react';
 
-import { UserProfile, Badge, IconButton, Table as T } from '@/components';
-import { users } from '@/data';
+import {
+  UserProfile,
+  Badge,
+  IconButton,
+  Table as T,
+  Pagination,
+} from '@/components';
 import { usePaginate } from '@/hooks';
 import { User } from '@/interfaces';
 import { formatDate, formatDateTime } from '@/utils';
 
-export const UsersTable: React.FC = () => {
+type UserTableProps = {
+  users: User[];
+};
+
+export const UsersTable: React.FC<UserTableProps> = ({ users = [] }) => {
   const {
     page,
     totalPages,
@@ -25,35 +28,6 @@ export const UsersTable: React.FC = () => {
     goToFirstPage,
     goToLastPage,
   } = usePaginate({ data: users, itemsPerPage: 10 });
-
-  const renderRow = React.useCallback((user: User) => {
-    return (
-      <T.Row hoverable key={user.id}>
-        <T.Cell style={{ maxWidth: 220 }}>
-          <UserProfile
-            small
-            color="dark"
-            name={user.name}
-            imageUrl={user.image_url}
-            email={user.email}
-          />
-        </T.Cell>
-        <T.Cell>
-          <Badge type={user.user_type} />
-        </T.Cell>
-        <T.Cell>{formatDate(user.created_at)}</T.Cell>
-        <T.Cell>
-          <Badge type={user.status} />
-        </T.Cell>
-        <T.Cell>{formatDateTime(user.last_access)}</T.Cell>
-        <T.Cell style={{ width: 50 }}>
-          <IconButton>
-            <DotsThreeOutline className="size-4 text-slate-800" weight="fill" />
-          </IconButton>
-        </T.Cell>
-      </T.Row>
-    );
-  }, []);
 
   return (
     <T.Container>
@@ -67,48 +41,61 @@ export const UsersTable: React.FC = () => {
           <td />
         </T.Row>
       </thead>
-      <tbody>{currentPageData.map(renderRow)}</tbody>
+      <tbody>
+        {currentPageData.map((user) => (
+          <UserRow key={user.id} user={user} />
+        ))}
+      </tbody>
       <tfoot>
         <T.Row border={false}>
           <T.Cell colSpan={3}>
-            Mostrando {currentPageData.length} de {totalItems} usuários
+            <Pagination.Label
+              currentPageData={currentPageData}
+              totalItems={totalItems}
+              paginationLabel={{ single: 'usuário', several: 'usuários' }}
+            />
           </T.Cell>
           <T.Cell className="text-right" colSpan={4}>
-            <div className="inline-flex items-center gap-8">
-              <span>
-                Página {page} de {totalPages}
-              </span>
-
-              <div className="flex gap-1.5">
-                <IconButton onClick={goToFirstPage} disabled={page === 1}>
-                  <CaretDoubleLeft
-                    className="size-4 text-slate-800"
-                    weight="bold"
-                  />
-                </IconButton>
-                <IconButton onClick={goToPreviousPage} disabled={page === 1}>
-                  <CaretLeft className="size-4 text-slate-800" weight="bold" />
-                </IconButton>
-                <IconButton
-                  onClick={goToNextPage}
-                  disabled={page === totalPages}
-                >
-                  <CaretRight className="size-4 text-slate-800" weight="bold" />
-                </IconButton>
-                <IconButton
-                  onClick={goToLastPage}
-                  disabled={page === totalPages}
-                >
-                  <CaretDoubleRight
-                    className="size-4 text-slate-800"
-                    weight="bold"
-                  />
-                </IconButton>
-              </div>
-            </div>
+            <Pagination.Actions
+              page={page}
+              totalPages={totalPages}
+              goToNextPage={goToNextPage}
+              goToPreviousPage={goToPreviousPage}
+              goToFirstPage={goToFirstPage}
+              goToLastPage={goToLastPage}
+            />
           </T.Cell>
         </T.Row>
       </tfoot>
     </T.Container>
+  );
+};
+
+const UserRow: React.FC<{ user: User }> = ({ user }) => {
+  return (
+    <T.Row hoverable key={user.id}>
+      <T.Cell style={{ maxWidth: 220 }}>
+        <UserProfile
+          small
+          color="dark"
+          name={user.name}
+          imageUrl={user.image_url}
+          email={user.email}
+        />
+      </T.Cell>
+      <T.Cell>
+        <Badge type={user.user_type} />
+      </T.Cell>
+      <T.Cell>{formatDate(user.created_at)}</T.Cell>
+      <T.Cell>
+        <Badge type={user.status} />
+      </T.Cell>
+      <T.Cell>{formatDateTime(user.last_access)}</T.Cell>
+      <T.Cell style={{ width: 50 }}>
+        <IconButton>
+          <DotsThreeOutline className="size-4 text-slate-800" weight="fill" />
+        </IconButton>
+      </T.Cell>
+    </T.Row>
   );
 };
