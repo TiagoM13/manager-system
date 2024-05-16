@@ -20,7 +20,7 @@ export const Header: React.FC<HeaderProps> = ({
     <HeaderContainer>
       <TextTitle>{title}</TextTitle>
 
-      <Link to="new">
+      <Link className="outline-none" to="new">
         <Button
           id="header"
           type="button"
