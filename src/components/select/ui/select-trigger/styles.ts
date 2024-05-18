@@ -20,6 +20,11 @@ export const SelectTriggerContainer = styled.button`
   &:hover {
     background-color: var(--sky-500);
   }
+
+  &:disabled {
+    background-color: var(--sky-700);
+    cursor: auto;
+  }
 `;
 
 export const ContentIcon = styled.div`

@@ -5,12 +5,15 @@ import { SelectContent, SelectLabel, SelectTrigger, SelectValue } from './ui';
 
 import { SelectContainer } from './styles';
 
-export const Select: React.FC<SelectProps> = ({
+export type Props = React.ComponentProps<'button'> & SelectProps;
+
+export const Select: React.FC<Props> = ({
   label,
   placeholder = 'Selecione um item',
   options,
   multiSelect,
   required,
+  ...rest
 }) => {
   // states
   const [active, setActive] = React.useState(false);
@@ -104,7 +107,7 @@ export const Select: React.FC<SelectProps> = ({
       )}
 
       <SelectContainer ref={selectRef}>
-        <SelectTrigger onClick={handleActiveSelectOptions}>
+        <SelectTrigger {...rest} onClick={handleActiveSelectOptions}>
           <SelectValue
             placeholder={placeholder}
             label={label}
