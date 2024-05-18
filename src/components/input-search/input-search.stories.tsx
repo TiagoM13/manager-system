@@ -13,5 +13,5 @@ export default {
 } as Meta;
 
 export const InputSearch = () => {
-  return <Search />;
+  return <Search placeholder="pesquisar..." />;
 };

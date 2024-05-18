@@ -2,12 +2,14 @@ import React from 'react';
 
 import { MagnifyingGlass } from '@phosphor-icons/react';
 
-export const InputSearch: React.FC = () => {
+type InputSearchProps = React.ComponentProps<'input'> & {};
+
+export const InputSearch: React.FC<InputSearchProps> = ({ ...rest }) => {
   return (
     <div className="flex items-center">
       <input
+        {...rest}
         type="text"
-        placeholder="Pesquisar usuário"
         className="text-sm border-r-0 border border-slate-400 py-1.5 px-4 rounded-l-lg h-9 outline-sky-500 min-w-60"
       />
 
