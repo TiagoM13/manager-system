@@ -11,4 +11,3 @@ export * from './sidebar';
 export * from './divider';
 export * from './table';
 export * from './pagination';
-export * from './select';
