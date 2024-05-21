@@ -1,16 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import {
-  Icon,
-  ChartBar,
-  SignOut,
-  User,
-  Users,
-  UsersThree,
-} from '@phosphor-icons/react';
+import { Icon, SignOut } from '@phosphor-icons/react';
 
 import { user } from '@/__mocks__';
+import { menus } from '@/utils';
 
 import { UserProfile } from '../user-profile';
 
@@ -26,10 +20,14 @@ export const Sidebar = () => {
         />
 
         <div className="mt-12 space-y-6">
-          <Link title="Dashboard" icon={ChartBar} url="/" />
-          <Link title="Perfil" icon={User} url="/profile" />
-          <Link title="Usuários" icon={Users} url="/users" />
-          <Link title="Pacientes" icon={UsersThree} url="/patients" />
+          {menus.map((menu, index) => (
+            <Link
+              key={`${menu.title}-${index}`}
+              title={menu.title}
+              icon={menu.icon}
+              url={menu.url}
+            />
+          ))}
         </div>
 
         <button className="flex gap-2 text-sm text-zinc-400 hover:text-sky-500 transition absolute bottom-8">

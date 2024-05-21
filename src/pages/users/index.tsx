@@ -5,7 +5,7 @@ import { users } from '@/data';
 
 import { UsersFilters, UsersTable } from './components';
 
-export const Users: React.FC = () => {
+const Users: React.FC = () => {
   return (
     <>
       <Header title="Usuários" labelAction="cadastrar usuário" />
@@ -18,3 +18,5 @@ export const Users: React.FC = () => {
     </>
   );
 };
+
+export default Users;
