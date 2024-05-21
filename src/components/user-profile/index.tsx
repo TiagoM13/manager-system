@@ -8,6 +8,7 @@ export type UserProfileProps = {
   imageUrl: string;
   small?: boolean;
   color?: 'light' | 'dark';
+  activeSideBar?: boolean;
 };
 
 export const UserProfile: React.FC<UserProfileProps> = ({
@@ -16,12 +17,19 @@ export const UserProfile: React.FC<UserProfileProps> = ({
   imageUrl,
   small,
   color,
+  activeSideBar,
 }) => {
   return (
-    <div className="flex items-center py-2 gap-3">
-      <Avatar name={name} imageUrl={imageUrl} small={small} color={color!} />
+    <div
+      className={`flex items-center py-2 gap-3 transition-all ease-in-out duration-500 ${activeSideBar ? '-ml-3' : null}`}
+    >
+      <div>
+        <Avatar name={name} imageUrl={imageUrl} small={small} color={color!} />
+      </div>
 
-      <div className="break-words">
+      <div
+        className={`break-words transition-all ease-in-out duration-500 ${activeSideBar ? 'opacity-0' : 'opacity-1'}`}
+      >
         <h4
           className={`${color === 'light' ? 'text-slate-300' : 'text-slate-600'} font-semibold text-sm`}
         >
