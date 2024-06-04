@@ -70,6 +70,4 @@ body {
 
 button {
   transition: all 0.5s ease-in;
-  outline-color: var(--sky-500);
 }
-

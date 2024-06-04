@@ -28,7 +28,7 @@ export const PaginationActions: React.FC<PaginationActionsProps> = ({
 }) => {
   return (
     <div className="inline-flex items-center gap-8">
-      <span>
+      <span className="text-sm">
         Página {page} de {totalPages}
       </span>
 
@@ -68,11 +68,11 @@ export const PaginationLabel = ({
   },
 }: PaginationLabelProps) => {
   return (
-    <>
+    <span className="text-sm">
       {currentPageData.length === 0
         ? 'Não há resultados para exibir'
         : `Mostrando ${currentPageData.length} de ${totalItems} ${currentPageData.length === 1 ? paginationLabel.single : paginationLabel.several}`}
-    </>
+    </span>
   );
 };
 
