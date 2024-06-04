@@ -5,6 +5,7 @@ import { users } from '@/data';
 import { useWindowSize } from '@/hooks';
 
 import { UsersFilters, UsersTable } from './components';
+import { UsersCard } from './components/users-card';
 
 const Users: React.FC = () => {
   const [, , isMobile] = useWindowSize();
@@ -17,7 +18,7 @@ const Users: React.FC = () => {
       <Card>
         <UsersFilters />
 
-        {!isMobile ? <UsersTable users={users} /> : null}
+        {!isMobile ? <UsersTable users={users} /> : <UsersCard users={users} />}
       </Card>
     </>
   );
