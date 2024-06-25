@@ -1,13 +1,11 @@
 import React from 'react';
 
-import { DotsThreeOutline } from '@phosphor-icons/react';
-
 import {
   UserProfile,
   Badge,
-  IconButton,
   Table as T,
   Pagination,
+  ButtonActions,
 } from '@/components';
 import { usePaginate } from '@/hooks';
 import { User } from '@/interfaces';
@@ -92,9 +90,7 @@ const UserRow: React.FC<{ user: User }> = ({ user }) => {
       </T.Cell>
       <T.Cell>{formatDateTime(user.last_access)}</T.Cell>
       <T.Cell style={{ width: 50 }}>
-        <IconButton>
-          <DotsThreeOutline className="size-4 text-slate-800" weight="fill" />
-        </IconButton>
+        <ButtonActions />
       </T.Cell>
     </T.Row>
   );
