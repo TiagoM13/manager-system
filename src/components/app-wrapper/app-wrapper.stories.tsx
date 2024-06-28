@@ -3,11 +3,11 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { Meta } from '@storybook/react';
 
-import { Sidebar as SideBarComponent } from '.';
+import { AppWrapper } from '.';
 
 export default {
-  title: 'Components/SideBar',
-  component: SideBarComponent,
+  title: 'Components/AppWrapper',
+  component: AppWrapper,
   parameters: {
     layout: 'fullscreen',
   },
@@ -16,7 +16,9 @@ export default {
 export const SideBar = () => {
   return (
     <BrowserRouter>
-      <SideBarComponent />
+      <AppWrapper>
+        <div>content</div>
+      </AppWrapper>
     </BrowserRouter>
   );
 };

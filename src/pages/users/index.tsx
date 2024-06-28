@@ -11,7 +11,7 @@ const Users: React.FC = () => {
   const [, , isMobile] = useWindowSize();
 
   return (
-    <>
+    <div className="flex flex-col">
       <Header title="Usuários" labelAction="cadastrar usuário" />
       <Divider />
 
@@ -20,7 +20,7 @@ const Users: React.FC = () => {
 
         {!isMobile ? <UsersTable users={users} /> : <UsersCard users={users} />}
       </Card>
-    </>
+    </div>
   );
 };
 

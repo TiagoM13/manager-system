@@ -5,8 +5,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/pt-br';
 
-import { Sidebar } from '@/components';
-import { routes as Router } from '@/routes';
+import { Router } from '@/routes';
 
 import { InitializerLoader } from './components/initializer-loader';
 
@@ -28,13 +27,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="bg-slate-100 h-screen flex relative">
-        <Sidebar />
-
-        <div className="w-full flex-1 p-6 overflow-auto">
-          <Router />
-        </div>
-      </div>
+      <Router />
     </BrowserRouter>
   );
 };
