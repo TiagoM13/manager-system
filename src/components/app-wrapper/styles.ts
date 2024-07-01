@@ -108,22 +108,22 @@ export const Aside = styled.aside<IMenuBarProps>`
 
     #btn-signup span {
       opacity: ${props.isSidebarOpen ? 0 : 1};
-      overflow: ${props.isSidebarOpen ? 'hidden' : 'visible'};
     }
 
     #link-menu span {
       opacity: ${props.isSidebarOpen ? 0 : 1};
-      overflow: ${props.isSidebarOpen ? 'hidden' : 'visible'};
     }
 
     #content-user-profile {
       margin-left: ${props.isSidebarOpen ? '-0.75rem' : null};
     }
 
-    #content-user-profile h4,
-    span {
+    #content-user-profile h4 {
       opacity: ${props.isSidebarOpen ? 0 : 1};
-      overflow: ${props.isSidebarOpen ? 'hidden' : 'visible'};
+    }
+
+    #content-user-profile span {
+      opacity: ${props.isSidebarOpen ? 0 : 1};
     }
   `}
 `;
