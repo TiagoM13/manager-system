@@ -1,6 +1,6 @@
 import { Status, UserTypes } from '../enums';
 
-export interface User {
+export interface IUser {
   id: number;
   name: string;
   email: string;

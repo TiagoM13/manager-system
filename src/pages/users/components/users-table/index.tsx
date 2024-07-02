@@ -8,11 +8,11 @@ import {
   ButtonActions,
 } from '@/components';
 import { usePaginate } from '@/hooks';
-import { User } from '@/interfaces';
+import { IUser } from '@/interfaces';
 import { formatDate, formatDateTime } from '@/utils';
 
 type UserTableProps = {
-  users: User[];
+  users: IUser[];
 };
 
 export const UsersTable: React.FC<UserTableProps> = ({ users = [] }) => {
@@ -69,7 +69,7 @@ export const UsersTable: React.FC<UserTableProps> = ({ users = [] }) => {
   );
 };
 
-const UserRow: React.FC<{ user: User }> = ({ user }) => {
+const UserRow: React.FC<{ user: IUser }> = ({ user }) => {
   return (
     <T.Row hoverable key={user.id}>
       <T.Cell style={{ maxWidth: 220 }}>

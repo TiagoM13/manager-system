@@ -1,14 +1,19 @@
 import React from 'react';
 
 import { Card, Divider, Header } from '@/components';
-import { users } from '@/data';
 import { useWindowSize } from '@/hooks';
+import { useAllUsers } from '@/hooks/users';
 
 import { UsersFilters, UsersTable } from './components';
 import { UsersCard } from './components/users-card';
 
 const Users: React.FC = () => {
   const [, , isMobile] = useWindowSize();
+  const { loadding, getAllUsers, users: data } = useAllUsers();
+
+  React.useEffect(() => {
+    getAllUsers();
+  }, [getAllUsers]);
 
   return (
     <div className="flex flex-col">
@@ -18,7 +23,7 @@ const Users: React.FC = () => {
       <Card>
         <UsersFilters />
 
-        {!isMobile ? <UsersTable users={users} /> : <UsersCard users={users} />}
+        {!isMobile ? <UsersTable users={data} /> : <UsersCard users={data} />}
       </Card>
     </div>
   );

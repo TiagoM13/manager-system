@@ -2,15 +2,15 @@ import React from 'react';
 
 import { PencilSimple, Trash } from '@phosphor-icons/react';
 
-import { Badge, Button, Divider, Pagination } from '@/components';
+import { Badge, Button, Pagination } from '@/components';
 import { usePaginate } from '@/hooks';
-import { User } from '@/interfaces';
+import { IUser } from '@/interfaces';
 import { formatDate, formatDateTime } from '@/utils';
 
 import { Card, Container, Text } from './styles';
 
 type UsersCardProps = {
-  users: User[];
+  users: IUser[];
 };
 
 export const UsersCard: React.FC<UsersCardProps> = ({ users }) => {
@@ -50,7 +50,7 @@ export const UsersCard: React.FC<UsersCardProps> = ({ users }) => {
   );
 };
 
-const UserCard: React.FC<{ user: User }> = ({ user }) => {
+const UserCard: React.FC<{ user: IUser }> = ({ user }) => {
   return (
     <Card>
       <div>
