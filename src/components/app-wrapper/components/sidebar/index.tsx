@@ -8,7 +8,7 @@ import { menus } from '@/utils';
 
 import { MenuItem } from '../menu-item';
 
-export const SideBar: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+export const SideBar: React.FC = () => {
   return (
     <>
       <div className="ml-1 p-2">
@@ -23,7 +23,6 @@ export const SideBar: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <div className="mt-12 space-y-6">
           {menus.map((menu, index) => (
             <MenuItem
-              onClose={onClose}
               key={`${menu.title}-${index}`}
               title={menu.title}
               icon={menu.icon}

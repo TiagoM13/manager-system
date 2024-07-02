@@ -3,13 +3,13 @@ import React from 'react';
 import { ArrowLeft } from '@phosphor-icons/react';
 
 type ToggleButtonProps = {
-  isOpen: boolean;
+  showingActionBar: boolean;
   toggleSideBar: () => void;
 };
 
 export const ToggleButton: React.FC<ToggleButtonProps> = ({
   toggleSideBar,
-  isOpen,
+  showingActionBar,
 }) => {
   return (
     <button
@@ -18,7 +18,7 @@ export const ToggleButton: React.FC<ToggleButtonProps> = ({
     >
       <ArrowLeft
         weight="bold"
-        className={`size-5 transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`}
+        className={`size-5 transition-transform duration-500 ${showingActionBar ? 'rotate-180' : ''}`}
       />
     </button>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ListDashes, X } from '@phosphor-icons/react';
 
-import { useWindowSize } from '@/hooks';
+import { useMenu, useWindowSize } from '@/hooks';
 
 import { SideBar } from './components/sidebar';
 import { ToggleButton } from './components/toggle-button';
@@ -13,28 +13,15 @@ export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   // Hooks
+  const { showMenu, showingActionBar, toggleMenu, toggleSideBar } = useMenu();
   const [width] = useWindowSize();
-
-  // States
-  const [showMenu, setShowMenu] = React.useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
   const sideBarRef = React.useRef<HTMLDivElement>(null);
 
   const isMobile = Number(width) <= 960;
 
-  // Callbacks
-  const toggleMenu = React.useCallback((show?: boolean) => {
-    setShowMenu((prevState) =>
-      typeof show !== 'undefined' ? show : !prevState,
-    );
-  }, []);
-
   // Memo
-  const renderSideBar = React.useMemo(
-    () => <SideBar onClose={() => toggleMenu()} />,
-    [toggleMenu],
-  );
+  const renderSideBar = React.useMemo(() => <SideBar />, []);
 
   // Effects
   React.useEffect(() => {
@@ -49,17 +36,13 @@ export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({
         sideBarRef.current &&
         sideBarRef.current.contains(event.target as Node)
       )
-        setShowMenu(false);
+        toggleMenu(false);
     };
 
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [showMenu]);
-
-  const handleToggleSideBar = () => {
-    setIsSidebarOpen((prevState) => !prevState);
-  };
+  }, [toggleMenu]);
 
   return (
     <Container>
@@ -73,7 +56,7 @@ export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({
           <div ref={sideBarRef} className="overlay"></div>
           <div className="content-side-bar">
             <button
-              onClick={() => setShowMenu(false)}
+              onClick={() => toggleMenu(false)}
               className="btn-close-sidebar"
               id="btn-close-sidebar"
             >
@@ -84,10 +67,10 @@ export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({
         </StyledSidebar>
       ) : (
         <div className="relative">
-          <Aside isSidebarOpen={isSidebarOpen}>{renderSideBar}</Aside>
+          <Aside showingActionBar={showingActionBar}>{renderSideBar}</Aside>
           <ToggleButton
-            toggleSideBar={handleToggleSideBar}
-            isOpen={isSidebarOpen}
+            toggleSideBar={() => toggleSideBar()}
+            showingActionBar={showingActionBar}
           />
         </div>
       )}

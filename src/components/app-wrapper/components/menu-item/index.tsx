@@ -3,22 +3,20 @@ import { NavLink } from 'react-router-dom';
 
 import { Icon } from '@phosphor-icons/react';
 
+import { useMenu } from '@/hooks';
+
 type MenuItemProps = {
   title: string;
   url: string;
   icon: Icon;
-  onClose: () => void;
 };
 
-export const MenuItem = ({
-  title,
-  icon: Icon,
-  url,
-  onClose,
-}: MenuItemProps) => {
+export const MenuItem = ({ title, icon: Icon, url }: MenuItemProps) => {
+  const { toggleMenu } = useMenu();
+
   return (
     <NavLink
-      onClick={onClose}
+      onClick={() => toggleMenu(false)}
       id="link-menu"
       to={url}
       className={({ isActive }) =>

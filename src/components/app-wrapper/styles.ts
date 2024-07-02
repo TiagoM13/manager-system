@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 interface IMenuBarProps {
   showMenu?: boolean;
   isAuthenticated?: boolean;
-  isSidebarOpen?: boolean;
+  showingActionBar?: boolean;
 }
 
 export const Container = styled.div`
@@ -104,26 +104,26 @@ export const Aside = styled.aside<IMenuBarProps>`
   overflow-y: auto;
 
   ${(props) => css`
-    width: ${props.isSidebarOpen ? '75px' : '260px'};
+    width: ${props.showingActionBar ? '75px' : '260px'};
 
     #btn-signup span {
-      opacity: ${props.isSidebarOpen ? 0 : 1};
+      opacity: ${props.showingActionBar ? 0 : 1};
     }
 
     #link-menu span {
-      opacity: ${props.isSidebarOpen ? 0 : 1};
+      opacity: ${props.showingActionBar ? 0 : 1};
     }
 
     #content-user-profile {
-      margin-left: ${props.isSidebarOpen ? '-0.75rem' : null};
+      margin-left: ${props.showingActionBar ? '-0.75rem' : null};
     }
 
     #content-user-profile h4 {
-      opacity: ${props.isSidebarOpen ? 0 : 1};
+      opacity: ${props.showingActionBar ? 0 : 1};
     }
 
     #content-user-profile span {
-      opacity: ${props.isSidebarOpen ? 0 : 1};
+      opacity: ${props.showingActionBar ? 0 : 1};
     }
   `}
 `;
