@@ -10,3 +10,9 @@ export interface IUser {
   created_at: Date;
   last_access: Date;
 }
+
+export interface IUsersFilters {
+  name?: string;
+  // page_number: number;
+  // page_size: number;
+}

@@ -1,16 +1,30 @@
 import React from 'react';
+import { Control, Controller } from 'react-hook-form';
 
 import { MagnifyingGlass } from '@phosphor-icons/react';
 
-type InputSearchProps = React.ComponentProps<'input'> & {};
+type InputSearchProps = React.ComponentProps<'input'> & {
+  name: string;
+  control: Control;
+};
 
-export const InputSearch: React.FC<InputSearchProps> = ({ ...rest }) => {
+export const InputSearch: React.FC<InputSearchProps> = ({
+  name,
+  control,
+  ...rest
+}) => {
   return (
     <div className="flex items-center">
-      <input
-        {...rest}
-        type="text"
-        className="text-sm border-r-0 border border-slate-400 py-1.5 px-4 rounded-l-lg h-[36px] outline-sky-500 min-w-60"
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <input
+            {...field}
+            {...rest}
+            className="text-sm border-r-0 border border-slate-400 py-1.5 px-4 rounded-l-lg h-[36px] outline-sky-500 min-w-60"
+          />
+        )}
       />
 
       <button

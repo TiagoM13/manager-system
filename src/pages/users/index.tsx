@@ -1,31 +1,43 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { Card, Divider, Header } from '@/components';
-import { useWindowSize } from '@/hooks';
-import { useAllUsers } from '@/hooks/users';
+import { useAllUsers, useQuery, useWindowSize } from '@/hooks';
+import { IUsersFilters } from '@/interfaces';
 
-import { UsersFilters, UsersTable } from './components';
-import { UsersCard } from './components/users-card';
+import { UsersFilters, UsersTable, UsersCard } from './components';
+import { filterSchema } from './schemas';
 
 const Users: React.FC = () => {
   const [, , isMobile] = useWindowSize();
-  const { loadding, getAllUsers, users: data } = useAllUsers();
+  const [query] = useQuery<IUsersFilters>();
+  const { loadding, getAllUsers, list } = useAllUsers();
+
+  const methods = useForm({
+    defaultValues: query,
+    mode: 'onChange',
+    resolver: filterSchema,
+    shouldUnregister: false,
+  });
 
   React.useEffect(() => {
-    getAllUsers();
+    getAllUsers(query);
   }, [getAllUsers]);
 
   return (
-    <div className="flex flex-col">
-      <Header title="Usuários" labelAction="cadastrar usuário" />
-      <Divider />
+    <FormProvider {...methods}>
+      <div className="flex flex-col">
+        <Header title="Usuários" labelAction="cadastrar usuário" />
+        <Divider />
 
-      <Card>
-        <UsersFilters />
+        <Card>
+          <UsersFilters loading={loadding} />
 
-        {!isMobile ? <UsersTable users={data} /> : <UsersCard users={data} />}
-      </Card>
-    </div>
+          {!isMobile ? <UsersTable users={list} /> : <UsersCard users={list} />}
+        </Card>
+      </div>
+    </FormProvider>
   );
 };
 
