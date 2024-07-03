@@ -1,25 +1,27 @@
-import { getAllUsersAPI } from '@/services/users';
+import { IUsersFilters } from '@/interfaces';
+import { getAllUsersAPI, getFakerAllUsersAPI } from '@/services';
 
 import { store } from '.';
 
-const getAllUsers = async (query?: { name: string; page: number }) => {
+const getAllUsers = async (params: IUsersFilters) => {
   try {
     store.update((s) => {
-      s.loadding = true;
-      s.loadingError = false;
+      s.allUsers.loadding = true;
+      s.allUsers.loadingError = false;
     });
 
-    const data = await getAllUsersAPI().then((users) => users);
+    // const data = await getAllUsersAPI(params).then((users) => users);
+    const data = await getFakerAllUsersAPI(params).then((users) => users);
 
     store.update((s) => {
-      s.users = data;
-      s.loadding = false;
+      s.allUsers.list = data;
+      s.allUsers.loadding = false;
     });
 
     return data;
   } catch (error) {
     console.log(error);
-    store.update((s) => (s.loadingError = true));
+    store.update((s) => (s.allUsers.loadingError = true));
   }
 };
 

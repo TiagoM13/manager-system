@@ -3,17 +3,29 @@ import { Store } from 'pullstate';
 import { IUser } from '@/interfaces';
 
 interface IUserState {
-  users: IUser[];
-  user: IUser | null;
-  loadding: boolean;
-  loadingError: boolean;
+  allUsers: {
+    list: IUser[];
+    loadding: boolean;
+    loadingError: boolean;
+  };
+  user: {
+    data: IUser | null;
+    loadding: boolean;
+    loadingError: boolean;
+  };
 }
 
 const defaultState: IUserState = {
-  users: [],
-  user: null,
-  loadding: false,
-  loadingError: false,
+  allUsers: {
+    list: [],
+    loadding: false,
+    loadingError: false,
+  },
+  user: {
+    data: null,
+    loadding: false,
+    loadingError: false,
+  },
 };
 
 export const store = new Store(defaultState);

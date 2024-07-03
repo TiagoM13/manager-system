@@ -1,11 +1,36 @@
 import { users } from '@/data';
-import { IUser } from '@/interfaces';
+import { IUser, IUsersFilters } from '@/interfaces';
 
-export const getAllUsersAPI = (): Promise<IUser[]> => {
+import { fetchdata } from '.';
+
+export const getAllUsersAPI = ({ name }: IUsersFilters): Promise<IUser[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const data = users;
+      let data = users;
+
+      if (name) {
+        const formatedQuery = name.toLowerCase();
+        data = data.filter((user) =>
+          user.name.toLowerCase().includes(formatedQuery),
+        );
+      }
+
       resolve(data);
     }, 1000);
   });
+};
+
+export const getFakerAllUsersAPI = async ({
+  name,
+}: IUsersFilters): Promise<IUser[]> => {
+  let users = await fetchdata('users');
+
+  if (name) {
+    const formatedQuery = name.toLowerCase();
+    users = users.filter((user: IUser) =>
+      user.name.toLowerCase().includes(formatedQuery),
+    );
+  }
+
+  return users;
 };
