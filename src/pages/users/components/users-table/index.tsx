@@ -13,9 +13,13 @@ import { formatDate, formatDateTime } from '@/utils';
 
 type UserTableProps = {
   users: IUser[];
+  loading?: boolean;
 };
 
-export const UsersTable: React.FC<UserTableProps> = ({ users = [] }) => {
+export const UsersTable: React.FC<UserTableProps> = ({
+  users = [],
+  loading = false,
+}) => {
   const {
     page,
     totalPages,

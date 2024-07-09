@@ -11,6 +11,7 @@ import { Card, Container, Text } from './styles';
 
 type UsersCardProps = {
   users: IUser[];
+  loading?: boolean;
 };
 
 export const UsersCard: React.FC<UsersCardProps> = ({ users }) => {

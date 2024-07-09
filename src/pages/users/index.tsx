@@ -12,7 +12,7 @@ import { filterSchema } from './schemas';
 const Users: React.FC = () => {
   const [, , isMobile] = useWindowSize();
   const [query] = useQuery<IUsersFilters>();
-  const { loadding, getAllUsers, list } = useAllUsers();
+  const { loading, getAllUsers, list } = useAllUsers();
 
   const methods = useForm({
     defaultValues: query,
@@ -23,7 +23,7 @@ const Users: React.FC = () => {
 
   React.useEffect(() => {
     getAllUsers(query);
-  }, [getAllUsers]);
+  }, []);
 
   return (
     <FormProvider {...methods}>
@@ -32,9 +32,13 @@ const Users: React.FC = () => {
         <Divider />
 
         <Card>
-          <UsersFilters loading={loadding} />
+          <UsersFilters loading={loading} />
 
-          {!isMobile ? <UsersTable users={list} /> : <UsersCard users={list} />}
+          {!isMobile ? (
+            <UsersTable users={list} loading={loading} />
+          ) : (
+            <UsersCard users={list} />
+          )}
         </Card>
       </div>
     </FormProvider>

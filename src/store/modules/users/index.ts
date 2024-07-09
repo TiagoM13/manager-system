@@ -5,7 +5,7 @@ import { IUser } from '@/interfaces';
 interface IUserState {
   allUsers: {
     list: IUser[];
-    loadding: boolean;
+    loading: boolean;
     loadingError: boolean;
   };
   user: {
@@ -18,7 +18,7 @@ interface IUserState {
 const defaultState: IUserState = {
   allUsers: {
     list: [],
-    loadding: false,
+    loading: false,
     loadingError: false,
   },
   user: {

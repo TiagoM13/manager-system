@@ -7855,11 +7855,6 @@
     "filter-obj" "^5.1.0"
     "split-on-first" "^3.0.0"
 
-"query-strings-parser@^2.1.13":
-  "integrity" "sha512-/5ErnqLvyPIK6FmtvXEa0wfuyjJ5GJ0lBPeKy7GnHDWCV1bRvD1ZGHITDK7nFq0JEXK9UxU49cyFpKixrIyabA=="
-  "resolved" "https://registry.npmjs.org/query-strings-parser/-/query-strings-parser-2.1.13.tgz"
-  "version" "2.1.13"
-
 "querystringify@^2.1.1":
   "integrity" "sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ=="
   "resolved" "https://registry.npmjs.org/querystringify/-/querystringify-2.2.0.tgz"

@@ -31,7 +31,6 @@
     "dayjs": "^1.11.11",
     "pullstate": "^1.25.0",
     "query-string": "^9.0.0",
-    "query-strings-parser": "^2.1.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.52.1",

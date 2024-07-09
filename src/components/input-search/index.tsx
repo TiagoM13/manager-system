@@ -1,16 +1,18 @@
 import React from 'react';
 import { Control, Controller } from 'react-hook-form';
 
-import { MagnifyingGlass } from '@phosphor-icons/react';
+import { CircleNotch, MagnifyingGlass } from '@phosphor-icons/react';
 
 type InputSearchProps = React.ComponentProps<'input'> & {
   name: string;
   control: Control;
+  loading?: boolean;
 };
 
 export const InputSearch: React.FC<InputSearchProps> = ({
   name,
   control,
+  loading,
   ...rest
 }) => {
   return (
@@ -32,7 +34,15 @@ export const InputSearch: React.FC<InputSearchProps> = ({
         type="submit"
         className="bg-sky-600 outline-sky-500 hover:bg-sky-500 disabled:bg-sky-700 rounded-r-lg py-1 px-2.5 h-[36px]"
       >
-        <MagnifyingGlass weight="bold" color="white" className="size-5" />
+        {loading ? (
+          <CircleNotch
+            weight="bold"
+            color="white"
+            className="size-5 animate-spin"
+          />
+        ) : (
+          <MagnifyingGlass weight="bold" color="white" className="size-5" />
+        )}
       </button>
     </div>
   );
