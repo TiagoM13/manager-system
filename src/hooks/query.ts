@@ -1,8 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import queryString from 'query-string';
-
 interface Query {
   [key: string]: string;
 }
@@ -18,33 +16,43 @@ const useQuery: IUseQuery = <T extends Record<string, any> = Query>() => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const parseQueryString = React.useCallback((search: string): T => {
+    return search
+      ? (Object.fromEntries(new URLSearchParams(search)) as T)
+      : ({} as T);
+  }, []);
+
+  const stringifyQuery = React.useCallback((params: T): string => {
+    return new URLSearchParams(params as any).toString();
+  }, []);
+
   const [current, setCurrent] = React.useState<T>(
-    (queryString.parse(location.search) || {}) as T,
+    (parseQueryString(location.search) || {}) as T,
   );
 
   const setQuery = React.useCallback(
     (query: SetQuery<T>) => {
-      const currentParams = queryString.parse(location.search) || {};
+      const currentParams = parseQueryString(location.search) || {};
 
       let updatedParams: T;
 
       if (typeof query === 'function') {
-        updatedParams = (query as (prevState: T) => T)(currentParams as T);
+        updatedParams = (query as (prevState: T) => T)(currentParams);
       } else {
         updatedParams = { ...currentParams, ...query };
       }
 
       navigate({
-        search: queryString.stringify(updatedParams),
+        search: stringifyQuery(updatedParams),
       });
     },
-    [navigate, location.search],
+    [location.search, navigate, parseQueryString, stringifyQuery],
   );
 
   React.useEffect(() => {
-    const updatedParams = queryString.parse(location.search) || {};
+    const updatedParams = parseQueryString(location.search) || {};
     setCurrent(updatedParams as T);
-  }, [location.search]);
+  }, [location.search, parseQueryString]);
 
   return [current, setQuery];
 };
