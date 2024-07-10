@@ -18,11 +18,12 @@ describe('<Button />', () => {
     expect(getByTestId('btn-teste')).toHaveClass('bg-sky-600 hover:bg-sky-500');
   });
 
-  test('should render correctly new classNames', () => {
-    const { getByTestId } = render(
-      <Button id="teste" classNames="shadow shadow-slate-600/50" />,
+  test('should render correctly colors variables in the button', () => {
+    const { getByTestId, getByText } = render(
+      <Button id="teste" variable="danger" label="Delete" />,
     );
 
-    expect(getByTestId('btn-teste')).toHaveClass('shadow shadow-slate-600/50');
+    expect(getByTestId('btn-teste')).toHaveClass('bg-red-600 hover:bg-red-500');
+    expect(getByText('Delete')).toBeTruthy();
   });
 });

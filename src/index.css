@@ -4,6 +4,39 @@
 
 :root {
   --white: #ffffff;
+  --black: #000000;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-400: #94a3b8;
+  --slate-500: #6b7280;
+  --slate-600: #475569;
+  --slate-900: #334155;
+  --slate-700: #0f172a;
+  --green-300: #86efac;
+  --green-400: #4ade80;
+  --green-500: #22c55e;
+  --green-600: #16a34a;
+  --emerald-300: #6ee7b7;
+  --emerald-400: #34d399;
+  --emerald-500: #10b981;
+  --emerald-600: #059669;
+  --red-400: #f87171;
+  --red-500: #ef4444;
+  --red-600: #dc2626;
+  --cyan-400: #22d3ee;
+  --cyan-500: #06b6d4;
+  --cyan-600: #0891b2;
+  --sky-100: #e0f2fe;
+  --sky-300: #7dd3fc;
+  --sky-400: #38bdf8;
+  --sky-500: #0ea5e9;
+  --sky-600: #0284c7;
+  --sky-700: #0369a1;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --violet-400: #a78bfa;
+  --violet-500: #8b5cf6;
 }
 
 ::-webkit-scrollbar {
@@ -37,8 +70,4 @@ body {
 
 button {
   transition: all 0.5s ease-in;
-}
-
-button:hover {
-  filter: brightness(0.95);
 }

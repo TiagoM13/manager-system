@@ -6,7 +6,7 @@ module.exports = {
   moduleNameMapper: {
     '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/jest/__mocks__/setupMock.js',
     '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
-    "^@/(.*)$": "<rootDir>/src/$1",
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
   transformIgnorePatterns: ['/node_modules/'],
 };

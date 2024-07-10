@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { user } from '@/data';
+import { user } from '@/__mocks__';
 import { Meta, StoryFn } from '@storybook/react';
 
 import { UserProfile as Profile, UserProfileProps } from '.';

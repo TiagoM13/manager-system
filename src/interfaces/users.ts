@@ -1,6 +1,6 @@
 import { Status, UserTypes } from '../enums';
 
-export interface User {
+export interface IUser {
   id: number;
   name: string;
   email: string;
@@ -9,4 +9,10 @@ export interface User {
   status: Status;
   created_at: Date;
   last_access: Date;
+}
+
+export interface IUsersFilters {
+  name?: string;
+  // page_number: number;
+  // page_size: number;
 }
