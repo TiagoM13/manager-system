@@ -7,6 +7,7 @@ const Dashboard = React.lazy(() => import('@/pages/dashboard'));
 const Patients = React.lazy(() => import('@/pages/patients'));
 const Profile = React.lazy(() => import('@/pages/profile'));
 const Users = React.lazy(() => import('@/pages/users'));
+const User = React.lazy(() => import('@/pages/user'));
 
 export const Router: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ export const Router: React.FC = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<User />} />
           <Route path="/patients" element={<Patients />} />
         </Routes>
       </React.Suspense>
