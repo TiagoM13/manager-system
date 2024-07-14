@@ -93,13 +93,17 @@ export const Select = (props: ISelectProps) => {
 
   return (
     <Container>
-      <label className="inline text-sm text-slate-600">
+      <label className="block text-sm text-slate-600 mb-2">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
 
       <SelectContent>
         <div id="content">
-          <SelectComponent {...asyncSelectProps} styles={styles} />
+          <SelectComponent
+            {...asyncSelectProps}
+            className={className}
+            styles={styles}
+          />
         </div>
       </SelectContent>
     </Container>

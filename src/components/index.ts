@@ -14,3 +14,6 @@ export * from './pagination';
 export * from './button-actions';
 export * from './select';
 export * from './initializer-loader';
+export * from './input';
+export * from './input-file';
+export * from './input-radio';

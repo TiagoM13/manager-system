@@ -1,17 +1,20 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
 
   [class$='-container'] {
     border-radius: 0.5rem;
-    background-color: var(--sky-600);
+    border: 1px solid var(--slate-400);
+    color: var(--slate-600);
 
     [class$='-menu'],
     [class$='-menuList'] {
       background-color: white !important;
+      text-transform: capitalize;
     }
 
     [class$='-control'] {
@@ -19,22 +22,28 @@ export const Container = styled.div`
       min-height: 36px;
     }
 
-    [class$='-singleValue'],
+    [class$='-singleValue'] {
+      color: var(--slate-600);
+      font-size: 0.875rem;
+      text-transform: capitalize;
+    }
+
     [class$='-placeholder'] {
-      color: var(--white);
+      color: var(--slate-400);
       font-size: 0.875rem;
     }
 
     [class$='-ValueContainer'],
     [class$='-Input'] {
       padding: 0;
+      text-transform: capitalize;
     }
 
     [class$='-indicatorContainer'] {
       justify-content: center;
       align-items: center;
       align-self: center;
-      color: var(--white);
+      color: var(--slate-600);
       width: 30px;
     }
     [class$='-indicatorSeparator'] {
@@ -48,6 +57,7 @@ export const Container = styled.div`
 `;
 
 export const SelectContent = styled.div`
+  width: 100%;
   display: flex;
   align-items: flex-end;
   justify-content: center;

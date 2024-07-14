@@ -12,6 +12,7 @@ export type ButtonProps = React.ComponentProps<'button'> & {
   label?: string;
   icon?: React.ReactNode;
   variable?: keyof typeof Variables;
+  className?: string;
 };
 
 export const Button: React.FC<ButtonProps> = ({
@@ -19,6 +20,7 @@ export const Button: React.FC<ButtonProps> = ({
   label = 'Salvar',
   icon,
   variable = Variables.primary,
+  className = '',
   ...rest
 }) => {
   const colorMap: Record<keyof typeof Variables, string> = {
@@ -36,7 +38,7 @@ export const Button: React.FC<ButtonProps> = ({
     <button
       {...rest}
       data-testid={`btn-${id}`}
-      className={`${color} rounded-lg py-2.5 px-3 font-medium text-sm text-white flex gap-2 items-center justify-center`}
+      className={`${className} ${color} rounded-lg py-2.5 px-3 font-medium text-sm text-white flex gap-2 items-center justify-center`}
     >
       {!!icon && icon}
       {label}
