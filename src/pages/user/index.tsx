@@ -1,106 +1,74 @@
 import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import {
-  Header,
-  Divider,
-  Card,
-  Select,
-  InputFile,
-  Input,
-  InputRadio,
-} from '@/components';
-import { UserTypes } from '@/enums';
+import { Header, Divider } from '@/components';
+import { FormContainer } from '@/components/form-container';
+import { useUser } from '@/hooks';
+import { IUser } from '@/interfaces';
 
-type ParamsProps = {
-  id: string;
-};
+import { StatusForm } from './forms/status-form';
+import UserForm from './forms/user-form';
+import { formSchema } from './schemas';
 
 const User: React.FC = () => {
   const navigate = useNavigate();
-  const params = useParams<ParamsProps>();
+  const { id } = useParams<{ id: string }>();
+  const { loading, data, getUser: refreshUser } = useUser();
 
-  const newUser = params.id === 'new';
+  const newUser = React.useMemo(() => id === 'new', [id]);
+
+  // Hook Form
+  const methods = useForm<IUser>({
+    resolver: formSchema as any,
+    shouldUnregister: false,
+  });
+
+  const { handleSubmit } = methods;
 
   const handleCancel = React.useCallback(() => {
     navigate('/users');
   }, [navigate]);
 
-  const selectOptions = Object.values(UserTypes).map((label, index) => ({
-    id: index,
-    label,
-  }));
+  const submit = React.useCallback(async (values: IUser) => {
+    console.log(values);
+  }, []);
+
+  React.useEffect(() => {
+    if (!newUser) {
+      refreshUser(Number(id));
+    }
+  }, [id, newUser, refreshUser]);
 
   return (
-    <div className="flex flex-col">
-      <Header
-        title={newUser ? 'Cadastrar usuário' : 'Atualizar usuário'}
-        hasRegister={false}
-        hasActions
-        onCancel={handleCancel}
-        buttonLabels={{
-          saved: newUser ? 'salvar usuário' : 'atualizar usuário',
-        }}
-      />
-      <Divider />
+    <FormProvider {...methods}>
+      <FormContainer noValidate onSubmit={handleSubmit(submit)}>
+        <div className="flex flex-col">
+          <Header
+            title={newUser ? 'Cadastrar usuário' : 'Atualizar usuário'}
+            hasRegister={false}
+            hasActions
+            onCancel={handleCancel}
+            buttonLabels={{
+              saved: newUser ? 'salvar usuário' : 'atualizar usuário',
+            }}
+          />
+          <Divider />
 
-      <div className="max-w-[1440px] flex gap-5">
-        <div className="w-[60%]">
-          <Card title="Informações do usuário" className="px-6" bordered>
-            <div className="space-y-4 mb-20">
-              <InputFile
-                hasPreview
-                placeholder={newUser ? 'Escolher foto' : 'Alterar foto'}
-              />
-
-              <div className="grid grid-cols-2 gap-5">
-                <Input
-                  id="name"
-                  name="name"
-                  label="Nome"
-                  placeholder="Digite seu nome completo"
-                  required
-                  className="text-red-300"
-                />
-
-                <Input
-                  id="email"
-                  name="email"
-                  label="E-mail"
-                  type="email"
-                  placeholder="Digite seu e-mail"
-                  required
-                />
-
-                <Select
-                  label="Tipo de usuário"
-                  placeholder="Selcione um tipo de usuário"
-                  options={selectOptions}
-                  required
-                />
-              </div>
+          <div className="max-w-[1440px] flex gap-5">
+            <div className="w-[60%]">
+              <UserForm loading={loading} isNew={newUser} />
             </div>
-          </Card>
-        </div>
 
-        {!newUser && (
-          <div className="w-[40%]">
-            <Card title="Status do usuário" className="px-6" bordered>
-              <div className="py-2 mt-4">
-                <InputRadio
-                  label="Status"
-                  name="opt-status"
-                  options={{
-                    opt1: 'Ativo',
-                    opt2: 'Inativo',
-                  }}
-                />
+            {!newUser && (
+              <div className="w-[40%]">
+                <StatusForm loading={loading} />
               </div>
-            </Card>
+            )}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      </FormContainer>
+    </FormProvider>
   );
 };
 

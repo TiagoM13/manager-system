@@ -1,15 +1,33 @@
 import React from 'react';
+import {
+  Control,
+  FieldError,
+  FieldValues,
+  Path,
+  UseFormSetValue,
+} from 'react-hook-form';
+import { OptionProps, GroupBase } from 'react-select';
+import { AsyncProps } from 'react-select/async';
 
 type Option = {
   id: number;
   label: string;
 };
 
-export interface ISelectProps {
+export type SelectOption<T> = React.ComponentType<
+  OptionProps<T, false, GroupBase<T>>
+>;
+
+export interface ISelectProps<T, Fields extends FieldValues> {
   className?: string;
+  control: Control<Fields, unknown>;
+  name: Path<Fields>;
   label?: string | React.ReactNode;
   required?: boolean;
+  error?: FieldError;
   options?: Option[];
+  setValue: UseFormSetValue<Fields>;
+  defaultValue?: any;
   defaultOptions?: [];
   disabled?: boolean;
   clearable?: boolean;
@@ -17,7 +35,10 @@ export interface ISelectProps {
   showValue?: boolean;
   labelAs?: string;
   valueAs?: string;
+  select_props?: AsyncProps<T, false, GroupBase<T>>;
+  onFetch?(inputText: string): Promise<T[]>;
   search_debounce_time?: number;
+  optionComponent?: React.ComponentType<OptionProps<T, false, GroupBase<T>>>;
   shouldUnregister?: boolean;
   isSearchable?: boolean;
   onChange?: (props: any) => void;

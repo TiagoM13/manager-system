@@ -1,26 +1,22 @@
-import { users } from '@/data';
 import { IUser, IUsersFilters } from '@/interfaces';
 
-import { fetchdata } from '.';
+import { api, fetchdata } from '.';
 
-export const getAllUsersAPI = ({ name }: IUsersFilters): Promise<IUser[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      let data = users;
-
-      if (name) {
-        const formatedQuery = name.toLowerCase();
-        data = data.filter((user) =>
-          user.name.toLowerCase().includes(formatedQuery),
-        );
-      }
-
-      resolve(data);
-    }, 1000);
-  });
+export type IResponseMeta = {
+  current_page: number;
+  current_page_records: number;
+  first_page: boolean;
+  last_page: boolean;
+  total_pages: number;
+  total_records: number;
 };
 
-export const getFakerAllUsersAPI = async ({
+export type IMSResponse<T, PropertyName extends string> = {
+  success: boolean;
+  meta?: IResponseMeta;
+} & { [P in PropertyName]: T };
+
+export const getAllUsersAPI = async ({
   name,
 }: IUsersFilters): Promise<IUser[]> => {
   let users = await fetchdata('users');
@@ -33,4 +29,8 @@ export const getFakerAllUsersAPI = async ({
   }
 
   return users;
+};
+
+export const getUserAPI = (id: number) => {
+  return api.get<IUser>(`/users/${id}`);
 };

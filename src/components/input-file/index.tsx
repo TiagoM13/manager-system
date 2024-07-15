@@ -1,38 +1,41 @@
 import React from 'react';
+import { Control, Controller, FieldError } from 'react-hook-form';
 
 import { CircleNotch, UploadSimple } from '@phosphor-icons/react';
+
+import avatarImageUrl from '@/assets/avatars/avatar-woman.jpeg';
 
 import { Avatar } from '../avatar';
 
 interface InputFileProps {
   placeholder?: string;
   loading?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value?: string;
   hasPreview?: boolean;
+  control: Control<any>;
+  name: any;
+  error?: FieldError | undefined;
 }
 
 export const InputFile: React.FC<InputFileProps> = ({
   placeholder = 'Escolher foto',
   loading = false,
-  onChange,
   hasPreview = false,
+  control,
+  error,
+  name,
 }) => {
   const [imageUrl, setImageUrl] = React.useState<string | null>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageUrl(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+  const handleFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+
+    if (!files) {
+      return;
     }
 
-    if (onChange) {
-      onChange(event);
-    }
+    const previwURL = URL.createObjectURL(files[0]);
+
+    setImageUrl(previwURL);
   };
 
   const defaultAvatar =
@@ -66,15 +69,28 @@ export const InputFile: React.FC<InputFileProps> = ({
         {placeholder}
       </label>
 
-      <input
-        id="image_url"
-        name="image_url"
-        type="file"
-        accept=".png,.jpg"
-        className="hidden"
-        disabled={loading}
-        onChange={handleFileChange}
+      <Controller
+        name={name}
+        control={control}
+        render={({ field: { onChange } }) => (
+          <input
+            id="image_url"
+            name={name}
+            type="file"
+            accept=".png,.jpg"
+            className="hidden"
+            disabled={loading}
+            onChange={(e) => {
+              onChange(e);
+              handleFileSelected(e);
+            }}
+          />
+        )}
       />
+
+      {!!error && (
+        <span className="block text-sm text-red-500 mt-1">{error.message}</span>
+      )}
     </div>
   );
 };
