@@ -1,33 +1,85 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-import { Plus } from '@phosphor-icons/react';
+import { Check, Plus, X } from '@phosphor-icons/react';
 
 import { Button, TextTitle } from '@/components';
 
 import { HeaderContainer } from './styles';
 
 type HeaderProps = {
-  title: string;
+  title?: string;
   labelAction?: string;
+  hasActions?: boolean;
+  breadcrumb?: React.ReactNode;
+  onCancel?: () => void;
+  newRegister?: () => void;
+  hasRegister?: boolean;
+  buttonLabels?: {
+    cancel?: string;
+    saved?: string;
+  };
 };
 
 export const Header: React.FC<HeaderProps> = ({
   title,
   labelAction = 'Cadastrar',
+  hasActions = false,
+  breadcrumb,
+  onCancel,
+  hasRegister = true,
+  newRegister,
+  buttonLabels,
 }) => {
   return (
     <HeaderContainer>
-      <TextTitle>{title}</TextTitle>
+      <div className="flex flex-col">
+        {/* title */}
+        <TextTitle>{title}</TextTitle>
+        {/* bradcrumb */}
+        {breadcrumb && breadcrumb}
+      </div>
 
-      <Link className="outline-none" to="new">
-        <Button
-          id="header"
-          type="button"
-          icon={<Plus className="size-5" weight="bold" />}
-          label={labelAction}
-        />
-      </Link>
+      {/* content actions */}
+      <div className="flex gap-4 items-end">
+        {hasRegister && (
+          <Button
+            id="header"
+            type="button"
+            icon={<Plus className="size-5" weight="bold" />}
+            label={labelAction}
+            onClick={newRegister}
+          />
+        )}
+
+        {hasActions && (
+          <HeaderActions onCancel={onCancel} buttonLabels={buttonLabels} />
+        )}
+      </div>
     </HeaderContainer>
+  );
+};
+
+export const HeaderActions: React.FC<HeaderProps> = ({
+  onCancel,
+  buttonLabels,
+}) => {
+  return (
+    <>
+      <Button
+        id="cancel"
+        type="button"
+        variable="danger"
+        icon={<X className="size-5" weight="bold" />}
+        label={buttonLabels?.cancel || 'cancelar'}
+        onClick={onCancel}
+      />
+      <Button
+        id="saved"
+        type="submit"
+        icon={<Check className="size-5" weight="bold" />}
+        className="min-w-[100px]"
+        label={buttonLabels?.saved || 'salvar'}
+      />
+    </>
   );
 };

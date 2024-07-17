@@ -1,5 +1,6 @@
 import React from 'react';
 
+import defaultAvatarURL from '@/assets/avatars/avatar-user.jpg';
 import {
   UserProfile,
   Badge,
@@ -14,11 +15,15 @@ import { formatDate, formatDateTime } from '@/utils';
 type UserTableProps = {
   users: IUser[];
   loading?: boolean;
+  onEdit: (data: IUser) => void;
+  onDelete: (id: number) => void;
 };
 
 export const UsersTable: React.FC<UserTableProps> = ({
   users = [],
   loading = false,
+  onEdit,
+  onDelete,
 }) => {
   const {
     page,
@@ -45,7 +50,12 @@ export const UsersTable: React.FC<UserTableProps> = ({
       </thead>
       <tbody>
         {currentPageData.map((user) => (
-          <UserRow key={user.id} user={user} />
+          <UserRow
+            key={user.id}
+            user={user}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
         ))}
       </tbody>
       <tfoot>
@@ -73,7 +83,13 @@ export const UsersTable: React.FC<UserTableProps> = ({
   );
 };
 
-const UserRow: React.FC<{ user: IUser }> = ({ user }) => {
+interface UserRowProps {
+  user: IUser;
+  onEdit: (data: IUser) => void;
+  onDelete: (id: number) => void;
+}
+
+const UserRow: React.FC<UserRowProps> = ({ user, onDelete, onEdit }) => {
   return (
     <T.Row hoverable key={user.id}>
       <T.Cell style={{ maxWidth: 220 }}>
@@ -81,7 +97,7 @@ const UserRow: React.FC<{ user: IUser }> = ({ user }) => {
           small
           color="dark"
           name={user.name}
-          imageUrl={user.image_url}
+          imageUrl={!user.image_url ? defaultAvatarURL : user.image_url}
           email={user.email}
         />
       </T.Cell>
@@ -94,7 +110,10 @@ const UserRow: React.FC<{ user: IUser }> = ({ user }) => {
       </T.Cell>
       <T.Cell>{formatDateTime(user.last_access)}</T.Cell>
       <T.Cell style={{ width: 50 }}>
-        <ButtonActions />
+        <ButtonActions
+          onEdit={() => onEdit(user)}
+          onDelete={() => onDelete(user.id)}
+        />
       </T.Cell>
     </T.Row>
   );

@@ -3,10 +3,15 @@ import React, { useRef } from 'react';
 import { DotsThreeOutline, PencilSimple, Trash } from '@phosphor-icons/react';
 
 export type ButtonActionsProps = React.ComponentProps<'button'> & {
-  actionId?: number;
+  onDelete?: () => void;
+  onEdit?: () => void;
 };
 
-export const ButtonActions: React.FC<ButtonActionsProps> = ({ ...props }) => {
+export const ButtonActions: React.FC<ButtonActionsProps> = ({
+  onDelete,
+  onEdit,
+  ...props
+}) => {
   const [activeOptions, setActiveOptions] = React.useState(false);
 
   const contentRef = useRef<HTMLDivElement>(null);
@@ -50,11 +55,17 @@ export const ButtonActions: React.FC<ButtonActionsProps> = ({ ...props }) => {
         className={`${activeOptions ? 'block' : 'hidden'} bg-white shadow-sm shadow-slate-400 w-28 absolute top-8 -left-20 rounded-lg z-20`}
       >
         <div className="py-1">
-          <button className="flex items-center gap-4 w-full p-2 hover:bg-sky-100">
+          <button
+            onClick={onEdit}
+            className="flex items-center gap-4 w-full p-2 hover:bg-sky-100"
+          >
             <PencilSimple className="size-4 text-sky-600" weight="bold" />
             <span className="text-sm text-sky-600 text-wrap">Editar</span>
           </button>
-          <button className="flex items-center gap-4 w-full p-2 hover:bg-red-100">
+          <button
+            onClick={onDelete}
+            className="flex items-center gap-4 w-full p-2 hover:bg-red-100"
+          >
             <Trash className="size-4 text-red-600" weight="bold" />
             <span className="text-sm text-red-600 text-wrap">Deletar</span>
           </button>

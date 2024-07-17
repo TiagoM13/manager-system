@@ -1,5 +1,5 @@
 import { store } from '@/store/modules/users';
-import { getAllUsers } from '@/store/modules/users/actions';
+import { getAllUsers, getUser } from '@/store/modules/users/actions';
 
 const useAllUsers = () => {
   const { loading, loadingError, list } = store.useState((s) => s.allUsers);
@@ -7,4 +7,10 @@ const useAllUsers = () => {
   return { loading, loadingError, list, getAllUsers };
 };
 
-export { useAllUsers };
+const useUser = () => {
+  const { loading, loadingError, data } = store.useState((s) => s.user);
+
+  return { loading, loadingError, data, getUser };
+};
+
+export { useAllUsers, useUser };

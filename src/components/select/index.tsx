@@ -1,6 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import SelectComponent, { StylesConfig, components } from 'react-select';
+import { Controller, FieldValues } from 'react-hook-form';
+import SelectComponent, { StylesConfig } from 'react-select';
 
 import { ISelectProps } from './interface';
 
@@ -39,69 +39,65 @@ const styles: StylesConfig<Option, false> = {
   }),
 };
 
-export const Select = (props: ISelectProps) => {
+export const Select = <T, Fields extends FieldValues>(
+  props: ISelectProps<T, Fields>,
+) => {
   const {
     label,
-    className,
+    name,
     required,
-    defaultOptions,
+    control,
+    defaultValue,
     disabled,
     placeholder = 'Selecione uma opção',
-    clearable = false,
-    onChange,
-    showValue = true,
     options,
     labelAs,
     valueAs,
-    shouldUnregister,
-    search_debounce_time = 500,
     isSearchable = false,
+    error,
   } = props;
-  const [value, setValue] = React.useState<Option | null>();
 
   const getOptionLabel = (option: any) =>
     labelAs ? option[labelAs] || '' : option.label || '';
   const getOptionValue = (option: any) =>
     valueAs ? option[valueAs] || '' : option.id || '';
 
-  const asyncSelectProps = React.useMemo(() => {
-    return {
-      noOptionsMessage: () => 'Não há opções',
-      loadingMessage: () => 'Carregando...',
-      className: 'select',
-      isDisabled: disabled,
-      defaultOptions,
-      options,
-      value,
-      setValue,
-      placeholder,
-      onChange: onChange,
-      isSearchable,
-      getOptionLabel,
-      getOptionValue,
-    };
-  }, [
-    disabled,
-    defaultOptions,
-    options,
-    placeholder,
-    onChange,
-    isSearchable,
-    getOptionLabel,
-    getOptionValue,
-  ]);
-
   return (
     <Container>
-      <label className="inline text-sm text-slate-600">
+      <label className="block text-sm text-slate-600 mb-2">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
 
       <SelectContent>
         <div id="content">
-          <SelectComponent {...asyncSelectProps} styles={styles} />
+          <Controller
+            name={name}
+            control={control}
+            defaultValue={defaultValue}
+            render={({ field: { onChange, value } }) => (
+              <SelectComponent
+                {...props}
+                value={
+                  options?.find((option) => option.label === value) || null
+                }
+                onChange={(option) => onChange(option ? option.label : null)}
+                styles={styles}
+                options={options}
+                isDisabled={disabled}
+                placeholder={placeholder}
+                getOptionLabel={getOptionLabel}
+                getOptionValue={getOptionValue}
+                isSearchable={isSearchable}
+                className={`${disabled ? 'opacity-60' : 'opacity-100'}`}
+              />
+            )}
+          />
         </div>
       </SelectContent>
+
+      {!!error?.message && (
+        <span className="block text-sm text-red-500 mt-1">{error.message}</span>
+      )}
     </Container>
   );
 };

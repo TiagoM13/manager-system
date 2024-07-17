@@ -4,7 +4,7 @@ export interface IUser {
   id: number;
   name: string;
   email: string;
-  image_url: string;
+  image_url: string | undefined;
   user_type: UserTypes;
   status: Status;
   created_at: Date;

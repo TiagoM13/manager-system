@@ -5,7 +5,7 @@ import { Avatar } from '../avatar';
 export type UserProfileProps = {
   name: string;
   email: string;
-  imageUrl: string;
+  imageUrl: string | undefined;
   small?: boolean;
   color?: 'light' | 'dark';
 };

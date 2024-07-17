@@ -9,8 +9,8 @@ interface IUserState {
     loadingError: boolean;
   };
   user: {
-    data: IUser | null;
-    loadding: boolean;
+    data?: IUser;
+    loading: boolean;
     loadingError: boolean;
   };
 }
@@ -22,8 +22,8 @@ const defaultState: IUserState = {
     loadingError: false,
   },
   user: {
-    data: null,
-    loadding: false,
+    data: undefined,
+    loading: false,
     loadingError: false,
   },
 };
