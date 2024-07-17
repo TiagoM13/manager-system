@@ -1,7 +1,7 @@
 import React from 'react';
 
 export type AvatarProps = {
-  imageUrl: string;
+  imageUrl: string | undefined;
   name: string;
   small?: boolean;
   color: 'light' | 'dark';

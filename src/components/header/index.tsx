@@ -9,7 +9,6 @@ import { HeaderContainer } from './styles';
 type HeaderProps = {
   title?: string;
   labelAction?: string;
-  children?: React.ReactNode;
   hasActions?: boolean;
   breadcrumb?: React.ReactNode;
   onCancel?: () => void;
