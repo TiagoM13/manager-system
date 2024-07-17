@@ -4,8 +4,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Header, Divider } from '@/components';
 import { FormContainer } from '@/components/form-container';
+import { Status } from '@/enums';
 import { useUser } from '@/hooks';
 import { IUser } from '@/interfaces';
+import { createUser, updateUser } from '@/store/modules/users/actions';
 
 import { StatusForm } from './forms/status-form';
 import UserForm from './forms/user-form';
@@ -24,21 +26,57 @@ const User: React.FC = () => {
     shouldUnregister: false,
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
 
   const handleCancel = React.useCallback(() => {
     navigate('/users');
   }, [navigate]);
 
-  const submit = React.useCallback(async (values: IUser) => {
-    console.log(values);
+  const create = React.useCallback(async (values: IUser) => {
+    return createUser({
+      ...values,
+      status: Status.ACTIVE,
+      image_url: undefined,
+    });
   }, []);
 
-  React.useEffect(() => {
+  const update = React.useCallback(
+    async (values: IUser) => {
+      return updateUser(Number(id), values);
+    },
+    [id],
+  );
+
+  const submit = React.useCallback(
+    async (values: IUser) => {
+      let savedValues: IUser | null | undefined = null;
+
+      if (newUser) {
+        savedValues = await create(values);
+      } else {
+        savedValues = await update(values);
+      }
+
+      if (savedValues) {
+        navigate('/users');
+      }
+    },
+    [create, navigate, newUser, update],
+  );
+
+  const load = React.useCallback(async () => {
     if (!newUser) {
-      refreshUser(Number(id));
+      const loadedUser = await refreshUser(Number(id));
+
+      if (loadedUser) {
+        reset(loadedUser);
+      }
     }
-  }, [id, newUser, refreshUser]);
+  }, [id, newUser, refreshUser, reset]);
+
+  React.useEffect(() => {
+    load();
+  }, [load]);
 
   return (
     <FormProvider {...methods}>

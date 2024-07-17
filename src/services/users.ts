@@ -34,3 +34,15 @@ export const getAllUsersAPI = async ({
 export const getUserAPI = (id: number) => {
   return api.get<IUser>(`/users/${id}`);
 };
+
+export const createUserService = (data: IUser) => {
+  return api.post<IUser>('/users', data);
+};
+
+export const updateUserService = (id: number, data: IUser) => {
+  return api.put<IUser>(`/users/${id}`, data);
+};
+
+export const deleteUserService = (id: number) => {
+  return api.delete<IUser>(`/users/${id}`);
+};

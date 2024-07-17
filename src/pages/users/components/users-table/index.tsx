@@ -1,5 +1,6 @@
 import React from 'react';
 
+import defaultAvatarURL from '@/assets/avatars/avatar-user.jpg';
 import {
   UserProfile,
   Badge,
@@ -96,7 +97,7 @@ const UserRow: React.FC<UserRowProps> = ({ user, onDelete, onEdit }) => {
           small
           color="dark"
           name={user.name}
-          imageUrl={user.image_url}
+          imageUrl={!user.image_url ? defaultAvatarURL : user.image_url}
           email={user.email}
         />
       </T.Cell>

@@ -1,9 +1,11 @@
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
 import { CircleNotch, UploadSimple } from '@phosphor-icons/react';
 
-import avatarImageUrl from '@/assets/avatars/avatar-woman.jpeg';
+import avatarImageUrl from '@/assets/avatars/avatar-user.jpg';
+import { useUser } from '@/hooks';
 
 import { Avatar } from '../avatar';
 
@@ -12,7 +14,8 @@ interface InputFileProps {
   loading?: boolean;
   hasPreview?: boolean;
   control: Control<any>;
-  name: any;
+  name?: any;
+  defaultValue?: any;
   error?: FieldError | undefined;
 }
 
@@ -20,10 +23,15 @@ export const InputFile: React.FC<InputFileProps> = ({
   placeholder = 'Escolher foto',
   loading = false,
   hasPreview = false,
+  defaultValue,
   control,
   error,
   name,
 }) => {
+  const { data } = useUser();
+  const { id } = useParams<{ id: string }>();
+  const newUser = React.useMemo(() => id === 'new', [id]);
+
   const [imageUrl, setImageUrl] = React.useState<string | null>(null);
 
   const handleFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,8 +46,20 @@ export const InputFile: React.FC<InputFileProps> = ({
     setImageUrl(previwURL);
   };
 
-  const defaultAvatar =
-    'https://images.nightcafe.studio/jobs/0Kn1rxnTPMBeajQI9rVD/0Kn1rxnTPMBeajQI9rVD--2--bfk8i_2x.jpg?tr=w-1600,c-at_max';
+  // TODO - REMOVE
+  React.useEffect(() => {
+    if (data && !newUser) {
+      setImageUrl(data?.image_url as string);
+    }
+  }, [data, newUser]);
+
+  const renderImageUrl = React.useMemo(() => {
+    if (loading) return avatarImageUrl;
+    if (imageUrl) return imageUrl;
+    if (imageUrl === undefined) return avatarImageUrl;
+    if (imageUrl === '') return avatarImageUrl;
+    return avatarImageUrl;
+  }, [imageUrl, loading]);
 
   return (
     <div className="flex items-center gap-5 mt-4">
@@ -47,7 +67,7 @@ export const InputFile: React.FC<InputFileProps> = ({
         <Avatar
           className="size-32"
           color="dark"
-          imageUrl={imageUrl || defaultAvatar}
+          imageUrl={renderImageUrl}
           name="avatar"
         />
       )}
@@ -72,12 +92,13 @@ export const InputFile: React.FC<InputFileProps> = ({
       <Controller
         name={name}
         control={control}
+        defaultValue={defaultValue}
         render={({ field: { onChange } }) => (
           <input
-            id="image_url"
             name={name}
+            id="image_url"
             type="file"
-            accept=".png,.jpg"
+            accept="image/*"
             className="hidden"
             disabled={loading}
             onChange={(e) => {

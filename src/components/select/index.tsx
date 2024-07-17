@@ -88,6 +88,7 @@ export const Select = <T, Fields extends FieldValues>(
                 getOptionLabel={getOptionLabel}
                 getOptionValue={getOptionValue}
                 isSearchable={isSearchable}
+                className={`${disabled ? 'opacity-60' : 'opacity-100'}`}
               />
             )}
           />

@@ -16,7 +16,6 @@ const UserForm: React.FC<UserFormProps> = ({ isNew, loading }) => {
     setValue,
     formState: { errors },
   } = useFormContext<IUser>();
-
   const selectOptions = Object.values(UserTypes).map((label, index) => ({
     id: index,
     label,
@@ -26,10 +25,12 @@ const UserForm: React.FC<UserFormProps> = ({ isNew, loading }) => {
     <Card title="Informações do usuário" className="px-6" bordered>
       <div className="space-y-4 mb-20">
         <InputFile
-          hasPreview
           name="image_url"
           control={control}
           placeholder={isNew ? 'Escolher foto' : 'Alterar foto'}
+          error={errors.image_url}
+          loading={loading}
+          hasPreview
         />
 
         <div className="grid grid-cols-2 gap-5">
@@ -43,6 +44,7 @@ const UserForm: React.FC<UserFormProps> = ({ isNew, loading }) => {
             className="text-red-300"
             disabled={loading}
             error={errors.name}
+            required
           />
 
           <Input
@@ -55,6 +57,7 @@ const UserForm: React.FC<UserFormProps> = ({ isNew, loading }) => {
             placeholder="Digite seu e-mail"
             disabled={loading}
             error={errors.email}
+            required
           />
 
           <Select

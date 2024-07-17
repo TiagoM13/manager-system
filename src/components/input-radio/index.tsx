@@ -6,6 +6,7 @@ interface InputRadioProps {
   disabled?: boolean;
   label?: string;
   name?: string;
+  control?: Control<any>;
   options: {
     opt1: string;
     opt2: string;
@@ -17,6 +18,7 @@ export const InputRadio: React.FC<InputRadioProps> = ({
   required = false,
   disabled = false,
   label = 'Selecione uma opção',
+  control,
   options,
   name,
   error,
@@ -30,12 +32,14 @@ export const InputRadio: React.FC<InputRadioProps> = ({
       <div className="flex gap-6">
         <OptionRadio
           name={name}
+          control={control}
           id={options.opt1}
           value={options.opt1}
           disabled={disabled}
         />
         <OptionRadio
           name={name}
+          control={control}
           id={options.opt2}
           value={options.opt2}
           disabled={disabled}
@@ -51,19 +55,27 @@ export const InputRadio: React.FC<InputRadioProps> = ({
 
 type OptionRadioProps = React.ComponentProps<'input'> & {
   control?: Control<any>;
+  defaultValue?: any;
   name?: string;
 };
 
-const OptionRadio = ({ name, control, ...props }: OptionRadioProps) => {
+const OptionRadio = ({
+  name,
+  control,
+  defaultValue,
+  ...props
+}: OptionRadioProps) => {
   return (
     <div className="flex items-center gap-2.5">
       <Controller
         name={name as string}
         control={control}
+        defaultValue={defaultValue}
         render={({ field }) => (
           <input
             {...field}
             {...props}
+            checked={field.value === props.value}
             id={props.id?.toLowerCase()}
             type="radio"
             className="cursor-pointer appearance-none h-[12px] w-[12px] border border-slate-600 rounded-full hover:bg-sky-200 checked:bg-sky-600 checked:hover:bg-sky-500 transition-all ease-in duration-500 disabled:opacity-60"
@@ -73,7 +85,7 @@ const OptionRadio = ({ name, control, ...props }: OptionRadioProps) => {
 
       <label
         htmlFor={props.id?.toLowerCase()}
-        className={`cursor-pointer capitalize text-slate-600 ${props.disabled ? 'opacity-60' : null}`}
+        className={`cursor-pointer capitalize text-slate-600 ${props.disabled ? 'opacity-60' : ''}`}
       >
         {props.value}
       </label>
