@@ -71,7 +71,12 @@ const Users: React.FC = () => {
               onDelete={handleDeleteUser}
             />
           ) : (
-            <UsersCard users={list} />
+            <UsersCard
+              users={list}
+              loading={loading}
+              onEdit={handleEditUser}
+              onDelete={handleDeleteUser}
+            />
           )}
         </Card>
       </div>
