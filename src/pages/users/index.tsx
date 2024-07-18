@@ -3,8 +3,9 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { Card, Divider, Header } from '@/components';
-import { useAllUsers, useQuery, useWindowSize } from '@/hooks';
+import { useAllUsers, useDialog, useQuery, useWindowSize } from '@/hooks';
 import { IUser, IUsersFilters } from '@/interfaces';
+import { deleteUser } from '@/store/modules/users/actions';
 
 import { UsersFilters, UsersTable, UsersCard } from './components';
 import { filterSchema } from './schemas';
@@ -14,6 +15,7 @@ const Users: React.FC = () => {
   const navigate = useNavigate();
   const [, , isMobile] = useWindowSize();
   const [query] = useQuery<IUsersFilters>();
+  const { confirmDialog } = useDialog();
   const { loading, getAllUsers: refreshAllUsers, list } = useAllUsers();
 
   // Hook Form
@@ -30,13 +32,27 @@ const Users: React.FC = () => {
   }, [navigate]);
 
   // delete
-  const handleDeleteUser = React.useCallback(async (id: number) => {
-    // TODO
-    console.log(id);
-  }, []);
+  const handleDelete = React.useCallback(
+    (id: number) => {
+      confirmDialog({
+        header: 'Você esta prestes a excluir!',
+        message: 'Tem certeza de que deseja excluir este usuário?',
+        acceptLabel: 'confirmar',
+        rejectLabel: 'cancelar',
+        accept: async () => {
+          const deletedUser = await deleteUser(id);
+
+          if (deletedUser) {
+            console.log('Usuário deletado com sucesso mue caro! ' + id);
+          }
+        },
+      });
+    },
+    [confirmDialog],
+  );
 
   // edit
-  const handleEditUser = React.useCallback(
+  const handleEdit = React.useCallback(
     async (user: IUser) => {
       navigate(`/users/${user.id}`);
     },
@@ -67,11 +83,16 @@ const Users: React.FC = () => {
             <UsersTable
               users={list}
               loading={loading}
-              onEdit={handleEditUser}
-              onDelete={handleDeleteUser}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
             />
           ) : (
-            <UsersCard users={list} />
+            <UsersCard
+              users={list}
+              loading={loading}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
           )}
         </Card>
       </div>

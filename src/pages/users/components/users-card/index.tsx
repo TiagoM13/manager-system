@@ -12,9 +12,16 @@ import { Card, Container, Text } from './styles';
 type UsersCardProps = {
   users: IUser[];
   loading?: boolean;
+  onEdit: (data: IUser) => void;
+  onDelete: (id: number) => void;
 };
 
-export const UsersCard: React.FC<UsersCardProps> = ({ users }) => {
+export const UsersCard: React.FC<UsersCardProps> = ({
+  users = [],
+  loading = false,
+  onEdit,
+  onDelete,
+}) => {
   const {
     page,
     totalPages,
@@ -29,7 +36,12 @@ export const UsersCard: React.FC<UsersCardProps> = ({ users }) => {
   return (
     <Container>
       {currentPageData.map((user) => (
-        <UserCard key={user.id} user={user} />
+        <UserCard
+          key={user.id}
+          user={user}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
       ))}
 
       <div className="flex items-center justify-between p-4 border-t border-t-slate-400">
@@ -51,7 +63,13 @@ export const UsersCard: React.FC<UsersCardProps> = ({ users }) => {
   );
 };
 
-const UserCard: React.FC<{ user: IUser }> = ({ user }) => {
+interface UserCardProps {
+  user: IUser;
+  onEdit: (data: IUser) => void;
+  onDelete: (id: number) => void;
+}
+
+const UserCard: React.FC<UserCardProps> = ({ user, onEdit, onDelete }) => {
   return (
     <Card>
       <div>
@@ -86,11 +104,13 @@ const UserCard: React.FC<{ user: IUser }> = ({ user }) => {
           label="editar"
           variable="primary"
           icon={<PencilSimple className="size-4" weight="bold" />}
+          onClick={() => onEdit(user)}
         />
         <Button
           label="deletar"
           variable="danger"
           icon={<Trash className="size-4" weight="bold" />}
+          onClick={() => onDelete(user.id)}
         />
       </div>
     </Card>

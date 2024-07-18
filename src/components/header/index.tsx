@@ -18,6 +18,7 @@ type HeaderProps = {
     cancel?: string;
     saved?: string;
   };
+  loading?: boolean;
 };
 
 export const Header: React.FC<HeaderProps> = ({
@@ -29,6 +30,7 @@ export const Header: React.FC<HeaderProps> = ({
   hasRegister = true,
   newRegister,
   buttonLabels,
+  loading = false,
 }) => {
   return (
     <HeaderContainer>
@@ -52,7 +54,11 @@ export const Header: React.FC<HeaderProps> = ({
         )}
 
         {hasActions && (
-          <HeaderActions onCancel={onCancel} buttonLabels={buttonLabels} />
+          <HeaderActions
+            loading={loading}
+            onCancel={onCancel}
+            buttonLabels={buttonLabels}
+          />
         )}
       </div>
     </HeaderContainer>
@@ -62,6 +68,7 @@ export const Header: React.FC<HeaderProps> = ({
 export const HeaderActions: React.FC<HeaderProps> = ({
   onCancel,
   buttonLabels,
+  loading,
 }) => {
   return (
     <>
@@ -79,6 +86,7 @@ export const HeaderActions: React.FC<HeaderProps> = ({
         icon={<Check className="size-5" weight="bold" />}
         className="min-w-[100px]"
         label={buttonLabels?.saved || 'salvar'}
+        disabled={loading}
       />
     </>
   );
