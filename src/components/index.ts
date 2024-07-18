@@ -17,3 +17,5 @@ export * from './initializer-loader';
 export * from './input';
 export * from './input-file';
 export * from './input-radio';
+export * from './dialog';
+export * from './confirm-dialog';

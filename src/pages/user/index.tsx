@@ -16,7 +16,7 @@ import { formSchema } from './schemas';
 const User: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { loading, data, getUser: refreshUser } = useUser();
+  const { loading, getUser: refreshUser } = useUser();
 
   const newUser = React.useMemo(() => id === 'new', [id]);
 
@@ -90,6 +90,7 @@ const User: React.FC = () => {
             buttonLabels={{
               saved: newUser ? 'salvar usuário' : 'atualizar usuário',
             }}
+            loading={loading}
           />
           <Divider />
 

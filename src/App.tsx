@@ -5,9 +5,8 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/pt-br';
 
+import { ConfirmDialog, InitializerLoader } from '@/components';
 import { Router } from '@/routes';
-
-import { InitializerLoader } from './components/initializer-loader';
 
 dayjs.extend(relativeTime);
 dayjs.locale('pt-br');
@@ -27,6 +26,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <ConfirmDialog />
       <Router />
     </BrowserRouter>
   );
