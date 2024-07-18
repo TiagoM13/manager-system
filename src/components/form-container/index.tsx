@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 
 interface FormContainerProps extends React.ComponentProps<'form'> {}
