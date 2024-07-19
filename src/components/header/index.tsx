@@ -1,31 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-import { Check, Plus, X } from '@phosphor-icons/react';
+import { Plus } from '@phosphor-icons/react';
 
 import { Button, TextTitle } from '@/components';
 
-import { BreadcrumbContainer, HeaderContainer } from './styles';
+import { HeaderActions } from './components/actions';
+import { Breadcrumb } from './components/breadcrumb';
+import { HeaderProps } from './interfaces';
 
-type PathItemsProps = {
-  label: string;
-  path?: string;
-};
-
-type HeaderProps = {
-  title?: string;
-  labelAction?: string;
-  hasActions?: boolean;
-  pathItems?: PathItemsProps[];
-  onCancel?: () => void;
-  newRegister?: () => void;
-  hasRegister?: boolean;
-  buttonLabels?: {
-    cancel?: string;
-    saved?: string;
-  };
-  loading?: boolean;
-};
+import { HeaderContainer } from './styles';
 
 export const Header: React.FC<HeaderProps> = ({
   title,
@@ -46,7 +29,6 @@ export const Header: React.FC<HeaderProps> = ({
         {pathItems && <Breadcrumb pathItems={pathItems} />}
       </div>
 
-      {/* content actions */}
       <div className="flex gap-4 items-end">
         {hasRegister && (
           <Button
@@ -67,56 +49,5 @@ export const Header: React.FC<HeaderProps> = ({
         )}
       </div>
     </HeaderContainer>
-  );
-};
-
-export const HeaderActions: React.FC<HeaderProps> = ({
-  onCancel,
-  buttonLabels,
-  loading,
-}) => {
-  return (
-    <>
-      <Button
-        id="cancel"
-        type="button"
-        variable="danger"
-        icon={<X className="size-5" weight="bold" />}
-        label={buttonLabels?.cancel || 'cancelar'}
-        onClick={onCancel}
-      />
-      <Button
-        id="saved"
-        type="submit"
-        icon={<Check className="size-5" weight="bold" />}
-        className="min-w-[100px]"
-        label={buttonLabels?.saved || 'salvar'}
-        disabled={loading}
-      />
-    </>
-  );
-};
-
-export const Breadcrumb: React.FC<HeaderProps> = ({ pathItems }) => {
-  return (
-    <BreadcrumbContainer>
-      {pathItems?.map((item, index) => (
-        <div key={index}>
-          {item.path ? (
-            <>
-              <Link
-                className="hover:text-sky-600 transition-all ease-in-out"
-                to={item.path}
-              >
-                {item.label}
-              </Link>
-              &gt;
-            </>
-          ) : (
-            <span>{item.label}</span>
-          )}
-        </div>
-      ))}
-    </BreadcrumbContainer>
   );
 };

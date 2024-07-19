@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { Card, Divider, Header } from '@/components';
 import { useAllUsers, useDialog, useQuery, useWindowSize } from '@/hooks';
@@ -43,7 +44,7 @@ const Users: React.FC = () => {
           const deletedUser = await deleteUser(id);
 
           if (deletedUser) {
-            console.log('Usuário deletado com sucesso mue caro! ' + id);
+            toast.success('Usuário deletado com sucesso!');
           }
         },
       });
@@ -62,8 +63,7 @@ const Users: React.FC = () => {
   // Effects
   React.useEffect(() => {
     refreshAllUsers(query);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [query, refreshAllUsers]);
 
   return (
     <FormProvider {...methods}>
@@ -77,7 +77,7 @@ const Users: React.FC = () => {
         <Divider />
 
         <Card>
-          <UsersFilters loading={loading} />
+          <UsersFilters />
 
           {!isMobile ? (
             <UsersTable

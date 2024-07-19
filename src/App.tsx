@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -28,6 +30,7 @@ const App = () => {
     <BrowserRouter>
       <ConfirmDialog />
       <Router />
+      <ToastContainer />
     </BrowserRouter>
   );
 };

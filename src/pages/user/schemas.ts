@@ -16,20 +16,20 @@ const schema = z.object({
     .trim()
     .email({ message: 'O email é invalido' })
     .refine((data) => data.trim() !== '', {
-      message: 'O nome é obrigatório',
+      message: 'O email é obrigatório',
     }),
   image_url: z.string().optional(),
   user_type: z
     .string()
     .trim()
     .refine((data) => data.trim() !== '', {
-      message: 'O nome é obrigatório',
+      message: 'Selecione uma opção',
     }),
   status: z
     .string()
     .trim()
     .refine((data) => data.trim() !== '', {
-      message: 'O nome é obrigatório',
+      message: 'Selecione uma opção',
     })
     .optional(),
 });
