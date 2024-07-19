@@ -30,7 +30,7 @@ const App = () => {
     <BrowserRouter>
       <ConfirmDialog />
       <Router />
-      <ToastContainer />
+      <ToastContainer theme="colored" />
     </BrowserRouter>
   );
 };

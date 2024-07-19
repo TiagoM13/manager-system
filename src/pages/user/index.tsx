@@ -1,7 +1,6 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import {
   House,
@@ -15,6 +14,7 @@ import { Status } from '@/enums';
 import { useUser } from '@/hooks';
 import { IUser } from '@/interfaces';
 import { createUser, updateUser } from '@/store/modules/users/actions';
+import { toastSuccess } from '@/utils/toasts';
 
 import { StatusForm } from './forms/status-form';
 import { UserForm } from './forms/user-form';
@@ -98,7 +98,7 @@ const User: React.FC = () => {
       if (savedValues) {
         navigate('/users');
         const title = newUser ? 'criado' : 'atualizado';
-        toast.success(`Usuário ${title} com sucesso!`);
+        toastSuccess(`Usuário ${title} com sucesso!`);
       }
     },
     [create, navigate, newUser, update],

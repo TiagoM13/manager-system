@@ -1,6 +1,6 @@
 import { IUser, IUsersFilters } from '@/interfaces';
 
-import { api, fetchdata } from '.';
+import { api } from '.';
 
 export type IResponseMeta = {
   current_page: number;
@@ -16,11 +16,10 @@ export type IMSResponse<T, PropertyName extends string> = {
   meta?: IResponseMeta;
 } & { [P in PropertyName]: T };
 
-export const getAllUsersAPI = async ({
-  name,
-}: IUsersFilters): Promise<IUser[]> => {
-  let users = await fetchdata('users');
+export const getAllUsersService = async ({ name }: IUsersFilters) => {
+  const allUsers = await api.get<IUser[]>(`/users`);
 
+  let users = allUsers.data;
   if (name) {
     const formatedQuery = name.toLowerCase();
     users = users.filter((user: IUser) =>
@@ -31,7 +30,7 @@ export const getAllUsersAPI = async ({
   return users;
 };
 
-export const getUserAPI = (id: number) => {
+export const getUserService = (id: number) => {
   return api.get<IUser>(`/users/${id}`);
 };
 
