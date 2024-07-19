@@ -16,7 +16,7 @@ import { formSchema } from './schemas';
 const User: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { loading, getUser: refreshUser } = useUser();
+  const { loading, data, getUser: refreshUser } = useUser();
 
   const newUser = React.useMemo(() => id === 'new', [id]);
 
@@ -28,6 +28,34 @@ const User: React.FC = () => {
 
   const { handleSubmit, reset } = methods;
 
+  // Memos
+  const title = React.useMemo(() => {
+    if (newUser) return 'Cadastrar usuário';
+    return 'Atualizar usuário';
+  }, [newUser]);
+
+  const breadcrumbsPathItems = React.useMemo(
+    () => [
+      {
+        label: 'Início',
+        path: '/',
+      },
+      {
+        label: 'Usuários',
+        path: '/users',
+      },
+      {
+        label: newUser
+          ? 'Cadastrar'
+          : loading
+            ? 'Carregando...'
+            : `${data?.name}`,
+      },
+    ],
+    [data?.name, loading, newUser],
+  );
+
+  // Callbacks
   const handleCancel = React.useCallback(() => {
     navigate('/users');
   }, [navigate]);
@@ -83,14 +111,15 @@ const User: React.FC = () => {
       <FormContainer noValidate onSubmit={handleSubmit(submit)}>
         <div className="flex flex-col">
           <Header
-            title={newUser ? 'Cadastrar usuário' : 'Atualizar usuário'}
+            title={title}
+            pathItems={breadcrumbsPathItems}
+            onCancel={handleCancel}
+            loading={loading}
             hasRegister={false}
             hasActions
-            onCancel={handleCancel}
             buttonLabels={{
               saved: newUser ? 'salvar usuário' : 'atualizar usuário',
             }}
-            loading={loading}
           />
           <Divider />
 
