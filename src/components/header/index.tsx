@@ -1,16 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { Check, Plus, X } from '@phosphor-icons/react';
 
 import { Button, TextTitle } from '@/components';
 
-import { HeaderContainer } from './styles';
+import { BreadcrumbContainer, HeaderContainer } from './styles';
+
+type PathItemsProps = {
+  label: string;
+  path?: string;
+};
 
 type HeaderProps = {
   title?: string;
   labelAction?: string;
   hasActions?: boolean;
-  breadcrumb?: React.ReactNode;
+  pathItems?: PathItemsProps[];
   onCancel?: () => void;
   newRegister?: () => void;
   hasRegister?: boolean;
@@ -25,7 +31,7 @@ export const Header: React.FC<HeaderProps> = ({
   title,
   labelAction = 'Cadastrar',
   hasActions = false,
-  breadcrumb,
+  pathItems,
   onCancel,
   hasRegister = true,
   newRegister,
@@ -35,10 +41,9 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <HeaderContainer>
       <div className="flex flex-col">
-        {/* title */}
         <TextTitle>{title}</TextTitle>
-        {/* bradcrumb */}
-        {breadcrumb && breadcrumb}
+
+        {pathItems && <Breadcrumb pathItems={pathItems} />}
       </div>
 
       {/* content actions */}
@@ -89,5 +94,29 @@ export const HeaderActions: React.FC<HeaderProps> = ({
         disabled={loading}
       />
     </>
+  );
+};
+
+export const Breadcrumb: React.FC<HeaderProps> = ({ pathItems }) => {
+  return (
+    <BreadcrumbContainer>
+      {pathItems?.map((item, index) => (
+        <div key={index}>
+          {item.path ? (
+            <>
+              <Link
+                className="hover:text-sky-600 transition-all ease-in-out"
+                to={item.path}
+              >
+                {item.label}
+              </Link>
+              &gt;
+            </>
+          ) : (
+            <span>{item.label}</span>
+          )}
+        </div>
+      ))}
+    </BreadcrumbContainer>
   );
 };
