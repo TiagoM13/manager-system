@@ -10,7 +10,7 @@ interface UserFormProps {
   loading?: boolean;
 }
 
-const UserForm: React.FC<UserFormProps> = ({ isNew, loading }) => {
+export const UserForm: React.FC<UserFormProps> = ({ isNew, loading }) => {
   const {
     control,
     setValue,
@@ -77,5 +77,3 @@ const UserForm: React.FC<UserFormProps> = ({ isNew, loading }) => {
     </Card>
   );
 };
-
-export default UserForm;

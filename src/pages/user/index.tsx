@@ -1,6 +1,13 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import {
+  House,
+  User as UserIcon,
+  Users as UsersIcon,
+} from '@phosphor-icons/react';
 
 import { Header, Divider } from '@/components';
 import { FormContainer } from '@/components/form-container';
@@ -10,7 +17,7 @@ import { IUser } from '@/interfaces';
 import { createUser, updateUser } from '@/store/modules/users/actions';
 
 import { StatusForm } from './forms/status-form';
-import UserForm from './forms/user-form';
+import { UserForm } from './forms/user-form';
 import { formSchema } from './schemas';
 
 const User: React.FC = () => {
@@ -39,10 +46,12 @@ const User: React.FC = () => {
       {
         label: 'Início',
         path: '/',
+        icon: <House className="size-4" />,
       },
       {
         label: 'Usuários',
         path: '/users',
+        icon: <UsersIcon className="size-4" />,
       },
       {
         label: newUser
@@ -50,6 +59,7 @@ const User: React.FC = () => {
           : loading
             ? 'Carregando...'
             : `${data?.name}`,
+        icon: <UserIcon className="size-4" />,
       },
     ],
     [data?.name, loading, newUser],
@@ -87,6 +97,8 @@ const User: React.FC = () => {
 
       if (savedValues) {
         navigate('/users');
+        const title = newUser ? 'criado' : 'atualizado';
+        toast.success(`Usuário ${title} com sucesso!`);
       }
     },
     [create, navigate, newUser, update],

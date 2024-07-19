@@ -3,8 +3,8 @@ import React, { useRef } from 'react';
 import { DotsThreeOutline, PencilSimple, Trash } from '@phosphor-icons/react';
 
 export type ButtonActionsProps = React.ComponentProps<'button'> & {
-  onDelete?: () => void;
-  onEdit?: () => void;
+  onDelete: () => void;
+  onEdit: () => void;
 };
 
 export const ButtonActions: React.FC<ButtonActionsProps> = ({
@@ -56,14 +56,20 @@ export const ButtonActions: React.FC<ButtonActionsProps> = ({
       >
         <div className="py-1">
           <button
-            onClick={onEdit}
+            onClick={() => {
+              setActiveOptions(false);
+              onEdit();
+            }}
             className="flex items-center gap-4 w-full p-2 hover:bg-sky-100"
           >
             <PencilSimple className="size-4 text-sky-600" weight="bold" />
             <span className="text-sm text-sky-600 text-wrap">Editar</span>
           </button>
           <button
-            onClick={onDelete}
+            onClick={() => {
+              setActiveOptions(false);
+              onDelete();
+            }}
             className="flex items-center gap-4 w-full p-2 hover:bg-red-100"
           >
             <Trash className="size-4 text-red-600" weight="bold" />

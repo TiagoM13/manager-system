@@ -16,17 +16,17 @@ export const BreadcrumbContainer = styled.div`
   gap: 8px;
 
   a {
-    margin-right: 10px;
+    display: flex;
+    gap: 8px;
     line-height: 1.25;
     color: var(--slate-600);
+    transition: all 0.5s ease-in-out;
+    border-radius: 10px;
+    padding: 1px 6px;
 
     &:hover {
+      background-color: var(--slate-200);
       color: var(--sky-600);
     }
-  }
-
-  span {
-    line-height: 1.25;
-    color: var(--slate-600);
   }
 `;
