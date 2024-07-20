@@ -98,5 +98,8 @@
       "plugin:storybook/recommended",
       "plugin:storybook/recommended"
     ]
+  },
+  "resolutions": {
+    "strip-ansi": "^6.0.1"
   }
 }
