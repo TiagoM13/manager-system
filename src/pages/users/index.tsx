@@ -1,12 +1,12 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { Card, Divider, Header } from '@/components';
 import { useAllUsers, useDialog, useQuery, useWindowSize } from '@/hooks';
 import { IUser, IUsersFilters } from '@/interfaces';
 import { deleteUser } from '@/store/modules/users/actions';
+import { toastSuccess } from '@/utils/toasts';
 
 import { UsersFilters, UsersTable, UsersCard } from './components';
 import { filterSchema } from './schemas';
@@ -44,7 +44,7 @@ const Users: React.FC = () => {
           const deletedUser = await deleteUser(id);
 
           if (deletedUser) {
-            toast.success('Usuário deletado com sucesso!');
+            toastSuccess('Usuário deletado com sucesso!');
           }
         },
       });

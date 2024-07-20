@@ -2,10 +2,11 @@ import { IUser, IUsersFilters } from '@/interfaces';
 import {
   createUserService,
   deleteUserService,
-  getAllUsersAPI,
-  getUserAPI,
+  getAllUsersService,
+  getUserService,
   updateUserService,
 } from '@/services';
+import { toastError } from '@/utils/toasts';
 
 import { store } from '.';
 
@@ -17,19 +18,22 @@ export const getAllUsers = async (params: IUsersFilters) => {
       s.allUsers.loadingError = false;
     });
 
-    const data = await getAllUsersAPI(params).then((users) => users);
+    const data = await getAllUsersService(params);
 
     setTimeout(() => {
       store.update((s) => {
         s.allUsers.list = data;
         s.allUsers.loading = false;
       });
-    }, 3000);
+    }, 1000);
 
     return data;
   } catch (error) {
     store.update((s) => {
       s.allUsers.loadingError = true;
+      s.allUsers.loading = false;
+
+      toastError('Falha ao carregar a lista de usuários!');
     });
   }
 };
@@ -42,19 +46,22 @@ export const getUser = async (id: number) => {
       s.user.loadingError = false;
     });
 
-    const { data } = await getUserAPI(id);
+    const { data } = await getUserService(id);
 
     setTimeout(() => {
       store.update((s) => {
         s.user.data = data;
         s.user.loading = false;
       });
-    }, 3000);
+    }, 1000);
 
     return data;
   } catch (error) {
     store.update((s) => {
       s.user.loadingError = true;
+      s.user.loading = false;
+
+      toastError('Falha ao tentar obter informações do usuário!');
     });
   }
 };
@@ -78,6 +85,9 @@ export const createUser = async (values: IUser) => {
   } catch (error) {
     store.update((s) => {
       s.user.loadingError = true;
+      s.user.loading = false;
+
+      toastError('Falha ao tentar criar usuário!');
     });
   }
 };
@@ -102,6 +112,9 @@ export const updateUser = async (id: number, values: IUser) => {
   } catch (error) {
     store.update((s) => {
       s.user.loadingError = true;
+      s.user.loading = false;
+
+      toastError('Falha ao tentar atualizar usuário!');
     });
   }
 };
@@ -127,6 +140,9 @@ export const deleteUser = async (id: number) => {
   } catch (error) {
     store.update((s) => {
       s.user.loadingError = true;
+      s.user.loading = false;
+
+      toastError('Falha ao tentar deletar usuário!');
     });
   }
 };
