@@ -8,6 +8,7 @@ const schema = z.object({
     .trim()
     .max(255, { message: 'O máximo de caracteres permitos é 255' })
     .optional(),
+  page: z.string().optional(),
 });
 
 export const filterSchema = zodResolver(schema);
