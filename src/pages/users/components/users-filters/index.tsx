@@ -18,7 +18,7 @@ export const UsersFilters: React.FC<UserFiltersProps> = ({ loading }) => {
   } = useFormContext<IUsersFilters>();
 
   const { getAllUsers: refresh } = useAllUsers();
-  const [query, setQuery] = useQuery<{ name?: string }>();
+  const [query, setQuery] = useQuery<IUsersFilters>();
 
   const handleChangeQuery = React.useCallback(
     (field: 'name', value?: string) => {

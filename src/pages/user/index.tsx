@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import {
   House,
@@ -14,6 +14,7 @@ import { Status } from '@/enums';
 import { useUser } from '@/hooks';
 import { IUser } from '@/interfaces';
 import { createUser, updateUser } from '@/store/modules/users/actions';
+import { backWithQuery } from '@/utils/navigate';
 import { toastSuccess } from '@/utils/toasts';
 
 import { StatusForm } from './forms/status-form';
@@ -21,6 +22,7 @@ import { UserForm } from './forms/user-form';
 import { formSchema } from './schemas';
 
 const User: React.FC = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { loading, data, getUser: refreshUser } = useUser();
@@ -67,8 +69,9 @@ const User: React.FC = () => {
 
   // Callbacks
   const handleCancel = React.useCallback(() => {
-    navigate('/users');
-  }, [navigate]);
+    const from = location.state?.from;
+    backWithQuery(navigate, from, from.pathname);
+  }, [location.state?.from, navigate]);
 
   const create = React.useCallback(async (values: IUser) => {
     return createUser({

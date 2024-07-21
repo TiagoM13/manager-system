@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 type PaginateProps<T> = {
   data: T[];
@@ -14,13 +15,20 @@ type PaginatedData<T> = {
   goToPreviousPage: () => void;
   goToFirstPage: () => void;
   goToLastPage: () => void;
+  setPage: (newPage: number) => void;
 };
 
 export const usePaginate = <T>({
   data,
   itemsPerPage,
 }: PaginateProps<T>): PaginatedData<T> => {
-  const [page, setPage] = React.useState(1);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const queryParams = new URLSearchParams(location.search);
+  const initialPage = Number(queryParams.get('page')) || 1;
+
+  const [page, setPage] = React.useState(initialPage);
 
   const totalItems = data.length;
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -28,20 +36,28 @@ export const usePaginate = <T>({
   const endIndex = startIndex + itemsPerPage;
   const currentPageData = data.slice(startIndex, endIndex);
 
+  const updatePage = (newPage: number) => {
+    queryParams.set('page', String(newPage));
+    navigate(`${location.pathname}?${queryParams.toString()}`, {
+      replace: true,
+    });
+    setPage(newPage);
+  };
+
   const goToNextPage = () => {
-    setPage((prevPage) => Math.min(prevPage + 1, totalPages));
+    updatePage(Math.min(page + 1, totalPages));
   };
 
   const goToPreviousPage = () => {
-    setPage((prevPage) => Math.max(prevPage - 1, 1));
+    updatePage(Math.max(page - 1, 1));
   };
 
   const goToFirstPage = () => {
-    setPage(1);
+    updatePage(1);
   };
 
   const goToLastPage = () => {
-    setPage(totalPages);
+    updatePage(totalPages);
   };
 
   return {
@@ -53,5 +69,6 @@ export const usePaginate = <T>({
     goToPreviousPage,
     goToFirstPage,
     goToLastPage,
+    setPage: updatePage,
   };
 };

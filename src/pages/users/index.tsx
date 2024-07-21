@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Card, Divider, Header } from '@/components';
 import { useAllUsers, useDialog, useQuery, useWindowSize } from '@/hooks';
@@ -14,6 +14,7 @@ import { filterSchema } from './schemas';
 const Users: React.FC = () => {
   // Hooks
   const navigate = useNavigate();
+  const location = useLocation();
   const [, , isMobile] = useWindowSize();
   const [query] = useQuery<IUsersFilters>();
   const { confirmDialog } = useDialog();
@@ -29,8 +30,10 @@ const Users: React.FC = () => {
 
   // Callbacks
   const handleNewRegister = React.useCallback(() => {
-    navigate('/users/new');
-  }, [navigate]);
+    navigate('/users/new', {
+      state: { from: location },
+    });
+  }, [location, navigate]);
 
   // delete
   const handleDelete = React.useCallback(
@@ -55,9 +58,11 @@ const Users: React.FC = () => {
   // edit
   const handleEdit = React.useCallback(
     async (user: IUser) => {
-      navigate(`/users/${user.id}`);
+      navigate(`/users/${user.id}`, {
+        state: { from: location },
+      });
     },
-    [navigate],
+    [location, navigate],
   );
 
   // Effects
