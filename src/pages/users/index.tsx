@@ -6,7 +6,7 @@ import { Card, Divider, Header } from '@/components';
 import { useAllUsers, useDialog, useQuery, useWindowSize } from '@/hooks';
 import { IUser, IUsersFilters } from '@/interfaces';
 import { deleteUser } from '@/store/modules/users/actions';
-import { toastSuccess } from '@/utils/toasts';
+import { toastSuccess } from '@/utils';
 
 import { UsersFilters, UsersTable, UsersCard } from './components';
 import { filterSchema } from './schemas';

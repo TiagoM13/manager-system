@@ -8,14 +8,12 @@ import {
   Users as UsersIcon,
 } from '@phosphor-icons/react';
 
-import { Header, Divider } from '@/components';
-import { FormContainer } from '@/components/form-container';
+import { Header, Divider, FormContainer } from '@/components';
 import { Status } from '@/enums';
 import { useUser } from '@/hooks';
 import { IUser } from '@/interfaces';
 import { createUser, updateUser } from '@/store/modules/users/actions';
-import { backWithQuery } from '@/utils/navigate';
-import { toastSuccess } from '@/utils/toasts';
+import { toastSuccess, backWithQuery } from '@/utils';
 
 import { StatusForm } from './forms/status-form';
 import { UserForm } from './forms/user-form';
