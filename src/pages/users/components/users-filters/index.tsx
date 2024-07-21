@@ -32,13 +32,9 @@ export const UsersFilters: React.FC<UserFiltersProps> = ({ loading }) => {
     [reset, setQuery],
   );
 
-  const handleSubmit = React.useCallback(
-    (values: IUsersFilters) => {
-      setQuery({ ...query });
-      refresh({ ...values });
-    },
-    [refresh, query, setQuery],
-  );
+  const handleSubmit = React.useCallback(() => {
+    refresh({ ...query });
+  }, [query, refresh]);
 
   return (
     <form onSubmit={submit(handleSubmit)} className="w-full">
