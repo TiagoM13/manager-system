@@ -8,7 +8,12 @@ import {
   Users as UsersIcon,
 } from '@phosphor-icons/react';
 
-import { Header, Divider, FormContainer } from '@/components';
+import {
+  Header,
+  Divider,
+  FormContainer,
+  CustomLoadingSkeleton,
+} from '@/components';
 import { Status } from '@/enums';
 import { useUser } from '@/hooks';
 import { IUser } from '@/interfaces';
@@ -52,11 +57,13 @@ const User: React.FC = () => {
         icon: <UsersIcon className="size-4" />,
       },
       {
-        label: newUser
-          ? 'Cadastrar'
-          : loading
-            ? 'Carregando...'
-            : `${data?.name}`,
+        label: newUser ? (
+          'Cadastrar'
+        ) : loading ? (
+          <CustomLoadingSkeleton className="h-5 w-40" />
+        ) : (
+          `${data?.name}`
+        ),
         icon: <UserIcon className="size-4" />,
       },
     ],

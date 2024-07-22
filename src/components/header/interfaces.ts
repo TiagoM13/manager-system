@@ -1,5 +1,7 @@
+import { ReactNode } from 'react';
+
 export type PathItemsProps = {
-  label: string;
+  label: string | ReactNode;
   path?: string;
   icon?: React.ReactNode;
 };
