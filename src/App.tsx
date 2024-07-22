@@ -17,9 +17,11 @@ const App = () => {
   const [ready, setReady] = React.useState(true);
 
   React.useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setReady(false);
     }, 3000);
+
+    return () => clearTimeout(timer);
   }, [ready]);
 
   if (ready) {
