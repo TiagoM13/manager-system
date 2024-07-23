@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useImageLazyLoader } from '@/hooks';
+
 import { CustomLoadingSkeleton } from '../loading-skeleton';
 
 export type AvatarProps = {
@@ -19,9 +21,13 @@ export const Avatar: React.FC<AvatarProps> = ({
   className = '',
   loading = false,
 }) => {
-  if (loading) {
+  const { isLoading, imgSrc } = useImageLazyLoader({
+    imgUrl: imageUrl as string,
+  });
+
+  if (loading || isLoading) {
     return (
-      <div className="relative size-32">
+      <div className={`${className} ${small ? 'size-[45px] ' : 'size-16'}`}>
         <CustomLoadingSkeleton
           baseColor="var(--sky-100)"
           highlightColor="var(--sky-300)"
@@ -41,7 +47,7 @@ export const Avatar: React.FC<AvatarProps> = ({
     >
       <img
         data-testid="image-tag"
-        src={imageUrl}
+        src={imgSrc || ''}
         alt={name}
         className="rounded-full overflow-hidden object-cover w-full h-full"
       />

@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { PencilSimple, Trash } from '@phosphor-icons/react';
-
-import { Badge, Button, Pagination } from '@/components';
+import { CardLoadingSkeleton, Pagination } from '@/components';
 import { usePaginate } from '@/hooks';
 import { IUser } from '@/interfaces';
-import { formatDate, formatDateTime } from '@/utils';
 
-import { Card, Container, Text } from './styles';
+import { UserCard } from '../user-item';
+
+import { Container } from './styles';
 
 type UsersCardProps = {
   users: IUser[];
@@ -34,85 +33,43 @@ export const UsersCard: React.FC<UsersCardProps> = ({
   } = usePaginate({ data: users, itemsPerPage: 10 });
 
   return (
-    <Container>
-      {currentPageData.map((user) => (
-        <UserCard
-          key={user.id}
-          user={user}
-          onEdit={onEdit}
-          onDelete={onDelete}
-        />
-      ))}
+    <>
+      <Container>
+        {loading ? (
+          <>
+            {Array.from({ length: 10 }).map((_, index) => (
+              <CardLoadingSkeleton key={index} />
+            ))}
+          </>
+        ) : (
+          <>
+            {currentPageData.map((user) => (
+              <UserCard
+                key={user.id}
+                user={user}
+                onEdit={onEdit}
+                onDelete={onDelete}
+              />
+            ))}
+          </>
+        )}
 
-      <div className="flex items-center justify-between p-4 border-t border-t-slate-400">
-        <Pagination.Label
-          currentPageData={currentPageData}
-          totalItems={totalItems}
-          paginationLabel={{ single: 'usuário', several: 'usuários' }}
-        />
-        <Pagination.Actions
-          page={page}
-          totalPages={totalPages}
-          goToNextPage={goToNextPage}
-          goToPreviousPage={goToPreviousPage}
-          goToFirstPage={goToFirstPage}
-          goToLastPage={goToLastPage}
-        />
-      </div>
-    </Container>
-  );
-};
-
-interface UserCardProps {
-  user: IUser;
-  onEdit: (data: IUser) => void;
-  onDelete: (id: number) => void;
-}
-
-const UserCard: React.FC<UserCardProps> = ({ user, onEdit, onDelete }) => {
-  return (
-    <Card>
-      <div>
-        <Text>
-          <strong>Nome:</strong>
-          <span>{user.name}</span>
-        </Text>
-        <Text>
-          <strong>Email:</strong>
-          <span>{user.email}</span>
-        </Text>
-        <Text>
-          <strong>Tipo de usuário:</strong>
-          <Badge type={user.user_type} />
-        </Text>
-        <Text>
-          <strong>Data de registro:</strong>
-          <span>{formatDate(user.created_at)}</span>
-        </Text>
-        <Text>
-          <strong>Status:</strong>
-          <Badge type={user.status} />
-        </Text>
-        <Text>
-          <strong>Último acesso:</strong>
-          <span>{formatDateTime(user.last_access)}</span>
-        </Text>
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <Button
-          label="editar"
-          variable="primary"
-          icon={<PencilSimple className="size-4" weight="bold" />}
-          onClick={() => onEdit(user)}
-        />
-        <Button
-          label="deletar"
-          variable="danger"
-          icon={<Trash className="size-4" weight="bold" />}
-          onClick={() => onDelete(user.id)}
-        />
-      </div>
-    </Card>
+        <div className="flex items-center justify-between p-4 border-t border-t-slate-400">
+          <Pagination.Label
+            currentPageData={currentPageData}
+            totalItems={totalItems}
+            paginationLabel={{ single: 'usuário', several: 'usuários' }}
+          />
+          <Pagination.Actions
+            page={page}
+            totalPages={totalPages}
+            goToNextPage={goToNextPage}
+            goToPreviousPage={goToPreviousPage}
+            goToFirstPage={goToFirstPage}
+            goToLastPage={goToLastPage}
+          />
+        </div>
+      </Container>
+    </>
   );
 };
