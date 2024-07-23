@@ -9,7 +9,7 @@ type LoadingSkeletonProps = {
   highlightColor?: string;
 };
 
-export const LoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
+export const ListLoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
   count = 10,
   className = '',
   baseColor = 'var(--sky-100)',

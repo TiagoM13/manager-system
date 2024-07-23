@@ -7,7 +7,7 @@ import {
   Table as T,
   Pagination,
   ButtonActions,
-  LoadingSkeleton,
+  ListLoadingSkeleton,
 } from '@/components';
 import { usePaginate } from '@/hooks';
 import { IUser } from '@/interfaces';
@@ -40,7 +40,7 @@ export const UsersTable: React.FC<UserTableProps> = ({
   return (
     <>
       {loading ? (
-        <LoadingSkeleton />
+        <ListLoadingSkeleton />
       ) : (
         <T.Container>
           <thead>
