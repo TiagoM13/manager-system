@@ -1,11 +1,22 @@
 import React from 'react';
 
 import { user } from '@/__mocks__';
+import * as hooksModule from '@/hooks';
 import { render } from '@testing-library/react';
 
 import { UserProfile } from '.';
 
+jest.mock('@/hooks');
+const useImageLazyLoaderSpy = jest.spyOn(hooksModule, 'useImageLazyLoader');
+
 describe('<UserProfile />', () => {
+  beforeEach(() => {
+    useImageLazyLoaderSpy.mockReturnValue({
+      isLoading: false,
+      imgSrc: user.image_url as string,
+    });
+  });
+
   test('should render correctly component', () => {
     const { getByText, getByTestId } = render(
       <UserProfile

@@ -1,11 +1,22 @@
 import React from 'react';
 
 import { user } from '@/__mocks__';
+import * as hooksModule from '@/hooks';
 import { render, screen } from '@testing-library/react';
 
 import { Avatar } from '.';
 
+jest.mock('@/hooks');
+const useImageLazyLoaderSpy = jest.spyOn(hooksModule, 'useImageLazyLoader');
+
 describe('<Avatar />', () => {
+  beforeEach(() => {
+    useImageLazyLoaderSpy.mockReturnValue({
+      isLoading: false,
+      imgSrc: user.image_url as string,
+    });
+  });
+
   it('should render correctly component', () => {
     render(<Avatar color="dark" name={user.name} imageUrl={user.image_url} />);
 
