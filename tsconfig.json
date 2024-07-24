@@ -1,15 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2020"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -20,13 +24,15 @@
       "@/*": ["./src/*"]
     }
   },
-  "exclude": ["node_modules", "**/*.tests.tsx"],
+  "exclude": ["node_modules"],
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
     "./.eslintrc.*",
     "./vite.config.ts",
-    "./jest/setup.ts"
+    "./jest/setup.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ],
   "references": [
     {

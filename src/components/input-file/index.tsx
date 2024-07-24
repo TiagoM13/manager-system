@@ -54,12 +54,11 @@ export const InputFile: React.FC<InputFileProps> = ({
   }, [data, newUser]);
 
   const renderImageUrl = React.useMemo(() => {
-    if (loading) return avatarImageUrl;
     if (imageUrl) return imageUrl;
     if (imageUrl === undefined) return avatarImageUrl;
     if (imageUrl === '') return avatarImageUrl;
     return avatarImageUrl;
-  }, [imageUrl, loading]);
+  }, [imageUrl]);
 
   return (
     <div className="flex items-center gap-5 mt-4">
@@ -69,6 +68,7 @@ export const InputFile: React.FC<InputFileProps> = ({
           color="dark"
           imageUrl={renderImageUrl}
           name="avatar"
+          loading={loading}
         />
       )}
 

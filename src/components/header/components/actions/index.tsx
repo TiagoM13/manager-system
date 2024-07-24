@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { X, Check } from '@phosphor-icons/react';
+import { X, Check, CircleNotch } from '@phosphor-icons/react';
 
 import { Button } from '@/components/button';
 
@@ -11,6 +11,12 @@ export const HeaderActions: React.FC<HeaderProps> = ({
   buttonLabels,
   loading,
 }) => {
+  const icon = loading ? (
+    <CircleNotch weight="bold" color="white" className="size-5 animate-spin" />
+  ) : (
+    <Check className="size-5" weight="bold" />
+  );
+
   return (
     <>
       <Button
@@ -24,7 +30,7 @@ export const HeaderActions: React.FC<HeaderProps> = ({
       <Button
         id="saved"
         type="submit"
-        icon={<Check className="size-5" weight="bold" />}
+        icon={icon}
         className="min-w-[100px]"
         label={buttonLabels?.saved || 'salvar'}
         disabled={loading}

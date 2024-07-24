@@ -2,8 +2,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { InputSearch } from '@/components';
-import { useQuery } from '@/hooks/query';
-import { useAllUsers } from '@/hooks/users';
+import { useAllUsers, useQuery } from '@/hooks';
 import { IUsersFilters } from '@/interfaces';
 
 type UserFiltersProps = {

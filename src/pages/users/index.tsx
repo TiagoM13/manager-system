@@ -3,10 +3,15 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Card, Divider, Header } from '@/components';
-import { useAllUsers, useDialog, useQuery, useWindowSize } from '@/hooks';
+import {
+  useAllUsers,
+  useUser,
+  useDialog,
+  useQuery,
+  useWindowSize,
+} from '@/hooks';
 import { IUser, IUsersFilters } from '@/interfaces';
-import { deleteUser } from '@/store/modules/users/actions';
-import { toastSuccess } from '@/utils/toasts';
+import { toastSuccess } from '@/utils';
 
 import { UsersFilters, UsersTable, UsersCard } from './components';
 import { filterSchema } from './schemas';
@@ -18,7 +23,8 @@ const Users: React.FC = () => {
   const [, , isMobile] = useWindowSize();
   const [query] = useQuery<IUsersFilters>();
   const { confirmDialog } = useDialog();
-  const { loading, getAllUsers: refreshAllUsers, list } = useAllUsers();
+  const { deleteUser } = useUser();
+  const { loading, getAllUsers, list } = useAllUsers();
 
   // Hook Form
   const methods = useForm({
@@ -52,7 +58,7 @@ const Users: React.FC = () => {
         },
       });
     },
-    [confirmDialog],
+    [confirmDialog, deleteUser],
   );
 
   // edit
@@ -67,8 +73,8 @@ const Users: React.FC = () => {
 
   // Effects
   React.useEffect(() => {
-    refreshAllUsers(query);
-  }, [query, refreshAllUsers]);
+    getAllUsers(query);
+  }, [query, getAllUsers]);
 
   return (
     <FormProvider {...methods}>

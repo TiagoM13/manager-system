@@ -8,24 +8,25 @@ import {
   Users as UsersIcon,
 } from '@phosphor-icons/react';
 
-import { Header, Divider } from '@/components';
-import { FormContainer } from '@/components/form-container';
+import {
+  Header,
+  Divider,
+  FormContainer,
+  CustomLoadingSkeleton,
+} from '@/components';
 import { Status } from '@/enums';
 import { useUser } from '@/hooks';
 import { IUser } from '@/interfaces';
-import { createUser, updateUser } from '@/store/modules/users/actions';
-import { backWithQuery } from '@/utils/navigate';
-import { toastSuccess } from '@/utils/toasts';
+import { toastSuccess, backWithQuery } from '@/utils';
 
-import { StatusForm } from './forms/status-form';
-import { UserForm } from './forms/user-form';
+import { StatusForm, UserForm } from './forms';
 import { formSchema } from './schemas';
 
 const User: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { loading, data, getUser: refreshUser } = useUser();
+  const { loading, data, getUser, createUser, updateUser } = useUser();
 
   const newUser = React.useMemo(() => id === 'new', [id]);
 
@@ -56,11 +57,13 @@ const User: React.FC = () => {
         icon: <UsersIcon className="size-4" />,
       },
       {
-        label: newUser
-          ? 'Cadastrar'
-          : loading
-            ? 'Carregando...'
-            : `${data?.name}`,
+        label: newUser ? (
+          'Cadastrar'
+        ) : loading ? (
+          <CustomLoadingSkeleton className="h-5 w-40" />
+        ) : (
+          `${data?.name}`
+        ),
         icon: <UserIcon className="size-4" />,
       },
     ],
@@ -73,19 +76,22 @@ const User: React.FC = () => {
     backWithQuery(navigate, from, from.pathname);
   }, [location.state?.from, navigate]);
 
-  const create = React.useCallback(async (values: IUser) => {
-    return createUser({
-      ...values,
-      status: Status.ACTIVE,
-      image_url: undefined,
-    });
-  }, []);
+  const create = React.useCallback(
+    async (values: IUser) => {
+      return createUser({
+        ...values,
+        status: Status.ACTIVE,
+        image_url: undefined,
+      });
+    },
+    [createUser],
+  );
 
   const update = React.useCallback(
     async (values: IUser) => {
       return updateUser(Number(id), values);
     },
-    [id],
+    [id, updateUser],
   );
 
   const submit = React.useCallback(
@@ -109,13 +115,13 @@ const User: React.FC = () => {
 
   const load = React.useCallback(async () => {
     if (!newUser) {
-      const loadedUser = await refreshUser(Number(id));
+      const loadedUser = await getUser(Number(id));
 
       if (loadedUser) {
         reset(loadedUser);
       }
     }
-  }, [id, newUser, refreshUser, reset]);
+  }, [id, newUser, getUser, reset]);
 
   React.useEffect(() => {
     load();

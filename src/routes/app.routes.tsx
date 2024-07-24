@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { AppWrapper, InitializerLoader } from '@/components';
 
@@ -14,6 +14,7 @@ export const Router: React.FC = () => {
     <AppWrapper>
       <React.Suspense fallback={<InitializerLoader />}>
         <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/users" element={<Users />} />
