@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import { Icon } from '@phosphor-icons/react';
 
-import { useMenu } from '@/hooks';
+import { useMenu } from '@/store';
 
 type MenuItemProps = {
   title: string;

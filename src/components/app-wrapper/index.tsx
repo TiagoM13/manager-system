@@ -2,7 +2,8 @@ import React from 'react';
 
 import { ListDashes, X } from '@phosphor-icons/react';
 
-import { useMenu, useWindowSize } from '@/hooks';
+import { useWindowSize } from '@/hooks';
+import { useMenu } from '@/store';
 
 import { SideBar } from './components/sidebar';
 import { ToggleButton } from './components/toggle-button';

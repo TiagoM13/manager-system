@@ -1,14 +1,14 @@
-import { store } from '.';
+import { useMenu } from '.';
 
-const toggleMenu = (show?: boolean) =>
-  store.update((state) => {
-    state.showMenu = typeof show !== 'undefined' ? show : !state.showMenu;
-  });
+export const toggleMenu = (show?: boolean) => {
+  useMenu.setState((state) => ({
+    showMenu: typeof show !== 'undefined' ? show : !state.showMenu,
+  }));
+};
 
-const toggleSideBar = (show?: boolean) =>
-  store.update((state) => {
-    state.showingActionBar =
-      typeof show !== 'undefined' ? show : !state.showingActionBar;
-  });
-
-export { toggleMenu, toggleSideBar };
+export const toggleSideBar = (show?: boolean) => {
+  useMenu.setState((state) => ({
+    showingActionBar:
+      typeof show !== 'undefined' ? show : !state.showingActionBar,
+  }));
+};
