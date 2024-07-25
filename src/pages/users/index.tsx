@@ -3,15 +3,17 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Card, Divider, Header } from '@/components';
-import {
-  useAllUsers,
-  useUser,
-  useDialog,
-  useQuery,
-  useWindowSize,
-} from '@/hooks';
+import { useQuery, useWindowSize } from '@/hooks';
+import { useDebounce } from '@/hooks/debounce';
 import { IUser, IUsersFilters } from '@/interfaces';
-import { toastSuccess } from '@/utils';
+import { deleteUserService, getAllUsersService } from '@/services';
+import { useDialog } from '@/store';
+import { toastError, toastSuccess } from '@/utils';
+import {
+  useMutation,
+  useQueryClient,
+  useQuery as useQueryAllUsers,
+} from '@tanstack/react-query';
 
 import { UsersFilters, UsersTable, UsersCard } from './components';
 import { filterSchema } from './schemas';
@@ -23,8 +25,29 @@ const Users: React.FC = () => {
   const [, , isMobile] = useWindowSize();
   const [query] = useQuery<IUsersFilters>();
   const { confirmDialog } = useDialog();
-  const { deleteUser } = useUser();
-  const { loading, getAllUsers, list } = useAllUsers();
+
+  // query users data
+  const debouncedQuery = useDebounce(query.name || '', 500);
+  const queryClient = useQueryClient();
+  const {
+    data: users,
+    isLoading,
+    isFetching,
+  } = useQueryAllUsers({
+    queryKey: ['users', debouncedQuery],
+    queryFn: () => getAllUsersService({ name: debouncedQuery }),
+    enabled: !!debouncedQuery || !query.name, // Run query if debouncedQuery is not empty or query.name is empty
+  });
+  const { mutateAsync: deleteUserFn } = useMutation({
+    mutationFn: deleteUserService,
+    onSuccess: () => {
+      toastSuccess('Usuário deletado com sucesso!');
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+    onError: () => {
+      toastError('Erro ao deletar o usuário');
+    },
+  });
 
   // Hook Form
   const methods = useForm({
@@ -33,6 +56,11 @@ const Users: React.FC = () => {
     resolver: filterSchema,
     shouldUnregister: false,
   });
+
+  const loading = React.useMemo(
+    () => isLoading || isFetching,
+    [isFetching, isLoading],
+  );
 
   // Callbacks
   const handleNewRegister = React.useCallback(() => {
@@ -49,16 +77,10 @@ const Users: React.FC = () => {
         message: 'Tem certeza de que deseja excluir este usuário?',
         acceptLabel: 'confirmar',
         rejectLabel: 'cancelar',
-        accept: async () => {
-          const deletedUser = await deleteUser(id);
-
-          if (deletedUser) {
-            toastSuccess('Usuário deletado com sucesso!');
-          }
-        },
+        accept: async () => await deleteUserFn(id),
       });
     },
-    [confirmDialog, deleteUser],
+    [confirmDialog, deleteUserFn],
   );
 
   // edit
@@ -70,11 +92,6 @@ const Users: React.FC = () => {
     },
     [location, navigate],
   );
-
-  // Effects
-  React.useEffect(() => {
-    getAllUsers(query);
-  }, [query, getAllUsers]);
 
   return (
     <FormProvider {...methods}>
@@ -92,14 +109,14 @@ const Users: React.FC = () => {
 
           {!isMobile ? (
             <UsersTable
-              users={list}
+              users={users}
               loading={loading}
               onEdit={handleEdit}
               onDelete={handleDelete}
             />
           ) : (
             <UsersCard
-              users={list}
+              users={users || []}
               loading={loading}
               onEdit={handleEdit}
               onDelete={handleDelete}

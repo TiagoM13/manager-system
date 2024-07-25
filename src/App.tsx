@@ -9,6 +9,8 @@ import 'dayjs/locale/pt-br';
 
 import { ConfirmDialog, InitializerLoader } from '@/components';
 import { Router } from '@/routes';
+import { queryClient } from '@/services';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 dayjs.extend(relativeTime);
 dayjs.locale('pt-br');
@@ -29,11 +31,13 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
-      <ConfirmDialog />
-      <Router />
-      <ToastContainer theme="colored" />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <ConfirmDialog />
+        <Router />
+        <ToastContainer theme="colored" />
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 

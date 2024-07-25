@@ -27,11 +27,17 @@ export const getAllUsersService = async ({ name }: IUsersFilters) => {
     );
   }
 
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   return users;
 };
 
-export const getUserService = (id: number) => {
-  return api.get<IUser>(`/users/${id}`);
+export const getUserService = async (id: number) => {
+  const { data } = await api.get<IUser>(`/users/${id}`);
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  return data;
 };
 
 export const createUserService = (data: IUser) => {
