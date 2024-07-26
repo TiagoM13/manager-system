@@ -1,12 +1,10 @@
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
 
 import { CircleNotch, UploadSimple } from '@phosphor-icons/react';
 
 import avatarImageUrl from '@/assets/avatars/avatar-user.jpg';
-import { getUserService } from '@/services';
-import { useQuery } from '@tanstack/react-query';
+import { useImageUrl } from '@/store';
 
 import { Avatar } from '../avatar';
 
@@ -29,16 +27,7 @@ export const InputFile: React.FC<InputFileProps> = ({
   error,
   name,
 }) => {
-  const { id } = useParams<{ id: string }>();
-  const newUser = React.useMemo(() => id === 'new', [id]);
-
-  const { data: user } = useQuery({
-    queryKey: ['user'],
-    queryFn: async () => await getUserService(Number(id)),
-    enabled: !newUser,
-  });
-
-  const [imageUrl, setImageUrl] = React.useState<string | null>(null);
+  const { imageUrl, setImageUrl } = useImageUrl();
 
   const handleFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -51,12 +40,6 @@ export const InputFile: React.FC<InputFileProps> = ({
 
     setImageUrl(previwURL);
   };
-
-  React.useEffect(() => {
-    if (user && !newUser) {
-      setImageUrl(user?.image_url as string);
-    }
-  }, [user, newUser]);
 
   const renderImageUrl = React.useMemo(() => {
     if (imageUrl) return imageUrl;

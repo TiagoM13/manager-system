@@ -21,6 +21,7 @@ import {
   getUserService,
   updateUserService,
 } from '@/services';
+import { useImageUrl } from '@/store';
 import { toastSuccess, backWithQuery } from '@/utils';
 import {
   useMutation,
@@ -34,6 +35,7 @@ import { formSchema } from './schemas';
 const User: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { setImageUrl } = useImageUrl();
   const { id } = useParams<{ id: string }>();
 
   const newUser = React.useMemo(() => id === 'new', [id]);
@@ -49,19 +51,19 @@ const User: React.FC = () => {
     enabled: !newUser,
   });
   const { mutateAsync: createUser } = useMutation({
-    mutationFn: (newUser: IUser) =>
-      createUserService({
+    mutationFn: async (newUser: IUser) =>
+      await createUserService({
         ...newUser,
         status: Status.ACTIVE,
-        image_url:
-          'https://conteudo.imguol.com.br/c/parceiros/c0/2022/07/01/mia-khalifa-foto-reproducao-1656728744536_v2_900x506.png',
+        image_url: undefined,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
   const { mutateAsync: updateUser } = useMutation({
-    mutationFn: (values: IUser) => updateUserService(Number(id), values),
+    mutationFn: async (values: IUser) =>
+      await updateUserService(Number(id), values),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
@@ -142,10 +144,12 @@ const User: React.FC = () => {
   React.useEffect(() => {
     if (newUser || loading) {
       reset();
+      setImageUrl(undefined);
     } else if (user) {
       reset(user);
+      setImageUrl(user.image_url);
     }
-  }, [loading, newUser, reset, user]);
+  }, [loading, newUser, reset, setImageUrl, user]);
 
   return (
     <FormProvider {...methods}>

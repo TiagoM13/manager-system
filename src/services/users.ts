@@ -48,6 +48,6 @@ export const updateUserService = (id: number, data: IUser) => {
   return api.put<IUser>(`/users/${id}`, data);
 };
 
-export const deleteUserService = (id: number) => {
-  return api.delete<IUser>(`/users/${id}`);
+export const deleteUserService = async (id: number) => {
+  return await api.delete<IUser>(`/users/${id}`);
 };
