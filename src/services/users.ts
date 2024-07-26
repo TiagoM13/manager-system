@@ -27,11 +27,17 @@ export const getAllUsersService = async ({ name }: IUsersFilters) => {
     );
   }
 
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   return users;
 };
 
-export const getUserService = (id: number) => {
-  return api.get<IUser>(`/users/${id}`);
+export const getUserService = async (id: number) => {
+  const { data } = await api.get<IUser>(`/users/${id}`);
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  return data;
 };
 
 export const createUserService = (data: IUser) => {
@@ -42,6 +48,6 @@ export const updateUserService = (id: number, data: IUser) => {
   return api.put<IUser>(`/users/${id}`, data);
 };
 
-export const deleteUserService = (id: number) => {
-  return api.delete<IUser>(`/users/${id}`);
+export const deleteUserService = async (id: number) => {
+  return await api.delete<IUser>(`/users/${id}`);
 };

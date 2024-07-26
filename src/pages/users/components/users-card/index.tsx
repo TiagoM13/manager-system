@@ -9,7 +9,7 @@ import { UserCard } from '../user-item';
 import { Container } from './styles';
 
 type UsersCardProps = {
-  users: IUser[];
+  users: IUser[] | undefined;
   loading?: boolean;
   onEdit: (data: IUser) => void;
   onDelete: (id: number) => void;

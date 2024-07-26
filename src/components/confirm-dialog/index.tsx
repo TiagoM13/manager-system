@@ -2,16 +2,16 @@ import React from 'react';
 
 import { Trash, WarningCircle, X } from '@phosphor-icons/react';
 
-import { useDialog } from '@/hooks';
+import { useDialog } from '@/store';
 
 import { Button } from '../button';
 import { Dialog } from '../dialog';
 
 export const ConfirmDialog: React.FC = () => {
-  const { isOpen, closeModal, config } = useDialog();
+  const { isOpenDialog: isOpen, closeDialog, config } = useDialog();
 
   return (
-    <Dialog isOpen={isOpen} onClose={closeModal}>
+    <Dialog isOpen={isOpen} onClose={closeDialog}>
       <div className="flex flex-col items-center w-full">
         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-500/10">
           <WarningCircle className="size-10 text-red-400" weight="regular" />
@@ -29,7 +29,7 @@ export const ConfirmDialog: React.FC = () => {
           label={config?.rejectLabel || 'Não'}
           variable="secondary"
           icon={<X className="size-4" weight="bold" />}
-          onClick={closeModal}
+          onClick={closeDialog}
           className="w-full"
         />
         <Button
@@ -38,7 +38,7 @@ export const ConfirmDialog: React.FC = () => {
           icon={<Trash className="size-4" weight="bold" />}
           onClick={() => {
             config?.accept();
-            closeModal();
+            closeDialog();
           }}
           className="w-full"
         />

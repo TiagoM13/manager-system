@@ -15,9 +15,19 @@ import {
   CustomLoadingSkeleton,
 } from '@/components';
 import { Status } from '@/enums';
-import { useUser } from '@/hooks';
 import { IUser } from '@/interfaces';
+import {
+  createUserService,
+  getUserService,
+  updateUserService,
+} from '@/services';
+import { useImageUrl } from '@/store';
 import { toastSuccess, backWithQuery } from '@/utils';
+import {
+  useMutation,
+  useQueryClient,
+  useQuery as useQueryUser,
+} from '@tanstack/react-query';
 
 import { StatusForm, UserForm } from './forms';
 import { formSchema } from './schemas';
@@ -25,10 +35,39 @@ import { formSchema } from './schemas';
 const User: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { setImageUrl } = useImageUrl();
   const { id } = useParams<{ id: string }>();
-  const { loading, data, getUser, createUser, updateUser } = useUser();
 
   const newUser = React.useMemo(() => id === 'new', [id]);
+
+  const queryClient = useQueryClient();
+  const {
+    data: user,
+    isLoading,
+    isFetching,
+  } = useQueryUser({
+    queryKey: ['user'],
+    queryFn: async () => await getUserService(Number(id)),
+    enabled: !newUser,
+  });
+  const { mutateAsync: createUser } = useMutation({
+    mutationFn: async (newUser: IUser) =>
+      await createUserService({
+        ...newUser,
+        status: Status.ACTIVE,
+        image_url: undefined,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
+  const { mutateAsync: updateUser } = useMutation({
+    mutationFn: async (values: IUser) =>
+      await updateUserService(Number(id), values),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
 
   // Hook Form
   const methods = useForm<IUser>({
@@ -39,6 +78,11 @@ const User: React.FC = () => {
   const { handleSubmit, reset } = methods;
 
   // Memos
+  const loading = React.useMemo(
+    () => isLoading || isFetching,
+    [isFetching, isLoading],
+  );
+
   const title = React.useMemo(() => {
     if (newUser) return 'Cadastrar usuário';
     return 'Atualizar usuário';
@@ -60,14 +104,14 @@ const User: React.FC = () => {
         label: newUser ? (
           'Cadastrar'
         ) : loading ? (
-          <CustomLoadingSkeleton className="h-5 w-40" />
+          <CustomLoadingSkeleton className="h-5 w-40 rounded-lg" />
         ) : (
-          `${data?.name}`
+          `${user?.name}`
         ),
         icon: <UserIcon className="size-4" />,
       },
     ],
-    [data?.name, loading, newUser],
+    [loading, newUser, user?.name],
   );
 
   // Callbacks
@@ -76,56 +120,36 @@ const User: React.FC = () => {
     backWithQuery(navigate, from, from.pathname);
   }, [location.state?.from, navigate]);
 
-  const create = React.useCallback(
-    async (values: IUser) => {
-      return createUser({
-        ...values,
-        status: Status.ACTIVE,
-        image_url: undefined,
-      });
-    },
-    [createUser],
-  );
-
-  const update = React.useCallback(
-    async (values: IUser) => {
-      return updateUser(Number(id), values);
-    },
-    [id, updateUser],
-  );
-
   const submit = React.useCallback(
     async (values: IUser) => {
-      let savedValues: IUser | null | undefined = null;
-
       if (newUser) {
-        savedValues = await create(values);
+        createUser(values, {
+          onSuccess: () => {
+            toastSuccess('Usuário criado com sucesso!');
+            navigate('/users');
+          },
+        });
       } else {
-        savedValues = await update(values);
-      }
-
-      if (savedValues) {
-        navigate('/users');
-        const title = newUser ? 'criado' : 'atualizado';
-        toastSuccess(`Usuário ${title} com sucesso!`);
+        updateUser(values, {
+          onSuccess: () => {
+            toastSuccess('Usuário atualizado com sucesso!');
+            navigate('/users');
+          },
+        });
       }
     },
-    [create, navigate, newUser, update],
+    [createUser, navigate, newUser, updateUser],
   );
 
-  const load = React.useCallback(async () => {
-    if (!newUser) {
-      const loadedUser = await getUser(Number(id));
-
-      if (loadedUser) {
-        reset(loadedUser);
-      }
-    }
-  }, [id, newUser, getUser, reset]);
-
   React.useEffect(() => {
-    load();
-  }, [load]);
+    if (newUser || loading) {
+      reset();
+      setImageUrl(undefined);
+    } else if (user) {
+      reset(user);
+      setImageUrl(user.image_url);
+    }
+  }, [loading, newUser, reset, setImageUrl, user]);
 
   return (
     <FormProvider {...methods}>

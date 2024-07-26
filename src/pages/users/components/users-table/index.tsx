@@ -7,7 +7,7 @@ import { IUser } from '@/interfaces';
 import { UserRow } from '../user-item';
 
 type UserTableProps = {
-  users: IUser[];
+  users: IUser[] | undefined;
   loading?: boolean;
   onEdit: (data: IUser) => void;
   onDelete: (id: number) => void;

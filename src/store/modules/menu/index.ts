@@ -1,17 +1,25 @@
-import { Store } from 'pullstate';
+import { create } from 'zustand';
+
+import { toggleMenu, toggleSideBar } from './actions';
 
 interface IMenuState {
   showMenu: boolean;
   showingActionBar: boolean;
+  toggleMenu: (show?: boolean) => void;
+  toggleSideBar: (show?: boolean) => void;
+  clean: () => void;
 }
 
-const defaultState: IMenuState = {
+export const useMenu = create<IMenuState>((set) => ({
   showMenu: false,
   showingActionBar: false,
-};
+  toggleMenu: (show) => toggleMenu(show),
+  toggleSideBar: (show) => toggleSideBar(show),
+  clean: () =>
+    set({
+      showMenu: false,
+      showingActionBar: false,
+    }),
+}));
 
-export const store = new Store(defaultState);
-
-export const clean = () => store.replace(defaultState);
-
-export default { store, clean, key: '@menu' };
+export default { useMenu };
