@@ -15,7 +15,7 @@ interface InputProps<T extends FieldValues>
   defaultValue?: any;
   control?: Control<T>;
   name: FieldPath<T>;
-  error: FieldError | undefined;
+  error?: FieldError | undefined;
 }
 
 export const Input = <T extends FieldValues>({
