@@ -1,38 +1,21 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useRoutes,
-} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import BgLogin from '@/assets/img/background-login.jpg';
 import { FormContainer } from '@/components';
+import { IRecoverPasswordData, ISignInData } from '@/interfaces';
+import { forgotPasswordService } from '@/services';
+import { signIn } from '@/store/modules/auth/actions';
 import { toastSuccess } from '@/utils';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { ForgotPasswod } from './components/forgot-pass';
 import { SignIn } from './components/sign-in';
 import { FormAuthProps } from './interfaces';
 import { forgotPasswordSchema, loginSchema } from './schemas';
 
-const authRoutes = [
-  {
-    path: '/',
-    element: <Navigate to="/sign-in" />,
-  },
-  {
-    path: '/sign-in',
-    element: <SignIn />,
-  },
-  {
-    path: '/forgot-password',
-    element: <ForgotPasswod />,
-  },
-];
-
-const AuthPage: React.FC = () => {
-  const routes = useRoutes(authRoutes);
+const AuthPage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -45,19 +28,45 @@ const AuthPage: React.FC = () => {
 
   const { handleSubmit } = methods;
 
+  const queryClient = useQueryClient();
+  const { mutateAsync: login } = useMutation({
+    mutationFn: async (values: ISignInData) => await signIn(values),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
+  const { mutateAsync: forgotPassword } = useMutation({
+    mutationFn: async (values: IRecoverPasswordData) =>
+      await forgotPasswordService(values),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
+
   const submit = React.useCallback(
     async ({ email, password }: FormAuthProps) => {
       if (location.pathname === '/forgot-password') {
-        console.log(email);
-        toastSuccess('Código de acesso enviado com sucesso!');
-        navigate('/sign-in');
+        forgotPassword(
+          { email },
+          {
+            onSuccess: () => {
+              toastSuccess('Código de acesso enviado com sucesso!');
+              navigate('/sign-in');
+            },
+          },
+        );
       } else {
-        console.log({ email, password });
-        toastSuccess('Bem-vindo! Acesso aprovado!');
-        navigate('/dashboard');
+        const values = { email, password };
+
+        login(values as ISignInData, {
+          onSuccess: () => {
+            toastSuccess('Bem-vindo! Acesso aprovado!');
+            navigate('/dashboard');
+          },
+        });
       }
     },
-    [location.pathname, navigate],
+    [location.pathname, forgotPassword, navigate, login],
   );
 
   return (
@@ -69,7 +78,7 @@ const AuthPage: React.FC = () => {
       >
         <div className="flex h-screen items-center justify-between bg-slate-100 relative">
           <div className="w-[50%] flex justify-center items-center relative">
-            {routes}
+            {children}
           </div>
 
           <div className="h-full w-[50%]">
@@ -85,4 +94,20 @@ const AuthPage: React.FC = () => {
   );
 };
 
-export default AuthPage;
+const SignInPage = () => {
+  return (
+    <AuthPage>
+      <SignIn />
+    </AuthPage>
+  );
+};
+
+const ForgoitPassowrdPage = () => {
+  return (
+    <AuthPage>
+      <ForgotPasswod />
+    </AuthPage>
+  );
+};
+
+export { SignInPage, ForgoitPassowrdPage };

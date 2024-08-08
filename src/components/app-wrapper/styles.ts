@@ -128,17 +128,17 @@ export const Aside = styled.aside<IMenuBarProps>`
   `}
 `;
 
-export const Main = styled.main`
+export const Main = styled.main<IMenuBarProps>`
   flex: 1;
 
   transition: 0.1s all;
   justify-content: center;
-  padding: 22px;
+  padding: ${({ isAuthenticated }) => (isAuthenticated ? '22px' : '0')};
   overflow-y: auto;
   height: 100vh;
 
   @media (max-width: 960px) {
-    margin-top: 60px;
+    margin-top: ${({ isAuthenticated }) => (isAuthenticated ? '60px' : '0')};
     padding-bottom: 100px;
   }
 `;

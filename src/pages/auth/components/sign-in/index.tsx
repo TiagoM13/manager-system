@@ -2,13 +2,17 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
+import { CircleNotch } from '@phosphor-icons/react';
+
 import { Button, Input } from '@/components';
+import { useAuth } from '@/hooks';
 
 import { FormAuthProps } from '../../interfaces';
 
 import { Container } from '../../styles';
 
 export const SignIn: React.FC = () => {
+  const { loading } = useAuth();
   const {
     control,
     reset,
@@ -57,8 +61,18 @@ export const SignIn: React.FC = () => {
 
         <Button
           type="submit"
+          disabled={loading}
           className="w-full py-3.5 text-lg"
-          label="Entrar"
+          label={loading ? 'Entrando...' : 'Entrar'}
+          icon={
+            loading && (
+              <CircleNotch
+                weight="bold"
+                color="white"
+                className="size-5 animate-spin"
+              />
+            )
+          }
         />
       </div>
     </Container>
