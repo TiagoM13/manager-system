@@ -2,13 +2,17 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
+import { CircleNotch } from '@phosphor-icons/react';
+
 import { Button, Input } from '@/components';
+import { useAuth } from '@/hooks';
 
 import { FormAuthProps } from '../../interfaces';
 
 import { Container } from '../../styles';
 
 export const ForgotPasswod: React.FC = () => {
+  const { loading } = useAuth();
   const navigate = useNavigate();
   const {
     control,
@@ -46,8 +50,18 @@ export const ForgotPasswod: React.FC = () => {
 
         <Button
           type="submit"
+          disabled={loading}
           className="w-full py-3.5 text-lg"
-          label="Enviar código"
+          label={loading ? 'Enviando código...' : 'Enviar código'}
+          icon={
+            loading && (
+              <CircleNotch
+                weight="bold"
+                color="white"
+                className="size-5 animate-spin"
+              />
+            )
+          }
         />
       </div>
     </Container>

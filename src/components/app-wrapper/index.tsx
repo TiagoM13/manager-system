@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ListDashes, X } from '@phosphor-icons/react';
 
-import { useWindowSize } from '@/hooks';
+import { useIsAuthenticated, useWindowSize } from '@/hooks';
 import { useMenu } from '@/store';
 
 import { SideBar } from './components/sidebar';
@@ -16,6 +16,7 @@ export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({
   // Hooks
   const { showMenu, showingActionBar, toggleMenu, toggleSideBar } = useMenu();
   const [width] = useWindowSize();
+  const isAuthenticated = useIsAuthenticated();
 
   const sideBarRef = React.useRef<HTMLDivElement>(null);
 
@@ -47,35 +48,45 @@ export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <Container>
-      <AppBar>
-        <button onClick={() => toggleMenu()}>
-          <ListDashes className="size-8 text-white" weight="bold" />
-        </button>
-      </AppBar>
-      {Number(width) < 960 ? (
-        <StyledSidebar showMenu={showMenu}>
-          <div ref={sideBarRef} className="overlay"></div>
-          <div className="content-side-bar">
-            <button
-              onClick={() => toggleMenu(false)}
-              className="btn-close-sidebar"
-              id="btn-close-sidebar"
-            >
-              <X className="size-4 text-slate-400" weight="bold" />
+      {isAuthenticated && (
+        <>
+          <AppBar>
+            <button onClick={() => toggleMenu()}>
+              <ListDashes className="size-8 text-white" weight="bold" />
             </button>
-            {renderSideBar}
-          </div>
-        </StyledSidebar>
-      ) : (
-        <div className="relative">
-          <Aside showingActionBar={showingActionBar}>{renderSideBar}</Aside>
-          <ToggleButton
-            toggleSideBar={() => toggleSideBar()}
-            showingActionBar={showingActionBar}
-          />
-        </div>
+          </AppBar>
+          {Number(width) < 960 ? (
+            <StyledSidebar showMenu={showMenu}>
+              <div ref={sideBarRef} className="overlay"></div>
+              <div className="content-side-bar">
+                <button
+                  onClick={() => toggleMenu(false)}
+                  className="btn-close-sidebar"
+                  id="btn-close-sidebar"
+                >
+                  <X className="size-4 text-slate-400" weight="bold" />
+                </button>
+                {renderSideBar}
+              </div>
+            </StyledSidebar>
+          ) : (
+            <div className="relative">
+              <Aside showingActionBar={showingActionBar}>{renderSideBar}</Aside>
+              <ToggleButton
+                toggleSideBar={() => toggleSideBar()}
+                showingActionBar={showingActionBar}
+              />
+            </div>
+          )}
+        </>
       )}
-      <Main>{children}</Main>
+      <Main
+        showMenu={showMenu}
+        showingActionBar={showingActionBar}
+        isAuthenticated={isAuthenticated}
+      >
+        {children}
+      </Main>
     </Container>
   );
 };

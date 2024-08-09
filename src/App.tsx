@@ -12,8 +12,6 @@ import { Router } from '@/routes';
 import { queryClient } from '@/services';
 import { QueryClientProvider } from '@tanstack/react-query';
 
-import AuthPage from './pages/auth';
-
 dayjs.extend(relativeTime);
 dayjs.locale('pt-br');
 
@@ -36,8 +34,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <ConfirmDialog />
-        <AuthPage />
-        {/* {authenticate && <Router />} */}
+        <Router />
         <ToastContainer theme="colored" />
       </BrowserRouter>
     </QueryClientProvider>
