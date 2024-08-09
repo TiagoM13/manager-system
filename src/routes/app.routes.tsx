@@ -1,51 +1,85 @@
-import React, { useEffect } from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { AppWrapper, InitializerLoader } from '@/components';
 import { useIsAuthenticated } from '@/hooks';
-import { ForgoitPassowrdPage, SignInPage } from '@/pages/auth';
+import { ForgotPasswordPage, SignInPage } from '@/pages/auth';
+
+import { PrivateRoute } from './private.route';
+import { PublicRoute } from './public.route';
 
 const Dashboard = React.lazy(() => import('@/pages/dashboard'));
 const Patients = React.lazy(() => import('@/pages/patients'));
-const Profile = React.lazy(() => import('@/pages/profile'));
 const Users = React.lazy(() => import('@/pages/users'));
 const User = React.lazy(() => import('@/pages/user'));
 
-export const HOME = '/';
-export const DASHBOARD = '/dashboard';
-export const SIGNIN = '/sign-in';
-export const RECOVERPASSWORD = '/forgot-password';
-
 export const Router: React.FC = () => {
   const isAuthenticated = useIsAuthenticated();
-  const location = useLocation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isAuthenticated && [HOME, DASHBOARD].includes(location.pathname)) {
-      navigate(SIGNIN);
-    } else if (
-      isAuthenticated &&
-      [SIGNIN, HOME, RECOVERPASSWORD].includes(location.pathname)
-    ) {
-      navigate(DASHBOARD);
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      if (['/sign-in', '/forgot-password'].includes(window.location.pathname)) {
+        navigate('/dashboard', { replace: true });
+      }
     }
-  }, [isAuthenticated, location.pathname, navigate]);
+  }, [isAuthenticated, navigate]);
 
   return (
     <AppWrapper>
       <React.Suspense fallback={<InitializerLoader />}>
         <Routes>
-          <Route path="/sign-in" element={!isAuthenticated && <SignInPage />} />
+          {/* public routes */}
+          <Route
+            path="/sign-in"
+            element={
+              <PublicRoute>
+                <SignInPage />
+              </PublicRoute>
+            }
+          />
           <Route
             path="/forgot-password"
-            element={!isAuthenticated && <ForgoitPassowrdPage />}
+            element={
+              <PublicRoute>
+                <ForgotPasswordPage />
+              </PublicRoute>
+            }
           />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/users/:id" element={<User />} />
-          <Route path="/patients" element={<Patients />} />
+
+          {/* private routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <PrivateRoute>
+                <Users />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users/:id"
+            element={
+              <PrivateRoute>
+                <User />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/patients"
+            element={
+              <PrivateRoute>
+                <Patients />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </React.Suspense>
     </AppWrapper>

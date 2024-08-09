@@ -51,7 +51,10 @@ const AuthPage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           {
             onSuccess: () => {
               toastSuccess('Código de acesso enviado com sucesso!');
-              navigate('/sign-in');
+              navigate('/sign-in', {
+                state: location.state,
+                replace: true,
+              });
             },
           },
         );
@@ -61,12 +64,15 @@ const AuthPage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         login(values as ISignInData, {
           onSuccess: () => {
             toastSuccess('Bem-vindo! Acesso aprovado!');
-            navigate('/dashboard');
+            navigate('/dashboard', {
+              state: location.state,
+              replace: true,
+            });
           },
         });
       }
     },
-    [location.pathname, forgotPassword, navigate, login],
+    [location.pathname, location.state, forgotPassword, navigate, login],
   );
 
   return (
@@ -102,7 +108,7 @@ const SignInPage = () => {
   );
 };
 
-const ForgoitPassowrdPage = () => {
+const ForgotPasswordPage = () => {
   return (
     <AuthPage>
       <ForgotPasswod />
@@ -110,4 +116,4 @@ const ForgoitPassowrdPage = () => {
   );
 };
 
-export { SignInPage, ForgoitPassowrdPage };
+export { SignInPage, ForgotPasswordPage };

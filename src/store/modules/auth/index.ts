@@ -2,7 +2,8 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 import { IUser } from '@/interfaces';
-import { toastError } from '@/utils';
+
+import { logout } from './actions';
 
 interface IAuthState {
   token: string;
@@ -18,7 +19,7 @@ interface IActionsState {
   setCurrentUser: (user: IUser) => void;
   getAuthTokens: () => string;
   getCurrentUser: () => IUser | undefined;
-  logout: () => void;
+  logout: () => Promise<boolean>;
 }
 
 export const initialState: IAuthState = {
@@ -44,17 +45,7 @@ export const useAuthStore = create(
         })),
       getAuthTokens: () => get().token,
       getCurrentUser: () => get().user.data,
-      logout: () => {
-        new Promise<boolean>((resolve) => {
-          try {
-            set(initialState);
-            localStorage.removeItem('authToken');
-            resolve(true);
-          } catch (error) {
-            toastError('Não foi possivel sair, tente novamente.');
-          }
-        });
-      },
+      logout: () => logout(),
     }),
     {
       name: 'authToken',

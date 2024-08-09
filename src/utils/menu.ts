@@ -1,4 +1,4 @@
-import { ChartBar, Icon, User, Users, UsersThree } from '@phosphor-icons/react';
+import { ChartBar, Icon, Users, UsersThree } from '@phosphor-icons/react';
 
 type Menus = {
   title: string;
@@ -11,11 +11,6 @@ export const menus: Menus[] = [
     title: 'Dashoboard',
     url: '/dashboard',
     icon: ChartBar,
-  },
-  {
-    title: 'Perfil',
-    url: '/profile',
-    icon: User,
   },
   {
     title: 'Usuários',

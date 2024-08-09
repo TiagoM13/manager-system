@@ -1,26 +1,40 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { SignOut } from '@phosphor-icons/react';
+import { CircleNotch } from '@phosphor-icons/react/dist/ssr';
 
 import avatarImageUrl from '@/assets/avatars/avatar-user.jpg';
 import { UserProfile } from '@/components';
 import { useAuth } from '@/hooks';
-import { useDialog } from '@/store';
+import { useDialog, useMenu } from '@/store';
 import { menus } from '@/utils';
 
 import { MenuItem } from '../menu-item';
 
 export const SideBar: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { confirmDialog } = useDialog();
-  const { getCurrentUser, logout, token } = useAuth();
+  const { toggleMenu } = useMenu();
+  const { getCurrentUser, logout } = useAuth();
   const user = getCurrentUser();
 
-  const handleExit = React.useCallback(() => {
-    logout();
-    navigate('/sign-in');
-  }, [logout, navigate]);
+  const [loading, setLoading] = React.useState(false);
+
+  const handleExit = React.useCallback(async () => {
+    setLoading(true);
+    const response = await logout();
+
+    if (response) {
+      navigate('/sign-in', {
+        state: location.state,
+        replace: true,
+      });
+      toggleMenu();
+    }
+    setLoading(false);
+  }, [location.state, logout, navigate, toggleMenu]);
 
   const handleLogout = React.useCallback(() => {
     confirmDialog({
@@ -59,7 +73,11 @@ export const SideBar: React.FC = () => {
           id="btn-signup"
           className="flex gap-2 text-sm text-zinc-400 hover:text-sky-500 transition absolute bottom-8"
         >
-          <SignOut className="size-5" />
+          {!!loading ? (
+            <CircleNotch className="size-5" />
+          ) : (
+            <SignOut className="size-5" />
+          )}
           <span className="transition-all duration-500 ease-in-out">Sair</span>
         </button>
       </div>

@@ -1,6 +1,5 @@
 import { ISignInData, IUser } from '@/interfaces';
 import { signInService } from '@/services/auth';
-import { toastError } from '@/utils';
 import { handleAPIErrors } from '@/utils/common';
 
 import { initialState, useAuthStore } from '.';
@@ -64,14 +63,22 @@ export const getCurrentUser = () => {
   return useAuthStore.getState().user;
 };
 
-export const logout = () => {
-  new Promise<boolean>((resolve) => {
-    try {
-      useAuthStore.setState(initialState);
-      localStorage.removeItem('authToken');
-      resolve(true);
-    } catch (error) {
-      toastError('Não foi possivel sair, tente novamente.');
-    }
+export const logout = async (): Promise<boolean> => {
+  return new Promise<boolean>((resolve, reject) => {
+    const accept = () => {
+      try {
+        useAuthStore.setState(initialState);
+        localStorage.removeItem('authToken');
+        resolve(true);
+      } catch (error) {
+        handleAPIErrors(
+          error,
+          'Não foi possível sair, por favor tente novamente!',
+        );
+        reject(false); // Rejeita a promessa em caso de erro
+      }
+    };
+
+    accept();
   });
 };
