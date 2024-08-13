@@ -58,5 +58,10 @@ export const updateUserService = (id: number, data: IUser) => {
 };
 
 export const deleteUserService = async (id: number) => {
-  return await api.delete<IUser>(`/users/${id}`);
+  try {
+    return await msHosp.delete<IMSResponse<IUser, 'user'>>(`/users/${id}`);
+  } catch (error) {
+    handleAPIErrors(error);
+    return;
+  }
 };

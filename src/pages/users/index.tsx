@@ -24,7 +24,7 @@ const Users: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [, , isMobile] = useWindowSize();
-  const [query] = useQuery<IUsersFilters>();
+  const [query, setQuery] = useQuery<IUsersFilters>();
   const { confirmDialog } = useDialog();
 
   // query users data
@@ -86,6 +86,12 @@ const Users: React.FC = () => {
     },
     [location, navigate],
   );
+
+  React.useEffect(() => {
+    if (data?.users && data?.meta?.total_current_records === 0) {
+      setQuery({ page: 1 });
+    }
+  }, [data?.meta?.total_current_records, data?.users, setQuery]);
 
   return (
     <FormProvider {...methods}>
