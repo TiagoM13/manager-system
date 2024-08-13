@@ -41,11 +41,7 @@ const User: React.FC = () => {
   const newUser = React.useMemo(() => id === 'new', [id]);
 
   const queryClient = useQueryClient();
-  const {
-    data: user,
-    isLoading,
-    isFetching,
-  } = useQueryUser({
+  const { data: user, isLoading } = useQueryUser({
     queryKey: ['user'],
     queryFn: async () => await getUserService(Number(id)),
     enabled: !newUser,
@@ -78,10 +74,7 @@ const User: React.FC = () => {
   const { handleSubmit, reset } = methods;
 
   // Memos
-  const loading = React.useMemo(
-    () => isLoading || isFetching,
-    [isFetching, isLoading],
-  );
+  const loading = React.useMemo(() => isLoading, [isLoading]);
 
   const title = React.useMemo(() => {
     if (newUser) return 'Cadastrar usuário';

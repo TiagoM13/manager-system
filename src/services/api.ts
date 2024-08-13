@@ -9,8 +9,8 @@ export const api = axios.create({
 export const makeMs = (baseURL: string) => {
   const ms = axios.create({
     baseURL,
-    params: (params: any): string => {
-      return new URLSearchParams(params as any).toString();
+    paramsSerializer: (params) => {
+      return new URLSearchParams(params).toString();
     },
   });
 

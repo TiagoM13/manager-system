@@ -1,6 +1,5 @@
-import { AxiosResponse } from 'axios';
-
 import { IUser, IUsersFilters } from '@/interfaces';
+import { handleAPIErrors } from '@/utils/common';
 
 import { api, msHosp } from '.';
 
@@ -20,27 +19,34 @@ export type IMSResponse<T, PropertyName extends string> = {
 } & { [P in PropertyName]: T };
 
 export const getAllUsersService = async (params: IUsersFilters) => {
-  const { name = '', page = 1, page_size = 10 } = params;
+  try {
+    const { name = '', page = 1, page_size = 10 } = params;
 
-  const { data } = await msHosp.get<IMSResponse<IUser[], 'users'>>(`/users`, {
-    params: {
-      name,
-      page,
-      limit: page_size,
-    },
-  });
+    const { data } = await msHosp.get<IMSResponse<IUser[], 'users'>>(`/users`, {
+      params: {
+        name,
+        page,
+        limit: page_size,
+      },
+    });
 
-  // await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  return data;
+    return data;
+  } catch (error) {
+    handleAPIErrors(error);
+  }
 };
 
 export const getUserService = async (id: number) => {
-  const { data } = await api.get<AxiosResponse<IUser>>(`/users/${id}`);
+  try {
+    const { data } = await msHosp.get<IMSResponse<IUser, 'user'>>(
+      `/users/${id}`,
+    );
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  return data;
+    return data.user;
+  } catch (error) {
+    handleAPIErrors(error);
+    return null;
+  }
 };
 
 export const createUserService = (data: IUser) => {

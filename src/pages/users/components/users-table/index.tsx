@@ -12,7 +12,7 @@ type IUserData = {
 };
 
 type UserTableProps = {
-  data: IUserData;
+  data: IUserData | undefined;
   loading?: boolean;
   onEdit: (data: IUser) => void;
   onDelete: (id: number) => void;
@@ -46,7 +46,7 @@ export const UsersTable: React.FC<UserTableProps> = ({
             </>
           ) : (
             <>
-              {data.users.map((user) => (
+              {data?.users.map((user) => (
                 <UserRow
                   key={user.id}
                   user={user}

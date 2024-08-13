@@ -32,7 +32,7 @@ const Users: React.FC = () => {
   const queryClient = useQueryClient();
   const { data, isLoading } = useQueryAllUsers({
     queryKey: ['users', query.page, debouncedQuery],
-    queryFn: () => getAllUsersService(query),
+    queryFn: async () => await getAllUsersService(query),
     placeholderData: keepPreviousData,
   });
   const { mutateAsync: deleteUserFn } = useMutation({
@@ -103,14 +103,14 @@ const Users: React.FC = () => {
 
           {!isMobile ? (
             <UsersTable
-              data={data as any}
+              data={data}
               loading={loading}
               onEdit={handleEdit}
               onDelete={handleDelete}
             />
           ) : (
             <UsersCard
-              data={data as any}
+              data={data}
               loading={loading}
               onEdit={handleEdit}
               onDelete={handleDelete}

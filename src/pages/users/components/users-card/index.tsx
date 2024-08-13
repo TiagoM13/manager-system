@@ -14,7 +14,7 @@ type IUserData = {
 };
 
 type UsersCardProps = {
-  data: IUserData;
+  data: IUserData | undefined;
   loading?: boolean;
   onEdit: (data: IUser) => void;
   onDelete: (id: number) => void;
@@ -37,7 +37,7 @@ export const UsersCard: React.FC<UsersCardProps> = ({
           </>
         ) : (
           <>
-            {data.users.map((user) => (
+            {data?.users.map((user) => (
               <UserCard
                 key={user.id}
                 user={user}
