@@ -13,6 +13,7 @@ import {
   useMutation,
   useQueryClient,
   useQuery as useQueryAllUsers,
+  keepPreviousData,
 } from '@tanstack/react-query';
 
 import { UsersFilters, UsersTable, UsersCard } from './components';
@@ -29,14 +30,10 @@ const Users: React.FC = () => {
   // query users data
   const debouncedQuery = useDebounce(query.name || '', 500);
   const queryClient = useQueryClient();
-  const {
-    data: users,
-    isLoading,
-    isFetching,
-  } = useQueryAllUsers({
-    queryKey: ['users', debouncedQuery],
-    queryFn: () => getAllUsersService({ name: debouncedQuery }),
-    enabled: !!debouncedQuery || !query.name, // Run query if debouncedQuery is not empty or query.name is empty
+  const { data, isLoading } = useQueryAllUsers({
+    queryKey: ['users', query.page, debouncedQuery],
+    queryFn: () => getAllUsersService(query),
+    placeholderData: keepPreviousData,
   });
   const { mutateAsync: deleteUserFn } = useMutation({
     mutationFn: deleteUserService,
@@ -57,10 +54,7 @@ const Users: React.FC = () => {
     shouldUnregister: false,
   });
 
-  const loading = React.useMemo(
-    () => isLoading || isFetching,
-    [isFetching, isLoading],
-  );
+  const loading = React.useMemo(() => isLoading, [isLoading]);
 
   // Callbacks
   const handleNewRegister = React.useCallback(() => {
@@ -109,14 +103,14 @@ const Users: React.FC = () => {
 
           {!isMobile ? (
             <UsersTable
-              users={users}
+              data={data as any}
               loading={loading}
               onEdit={handleEdit}
               onDelete={handleDelete}
             />
           ) : (
             <UsersCard
-              users={users || []}
+              data={data as any}
               loading={loading}
               onEdit={handleEdit}
               onDelete={handleDelete}
