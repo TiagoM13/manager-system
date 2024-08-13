@@ -1,14 +1,17 @@
+import { AxiosResponse } from 'axios';
+
 import { IUser, IUsersFilters } from '@/interfaces';
 
-import { api } from '.';
+import { api, msHosp } from '.';
 
 export type IResponseMeta = {
-  current_page: number;
-  current_page_records: number;
-  first_page: boolean;
-  last_page: boolean;
+  page: number;
   total_pages: number;
+  items_per_page: number;
   total_records: number;
+  total_current_records: number;
+  has_next_page: boolean;
+  has_previous_page: boolean;
 };
 
 export type IMSResponse<T, PropertyName extends string> = {
@@ -16,24 +19,24 @@ export type IMSResponse<T, PropertyName extends string> = {
   meta?: IResponseMeta;
 } & { [P in PropertyName]: T };
 
-export const getAllUsersService = async ({ name }: IUsersFilters) => {
-  const allUsers = await api.get<IUser[]>(`/users`);
+export const getAllUsersService = async (params: IUsersFilters) => {
+  const { name = '', page = 1, page_size = 10 } = params;
 
-  let users = allUsers.data;
-  if (name) {
-    const formatedQuery = name.toLowerCase();
-    users = users.filter((user: IUser) =>
-      user.name.toLowerCase().includes(formatedQuery),
-    );
-  }
+  const { data } = await msHosp.get<IMSResponse<IUser[], 'users'>>(`/users`, {
+    params: {
+      name,
+      page,
+      limit: page_size,
+    },
+  });
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  return users;
+  return data;
 };
 
 export const getUserService = async (id: number) => {
-  const { data } = await api.get<IUser>(`/users/${id}`);
+  const { data } = await api.get<AxiosResponse<IUser>>(`/users/${id}`);
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
 

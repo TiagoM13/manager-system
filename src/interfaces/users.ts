@@ -14,5 +14,5 @@ export interface IUser {
 export interface IUsersFilters {
   name?: string;
   page?: number;
-  // page_size: number;
+  page_size?: number;
 }
