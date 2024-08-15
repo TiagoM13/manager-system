@@ -1,22 +1,7 @@
-import { IUser, IUsersFilters } from '@/interfaces';
+import { IMSResponse, IUser, IUsersFilters } from '@/interfaces';
 import { handleAPIErrors } from '@/utils/common';
 
-import { api, msHosp } from '.';
-
-export type IResponseMeta = {
-  page: number;
-  total_pages: number;
-  items_per_page: number;
-  total_records: number;
-  total_current_records: number;
-  has_next_page: boolean;
-  has_previous_page: boolean;
-};
-
-export type IMSResponse<T, PropertyName extends string> = {
-  success: boolean;
-  meta?: IResponseMeta;
-} & { [P in PropertyName]: T };
+import { api, msHosp } from '../api';
 
 export const getAllUsersService = async (params: IUsersFilters) => {
   try {
@@ -49,8 +34,13 @@ export const getUserService = async (id: number) => {
   }
 };
 
-export const createUserService = (data: IUser) => {
-  return api.post<IUser>('/users', data);
+export const createUserService = async (data: IUser) => {
+  try {
+    return await msHosp.post<IMSResponse<IUser, 'user'>>('/users', data);
+  } catch (error) {
+    handleAPIErrors(error);
+    return;
+  }
 };
 
 export const updateUserService = (id: number, data: IUser) => {
