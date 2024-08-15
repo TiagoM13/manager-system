@@ -14,7 +14,6 @@ import {
   FormContainer,
   CustomLoadingSkeleton,
 } from '@/components';
-import { Status } from '@/enums';
 import { IUser } from '@/interfaces';
 import {
   createUserService,
@@ -47,12 +46,7 @@ const User: React.FC = () => {
     enabled: !newUser,
   });
   const { mutateAsync: createUser } = useMutation({
-    mutationFn: async (newUser: IUser) =>
-      await createUserService({
-        ...newUser,
-        status: Status.ACTIVE,
-        image_url: undefined,
-      }),
+    mutationFn: async (newUser: IUser) => await createUserService(newUser),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },

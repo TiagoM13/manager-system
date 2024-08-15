@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { Table as T, Pagination, TableLoadingSkeleton } from '@/components';
-import { IUser } from '@/interfaces';
-import { IResponseMeta } from '@/services';
+import { IResponseMeta, IUser } from '@/interfaces';
 
 import { UserRow } from '../user-item';
 

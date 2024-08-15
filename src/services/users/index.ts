@@ -1,7 +1,7 @@
 import { IMSResponse, IUser, IUsersFilters } from '@/interfaces';
 import { handleAPIErrors } from '@/utils/common';
 
-import { api, msHosp } from '../api';
+import { msHosp } from '../api';
 
 export const getAllUsersService = async (params: IUsersFilters) => {
   try {
@@ -44,7 +44,7 @@ export const createUserService = async (data: IUser) => {
 };
 
 export const updateUserService = (id: number, data: IUser) => {
-  return api.put<IUser>(`/users/${id}`, data);
+  return msHosp.put<IMSResponse<IUser, 'user'>>(`/users/${id}`, data);
 };
 
 export const deleteUserService = async (id: number) => {
