@@ -22,7 +22,7 @@ describe('<UserProfile />', () => {
       <UserProfile
         name={user.name}
         email={user.email}
-        imageUrl={user.image_url}
+        imageUrl={user.image_url || ''}
         color="light"
       />,
     );
