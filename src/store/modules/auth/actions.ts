@@ -60,7 +60,7 @@ export const getAuthTokens = () => {
 };
 
 export const getCurrentUser = () => {
-  return useAuthStore.getState().user;
+  return useAuthStore.getState().user.data;
 };
 
 export const logout = async (): Promise<boolean> => {
@@ -75,7 +75,7 @@ export const logout = async (): Promise<boolean> => {
           error,
           'Não foi possível sair, por favor tente novamente!',
         );
-        reject(false); // Rejeita a promessa em caso de erro
+        reject(false);
       }
     };
 

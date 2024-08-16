@@ -17,4 +17,23 @@ export const Container = styled.div`
     margin-bottom: 3rem;
     text-align: center;
   }
+
+  @media (max-width: 1024px) {
+    max-width: 600px;
+  }
+
+  @media (max-width: 560px) {
+    h2 {
+      font-size: 1.675rem;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      font-size: 0.875rem;
+    }
+
+    input {
+      padding: 0.75rem 0.875rem;
+    }
+  }
 `;

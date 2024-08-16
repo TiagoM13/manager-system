@@ -18,7 +18,9 @@ describe('<Avatar />', () => {
   });
 
   it('should render correctly component', () => {
-    render(<Avatar color="dark" name={user.name} imageUrl={user.image_url} />);
+    render(
+      <Avatar color="dark" name={user.name} imageUrl={user.image_url || ''} />,
+    );
 
     const container = screen.getByTestId('avatar-container');
     const imgTag = screen.getByTestId('image-tag');
@@ -32,7 +34,12 @@ describe('<Avatar />', () => {
 
   it('should correctly render the color and size in the component', () => {
     render(
-      <Avatar color="light" small name={user.name} imageUrl={user.image_url} />,
+      <Avatar
+        color="light"
+        small
+        name={user.name}
+        imageUrl={user.image_url || ''}
+      />,
     );
 
     const container = screen.getByTestId('avatar-container');

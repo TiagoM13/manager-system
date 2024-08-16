@@ -14,7 +14,6 @@ import {
   FormContainer,
   CustomLoadingSkeleton,
 } from '@/components';
-import { Status } from '@/enums';
 import { IUser } from '@/interfaces';
 import {
   createUserService,
@@ -41,22 +40,13 @@ const User: React.FC = () => {
   const newUser = React.useMemo(() => id === 'new', [id]);
 
   const queryClient = useQueryClient();
-  const {
-    data: user,
-    isLoading,
-    isFetching,
-  } = useQueryUser({
+  const { data: user, isLoading } = useQueryUser({
     queryKey: ['user'],
     queryFn: async () => await getUserService(Number(id)),
     enabled: !newUser,
   });
   const { mutateAsync: createUser } = useMutation({
-    mutationFn: async (newUser: IUser) =>
-      await createUserService({
-        ...newUser,
-        status: Status.ACTIVE,
-        image_url: undefined,
-      }),
+    mutationFn: async (newUser: IUser) => await createUserService(newUser),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
@@ -78,10 +68,7 @@ const User: React.FC = () => {
   const { handleSubmit, reset } = methods;
 
   // Memos
-  const loading = React.useMemo(
-    () => isLoading || isFetching,
-    [isFetching, isLoading],
-  );
+  const loading = React.useMemo(() => isLoading, [isLoading]);
 
   const title = React.useMemo(() => {
     if (newUser) return 'Cadastrar usuário';

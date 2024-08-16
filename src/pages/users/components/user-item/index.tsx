@@ -44,7 +44,9 @@ export const UserRow: React.FC<UserItemProps> = ({
       <T.Cell>
         <Badge type={user.status} />
       </T.Cell>
-      <T.Cell>{formatDateTime(user.last_access)}</T.Cell>
+      <T.Cell>
+        {user.last_access ? formatDateTime(user.last_access) : '-'}
+      </T.Cell>
       <T.Cell style={{ width: 50 }}>
         <ButtonActions
           onEdit={() => onEdit(user)}
@@ -85,7 +87,9 @@ export const UserCard: React.FC<UserItemProps> = ({
         </Text>
         <Text>
           <strong>Último acesso:</strong>
-          <span>{formatDateTime(user.last_access)}</span>
+          <span>
+            {user.last_access ? formatDateTime(user.last_access) : '-'}
+          </span>
         </Text>
       </div>
 
