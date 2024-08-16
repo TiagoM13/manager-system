@@ -1,35 +1,28 @@
 import React from 'react';
 
 import { Table as T, Pagination, TableLoadingSkeleton } from '@/components';
-import { usePaginate } from '@/hooks';
-import { IUser } from '@/interfaces';
+import { IResponseMeta, IUser } from '@/interfaces';
 
 import { UserRow } from '../user-item';
 
+type IUserData = {
+  users: IUser[];
+  meta?: IResponseMeta;
+};
+
 type UserTableProps = {
-  users: IUser[] | undefined;
+  data: IUserData | undefined;
   loading?: boolean;
   onEdit: (data: IUser) => void;
   onDelete: (id: number) => void;
 };
 
 export const UsersTable: React.FC<UserTableProps> = ({
-  users = [],
+  data,
   loading = false,
   onEdit,
   onDelete,
 }) => {
-  const {
-    page,
-    totalPages,
-    totalItems,
-    currentPageData,
-    goToNextPage,
-    goToPreviousPage,
-    goToFirstPage,
-    goToLastPage,
-  } = usePaginate({ data: users, itemsPerPage: 10 });
-
   return (
     <>
       <T.Container>
@@ -52,7 +45,7 @@ export const UsersTable: React.FC<UserTableProps> = ({
             </>
           ) : (
             <>
-              {currentPageData.map((user) => (
+              {data?.users.map((user) => (
                 <UserRow
                   key={user.id}
                   user={user}
@@ -67,20 +60,13 @@ export const UsersTable: React.FC<UserTableProps> = ({
           <T.Row border={false}>
             <T.Cell colSpan={3}>
               <Pagination.Label
-                currentPageData={currentPageData}
-                totalItems={totalItems}
+                currentPageData={data?.meta?.total_current_records! || 0}
+                totalItems={data?.meta?.total_records || 0}
                 paginationLabel={{ single: 'usuário', several: 'usuários' }}
               />
             </T.Cell>
             <T.Cell className="text-right" colSpan={4}>
-              <Pagination.Actions
-                page={page}
-                totalPages={totalPages}
-                goToNextPage={goToNextPage}
-                goToPreviousPage={goToPreviousPage}
-                goToFirstPage={goToFirstPage}
-                goToLastPage={goToLastPage}
-              />
+              <Pagination.Actions totalPages={data?.meta?.total_pages || 1} />
             </T.Cell>
           </T.Row>
         </tfoot>

@@ -20,7 +20,7 @@ export const UserProfile: StoryFn<UserProfileProps> = () => {
         <Profile
           email={user.email}
           name={user.name}
-          imageUrl={user.image_url}
+          imageUrl={user.image_url || ''}
           color="light"
         />
       </div>
@@ -29,7 +29,7 @@ export const UserProfile: StoryFn<UserProfileProps> = () => {
         <Profile
           email={user.email}
           name={user.name}
-          imageUrl={user.image_url}
+          imageUrl={user.image_url || ''}
           color="dark"
         />
       </div>

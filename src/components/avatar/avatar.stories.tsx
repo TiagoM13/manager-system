@@ -17,13 +17,13 @@ export const Avatar: StoryFn<AvatarProps> = () => {
   return (
     <div className="flex gap-4 items-center">
       <AvatarComponent
-        imageUrl={user.image_url}
+        imageUrl={user.image_url || ''}
         name={user.name}
         color="dark"
       />
 
       <AvatarComponent
-        imageUrl={user.image_url}
+        imageUrl={user.image_url || ''}
         name={user.name}
         color="light"
         small
