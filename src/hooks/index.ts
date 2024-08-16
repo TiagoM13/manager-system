@@ -1,4 +1,3 @@
-export * from './paginate';
 export * from './window-size';
 export * from './query';
 export * from './image-loader';

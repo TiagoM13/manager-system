@@ -14,11 +14,11 @@ const schema = z.object({
   email: z
     .string()
     .trim()
-    .email({ message: 'O email é invalido' })
+    .email({ message: 'O email é inválido' })
     .refine((data) => data.trim() !== '', {
       message: 'O email é obrigatório',
     }),
-  image_url: z.string().optional(),
+  image_url: z.string().nullable().optional(),
   user_type: z
     .string()
     .trim()

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   CaretDoubleLeft,
@@ -7,42 +8,70 @@ import {
   CaretDoubleRight,
 } from '@phosphor-icons/react';
 
+import { useQuery } from '@/hooks';
+import { IUsersFilters } from '@/interfaces';
+
 import { IconButton } from '../icon-button';
 
-type PaginationActionsProps = {
-  page: number;
+type PaginateProps = {
   totalPages: number;
-  goToFirstPage: () => void;
-  goToPreviousPage: () => void;
-  goToNextPage: () => void;
-  goToLastPage: () => void;
 };
 
-export const PaginationActions: React.FC<PaginationActionsProps> = ({
-  page,
-  totalPages,
-  goToFirstPage,
-  goToLastPage,
-  goToNextPage,
-  goToPreviousPage,
-}) => {
+export const PaginationActions: React.FC<PaginateProps> = ({ totalPages }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [query] = useQuery<IUsersFilters>();
+  const currentPage = React.useMemo(
+    () => Number(query.page) || 1,
+    [query.page],
+  );
+
+  const queryParams = new URLSearchParams(location.search);
+  const updatePage = (newPage: number) => {
+    queryParams.set('page', String(newPage));
+    navigate(`${location.pathname}?${queryParams.toString()}`);
+  };
+
+  const goToNextPage = () => {
+    updatePage(Math.min(currentPage + 1, totalPages));
+  };
+
+  const goToPreviousPage = () => {
+    updatePage(Math.max(currentPage - 1, 1));
+  };
+
+  const goToFirstPage = () => {
+    updatePage(1);
+  };
+
+  const goToLastPage = () => {
+    updatePage(totalPages);
+  };
+
   return (
     <div className="inline-flex items-center gap-8">
       <span className="text-sm">
-        Página {page} de {totalPages}
+        Página {currentPage} de {totalPages}
       </span>
 
       <div data-testid="btn-actions" className="flex gap-1.5">
-        <IconButton onClick={goToFirstPage} disabled={page === 1}>
+        <IconButton onClick={goToFirstPage} disabled={currentPage === 1}>
           <CaretDoubleLeft className="size-4 text-slate-800" weight="bold" />
         </IconButton>
-        <IconButton onClick={goToPreviousPage} disabled={page === 1}>
+        <IconButton onClick={goToPreviousPage} disabled={currentPage === 1}>
           <CaretLeft className="size-4 text-slate-800" weight="bold" />
         </IconButton>
-        <IconButton onClick={goToNextPage} disabled={page === totalPages}>
+        <IconButton
+          onClick={goToNextPage}
+          disabled={currentPage === totalPages}
+        >
           <CaretRight className="size-4 text-slate-800" weight="bold" />
         </IconButton>
-        <IconButton onClick={goToLastPage} disabled={page === totalPages}>
+        <IconButton
+          onClick={goToLastPage}
+          disabled={currentPage === totalPages}
+        >
           <CaretDoubleRight className="size-4 text-slate-800" weight="bold" />
         </IconButton>
       </div>
@@ -51,7 +80,7 @@ export const PaginationActions: React.FC<PaginationActionsProps> = ({
 };
 
 type PaginationLabelProps = {
-  currentPageData: any[];
+  currentPageData: number;
   totalItems: number;
   paginationLabel?: {
     single: string;
@@ -69,9 +98,9 @@ export const PaginationLabel = ({
 }: PaginationLabelProps) => {
   return (
     <span className="text-sm">
-      {currentPageData.length === 0
+      {currentPageData === 0
         ? 'Não há resultados para exibir'
-        : `Mostrando ${currentPageData.length} de ${totalItems} ${currentPageData.length === 1 ? paginationLabel.single : paginationLabel.several}`}
+        : `Mostrando ${currentPageData} de ${totalItems} ${currentPageData === 1 ? paginationLabel.single : paginationLabel.several}`}
     </span>
   );
 };

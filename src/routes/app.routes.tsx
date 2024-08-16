@@ -19,8 +19,15 @@ export const Router: React.FC = () => {
 
   React.useEffect(() => {
     if (isAuthenticated) {
-      if (['/sign-in', '/forgot-password'].includes(window.location.pathname)) {
+      if (
+        ['/sign-in', '/forgot-password', '/'].includes(window.location.pathname)
+      ) {
         navigate('/dashboard', { replace: true });
+      }
+    }
+    if (!isAuthenticated) {
+      if (['/'].includes(window.location.pathname)) {
+        navigate('/sign-in', { replace: true });
       }
     }
   }, [isAuthenticated, navigate]);

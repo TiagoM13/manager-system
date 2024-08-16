@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 interface IState {
   imageUrl: string | null;
-  setImageUrl: (imageUrl: string | undefined) => void;
+  setImageUrl: (imageUrl?: string | null) => void;
 }
 
 export const useImageUrl = create<IState>((set) => ({
