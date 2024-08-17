@@ -27,7 +27,7 @@ export const UsersFilters: React.FC<UserFiltersProps> = ({ loading }) => {
   );
 
   return (
-    <form className="w-full">
+    <div className="w-full">
       <div className="flex flex-col gap-5">
         <div className="flex gap-2.5">
           <InputSearch
@@ -44,6 +44,6 @@ export const UsersFilters: React.FC<UserFiltersProps> = ({ loading }) => {
           {/* <Select options={options} placeholder="Selecione um filtro" /> */}
         </div>
       </div>
-    </form>
+    </div>
   );
 };
