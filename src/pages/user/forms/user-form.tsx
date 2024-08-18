@@ -9,9 +9,14 @@ import { useName } from '@/store';
 interface UserFormProps {
   isNew?: boolean;
   loading?: boolean;
+  isUpdatingItself: boolean;
 }
 
-export const UserForm: React.FC<UserFormProps> = ({ isNew, loading }) => {
+export const UserForm: React.FC<UserFormProps> = ({
+  isNew,
+  loading,
+  isUpdatingItself,
+}) => {
   const {
     control,
     setValue,
@@ -45,7 +50,7 @@ export const UserForm: React.FC<UserFormProps> = ({ isNew, loading }) => {
             control={control}
             placeholder="Digite seu nome completo"
             className="text-red-300"
-            disabled={loading}
+            disabled={loading || (!isUpdatingItself && !isNew)}
             error={errors.name}
             required
           />
@@ -58,7 +63,7 @@ export const UserForm: React.FC<UserFormProps> = ({ isNew, loading }) => {
             defaultValue=""
             control={control}
             placeholder="Digite seu e-mail"
-            disabled={loading}
+            disabled={loading || !isNew}
             error={errors.email}
             required
           />
@@ -70,7 +75,7 @@ export const UserForm: React.FC<UserFormProps> = ({ isNew, loading }) => {
             defaultValue=""
             placeholder="Selcione um tipo de usuário"
             options={selectOptions}
-            disabled={loading}
+            disabled={loading || isUpdatingItself}
             setValue={setValue}
             error={errors.user_type}
             required

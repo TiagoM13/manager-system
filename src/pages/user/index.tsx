@@ -14,6 +14,7 @@ import {
   FormContainer,
   CustomLoadingSkeleton,
 } from '@/components';
+import { useCurrentUser } from '@/hooks';
 import { IUser } from '@/interfaces';
 import {
   createUserService,
@@ -38,6 +39,8 @@ const User: React.FC = () => {
   const { setName } = useName();
   const { id } = useParams<{ id: string }>();
 
+  const currentUser = useCurrentUser();
+
   const newUser = React.useMemo(() => id === 'new', [id]);
 
   const queryClient = useQueryClient();
@@ -59,6 +62,8 @@ const User: React.FC = () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
+
+  const isUpdatingItself = !newUser && user?.id === currentUser.id;
 
   // Hook Form
   const methods = useForm<IUser>({
@@ -160,12 +165,19 @@ const User: React.FC = () => {
 
           <div className="max-w-[1440px] flex gap-5">
             <div className="w-[60%]">
-              <UserForm loading={loading} isNew={newUser} />
+              <UserForm
+                isUpdatingItself={isUpdatingItself}
+                loading={loading}
+                isNew={newUser}
+              />
             </div>
 
             {!newUser && (
               <div className="w-[40%]">
-                <StatusForm loading={loading} />
+                <StatusForm
+                  isUpdatingItself={isUpdatingItself}
+                  loading={loading}
+                />
               </div>
             )}
           </div>
