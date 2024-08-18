@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { Card, InputFile, Select, Input } from '@/components';
 import { UserTypes } from '@/enums';
 import { IUser } from '@/interfaces';
+import { useName } from '@/store';
 
 interface UserFormProps {
   isNew?: boolean;
@@ -16,6 +17,8 @@ export const UserForm: React.FC<UserFormProps> = ({ isNew, loading }) => {
     setValue,
     formState: { errors },
   } = useFormContext<IUser>();
+  const { name } = useName();
+
   const selectOptions = Object.values(UserTypes).map((label, index) => ({
     id: index,
     label,
@@ -25,7 +28,7 @@ export const UserForm: React.FC<UserFormProps> = ({ isNew, loading }) => {
     <Card title="Informações do usuário" className="px-6" bordered>
       <div className="space-y-4 mb-20">
         <InputFile
-          name="image_url"
+          name={name}
           control={control}
           placeholder={isNew ? 'Escolher foto' : 'Alterar foto'}
           error={errors.image_url}

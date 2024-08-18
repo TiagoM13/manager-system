@@ -20,7 +20,7 @@ import {
   getUserService,
   updateUserService,
 } from '@/services';
-import { useImageUrl } from '@/store';
+import { useImageUrl, useName } from '@/store';
 import { toastSuccess, backWithQuery } from '@/utils';
 import {
   useMutation,
@@ -35,6 +35,7 @@ const User: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { setImageUrl } = useImageUrl();
+  const { setName } = useName();
   const { id } = useParams<{ id: string }>();
 
   const newUser = React.useMemo(() => id === 'new', [id]);
@@ -132,11 +133,13 @@ const User: React.FC = () => {
     if (newUser || loading) {
       reset();
       setImageUrl(undefined);
+      setName('');
     } else if (user) {
       reset(user);
       setImageUrl(user.image_url);
+      setName(user.name);
     }
-  }, [loading, newUser, reset, setImageUrl, user]);
+  }, [loading, newUser, reset, setImageUrl, setName, user]);
 
   return (
     <FormProvider {...methods}>

@@ -3,7 +3,6 @@ import { Control, Controller, FieldError } from 'react-hook-form';
 
 import { CircleNotch, UploadSimple } from '@phosphor-icons/react';
 
-import avatarImageUrl from '@/assets/avatars/avatar-user.jpg';
 import { useImageUrl } from '@/store';
 
 import { Avatar } from '../avatar';
@@ -41,21 +40,14 @@ export const InputFile: React.FC<InputFileProps> = ({
     setImageUrl(previwURL);
   };
 
-  const renderImageUrl = React.useMemo(() => {
-    if (imageUrl) return imageUrl;
-    if (imageUrl === undefined) return avatarImageUrl;
-    if (imageUrl === '') return avatarImageUrl;
-    return avatarImageUrl;
-  }, [imageUrl]);
-
   return (
     <div className="flex items-center gap-5 mt-4">
       {hasPreview && (
         <Avatar
-          className="size-32"
+          className="size-32 text-3xl"
           color="dark"
-          imageUrl={renderImageUrl}
-          name="avatar"
+          imageUrl={imageUrl}
+          name={name}
           loading={loading}
         />
       )}

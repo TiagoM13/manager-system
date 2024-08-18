@@ -2,7 +2,6 @@ import React from 'react';
 
 import { PencilSimple, Trash } from '@phosphor-icons/react';
 
-import defaultAvatarURL from '@/assets/avatars/avatar-user.jpg';
 import {
   UserProfile,
   Badge,
@@ -33,7 +32,7 @@ export const UserRow: React.FC<UserItemProps> = ({
           small
           color="dark"
           name={user.name}
-          imageUrl={!user.image_url ? defaultAvatarURL : user.image_url}
+          imageUrl={user?.image_url || null}
           email={user.email}
         />
       </T.Cell>

@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { SignOut } from '@phosphor-icons/react';
 import { CircleNotch } from '@phosphor-icons/react/dist/ssr';
 
-import avatarImageUrl from '@/assets/avatars/avatar-user.jpg';
 import { UserProfile } from '@/components';
 import { useAuth } from '@/hooks';
 import { useDialog, useMenu } from '@/store';
@@ -53,7 +52,7 @@ export const SideBar: React.FC = () => {
           color="light"
           name={user?.name || '-'}
           email={user?.email || '-'}
-          imageUrl={user?.image_url || avatarImageUrl}
+          imageUrl={user?.image_url || null}
           small
         />
 
