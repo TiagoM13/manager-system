@@ -22,7 +22,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   loading = false,
 }) => {
   const { isLoading, imgSrc } = useImageLazyLoader({
-    imgUrl: imageUrl as string,
+    imgUrl: imageUrl || '',
   });
 
   const initialLetterName = React.useMemo(() => {
@@ -66,7 +66,7 @@ export const Avatar: React.FC<AvatarProps> = ({
       {imageUrl !== null ? (
         <img
           data-testid="image-tag"
-          src={imgSrc || ''}
+          src={imgSrc || imageUrl}
           alt={name}
           className="rounded-full overflow-hidden object-cover w-full h-full"
         />
