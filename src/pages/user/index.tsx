@@ -14,14 +14,16 @@ import {
   FormContainer,
   CustomLoadingSkeleton,
 } from '@/components';
+import { useCurrentUser } from '@/hooks';
 import { IUser } from '@/interfaces';
 import {
   createUserService,
   getUserService,
   updateUserService,
+  upladFileService,
 } from '@/services';
-import { useImageUrl } from '@/store';
-import { toastSuccess, backWithQuery } from '@/utils';
+import { useImageUrl, useName } from '@/store';
+import { toastSuccess, backWithQuery, toastError } from '@/utils';
 import {
   useMutation,
   useQueryClient,
@@ -35,7 +37,10 @@ const User: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { setImageUrl } = useImageUrl();
+  const { setName } = useName();
   const { id } = useParams<{ id: string }>();
+
+  const currentUser = useCurrentUser();
 
   const newUser = React.useMemo(() => id === 'new', [id]);
 
@@ -45,19 +50,33 @@ const User: React.FC = () => {
     queryFn: async () => await getUserService(Number(id)),
     enabled: !newUser,
   });
-  const { mutateAsync: createUser } = useMutation({
-    mutationFn: async (newUser: IUser) => await createUserService(newUser),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-    },
-  });
-  const { mutateAsync: updateUser } = useMutation({
-    mutationFn: async (values: IUser) =>
-      await updateUserService(Number(id), values),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-    },
-  });
+  const { mutateAsync: createUser, isPending: isLoadingCreateUser } =
+    useMutation({
+      mutationFn: async (newUser: IUser) => await createUserService(newUser),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['user'] });
+      },
+    });
+  const { mutateAsync: updateUser, isPending: isLoadingUpdateUser } =
+    useMutation({
+      mutationFn: async (values: IUser) =>
+        await updateUserService(Number(id), values),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['user'] });
+      },
+    });
+  const { mutateAsync: uploadFile, isPending: isLoadingUploadFile } =
+    useMutation({
+      mutationFn: upladFileService,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['user'] });
+      },
+      onError: () => {
+        toastError('Falha ao processar imagem');
+      },
+    });
+
+  const isUpdatingItself = !newUser && user?.id === currentUser.id;
 
   // Hook Form
   const methods = useForm<IUser>({
@@ -68,7 +87,14 @@ const User: React.FC = () => {
   const { handleSubmit, reset } = methods;
 
   // Memos
-  const loading = React.useMemo(() => isLoading, [isLoading]);
+  const loading = React.useMemo(
+    () =>
+      isLoading ||
+      isLoadingUploadFile ||
+      isLoadingCreateUser ||
+      isLoadingUpdateUser,
+    [isLoading, isLoadingCreateUser, isLoadingUpdateUser, isLoadingUploadFile],
+  );
 
   const title = React.useMemo(() => {
     if (newUser) return 'Cadastrar usuário';
@@ -107,17 +133,56 @@ const User: React.FC = () => {
     backWithQuery(navigate, from, from.pathname);
   }, [location.state?.from, navigate]);
 
+  const handleUploadFile = React.useCallback(
+    async (form: HTMLFormElement) => {
+      const formData = new FormData(form);
+      const fileToUpload = formData.get('image_url');
+
+      if (fileToUpload && fileToUpload instanceof File) {
+        const uploadFormData = new FormData();
+        uploadFormData.set('file', fileToUpload);
+        const upload = await uploadFile(uploadFormData);
+        const imageUrl = upload?.data.fileUrl;
+
+        return imageUrl;
+      }
+
+      return null;
+    },
+    [uploadFile],
+  );
+
   const submit = React.useCallback(
     async (values: IUser) => {
+      const formElement = document.querySelector(
+        '#form-user',
+      ) as HTMLFormElement;
+
+      const isValidImageUrl =
+        values.image_url !== null && values.image_url !== user?.image_url;
+
+      let uploadedImageUrl = '';
+
+      if (isValidImageUrl) {
+        const response = await handleUploadFile(formElement);
+
+        uploadedImageUrl = response;
+      }
+
+      const updatedValues = {
+        ...values,
+        image_url: uploadedImageUrl || values.image_url,
+      };
+
       if (newUser) {
-        createUser(values, {
+        createUser(updatedValues, {
           onSuccess: () => {
             toastSuccess('Usuário criado com sucesso!');
             navigate('/users');
           },
         });
       } else {
-        updateUser(values, {
+        updateUser(updatedValues, {
           onSuccess: () => {
             toastSuccess('Usuário atualizado com sucesso!');
             navigate('/users');
@@ -125,22 +190,31 @@ const User: React.FC = () => {
         });
       }
     },
-    [createUser, navigate, newUser, updateUser],
+    [
+      createUser,
+      handleUploadFile,
+      navigate,
+      newUser,
+      updateUser,
+      user?.image_url,
+    ],
   );
 
   React.useEffect(() => {
     if (newUser || loading) {
       reset();
       setImageUrl(undefined);
+      setName('');
     } else if (user) {
       reset(user);
       setImageUrl(user.image_url);
+      setName(user.name);
     }
-  }, [loading, newUser, reset, setImageUrl, user]);
+  }, [loading, newUser, reset, setImageUrl, setName, user]);
 
   return (
     <FormProvider {...methods}>
-      <FormContainer noValidate onSubmit={handleSubmit(submit)}>
+      <FormContainer id="form-user" noValidate onSubmit={handleSubmit(submit)}>
         <div className="flex flex-col">
           <Header
             title={title}
@@ -157,12 +231,19 @@ const User: React.FC = () => {
 
           <div className="max-w-[1440px] flex gap-5">
             <div className="w-[60%]">
-              <UserForm loading={loading} isNew={newUser} />
+              <UserForm
+                isUpdatingItself={isUpdatingItself}
+                loading={loading}
+                isNew={newUser}
+              />
             </div>
 
             {!newUser && (
               <div className="w-[40%]">
-                <StatusForm loading={loading} />
+                <StatusForm
+                  isUpdatingItself={isUpdatingItself}
+                  loading={loading}
+                />
               </div>
             )}
           </div>

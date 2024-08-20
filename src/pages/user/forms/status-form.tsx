@@ -7,9 +7,13 @@ import { IUser } from '@/interfaces';
 
 interface StatusFormProps {
   loading?: boolean;
+  isUpdatingItself: boolean;
 }
 
-export const StatusForm: React.FC<StatusFormProps> = ({ loading }) => {
+export const StatusForm: React.FC<StatusFormProps> = ({
+  loading,
+  isUpdatingItself,
+}) => {
   const {
     control,
     formState: { errors },
@@ -27,7 +31,7 @@ export const StatusForm: React.FC<StatusFormProps> = ({ loading }) => {
             opt2: Status.INACTIVE,
           }}
           error={errors.status}
-          disabled={loading}
+          disabled={loading || isUpdatingItself}
         />
       </div>
     </Card>
