@@ -20,9 +20,10 @@ import {
   createUserService,
   getUserService,
   updateUserService,
+  upladFileService,
 } from '@/services';
 import { useImageUrl, useName } from '@/store';
-import { toastSuccess, backWithQuery } from '@/utils';
+import { toastSuccess, backWithQuery, toastError } from '@/utils';
 import {
   useMutation,
   useQueryClient,
@@ -49,19 +50,31 @@ const User: React.FC = () => {
     queryFn: async () => await getUserService(Number(id)),
     enabled: !newUser,
   });
-  const { mutateAsync: createUser } = useMutation({
-    mutationFn: async (newUser: IUser) => await createUserService(newUser),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-    },
-  });
-  const { mutateAsync: updateUser } = useMutation({
-    mutationFn: async (values: IUser) =>
-      await updateUserService(Number(id), values),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-    },
-  });
+  const { mutateAsync: createUser, isPending: isLoadingCreateUser } =
+    useMutation({
+      mutationFn: async (newUser: IUser) => await createUserService(newUser),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['user'] });
+      },
+    });
+  const { mutateAsync: updateUser, isPending: isLoadingUpdateUser } =
+    useMutation({
+      mutationFn: async (values: IUser) =>
+        await updateUserService(Number(id), values),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['user'] });
+      },
+    });
+  const { mutateAsync: uploadFile, isPending: isLoadingUploadFile } =
+    useMutation({
+      mutationFn: upladFileService,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['user'] });
+      },
+      onError: () => {
+        toastError('Falha ao processar imagem');
+      },
+    });
 
   const isUpdatingItself = !newUser && user?.id === currentUser.id;
 
@@ -74,7 +87,14 @@ const User: React.FC = () => {
   const { handleSubmit, reset } = methods;
 
   // Memos
-  const loading = React.useMemo(() => isLoading, [isLoading]);
+  const loading = React.useMemo(
+    () =>
+      isLoading ||
+      isLoadingUploadFile ||
+      isLoadingCreateUser ||
+      isLoadingUpdateUser,
+    [isLoading, isLoadingCreateUser, isLoadingUpdateUser, isLoadingUploadFile],
+  );
 
   const title = React.useMemo(() => {
     if (newUser) return 'Cadastrar usuário';
@@ -113,17 +133,56 @@ const User: React.FC = () => {
     backWithQuery(navigate, from, from.pathname);
   }, [location.state?.from, navigate]);
 
+  const handleUploadFile = React.useCallback(
+    async (form: HTMLFormElement) => {
+      const formData = new FormData(form);
+      const fileToUpload = formData.get('image_url');
+
+      if (fileToUpload && fileToUpload instanceof File) {
+        const uploadFormData = new FormData();
+        uploadFormData.set('file', fileToUpload);
+        const upload = await uploadFile(uploadFormData);
+        const imageUrl = upload?.data.fileUrl;
+
+        return imageUrl;
+      }
+
+      return null;
+    },
+    [uploadFile],
+  );
+
   const submit = React.useCallback(
     async (values: IUser) => {
+      const formElement = document.querySelector(
+        '#form-user',
+      ) as HTMLFormElement;
+
+      const isValidImageUrl =
+        values.image_url !== null && values.image_url !== user?.image_url;
+
+      let uploadedImageUrl = '';
+
+      if (isValidImageUrl) {
+        const response = await handleUploadFile(formElement);
+
+        uploadedImageUrl = response;
+      }
+
+      const updatedValues = {
+        ...values,
+        image_url: uploadedImageUrl || values.image_url,
+      };
+
       if (newUser) {
-        createUser(values, {
+        createUser(updatedValues, {
           onSuccess: () => {
             toastSuccess('Usuário criado com sucesso!');
             navigate('/users');
           },
         });
       } else {
-        updateUser(values, {
+        updateUser(updatedValues, {
           onSuccess: () => {
             toastSuccess('Usuário atualizado com sucesso!');
             navigate('/users');
@@ -131,7 +190,14 @@ const User: React.FC = () => {
         });
       }
     },
-    [createUser, navigate, newUser, updateUser],
+    [
+      createUser,
+      handleUploadFile,
+      navigate,
+      newUser,
+      updateUser,
+      user?.image_url,
+    ],
   );
 
   React.useEffect(() => {
@@ -148,7 +214,7 @@ const User: React.FC = () => {
 
   return (
     <FormProvider {...methods}>
-      <FormContainer noValidate onSubmit={handleSubmit(submit)}>
+      <FormContainer id="form-user" noValidate onSubmit={handleSubmit(submit)}>
         <div className="flex flex-col">
           <Header
             title={title}

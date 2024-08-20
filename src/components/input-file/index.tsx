@@ -4,7 +4,7 @@ import { Control, Controller, FieldError } from 'react-hook-form';
 import { CircleNotch, UploadSimple } from '@phosphor-icons/react';
 
 import defaultImageAvatar from '@/assets/avatars/avatar-user.jpg';
-import { useImageUrl } from '@/store';
+import { useImageUrl, useName } from '@/store';
 
 import { Avatar } from '../avatar';
 
@@ -27,6 +27,7 @@ export const InputFile: React.FC<InputFileProps> = ({
   error,
   name,
 }) => {
+  const { name: altName } = useName();
   const { imageUrl, setImageUrl } = useImageUrl();
 
   const handleFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +56,7 @@ export const InputFile: React.FC<InputFileProps> = ({
           className="size-32 text-3xl"
           color="dark"
           imageUrl={renderImageUrl}
-          name={name}
+          name={altName}
           loading={loading}
         />
       )}
