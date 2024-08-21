@@ -21,3 +21,4 @@ export * from './dialog';
 export * from './confirm-dialog';
 export * from './loading-skeleton';
 export * from './form-container';
+export * from './error-message';

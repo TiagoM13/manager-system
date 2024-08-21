@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { twMerge } from 'tailwind-merge';
+
 enum Variables {
   primary = 'primary',
   danger = 'danger',
@@ -13,6 +15,7 @@ export type ButtonProps = React.ComponentProps<'button'> & {
   icon?: React.ReactNode;
   variable?: keyof typeof Variables;
   className?: string;
+  clear?: boolean;
 };
 
 export const Button: React.FC<ButtonProps> = ({
@@ -21,6 +24,7 @@ export const Button: React.FC<ButtonProps> = ({
   icon,
   variable = Variables.primary,
   className = '',
+  clear,
   ...rest
 }) => {
   const colorMap: Record<keyof typeof Variables, string> = {
@@ -36,9 +40,12 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      {...rest}
       data-testid={`btn-${id}`}
-      className={`${className} ${color} rounded-lg py-2.5 px-3 font-medium text-sm text-white flex gap-2 items-center justify-center`}
+      className={twMerge(
+        `${!clear ? color : ''} rounded-lg py-2.5 px-3 font-medium text-sm text-white flex gap-2 items-center justify-center`,
+        className,
+      )}
+      {...rest}
     >
       {!!icon && icon}
       {label}

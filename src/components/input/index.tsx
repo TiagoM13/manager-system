@@ -7,6 +7,8 @@ import {
   FieldValues,
 } from 'react-hook-form';
 
+import { ErrorMessage } from '../error-message';
+
 interface InputProps<T extends FieldValues>
   extends React.ComponentProps<'input'> {
   label?: string;
@@ -47,9 +49,7 @@ export const Input = <T extends FieldValues>({
         )}
       />
 
-      {!!error && (
-        <span className="block text-sm text-red-500 mt-1">{error.message}</span>
-      )}
+      <ErrorMessage error={error?.message} />
     </div>
   );
 };

@@ -1,12 +1,11 @@
 import React from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
-
-import { CircleNotch, UploadSimple } from '@phosphor-icons/react';
+import { Control, FieldError } from 'react-hook-form';
 
 import defaultImageAvatar from '@/assets/avatars/avatar-user.jpg';
 import { useImageUrl, useName } from '@/store';
 
 import { Avatar } from '../avatar';
+import { FileUploadInput } from '../input/components/input-file';
 
 interface InputFileProps {
   placeholder?: string;
@@ -20,7 +19,7 @@ interface InputFileProps {
 }
 
 export const InputFile: React.FC<InputFileProps> = ({
-  placeholder = 'Escolher foto',
+  placeholder,
   loading = false,
   hasPreview = false,
   flexCol = false,
@@ -65,46 +64,14 @@ export const InputFile: React.FC<InputFileProps> = ({
         />
       )}
 
-      <label
-        htmlFor="image_url"
-        className={`bg-sky-600 flex items-center gap-3 py-2 px-4 rounded-md transition-all ease-in duration-500 focus-visible:bg-sky-600 text-sm font-medium text-white ${loading ? 'bg-sky-700' : 'hover:bg-sky-500 cursor-pointer'}`}
-      >
-        {loading ? (
-          <CircleNotch
-            weight="bold"
-            color="white"
-            className="size-5 animate-spin"
-          />
-        ) : (
-          <UploadSimple className="size-5 text-white" weight="bold" />
-        )}
-
-        {placeholder}
-      </label>
-
-      <Controller
+      <FileUploadInput
         name={name}
         control={control}
+        placeholder={placeholder}
         defaultValue={defaultValue}
-        render={({ field: { onChange } }) => (
-          <input
-            name={name}
-            id="image_url"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            disabled={loading}
-            onChange={(e) => {
-              onChange(e);
-              handleFileSelected(e);
-            }}
-          />
-        )}
+        error={error}
+        onChangeFileSelected={handleFileSelected}
       />
-
-      {!!error && (
-        <span className="block text-sm text-red-500 mt-1">{error.message}</span>
-      )}
     </div>
   );
 };
