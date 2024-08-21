@@ -66,14 +66,14 @@ export const Avatar: React.FC<AvatarProps> = ({
       {imageUrl !== null ? (
         <img
           data-testid="image-tag"
-          src={imgSrc || imageUrl}
+          src={imgSrc || ''}
           alt={name}
           className="rounded-full overflow-hidden object-cover w-full h-full"
         />
       ) : (
-        <span className="w-full h-full flex justify-center items-center bg-sky-600 text-white font-semibold rounded-full uppercase">
+        <div className="w-full h-full flex justify-center items-center bg-sky-600 text-white font-semibold rounded-full uppercase">
           {initialLetterName}
-        </span>
+        </div>
       )}
     </div>
   );

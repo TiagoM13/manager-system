@@ -42,11 +42,15 @@ export const StyledSidebar = styled.div<IMenuBarProps>`
     height: 100vh;
     width: 100%;
     max-width: 260px;
-    padding: 0.5rem 1rem 1rem;
+    padding: 0.5rem 1rem 2.5rem;
 
     ${(props) => css`
       transform: ${props.showMenu ? 'translateX(0%)' : 'translateX(-100%)'};
     `}
+
+    #btn-close-sidebar {
+      margin-left: auto;
+    }
   }
 
   ${(props) =>
@@ -69,26 +73,6 @@ export const StyledSidebar = styled.div<IMenuBarProps>`
           }
         `
       : null}
-
-  .btn-close-sidebar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--slate-400);
-    border-radius: 9999px;
-    width: 20px;
-    height: 20px;
-
-    margin-left: auto;
-  }
-
-  .btn-close-side-bar:focus-visible {
-    outline-color: var(--sky-500);
-  }
-
-  .btn-close-side-bar:hover {
-    filter: brightness(0.9);
-  }
 `;
 
 export const Aside = styled.aside<IMenuBarProps>`
@@ -107,6 +91,10 @@ export const Aside = styled.aside<IMenuBarProps>`
     width: ${props.showingActionBar ? '75px' : '260px'};
 
     #btn-signup span {
+      opacity: ${props.showingActionBar ? 0 : 1};
+    }
+
+    #btn-edit-profile span {
       opacity: ${props.showingActionBar ? 0 : 1};
     }
 

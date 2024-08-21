@@ -16,12 +16,14 @@ interface InputFileProps {
   name?: any;
   defaultValue?: any;
   error?: FieldError | undefined;
+  flexCol?: boolean;
 }
 
 export const InputFile: React.FC<InputFileProps> = ({
   placeholder = 'Escolher foto',
   loading = false,
   hasPreview = false,
+  flexCol = false,
   defaultValue,
   control,
   error,
@@ -50,7 +52,9 @@ export const InputFile: React.FC<InputFileProps> = ({
   }, [imageUrl]);
 
   return (
-    <div className="flex items-center gap-5 mt-4">
+    <div
+      className={`flex ${flexCol ? 'flex-col' : ''} items-center gap-5 mt-4`}
+    >
       {hasPreview && (
         <Avatar
           className="size-32 text-3xl"
