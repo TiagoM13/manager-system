@@ -2,6 +2,7 @@ import React from 'react';
 import { Controller, FieldValues } from 'react-hook-form';
 import SelectComponent, { StylesConfig } from 'react-select';
 
+import { ErrorMessage } from '../error-message';
 import { ISelectProps } from './interface';
 
 import { Container, SelectContent } from './styles';
@@ -70,34 +71,50 @@ export const Select = <T, Fields extends FieldValues>(
 
       <SelectContent>
         <div id="content">
-          <Controller
-            name={name}
-            control={control}
-            defaultValue={defaultValue}
-            render={({ field: { onChange, value } }) => (
-              <SelectComponent
-                {...props}
-                value={
-                  options?.find((option) => option.label === value) || null
-                }
-                onChange={(option) => onChange(option ? option.label : null)}
-                styles={styles}
-                options={options}
-                isDisabled={disabled}
-                placeholder={placeholder}
-                getOptionLabel={getOptionLabel}
-                getOptionValue={getOptionValue}
-                isSearchable={isSearchable}
-                className={`${disabled ? 'opacity-60' : 'opacity-100'}`}
+          {control ? (
+            <>
+              <Controller
+                name={name}
+                control={control}
+                defaultValue={defaultValue}
+                render={({ field: { onChange, value } }) => (
+                  <SelectComponent
+                    {...props}
+                    value={
+                      options?.find((option) => option.label === value) || null
+                    }
+                    onChange={(option) =>
+                      onChange(option ? option.label : null)
+                    }
+                    styles={styles}
+                    options={options}
+                    isDisabled={disabled}
+                    placeholder={placeholder}
+                    getOptionLabel={getOptionLabel}
+                    getOptionValue={getOptionValue}
+                    isSearchable={isSearchable}
+                    className={`${disabled ? 'opacity-60' : 'opacity-100'}`}
+                  />
+                )}
               />
-            )}
-          />
+            </>
+          ) : (
+            <SelectComponent
+              {...props}
+              styles={styles}
+              options={options}
+              isDisabled={disabled}
+              placeholder={placeholder}
+              getOptionLabel={getOptionLabel}
+              getOptionValue={getOptionValue}
+              isSearchable={isSearchable}
+              className={`${disabled ? 'opacity-60' : 'opacity-100'}`}
+            />
+          )}
         </div>
       </SelectContent>
 
-      {!!error?.message && (
-        <span className="block text-sm text-red-500 mt-1">{error.message}</span>
-      )}
+      <ErrorMessage error={error?.message} />
     </Container>
   );
 };

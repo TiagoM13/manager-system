@@ -18,7 +18,7 @@ interface InputFileProps {
   flexCol?: boolean;
 }
 
-export const InputFile: React.FC<InputFileProps> = ({
+export const UploadAvatar: React.FC<InputFileProps> = ({
   placeholder,
   loading = false,
   hasPreview = false,
@@ -70,6 +70,7 @@ export const InputFile: React.FC<InputFileProps> = ({
         placeholder={placeholder}
         defaultValue={defaultValue}
         error={error}
+        loading={loading}
         onChangeFileSelected={handleFileSelected}
       />
     </div>

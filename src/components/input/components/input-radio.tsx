@@ -1,6 +1,8 @@
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
+import { ErrorMessage } from '@/components/error-message';
+
 interface InputRadioProps {
   required?: boolean;
   disabled?: boolean;
@@ -46,9 +48,7 @@ export const InputRadio: React.FC<InputRadioProps> = ({
         />
       </div>
 
-      {!!error && (
-        <span className="block text-sm text-red-500 mt-1">{error.message}</span>
-      )}
+      <ErrorMessage error={error?.message} />
     </>
   );
 };
@@ -67,21 +67,30 @@ const OptionRadio = ({
 }: OptionRadioProps) => {
   return (
     <div className="flex items-center gap-2.5">
-      <Controller
-        name={name as string}
-        control={control}
-        defaultValue={defaultValue}
-        render={({ field }) => (
-          <input
-            {...field}
-            {...props}
-            checked={field.value === props.value}
-            id={props.id?.toLowerCase()}
-            type="radio"
-            className={`cursor-pointer appearance-none h-[12px] w-[12px] border border-slate-600 rounded-full  transition-all ease-in duration-500 disabled:opacity-60 disabled:cursor-auto checked:bg-sky-600 checked:hover:bg-sky-500 ${!props.disabled ? 'hover:bg-sky-200' : ''}`}
-          />
-        )}
-      />
+      {control ? (
+        <Controller
+          name={name as string}
+          control={control}
+          defaultValue={defaultValue}
+          render={({ field }) => (
+            <input
+              {...field}
+              {...props}
+              checked={field.value === props.value}
+              id={props.id?.toLowerCase()}
+              type="radio"
+              className={`cursor-pointer appearance-none h-[12px] w-[12px] border border-slate-600 rounded-full  transition-all ease-in duration-500 disabled:opacity-60 disabled:cursor-auto checked:bg-sky-600 checked:hover:bg-sky-500 ${!props.disabled ? 'hover:bg-sky-200' : ''}`}
+            />
+          )}
+        />
+      ) : (
+        <input
+          {...props}
+          id={props.id?.toLowerCase()}
+          type="radio"
+          className={`cursor-pointer appearance-none h-[12px] w-[12px] border border-slate-600 rounded-full  transition-all ease-in duration-500 disabled:opacity-60 disabled:cursor-auto checked:bg-sky-600 checked:hover:bg-sky-500 ${!props.disabled ? 'hover:bg-sky-200' : ''}`}
+        />
+      )}
 
       <label
         htmlFor={props.id?.toLowerCase()}
