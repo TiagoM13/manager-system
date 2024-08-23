@@ -3,7 +3,7 @@ import React from 'react';
 import { ListDashes } from '@phosphor-icons/react';
 
 import { useIsAuthenticated, useWindowSize } from '@/hooks';
-import { useMenu, useMenuProfile } from '@/store';
+import { useMenu } from '@/store';
 
 import { CloseButton } from '../icon-button';
 import { Profile } from '../profile';
@@ -17,7 +17,6 @@ export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   // Hooks
   const { showMenu, showingActionBar, toggleMenu, toggleSideBar } = useMenu();
-  const { show } = useMenuProfile();
   const [width] = useWindowSize();
   const isAuthenticated = useIsAuthenticated();
 

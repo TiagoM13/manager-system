@@ -3,12 +3,21 @@ import { useForm } from 'react-hook-form';
 
 import { CircleNotch, Check } from '@phosphor-icons/react';
 
-import { Avatar, Button, CloseButton, Input } from '@/components';
+import {
+  Avatar,
+  Button,
+  CloseButton,
+  FormContainer,
+  FileUploadInput,
+  Input,
+} from '@/components';
 import { useCurrentUser } from '@/hooks';
-import { IChangePasswordData } from '@/interfaces';
+import { IChangePasswordData, IUser } from '@/interfaces';
+import { updateUserService, upladFileService } from '@/services';
 import { useMenuProfile } from '@/store';
-
-import { FileUploadInput } from '../input/components/input-file';
+import { setCurrentUser } from '@/store/modules/auth/actions';
+import { toastError, toastSuccess } from '@/utils';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { StyledProfileMenu } from './styles';
 
@@ -21,11 +30,18 @@ interface IUserProfile extends IChangePasswordData {
 }
 
 export const Profile: React.FC<ProfileProps> = ({ loading }) => {
-  const [avatar, setAvatar] = React.useState<string | null>('');
+  const [initialAvatarUrl, setInitialAvatarUrl] = React.useState<string | null>(
+    null,
+  );
   const [showPasswordInput, setShowPasswordInput] = React.useState(false);
 
-  const { show, toggle } = useMenuProfile();
+  const { show, toggle, avatarUrl, setAvatarUrl } = useMenuProfile();
   const user = useCurrentUser();
+
+  React.useEffect(() => {
+    setAvatarUrl(user.image_url || null);
+    setInitialAvatarUrl(user.image_url || null);
+  }, [setAvatarUrl, user.image_url]);
 
   const methods = useForm<IUserProfile>({
     shouldUnregister: false,
@@ -34,6 +50,47 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
   const { handleSubmit, reset, control } = methods;
 
   const profileRef = React.useRef<HTMLDivElement>(null);
+
+  const queryClient = useQueryClient();
+  const { mutateAsync: updateUser, isPending: isLoadingUpdateUser } =
+    useMutation({
+      mutationFn: async (values: IUser) =>
+        await updateUserService(Number(user.id), values),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['users'] });
+        toastSuccess('Perfil atualizado com sucesso!');
+        toggle(false);
+      },
+    });
+  const { mutateAsync: uploadFile, isPending: isLoadingUploadFile } =
+    useMutation({
+      mutationFn: upladFileService,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['users'] });
+      },
+      onError: () => {
+        toastError('Falha ao processar imagem');
+      },
+    });
+
+  const handleUploadFile = React.useCallback(
+    async (form: HTMLFormElement) => {
+      const formData = new FormData(form);
+      const fileToUpload = formData.get('image_perfil');
+
+      if (fileToUpload && fileToUpload instanceof File) {
+        const uploadFormData = new FormData();
+        uploadFormData.set('file', fileToUpload);
+        const upload = await uploadFile(uploadFormData);
+        const imageUrl = upload?.data.fileUrl as string;
+
+        return imageUrl;
+      }
+
+      return null;
+    },
+    [uploadFile],
+  );
 
   const handleFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -44,14 +101,18 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
 
     const previwURL = URL.createObjectURL(files[0]);
 
-    setAvatar(previwURL);
+    setAvatarUrl(previwURL || null);
   };
 
-  const submit = React.useCallback((values: IUserProfile) => {
-    console.log(values);
-  }, []);
+  // cristal@gmail.com
+  // b14a6z0f
 
-  const icon = loading ? (
+  const isLoading = React.useMemo(
+    () => isLoadingUpdateUser || isLoadingUploadFile,
+    [isLoadingUpdateUser, isLoadingUploadFile],
+  );
+
+  const icon = isLoading ? (
     <CircleNotch weight="bold" color="white" className="size-5 animate-spin" />
   ) : (
     <Check className="size-5" weight="bold" />
@@ -59,9 +120,44 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
 
   const handleToggleMenuProfile = React.useCallback(() => {
     toggle(false);
-    setAvatar('');
+    setAvatarUrl(user.image_url || null);
+    setInitialAvatarUrl(user.image_url || null);
     setShowPasswordInput(false);
-  }, [toggle]);
+  }, [setAvatarUrl, toggle, user.image_url]);
+
+  const submit = React.useCallback(
+    async (values: IUserProfile) => {
+      const formElement = document.querySelector(
+        '#form-profile',
+      ) as HTMLFormElement;
+
+      let uploadedImageUrl: string | null = null;
+
+      // Updated avatar
+      if (avatarUrl !== initialAvatarUrl) {
+        uploadedImageUrl = await handleUploadFile(formElement);
+      }
+
+      // Updated username
+      if (values.name !== user.name) {
+        const response = await updateUser({
+          ...user,
+          name: values.name,
+          image_url: uploadedImageUrl || user.image_url,
+        });
+
+        if (response.data.success) {
+          setCurrentUser(response.data.user!);
+        }
+      }
+
+      // Change password
+      // if (values.password && values.confirm_password) {
+      //   console.log(values.password, values.confirm_password);
+      // }
+    },
+    [avatarUrl, handleUploadFile, initialAvatarUrl, updateUser, user],
+  );
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -80,7 +176,10 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
 
   React.useEffect(() => {
     reset(user);
-  }, [reset, user, show]);
+    if (user.image_url !== null) {
+      setAvatarUrl(user.image_url || null);
+    }
+  }, [reset, setAvatarUrl, show, user]);
 
   return (
     <StyledProfileMenu show={show}>
@@ -92,7 +191,11 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
           onClick={handleToggleMenuProfile}
         />
 
-        <form noValidate onSubmit={handleSubmit(submit)}>
+        <FormContainer
+          id="form-profile"
+          noValidate
+          onSubmit={handleSubmit(submit)}
+        >
           <div className="flex flex-col items-center justify-center px-2">
             <h3 className="text-slate-400 text-lg my-4">Editar Perfil</h3>
 
@@ -100,7 +203,7 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
               <Avatar
                 className="size-32 text-3xl"
                 color="light"
-                imageUrl={avatar || null}
+                imageUrl={avatarUrl || null}
                 name={user.name}
                 loading={loading}
               />
@@ -136,8 +239,8 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
 
                   <Input
                     type="password"
-                    id="password_confirmation"
-                    name="password_confirmation"
+                    id="confirm_password"
+                    name="confirm_password"
                     label="Confirmar Senha"
                     defaultValue=""
                     control={control}
@@ -161,10 +264,11 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
                 label="Salvar dados"
                 icon={icon}
                 className="w-full"
+                disabled={isLoading}
               />
             </div>
           </div>
-        </form>
+        </FormContainer>
       </div>
     </StyledProfileMenu>
   );

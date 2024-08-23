@@ -5,7 +5,7 @@ import { SignOut, UserCircle } from '@phosphor-icons/react';
 import { CircleNotch } from '@phosphor-icons/react/dist/ssr';
 
 import { UserProfile } from '@/components';
-import { useAuth } from '@/hooks';
+import { useAuth, useCurrentUser } from '@/hooks';
 import { useDialog, useMenu, useMenuProfile } from '@/store';
 import { menus } from '@/utils';
 
@@ -16,9 +16,9 @@ export const SideBar: React.FC = () => {
   const location = useLocation();
   const { confirmDialog } = useDialog();
   const { toggleMenu } = useMenu();
-  const { getCurrentUser, logout } = useAuth();
   const { toggle } = useMenuProfile();
-  const user = getCurrentUser();
+  const { logout } = useAuth();
+  const user = useCurrentUser();
 
   const [loading, setLoading] = React.useState(false);
 
