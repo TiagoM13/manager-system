@@ -10,7 +10,7 @@ interface IActions {
   setAvatarUrl: (url?: string | null) => void;
 }
 
-export const initialState: IProfileState = {
+const initialState: IProfileState = {
   show: false,
   avatarUrl: null,
 };
