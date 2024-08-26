@@ -2,10 +2,6 @@ import axios from 'axios';
 
 import { getAuthTokens, getCurrentUser } from '@/store/modules/auth/actions';
 
-export const api = axios.create({
-  baseURL: process.env.VITE_BASE_URL_API,
-});
-
 export const makeMs = (baseURL: string) => {
   const ms = axios.create({
     baseURL,
@@ -20,7 +16,7 @@ export const makeMs = (baseURL: string) => {
     const token = getAuthTokens();
 
     if (token) {
-      const bearerToken = `Bearer ${token}`.replace(/['"]+/g, '');
+      // const bearerToken = `Bearer ${token}`.replace(/['"]+/g, '');
       config.headers.Authorization = token;
     }
 

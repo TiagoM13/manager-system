@@ -43,8 +43,8 @@ export const createUserService = async (data: IUser) => {
   }
 };
 
-export const updateUserService = (id: number, data: IUser) => {
-  return msHosp.put<IMSResponse<IUser, 'user'>>(`/users/${id}`, data);
+export const updateUserService = async (id: number, data: IUser) => {
+  return await msHosp.put<IMSResponse<IUser, 'user'>>(`/users/${id}`, data);
 };
 
 export const deleteUserService = async (id: number) => {

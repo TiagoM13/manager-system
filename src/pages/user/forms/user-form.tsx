@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Card, InputFile, Select, Input } from '@/components';
+import { Card, UploadAvatar, Select, Input } from '@/components';
 import { UserTypes } from '@/enums';
 import { IUser } from '@/interfaces';
 
@@ -29,7 +29,7 @@ export const UserForm: React.FC<UserFormProps> = ({
   return (
     <Card title="Informações do usuário" className="px-6" bordered>
       <div className="space-y-4 mb-20">
-        <InputFile
+        <UploadAvatar
           name="image_url"
           control={control}
           placeholder={isNew ? 'Escolher foto' : 'Alterar foto'}

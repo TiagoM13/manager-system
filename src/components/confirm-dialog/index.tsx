@@ -14,7 +14,9 @@ export const ConfirmDialog: React.FC = () => {
     <Dialog isOpen={isOpen} onClose={closeDialog}>
       <div className="flex flex-col items-center w-full">
         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-500/10">
-          <WarningCircle className="size-10 text-red-400" weight="regular" />
+          {config?.icon || (
+            <WarningCircle className="size-10 text-red-400" weight="regular" />
+          )}
         </div>
         <div className="text-center mt-4">
           <h2 className="text-xl font-semibold">
@@ -25,17 +27,21 @@ export const ConfirmDialog: React.FC = () => {
       </div>
 
       <div className="flex justify-end gap-4 mt-10">
-        <Button
-          label={config?.rejectLabel || 'Não'}
-          variable="secondary"
-          icon={<X className="size-4" weight="bold" />}
-          onClick={closeDialog}
-          className="w-full"
-        />
+        {config?.rejectLabel && (
+          <Button
+            label={config?.rejectLabel || 'Não'}
+            variable={config?.rejectBtnColor || 'secondary'}
+            icon={config?.rejectIcon || <X className="size-4" weight="bold" />}
+            onClick={closeDialog}
+            className="w-full"
+          />
+        )}
         <Button
           label={config?.acceptLabel || 'Sim'}
-          variable="danger"
-          icon={<Trash className="size-4" weight="bold" />}
+          variable={config?.acceptBtnColor || 'danger'}
+          icon={
+            config?.acceptIcon || <Trash className="size-4" weight="bold" />
+          }
           onClick={() => {
             config?.accept();
             closeDialog();

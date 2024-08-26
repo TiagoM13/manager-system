@@ -32,7 +32,6 @@ export const UsersFilters: React.FC<UserFiltersProps> = ({ loading }) => {
         <div className="flex gap-2.5">
           <InputSearch
             name="name"
-            loading={loading}
             control={control}
             value={query.name || ''}
             disabled={loading}
