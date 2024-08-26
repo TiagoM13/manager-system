@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { CircleNotch, Check } from '@phosphor-icons/react';
 
@@ -11,13 +12,18 @@ import {
   FileUploadInput,
   Input,
 } from '@/components';
-import { useCurrentUser } from '@/hooks';
+import { useAuth, useCurrentUser } from '@/hooks';
 import { IChangePasswordData, IUser } from '@/interfaces';
-import { updateUserService, upladFileService } from '@/services';
+import {
+  changePasswordService,
+  updateUserService,
+  upladFileService,
+} from '@/services';
 import { useMenuProfile } from '@/store';
-import { setCurrentUser } from '@/store/modules/auth/actions';
-import { toastError, toastSuccess } from '@/utils';
+import { toastError, toastSuccess, toastWarning } from '@/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { profileSchema } from './schemas';
 
 import { StyledProfileMenu } from './styles';
 
@@ -30,27 +36,43 @@ interface IUserProfile extends IChangePasswordData {
 }
 
 export const Profile: React.FC<ProfileProps> = ({ loading }) => {
+  // States
   const [initialAvatarUrl, setInitialAvatarUrl] = React.useState<string | null>(
     null,
   );
   const [showPasswordInput, setShowPasswordInput] = React.useState(false);
 
-  const { show, toggle, avatarUrl, setAvatarUrl } = useMenuProfile();
+  // Hooks
+  const navigate = useNavigate();
+  const location = useLocation();
   const user = useCurrentUser();
+  const { setCurrentUser, logout } = useAuth();
+  const { show, toggle, avatarUrl, setAvatarUrl } = useMenuProfile();
 
-  React.useEffect(() => {
-    setAvatarUrl(user.image_url || null);
-    setInitialAvatarUrl(user.image_url || null);
-  }, [setAvatarUrl, user.image_url]);
-
+  // Forms
   const methods = useForm<IUserProfile>({
+    resolver: profileSchema,
     shouldUnregister: false,
   });
 
-  const { handleSubmit, reset, control } = methods;
+  const {
+    handleSubmit,
+    reset,
+    control,
+    watch,
+    formState: { errors },
+  } = methods;
 
+  const [name, password, confirm_password] = watch([
+    'name',
+    'password',
+    'confirm_password',
+  ]);
+
+  // Refs
   const profileRef = React.useRef<HTMLDivElement>(null);
 
+  // Mutations
   const queryClient = useQueryClient();
   const { mutateAsync: updateUser, isPending: isLoadingUpdateUser } =
     useMutation({
@@ -72,6 +94,75 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
         toastError('Falha ao processar imagem');
       },
     });
+  const { mutateAsync: changePassword, isPending: isLoadingChangePassword } =
+    useMutation({
+      mutationFn: async (values: IChangePasswordData) =>
+        changePasswordService(user.id, values),
+      onSuccess: () => {
+        toastWarning(
+          'Sua senha foi alterada! Por favor, faça login novamente.',
+        );
+        toggle(false);
+      },
+    });
+
+  const handleFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+
+    if (!files) {
+      return;
+    }
+
+    const previwURL = URL.createObjectURL(files[0]);
+
+    setAvatarUrl(previwURL || null);
+  };
+
+  // Memos
+  const isLoading = React.useMemo(
+    () => isLoadingUpdateUser || isLoadingUploadFile || isLoadingChangePassword,
+    [isLoadingChangePassword, isLoadingUpdateUser, isLoadingUploadFile],
+  );
+
+  const disableSubmitButton = React.useMemo(
+    () =>
+      isLoading ||
+      (avatarUrl === user.image_url &&
+        name === user.name &&
+        password === undefined &&
+        confirm_password === undefined),
+    [
+      avatarUrl,
+      confirm_password,
+      isLoading,
+      name,
+      password,
+      user.image_url,
+      user.name,
+    ],
+  );
+
+  const icon = React.useMemo(
+    () =>
+      isLoading ? (
+        <CircleNotch
+          weight="bold"
+          color="white"
+          className="size-5 animate-spin"
+        />
+      ) : (
+        <Check className="size-5" weight="bold" />
+      ),
+    [isLoading],
+  );
+
+  // Callbacks
+  const handleToggleMenuProfile = React.useCallback(() => {
+    toggle(false);
+    setAvatarUrl(user.image_url || null);
+    setInitialAvatarUrl(user.image_url || null);
+    setShowPasswordInput(false);
+  }, [setAvatarUrl, toggle, user.image_url]);
 
   const handleUploadFile = React.useCallback(
     async (form: HTMLFormElement) => {
@@ -92,38 +183,16 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
     [uploadFile],
   );
 
-  const handleFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = event.target;
+  const handleExit = React.useCallback(async () => {
+    const response = await logout();
 
-    if (!files) {
-      return;
+    if (response) {
+      navigate('/sign-in', {
+        state: location.state,
+        replace: true,
+      });
     }
-
-    const previwURL = URL.createObjectURL(files[0]);
-
-    setAvatarUrl(previwURL || null);
-  };
-
-  // cristal@gmail.com
-  // b14a6z0f
-
-  const isLoading = React.useMemo(
-    () => isLoadingUpdateUser || isLoadingUploadFile,
-    [isLoadingUpdateUser, isLoadingUploadFile],
-  );
-
-  const icon = isLoading ? (
-    <CircleNotch weight="bold" color="white" className="size-5 animate-spin" />
-  ) : (
-    <Check className="size-5" weight="bold" />
-  );
-
-  const handleToggleMenuProfile = React.useCallback(() => {
-    toggle(false);
-    setAvatarUrl(user.image_url || null);
-    setInitialAvatarUrl(user.image_url || null);
-    setShowPasswordInput(false);
-  }, [setAvatarUrl, toggle, user.image_url]);
+  }, [location.state, logout, navigate]);
 
   const submit = React.useCallback(
     async (values: IUserProfile) => {
@@ -139,10 +208,10 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
       }
 
       // Updated username
-      if (values.name !== user.name) {
+      if (values.name !== user.name || avatarUrl !== initialAvatarUrl) {
         const response = await updateUser({
           ...user,
-          name: values.name,
+          name: values.name || user.name,
           image_url: uploadedImageUrl || user.image_url,
         });
 
@@ -152,13 +221,30 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
       }
 
       // Change password
-      // if (values.password && values.confirm_password) {
-      //   console.log(values.password, values.confirm_password);
-      // }
+      if (values.password && values.confirm_password) {
+        const response = await changePassword({
+          password: values.password,
+          confirm_password: values.confirm_password,
+        });
+
+        if (response) {
+          handleExit();
+        }
+      }
     },
-    [avatarUrl, handleUploadFile, initialAvatarUrl, updateUser, user],
+    [
+      avatarUrl,
+      changePassword,
+      handleExit,
+      handleUploadFile,
+      initialAvatarUrl,
+      setCurrentUser,
+      updateUser,
+      user,
+    ],
   );
 
+  // Effects
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -180,6 +266,14 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
       setAvatarUrl(user.image_url || null);
     }
   }, [reset, setAvatarUrl, show, user]);
+
+  React.useEffect(() => {
+    setAvatarUrl(user.image_url || null);
+    setInitialAvatarUrl(user.image_url || null);
+  }, [setAvatarUrl, user.image_url]);
+
+  // cristal@gmail.com
+  // novasenha123
 
   return (
     <StyledProfileMenu show={show}>
@@ -220,6 +314,7 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
                 name="name"
                 label="Nome"
                 defaultValue=""
+                error={errors.name}
                 control={control}
                 placeholder="Digite seu nome completo"
               />
@@ -233,8 +328,8 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
                     label="Nova Senha"
                     defaultValue=""
                     control={control}
+                    error={errors.password}
                     placeholder="Digite sua nova senha"
-                    required
                   />
 
                   <Input
@@ -244,8 +339,8 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
                     label="Confirmar Senha"
                     defaultValue=""
                     control={control}
+                    error={errors.confirm_password}
                     placeholder="Confirme sua senha"
-                    required
                   />
                 </>
               ) : (
@@ -263,8 +358,8 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
                 type="submit"
                 label="Salvar dados"
                 icon={icon}
-                className="w-full"
-                disabled={isLoading}
+                className="w-full disabled:cursor-not-allowed"
+                disabled={disableSubmitButton}
               />
             </div>
           </div>

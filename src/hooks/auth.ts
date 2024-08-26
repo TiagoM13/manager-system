@@ -2,8 +2,15 @@ import { IUser } from '@/interfaces';
 import { useAuthStore } from '@/store';
 
 export const useAuth = () => {
-  const { token, user, getAuthTokens, getCurrentUser, logout } =
-    useAuthStore.getState();
+  const {
+    token,
+    user,
+    getAuthTokens,
+    getCurrentUser,
+    logout,
+    setCurrentUser,
+    setAuthTokens,
+  } = useAuthStore.getState();
   const { loading, loadingError, data } = user;
 
   return {
@@ -13,6 +20,8 @@ export const useAuth = () => {
     loadingError,
     getAuthTokens,
     getCurrentUser,
+    setCurrentUser,
+    setAuthTokens,
     logout,
   };
 };

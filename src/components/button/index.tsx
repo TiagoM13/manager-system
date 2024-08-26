@@ -2,7 +2,7 @@ import React from 'react';
 
 import { twMerge } from 'tailwind-merge';
 
-enum Variables {
+export enum Variables {
   primary = 'primary',
   danger = 'danger',
   success = 'success',

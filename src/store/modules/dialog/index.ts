@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 
+import { Variables } from '@/components';
+
 import { closeDialog, confirmDialog, openDialog } from './actions';
 
 export interface ConfirmDialogConfig {
@@ -9,6 +11,10 @@ export interface ConfirmDialogConfig {
   accept: () => void;
   acceptLabel?: string;
   rejectLabel?: string;
+  rejectBtnColor?: keyof typeof Variables;
+  acceptBtnColor?: keyof typeof Variables;
+  acceptIcon?: React.ReactNode;
+  rejectIcon?: React.ReactNode;
 }
 
 interface IStateDialog {
