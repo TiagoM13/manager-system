@@ -1,12 +1,20 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { useIsAuthenticated } from '@/hooks';
+import { UserTypes } from '@/enums';
+import { useCurrentUser, useIsAuthenticated } from '@/hooks';
 
-export const PrivateRoute: React.FC<{ children: JSX.Element }> = ({
+type PrivateRouteProps = {
+  children: JSX.Element;
+  allowedRoles?: UserTypes[];
+};
+
+export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   children,
+  allowedRoles,
 }) => {
   const isAuthenticated = useIsAuthenticated();
+  const user = useCurrentUser();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -17,12 +25,25 @@ export const PrivateRoute: React.FC<{ children: JSX.Element }> = ({
         replace: true,
       });
     }
-  }, [isAuthenticated, location.pathname, location.state, navigate]);
+
+    if (isAuthenticated && !allowedRoles?.includes(user.user_type)) {
+      navigate('/dashboard', {
+        state: location.state,
+      });
+    }
+  }, [
+    allowedRoles,
+    isAuthenticated,
+    location.pathname,
+    location.state,
+    navigate,
+    user.user_type,
+  ]);
 
   return (
     <>
       {!isAuthenticated && null}
-      {isAuthenticated && children}
+      {isAuthenticated && allowedRoles?.includes(user.user_type) && children}
     </>
   );
 };

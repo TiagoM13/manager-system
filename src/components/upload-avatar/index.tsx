@@ -10,6 +10,7 @@ import { FileUploadInput } from '../input/components/input-file';
 interface InputFileProps {
   placeholder?: string;
   loading?: boolean;
+  disabled?: boolean;
   hasPreview?: boolean;
   control: Control<any>;
   name?: any;
@@ -21,6 +22,7 @@ interface InputFileProps {
 export const UploadAvatar: React.FC<InputFileProps> = ({
   placeholder,
   loading = false,
+  disabled = false,
   hasPreview = false,
   flexCol = false,
   defaultValue,
@@ -71,6 +73,7 @@ export const UploadAvatar: React.FC<InputFileProps> = ({
         defaultValue={defaultValue}
         error={error}
         loading={loading}
+        disabled={disabled}
         onChangeFileSelected={handleFileSelected}
       />
     </div>

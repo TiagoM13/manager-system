@@ -272,9 +272,6 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
     setInitialAvatarUrl(user.image_url || null);
   }, [setAvatarUrl, user.image_url]);
 
-  // cristal@gmail.com
-  // novasenha123
-
   return (
     <StyledProfileMenu show={show}>
       <div ref={profileRef} className="overlay"></div>

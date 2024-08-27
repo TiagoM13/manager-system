@@ -1,8 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { SignOut, UserCircle } from '@phosphor-icons/react';
-import { CircleNotch } from '@phosphor-icons/react/dist/ssr';
+import { SignOut, UserCircle, CircleNotch } from '@phosphor-icons/react';
 
 import { UserProfile } from '@/components';
 import { useAuth, useCurrentUser } from '@/hooks';
@@ -59,14 +58,16 @@ export const SideBar: React.FC = () => {
           />
 
           <div className="mt-12 space-y-6">
-            {menus.map((menu, index) => (
-              <MenuItem
-                key={`${menu.title}-${index}`}
-                title={menu.title}
-                icon={menu.icon}
-                url={menu.url}
-              />
-            ))}
+            {menus
+              .filter((item) => item.roles.includes(user.user_type))
+              .map((menu, index) => (
+                <MenuItem
+                  key={`${menu.title}-${index}`}
+                  title={menu.title}
+                  icon={menu.icon}
+                  url={menu.url}
+                />
+              ))}
           </div>
         </div>
 
