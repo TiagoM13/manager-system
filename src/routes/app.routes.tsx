@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { AppWrapper, InitializerLoader } from '@/components';
-import { UserTypes } from '@/enums';
 import { useIsAuthenticated } from '@/hooks';
 import { ForgotPasswordPage, SignInPage } from '@/pages/auth';
 
@@ -30,6 +29,7 @@ export const Router: React.FC = () => {
       if (['/'].includes(window.location.pathname)) {
         navigate('/sign-in', { replace: true });
       }
+      navigate('/sign-in', { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
@@ -59,14 +59,7 @@ export const Router: React.FC = () => {
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute
-                allowedRoles={[
-                  UserTypes.ADMIN,
-                  UserTypes.CLINICAL,
-                  UserTypes.EDITOR,
-                  UserTypes.NO_TYPE,
-                ]}
-              >
+              <PrivateRoute allowedRoles={[0, 1, 2]}>
                 <Dashboard />
               </PrivateRoute>
             }
@@ -74,7 +67,7 @@ export const Router: React.FC = () => {
           <Route
             path="/users"
             element={
-              <PrivateRoute allowedRoles={[UserTypes.ADMIN]}>
+              <PrivateRoute allowedRoles={[0]}>
                 <Users />
               </PrivateRoute>
             }
@@ -82,7 +75,7 @@ export const Router: React.FC = () => {
           <Route
             path="/users/:id"
             element={
-              <PrivateRoute allowedRoles={[UserTypes.ADMIN]}>
+              <PrivateRoute allowedRoles={[0]}>
                 <User />
               </PrivateRoute>
             }
@@ -90,13 +83,7 @@ export const Router: React.FC = () => {
           <Route
             path="/patients"
             element={
-              <PrivateRoute
-                allowedRoles={[
-                  UserTypes.ADMIN,
-                  UserTypes.EDITOR,
-                  UserTypes.CLINICAL,
-                ]}
-              >
+              <PrivateRoute allowedRoles={[0, 1, 2]}>
                 <Patients />
               </PrivateRoute>
             }

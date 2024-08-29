@@ -59,7 +59,7 @@ export const SideBar: React.FC = () => {
 
           <div className="mt-12 space-y-6">
             {menus
-              .filter((item) => item.roles.includes(user.user_type))
+              .filter((item) => item.roles.includes(user.role))
               .map((menu, index) => (
                 <MenuItem
                   key={`${menu.title}-${index}`}

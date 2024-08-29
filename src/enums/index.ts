@@ -1,2 +1,2 @@
-export * from './user-types';
+export * from './role';
 export * from './status';

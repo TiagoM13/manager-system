@@ -9,8 +9,8 @@ import {
 import { OptionProps, GroupBase } from 'react-select';
 import { AsyncProps } from 'react-select/async';
 
-type Option = {
-  id: number;
+export type Option = {
+  value: number;
   label: string;
 };
 

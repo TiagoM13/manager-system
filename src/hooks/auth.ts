@@ -1,4 +1,4 @@
-import { UserTypes } from '@/enums';
+import { Role } from '@/enums';
 import { IUser } from '@/interfaces';
 import { useAuthStore } from '@/store';
 
@@ -42,9 +42,9 @@ export const useIsAuthenticated = () => {
 export const usePermissions = () => {
   const user = useCurrentUser();
 
-  const isAdmin = user.user_type === UserTypes.ADMIN;
-  const isEdit = user.user_type === UserTypes.EDITOR;
-  const isDoctor = user.user_type === UserTypes.CLINICAL;
+  const isAdmin = user.role === Role.ADMIN;
+  const isEdit = user.role === Role.EDITOR;
+  const isDoctor = user.role === Role.CLINICAL;
 
   return { isAdmin, isEdit, isDoctor };
 };

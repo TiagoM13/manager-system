@@ -159,7 +159,9 @@ const User: React.FC = () => {
       ) as HTMLFormElement;
 
       const isValidImageUrl =
-        values.image_url !== null && values.image_url !== user?.image_url;
+        values.image_url !== null &&
+        values.image_url !== undefined &&
+        values.image_url !== user?.image_url;
 
       let uploadedImageUrl = '';
 

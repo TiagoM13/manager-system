@@ -1,12 +1,11 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { UserTypes } from '@/enums';
 import { useCurrentUser, useIsAuthenticated } from '@/hooks';
 
 type PrivateRouteProps = {
   children: JSX.Element;
-  allowedRoles?: UserTypes[];
+  allowedRoles?: number[];
 };
 
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({
@@ -26,7 +25,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
       });
     }
 
-    if (isAuthenticated && !allowedRoles?.includes(user.user_type)) {
+    if (isAuthenticated && !allowedRoles?.includes(user.role)) {
       navigate('/dashboard', {
         state: location.state,
       });
@@ -37,13 +36,13 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
     location.pathname,
     location.state,
     navigate,
-    user.user_type,
+    user.role,
   ]);
 
   return (
     <>
       {!isAuthenticated && null}
-      {isAuthenticated && allowedRoles?.includes(user.user_type) && children}
+      {isAuthenticated && allowedRoles?.includes(user.role) && children}
     </>
   );
 };
