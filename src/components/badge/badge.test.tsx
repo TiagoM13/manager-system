@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Status, UserTypes } from '@/enums';
+import { Role, Status, UserTypes } from '@/enums';
 import { render } from '@testing-library/react';
 
 import { Badge } from '.';
 
 describe('<Badge />', () => {
   test('should render correctly component', () => {
-    const { getByTestId, getByText } = render(<Badge type={UserTypes.ADMIN} />);
+    const { getByTestId, getByText } = render(<Badge type={Role.ADMIN} />);
 
     const container = getByTestId('badge-container');
 
@@ -16,9 +16,7 @@ describe('<Badge />', () => {
   });
 
   test('should render correctly className', () => {
-    const { getByTestId, getByText } = render(
-      <Badge type={UserTypes.EDITOR} />,
-    );
+    const { getByTestId, getByText } = render(<Badge type={Role.EDITOR} />);
 
     const container = getByTestId('badge-container');
 
