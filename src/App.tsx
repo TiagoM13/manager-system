@@ -8,8 +8,10 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/pt-br';
 
 import { ConfirmDialog, InitializerLoader } from '@/components';
+import { useUserRoleObservable, useUserStatusObservable } from '@/hooks';
 import { Router } from '@/routes';
 import { queryClient } from '@/services';
+import { userObservable } from '@/utils';
 import { QueryClientProvider } from '@tanstack/react-query';
 
 dayjs.extend(relativeTime);
@@ -18,12 +20,16 @@ dayjs.locale('pt-br');
 const App = () => {
   const [ready, setReady] = React.useState(true);
 
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      setReady(false);
-    }, 3000);
+  useUserRoleObservable();
+  useUserStatusObservable();
 
-    return () => clearTimeout(timer);
+  React.useEffect(() => {
+    const intervalId = setInterval(async () => {
+      await userObservable();
+    }, 1800000); // 3min
+    setReady(false);
+
+    return () => clearInterval(intervalId);
   }, [ready]);
 
   if (ready) {

@@ -24,6 +24,7 @@ import {
 } from '@/services';
 import { useImageUrl, useName } from '@/store';
 import { toastSuccess, backWithQuery, toastError } from '@/utils';
+import { handleAPIErrors } from '@/utils/common';
 import {
   useMutation,
   useQueryClient,
@@ -47,7 +48,15 @@ const User: React.FC = () => {
   const queryClient = useQueryClient();
   const { data: user, isLoading } = useQueryUser({
     queryKey: ['user'],
-    queryFn: async () => await getUserService(Number(id)),
+    queryFn: async () => {
+      try {
+        const user = await getUserService(Number(id));
+        return user;
+      } catch (error) {
+        handleAPIErrors(error);
+        return;
+      }
+    },
     enabled: !newUser,
   });
   const { mutateAsync: createUser, isPending: isLoadingCreateUser } =
