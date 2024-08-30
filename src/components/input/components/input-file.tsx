@@ -33,12 +33,17 @@ export const FileUploadInput: React.FC<FileUploadButtonProps> = ({
     >
       {loading ? (
         <CircleNotch
+          data-testid="loading-icon"
           weight="bold"
           color="white"
           className="size-5 animate-spin"
         />
       ) : (
-        <UploadSimple className="size-5 text-white" weight="bold" />
+        <UploadSimple
+          data-testid="upload-icon"
+          className="size-5 text-white"
+          weight="bold"
+        />
       )}
 
       {placeholder}

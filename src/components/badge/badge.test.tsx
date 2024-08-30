@@ -26,7 +26,7 @@ describe('<Badge />', () => {
   });
 
   test('should render correctly status active', () => {
-    const { getByTestId, getByText, queryAllByText } = render(
+    const { asFragment, getByTestId, getByText, queryAllByText } = render(
       <Badge type={Status.ACTIVE} />,
     );
 
@@ -36,5 +36,7 @@ describe('<Badge />', () => {
     expect(queryAllByText(Status.INACTIVE).length).not.toBeTruthy();
     expect(container).toHaveClass('bg-emerald-400');
     expect(container).not.toHaveClass('bg-slate-300');
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });
