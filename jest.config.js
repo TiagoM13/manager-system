@@ -4,7 +4,7 @@ module.exports = {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest/setup.ts'],
   moduleNameMapper: {
-    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/jest/__mocks__/setupMock.js',
+    '\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/src/__mocks__/fileMock.js',
     '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
     'react-loading-skeleton/dist/skeleton.css': 'identity-obj-proxy',
     '^@/(.*)$': '<rootDir>/src/$1',

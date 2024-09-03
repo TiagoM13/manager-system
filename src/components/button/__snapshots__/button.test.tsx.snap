@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Button /> should render correctly colors variables in the button 1`] = `
+<DocumentFragment>
+  <button
+    class="bg-red-600 outline-red-500 hover:bg-red-500 disabled:bg-red-700 rounded-lg py-2.5 px-3 font-medium text-sm text-white flex gap-2 items-center justify-center"
+    data-testid="btn-teste"
+  >
+    Delete
+  </button>
+</DocumentFragment>
+`;

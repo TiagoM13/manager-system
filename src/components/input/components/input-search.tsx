@@ -37,7 +37,12 @@ export const InputSearch: React.FC<InputSearchProps> = ({
       )}
 
       <div className="flex items-center bg-sky-600 disabled:bg-sky-700 rounded-r-lg py-1 px-2.5 h-[36px]">
-        <MagnifyingGlass weight="bold" color="white" className="size-5" />
+        <MagnifyingGlass
+          data-testid="icon-search"
+          weight="bold"
+          color="white"
+          className="size-5"
+        />
       </div>
     </div>
   );

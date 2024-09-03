@@ -12,9 +12,14 @@ export const HeaderActions: React.FC<HeaderProps> = ({
   loading,
 }) => {
   const icon = loading ? (
-    <CircleNotch weight="bold" color="white" className="size-5 animate-spin" />
+    <CircleNotch
+      data-testid="icon-loading"
+      weight="bold"
+      color="white"
+      className="size-5 animate-spin"
+    />
   ) : (
-    <Check className="size-5" weight="bold" />
+    <Check data-testid="icon-check" className="size-5" weight="bold" />
   );
 
   return (

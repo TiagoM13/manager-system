@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Dialog/> should render correctly component 1`] = `
+<DocumentFragment>
+  <div
+    aria-labelledby="modal-title"
+    aria-modal="true"
+    class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-50"
+    role="dialog"
+  >
+    <div
+      class="bg-white rounded-lg shadow-lg max-w-md w-full p-4"
+    >
+      <div
+        class="flex justify-between items-center mb-2"
+      >
+        <h2
+          class="text-xl font-semibold"
+          id="modal-title"
+        >
+          Titulo do Dialog
+        </h2>
+        <button
+          aria-label="Close modal"
+          class="text-slate-600 rounded-full p-[0.125rem] hover:bg-slate-200"
+          data-testid="btn-close-dialog"
+        >
+          <svg
+            class="size-5"
+            fill="currentColor"
+            height="1em"
+            viewBox="0 0 256 256"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div>
+        <div>
+          conteudo
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
