@@ -2,5 +2,10 @@ export enum UserTypes {
   ADMIN = 'administrador',
   EDITOR = 'editor',
   CLINICAL = 'clínico',
-  NO_TYPE = 'não definido',
+}
+
+export enum Role {
+  ADMIN = 0,
+  EDITOR = 1,
+  CLINICAL = 2,
 }

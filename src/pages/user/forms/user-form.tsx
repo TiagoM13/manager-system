@@ -2,7 +2,6 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Card, UploadAvatar, Select, Input } from '@/components';
-import { UserTypes } from '@/enums';
 import { IUser } from '@/interfaces';
 
 interface UserFormProps {
@@ -21,10 +20,12 @@ export const UserForm: React.FC<UserFormProps> = ({
     setValue,
     formState: { errors },
   } = useFormContext<IUser>();
-  const selectOptions = Object.values(UserTypes).map((label, index) => ({
-    id: index,
-    label,
-  }));
+
+  const selectOptions = [
+    { value: 0, label: 'adiministrador' },
+    { value: 1, label: 'editor' },
+    { value: 2, label: 'clínico' },
+  ];
 
   return (
     <Card title="Informações do usuário" className="px-6" bordered>
@@ -35,6 +36,7 @@ export const UserForm: React.FC<UserFormProps> = ({
           placeholder={isNew ? 'Escolher foto' : 'Alterar foto'}
           error={errors.image_url}
           loading={loading}
+          disabled={!isUpdatingItself && !isNew}
           hasPreview
         />
 
@@ -67,14 +69,16 @@ export const UserForm: React.FC<UserFormProps> = ({
 
           <Select
             control={control}
-            name="user_type"
+            name="role"
             label="Tipo de usuário"
             defaultValue=""
             placeholder="Selcione um tipo de usuário"
             options={selectOptions}
             disabled={loading || isUpdatingItself}
             setValue={setValue}
-            error={errors.user_type}
+            error={errors.role}
+            valueAs="value"
+            labelAs="label"
             required
           />
         </div>

@@ -16,14 +16,14 @@ export const makeMs = (baseURL: string) => {
     const token = getAuthTokens();
 
     if (token) {
-      // const bearerToken = `Bearer ${token}`.replace(/['"]+/g, '');
-      config.headers.Authorization = token;
+      const bearerToken = `Bearer ${token}`.replace(/['"]+/g, '');
+      config.headers.Authorization = bearerToken;
     }
 
     const user = getCurrentUser();
 
-    if (typeof user?.user_type !== 'undefined') {
-      config.headers.role = user.user_type;
+    if (typeof user?.role !== 'undefined') {
+      config.headers.role = user.role;
     }
 
     return config;

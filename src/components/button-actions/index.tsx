@@ -42,12 +42,17 @@ export const ButtonActions: React.FC<ButtonActionsProps> = ({
   return (
     <div className="relative">
       <button
+        data-testid="btn-actions"
         {...props}
         ref={buttonRef}
         onClick={(event) => handleToggleActiveActions(event)}
         className="bg-white hover:bg-slate-200/50 border border-slate-400/50 rounded-md p-1.5 duration-300 disabled:bg-slate-300/50 disabled:hover:bg-slate-300/50 outline-slate-400"
       >
-        <DotsThreeOutline className="size-4 text-slate-800" weight="fill" />
+        <DotsThreeOutline
+          data-testid="icon-btn"
+          className="size-4 text-slate-800"
+          weight="fill"
+        />
       </button>
 
       <div

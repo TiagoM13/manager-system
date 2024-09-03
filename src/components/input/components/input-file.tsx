@@ -9,6 +9,7 @@ interface FileUploadButtonProps {
   placeholder?: string;
   defaultValue?: string;
   loading?: boolean;
+  disabled?: boolean;
   control?: Control;
   error?: FieldError | undefined;
   name: string;
@@ -18,6 +19,7 @@ interface FileUploadButtonProps {
 export const FileUploadInput: React.FC<FileUploadButtonProps> = ({
   placeholder = 'Escolher foto',
   loading = false,
+  disabled = false,
   defaultValue,
   onChangeFileSelected,
   control,
@@ -27,16 +29,21 @@ export const FileUploadInput: React.FC<FileUploadButtonProps> = ({
   return (
     <label
       htmlFor={name}
-      className={`bg-sky-600 flex items-center gap-3 py-2 px-4 rounded-md transition-all ease-in duration-500 focus-visible:bg-sky-600 text-sm font-medium text-white ${loading ? 'bg-sky-700' : 'hover:bg-sky-500 cursor-pointer'}`}
+      className={`bg-sky-600 flex items-center gap-3 py-2 px-4 rounded-md transition-all ease-in duration-500 focus-visible:bg-sky-600 text-sm font-medium text-white ${loading || disabled ? 'bg-sky-700' : 'hover:bg-sky-500 cursor-pointer'}`}
     >
       {loading ? (
         <CircleNotch
+          data-testid="loading-icon"
           weight="bold"
           color="white"
           className="size-5 animate-spin"
         />
       ) : (
-        <UploadSimple className="size-5 text-white" weight="bold" />
+        <UploadSimple
+          data-testid="upload-icon"
+          className="size-5 text-white"
+          weight="bold"
+        />
       )}
 
       {placeholder}
@@ -53,7 +60,7 @@ export const FileUploadInput: React.FC<FileUploadButtonProps> = ({
               type="file"
               accept="image/*"
               className="hidden"
-              disabled={loading}
+              disabled={loading || disabled}
               onChange={(e) => {
                 onChange(e);
                 onChangeFileSelected(e);
@@ -68,7 +75,7 @@ export const FileUploadInput: React.FC<FileUploadButtonProps> = ({
           type="file"
           accept="image/*"
           className="hidden"
-          disabled={loading}
+          disabled={loading || disabled}
           onChange={onChangeFileSelected}
         />
       )}

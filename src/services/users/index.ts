@@ -22,16 +22,8 @@ export const getAllUsersService = async (params: IUsersFilters) => {
 };
 
 export const getUserService = async (id: number) => {
-  try {
-    const { data } = await msHosp.get<IMSResponse<IUser, 'user'>>(
-      `/users/${id}`,
-    );
-
-    return data.user;
-  } catch (error) {
-    handleAPIErrors(error);
-    return null;
-  }
+  const { data } = await msHosp.get<IMSResponse<IUser, 'user'>>(`/users/${id}`);
+  return data.user;
 };
 
 export const createUserService = async (data: IUser) => {

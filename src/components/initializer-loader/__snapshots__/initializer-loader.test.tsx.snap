@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InitializerLoader/> should render correctly component 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-braxZu dLKaNW"
+  >
+    <span
+      class="loader"
+      data-testid="icon-loader"
+    />
+    <span
+      class="text-2xl text-sky-600 font-medium"
+    >
+      Carregando...
+    </span>
+  </div>
+</DocumentFragment>
+`;

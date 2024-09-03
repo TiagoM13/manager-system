@@ -3,14 +3,9 @@ import { Controller, FieldValues } from 'react-hook-form';
 import SelectComponent, { StylesConfig } from 'react-select';
 
 import { ErrorMessage } from '../error-message';
-import { ISelectProps } from './interface';
+import { ISelectProps, Option } from './interface';
 
 import { Container, SelectContent } from './styles';
-
-type Option = {
-  id: number;
-  label: string;
-};
 
 const styles: StylesConfig<Option, false> = {
   control: (provided, state) => ({
@@ -61,7 +56,7 @@ export const Select = <T, Fields extends FieldValues>(
   const getOptionLabel = (option: any) =>
     labelAs ? option[labelAs] || '' : option.label || '';
   const getOptionValue = (option: any) =>
-    valueAs ? option[valueAs] || '' : option.id || '';
+    valueAs ? option[valueAs] || '' : option.value || '';
 
   return (
     <Container>
@@ -81,10 +76,10 @@ export const Select = <T, Fields extends FieldValues>(
                   <SelectComponent
                     {...props}
                     value={
-                      options?.find((option) => option.label === value) || null
+                      options?.find((option) => option.value === value) || null
                     }
                     onChange={(option) =>
-                      onChange(option ? option.label : null)
+                      onChange(option ? option.value : null)
                     }
                     styles={styles}
                     options={options}

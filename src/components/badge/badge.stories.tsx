@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { UserTypes, Status } from '@/enums';
+import { Status, Role } from '@/enums';
 import { Meta, StoryFn } from '@storybook/react';
 
 import { Badge as BadgeComponent, BadgeProps } from '.';
@@ -19,10 +19,9 @@ export const Badge: StoryFn<BadgeProps> = () => {
       <div>
         <h4 className="text-center">Tipos de Usuário</h4>
         <div className="flex justify-center gap-2 pt-2">
-          <BadgeComponent type={UserTypes.ADMIN} />
-          <BadgeComponent type={UserTypes.EDITOR} />
-          <BadgeComponent type={UserTypes.CLINICAL} />
-          <BadgeComponent type={UserTypes.NO_TYPE} />
+          <BadgeComponent type={Role.ADMIN} />
+          <BadgeComponent type={Role.EDITOR} />
+          <BadgeComponent type={Role.CLINICAL} />
         </div>
       </div>
 

@@ -8,12 +8,13 @@ import { IconButton } from '.';
 
 describe('<IconButton />', () => {
   test('should render correctly component', () => {
-    const { getByTestId } = render(
+    const { asFragment, getByTestId } = render(
       <IconButton>
         <Plus data-testid="icon" />
       </IconButton>,
     );
 
     expect(getByTestId('icon')).toBeTruthy();
+    expect(asFragment()).toMatchSnapshot();
   });
 });

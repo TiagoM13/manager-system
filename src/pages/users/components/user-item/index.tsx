@@ -40,7 +40,7 @@ export const UserRow: React.FC<UserItemProps> = ({
         />
       </T.Cell>
       <T.Cell>
-        <Badge type={user.user_type} />
+        <Badge type={user.role} />
       </T.Cell>
       <T.Cell>{formatDate(user.created_at)}</T.Cell>
       <T.Cell>
@@ -81,7 +81,7 @@ export const UserCard: React.FC<UserItemProps> = ({
         </Text>
         <Text>
           <strong>Tipo de usuário:</strong>
-          <Badge type={user.user_type} />
+          <Badge type={user.role} />
         </Text>
         <Text>
           <strong>Data de registro:</strong>

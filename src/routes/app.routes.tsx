@@ -29,6 +29,7 @@ export const Router: React.FC = () => {
       if (['/'].includes(window.location.pathname)) {
         navigate('/sign-in', { replace: true });
       }
+      navigate('/sign-in', { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
@@ -58,7 +59,7 @@ export const Router: React.FC = () => {
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute>
+              <PrivateRoute allowedRoles={[0, 1, 2]}>
                 <Dashboard />
               </PrivateRoute>
             }
@@ -66,7 +67,7 @@ export const Router: React.FC = () => {
           <Route
             path="/users"
             element={
-              <PrivateRoute>
+              <PrivateRoute allowedRoles={[0]}>
                 <Users />
               </PrivateRoute>
             }
@@ -74,7 +75,7 @@ export const Router: React.FC = () => {
           <Route
             path="/users/:id"
             element={
-              <PrivateRoute>
+              <PrivateRoute allowedRoles={[0]}>
                 <User />
               </PrivateRoute>
             }
@@ -82,7 +83,7 @@ export const Router: React.FC = () => {
           <Route
             path="/patients"
             element={
-              <PrivateRoute>
+              <PrivateRoute allowedRoles={[0, 1, 2]}>
                 <Patients />
               </PrivateRoute>
             }

@@ -1,11 +1,11 @@
-import { Status, UserTypes } from '../enums';
+import { Status, Role } from '../enums';
 
 export interface IUser {
   id: number;
   name: string;
   email: string;
   image_url?: string | null;
-  user_type: UserTypes;
+  role: Role;
   status: Status;
   created_at: Date;
   updated_at?: Date;

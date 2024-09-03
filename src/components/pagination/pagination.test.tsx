@@ -24,7 +24,7 @@ describe('<Pagination />', () => {
     const currentPageData = 10;
     const totalPages = 3;
 
-    const { getByText } = render(
+    const { asFragment, getByText } = render(
       <BrowserRouter>
         <Pagination.Label
           currentPageData={currentPageData}
@@ -38,5 +38,6 @@ describe('<Pagination />', () => {
       getByText(`Mostrando ${currentPageData} de ${totalItems} items`),
     ).toBeTruthy();
     expect(getByText(`Página 1 de ${totalPages}`)).toBeTruthy();
+    expect(asFragment()).toMatchSnapshot();
   });
 });

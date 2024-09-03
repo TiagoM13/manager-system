@@ -24,6 +24,7 @@ import {
 } from '@/services';
 import { useImageUrl, useName } from '@/store';
 import { toastSuccess, backWithQuery, toastError } from '@/utils';
+import { handleAPIErrors } from '@/utils/common';
 import {
   useMutation,
   useQueryClient,
@@ -47,7 +48,15 @@ const User: React.FC = () => {
   const queryClient = useQueryClient();
   const { data: user, isLoading } = useQueryUser({
     queryKey: ['user'],
-    queryFn: async () => await getUserService(Number(id)),
+    queryFn: async () => {
+      try {
+        const user = await getUserService(Number(id));
+        return user;
+      } catch (error) {
+        handleAPIErrors(error);
+        return;
+      }
+    },
     enabled: !newUser,
   });
   const { mutateAsync: createUser, isPending: isLoadingCreateUser } =
@@ -159,7 +168,9 @@ const User: React.FC = () => {
       ) as HTMLFormElement;
 
       const isValidImageUrl =
-        values.image_url !== null && values.image_url !== user?.image_url;
+        values.image_url !== null &&
+        values.image_url !== undefined &&
+        values.image_url !== user?.image_url;
 
       let uploadedImageUrl = '';
 
@@ -169,25 +180,30 @@ const User: React.FC = () => {
         uploadedImageUrl = response;
       }
 
-      const updatedValues = {
+      const savedValues = {
         ...values,
         image_url: uploadedImageUrl || values.image_url,
       };
 
-      if (newUser) {
-        createUser(updatedValues, {
-          onSuccess: () => {
-            toastSuccess('Usuário criado com sucesso!');
-            navigate('/users');
-          },
-        });
-      } else {
-        updateUser(updatedValues, {
-          onSuccess: () => {
-            toastSuccess('Usuário atualizado com sucesso!');
-            navigate('/users');
-          },
-        });
+      let response: IUser | undefined = undefined;
+
+      if (savedValues) {
+        if (newUser) {
+          const res = await createUser(savedValues);
+
+          response = res?.data as any;
+        } else {
+          const res = await updateUser(savedValues);
+
+          response = res?.data as any;
+        }
+
+        if (response) {
+          const message = newUser ? 'criado' : 'atualizado';
+
+          toastSuccess(`Usuário ${message} com sucesso!`);
+          navigate('/users');
+        }
       }
     },
     [
