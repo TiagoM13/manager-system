@@ -29,7 +29,10 @@ export const Router: React.FC = () => {
       if (['/'].includes(window.location.pathname)) {
         navigate('/sign-in', { replace: true });
       }
-      navigate('/sign-in', { replace: true });
+
+      if (window.location.pathname !== '/forgot-password') {
+        navigate('/sign-in', { replace: true });
+      }
     }
   }, [isAuthenticated, navigate]);
 
