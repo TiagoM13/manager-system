@@ -180,25 +180,30 @@ const User: React.FC = () => {
         uploadedImageUrl = response;
       }
 
-      const updatedValues = {
+      const savedValues = {
         ...values,
         image_url: uploadedImageUrl || values.image_url,
       };
 
-      if (newUser) {
-        createUser(updatedValues, {
-          onSuccess: () => {
-            toastSuccess('Usuário criado com sucesso!');
-            navigate('/users');
-          },
-        });
-      } else {
-        updateUser(updatedValues, {
-          onSuccess: () => {
-            toastSuccess('Usuário atualizado com sucesso!');
-            navigate('/users');
-          },
-        });
+      let response: IUser | undefined = undefined;
+
+      if (savedValues) {
+        if (newUser) {
+          const res = await createUser(savedValues);
+
+          response = res?.data as any;
+        } else {
+          const res = await updateUser(savedValues);
+
+          response = res?.data as any;
+        }
+
+        if (response) {
+          const message = newUser ? 'criado' : 'atualizado';
+
+          toastSuccess(`Usuário ${message} com sucesso!`);
+          navigate('/users');
+        }
       }
     },
     [
