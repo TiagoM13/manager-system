@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { CircleNotch } from '@phosphor-icons/react';
 
-import { Button, Input } from '@/components';
+import { Button, Input, InputPassword } from '@/components';
 import { useAuth } from '@/hooks';
 
 import { FormAuthProps } from '../../interfaces';
@@ -38,16 +38,20 @@ export const SignIn: React.FC = () => {
           placeholder="Digite seu email"
           className="py-3.5"
           error={errors.email}
+          disabled={loading}
           required
         />
-        <Input
+
+        <InputPassword
           control={control}
-          type="password"
           name="password"
           label="Senha"
           placeholder="Digite sua senha"
           className="py-3.5"
+          stylesRightButton="py-3.5 px-3"
           error={errors.password}
+          loading={loading}
+          disabled={loading}
           required
         />
 
