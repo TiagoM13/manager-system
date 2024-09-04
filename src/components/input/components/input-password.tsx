@@ -46,14 +46,14 @@ export const InputPassword = <T extends FieldValues>({
     <>
       {showPassword ? (
         <EyeSlash
-          data-testid="icon-search"
+          data-testid="icon-eye-slash"
           weight="bold"
           color="white"
           className="size-5"
         />
       ) : (
         <Eye
-          data-testid="icon-search"
+          data-testid="icon-eye"
           weight="bold"
           color="white"
           className="size-5"
@@ -93,6 +93,7 @@ export const InputPassword = <T extends FieldValues>({
 
         <button
           type="button"
+          data-testid="icon-button"
           onClick={togglePasswordVisibility}
           className={`${stylesRightButton} flex flex-wrap items-center rounded-r-lg py-2.5 px-2.5 h-full bg-sky-600 hover:bg-sky-500 disabled:bg-sky-700 outline-sky-500`}
           disabled={loading}
