@@ -100,19 +100,22 @@ export const UserCard: React.FC<UserItemProps> = ({
       </div>
 
       <div className="flex flex-col gap-4">
-        <Button
-          label="editar"
-          variable="primary"
-          icon={<PencilSimple className="size-4" weight="bold" />}
-          onClick={() => onEdit(user)}
-        />
         {currentUser.id !== user.id && (
-          <Button
-            label="deletar"
-            variable="danger"
-            icon={<Trash className="size-4" weight="bold" />}
-            onClick={() => onDelete(user.id)}
-          />
+          <>
+            <Button
+              label="editar"
+              variable="primary"
+              icon={<PencilSimple className="size-4" weight="bold" />}
+              onClick={() => onEdit(user)}
+            />
+
+            <Button
+              label="deletar"
+              variable="danger"
+              icon={<Trash className="size-4" weight="bold" />}
+              onClick={() => onDelete(user.id)}
+            />
+          </>
         )}
       </div>
     </Card>

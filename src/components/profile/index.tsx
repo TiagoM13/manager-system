@@ -11,6 +11,7 @@ import {
   FormContainer,
   FileUploadInput,
   Input,
+  InputPassword,
 } from '@/components';
 import { useAuth, useCurrentUser } from '@/hooks';
 import { IChangePasswordData, IUser } from '@/interfaces';
@@ -313,13 +314,13 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
                 defaultValue=""
                 error={errors.name}
                 control={control}
+                disabled={loading}
                 placeholder="Digite seu nome completo"
               />
 
               {showPasswordInput ? (
                 <>
-                  <Input
-                    type="password"
+                  <InputPassword
                     id="password"
                     name="password"
                     label="Nova Senha"
@@ -327,10 +328,11 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
                     control={control}
                     error={errors.password}
                     placeholder="Digite sua nova senha"
+                    loading={loading}
+                    disabled={loading}
                   />
 
-                  <Input
-                    type="password"
+                  <InputPassword
                     id="confirm_password"
                     name="confirm_password"
                     label="Confirmar Senha"
@@ -338,6 +340,8 @@ export const Profile: React.FC<ProfileProps> = ({ loading }) => {
                     control={control}
                     error={errors.confirm_password}
                     placeholder="Confirme sua senha"
+                    loading={loading}
+                    disabled={loading}
                   />
                 </>
               ) : (
