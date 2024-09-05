@@ -4,30 +4,31 @@ import { useNavigate } from 'react-router-dom';
 
 import { CircleNotch } from '@phosphor-icons/react';
 
-import { Button, Input } from '@/components';
+import { Button, Input, InputPassword } from '@/components';
 import { useAuth } from '@/hooks';
 
 import { FormAuthProps } from '../../interfaces';
 
 import { Container } from '../../styles';
 
-export const ForgotPasswod: React.FC = () => {
+export const SignInForm: React.FC = () => {
   const { loading } = useAuth();
-  const navigate = useNavigate();
   const {
     control,
     reset,
     formState: { errors },
   } = useFormContext<FormAuthProps>();
 
-  const redirectLogin = React.useCallback(() => {
-    navigate('/sign-in');
+  const navigate = useNavigate();
+
+  const redirectForgotPassword = React.useCallback(() => {
+    navigate('/forgot-password');
     reset();
   }, [navigate, reset]);
 
   return (
     <Container>
-      <h2>Esqueceu sua senha?</h2>
+      <h2>Bem-vindo de volta!</h2>
 
       <div className="space-y-6">
         <Input
@@ -37,22 +38,36 @@ export const ForgotPasswod: React.FC = () => {
           placeholder="Digite seu email"
           className="py-3.5"
           error={errors.email}
+          disabled={loading}
+          required
+        />
+
+        <InputPassword
+          control={control}
+          name="password"
+          label="Senha"
+          placeholder="Digite sua senha"
+          className="py-3.5"
+          stylesRightButton="py-3.5 px-3"
+          error={errors.password}
+          loading={loading}
+          disabled={loading}
           required
         />
 
         <button
           type="button"
-          onClick={redirectLogin}
-          className="block ml-auto  text-sm font-semibold cursor-pointer hover:text-sky-600 transition-all duration-500"
+          onClick={redirectForgotPassword}
+          className="block ml-auto text-sm font-semibold cursor-pointer hover:text-sky-600 transition-all duration-500"
         >
-          Fazer login
+          Equeceu a senha?
         </button>
 
         <Button
           type="submit"
           disabled={loading}
           className="w-full py-3.5 text-lg"
-          label={loading ? 'Enviando código...' : 'Enviar código'}
+          label={loading ? 'Entrando...' : 'Entrar'}
           icon={
             loading && (
               <CircleNotch

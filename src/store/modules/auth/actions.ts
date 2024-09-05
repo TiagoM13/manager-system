@@ -1,5 +1,5 @@
-import { ISignInData, IUser } from '@/interfaces';
-import { signInService } from '@/services/auth';
+import { IRecoverPasswordData, ISignInData, IUser } from '@/interfaces';
+import { forgotPasswordService, signInService } from '@/services/auth';
 import { handleAPIErrors } from '@/utils/common';
 
 import { initialState, useAuthStore } from '.';
@@ -31,6 +31,39 @@ export const signIn = async (values: ISignInData) => {
     }));
 
     handleAPIErrors(error, 'Falha ao realizar login!');
+    throw error;
+  } finally {
+    useAuthStore.setState((state) => ({
+      user: {
+        ...state.user,
+        loading: false,
+      },
+    }));
+  }
+};
+
+export const forgotPassword = async (values: IRecoverPasswordData) => {
+  try {
+    useAuthStore.setState((state) => ({
+      ...state,
+      user: {
+        ...state.user,
+        loading: true,
+      },
+    }));
+
+    await forgotPasswordService(values);
+
+    return true;
+  } catch (error) {
+    useAuthStore.setState((state) => ({
+      user: {
+        ...state.user,
+        loadingError: true,
+      },
+    }));
+
+    handleAPIErrors(error, 'Falha ao enviar código de acesso!');
     throw error;
   } finally {
     useAuthStore.setState((state) => ({

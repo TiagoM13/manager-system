@@ -217,11 +217,11 @@ const User: React.FC = () => {
   );
 
   React.useEffect(() => {
-    if (newUser || loading) {
+    if (newUser && !loading) {
       reset();
       setImageUrl(undefined);
       setName('');
-    } else if (user) {
+    } else if (user && !loading) {
       reset(user);
       setImageUrl(user.image_url);
       setName(user.name);
