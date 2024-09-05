@@ -31,8 +31,8 @@ import {
   useQuery as useQueryUser,
 } from '@tanstack/react-query';
 
-import { StatusForm, UserForm } from './forms';
-import { formSchema } from './schemas';
+import { StatusForm, UserForm } from '../forms';
+import { formSchema } from '../schemas';
 
 const User: React.FC = () => {
   const location = useLocation();
