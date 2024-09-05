@@ -16,8 +16,8 @@ import {
   keepPreviousData,
 } from '@tanstack/react-query';
 
-import { UsersFilters, UsersTable, UsersCard } from './components';
-import { filterSchema } from './schemas';
+import { UsersFilters, UsersTable, UsersCard } from '../components';
+import { filterSchema } from '../schemas';
 
 const Users: React.FC = () => {
   // Hooks

@@ -35,8 +35,8 @@ export const UserForm: React.FC<UserFormProps> = ({
           control={control}
           placeholder={isNew ? 'Escolher foto' : 'Alterar foto'}
           error={errors.image_url}
-          loading={loading}
-          disabled={!isUpdatingItself && !isNew}
+          loading={!isNew && loading}
+          disabled={loading || (!isUpdatingItself && !isNew)}
           hasPreview
         />
 

@@ -4,7 +4,10 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 import { PencilSimple, Trash } from '@phosphor-icons/react';
 
-import { Card, Text } from '@/pages/users/components/user-item/styles';
+import {
+  Card,
+  Text,
+} from '@/pages/users/user-list/components/user-item/styles';
 
 import { Button } from '../button';
 import { ButtonActions } from '../button-actions';

@@ -31,8 +31,8 @@ import {
   useQuery as useQueryUser,
 } from '@tanstack/react-query';
 
-import { StatusForm, UserForm } from './forms';
-import { formSchema } from './schemas';
+import { StatusForm, UserForm } from '../forms';
+import { formSchema } from '../schemas';
 
 const User: React.FC = () => {
   const location = useLocation();
@@ -217,11 +217,11 @@ const User: React.FC = () => {
   );
 
   React.useEffect(() => {
-    if (newUser || loading) {
+    if (newUser && !loading) {
       reset();
       setImageUrl(undefined);
       setName('');
-    } else if (user) {
+    } else if (user && !loading) {
       reset(user);
       setImageUrl(user.image_url);
       setName(user.name);

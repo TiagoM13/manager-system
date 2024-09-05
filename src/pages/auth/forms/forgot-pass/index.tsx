@@ -4,31 +4,30 @@ import { useNavigate } from 'react-router-dom';
 
 import { CircleNotch } from '@phosphor-icons/react';
 
-import { Button, Input, InputPassword } from '@/components';
+import { Button, Input } from '@/components';
 import { useAuth } from '@/hooks';
 
 import { FormAuthProps } from '../../interfaces';
 
 import { Container } from '../../styles';
 
-export const SignIn: React.FC = () => {
+export const ForgotPasswodForm: React.FC = () => {
   const { loading } = useAuth();
+  const navigate = useNavigate();
   const {
     control,
     reset,
     formState: { errors },
   } = useFormContext<FormAuthProps>();
 
-  const navigate = useNavigate();
-
-  const redirectForgotPassword = React.useCallback(() => {
-    navigate('/forgot-password');
+  const redirectLogin = React.useCallback(() => {
+    navigate('/sign-in');
     reset();
   }, [navigate, reset]);
 
   return (
     <Container>
-      <h2>Bem-vindo de volta!</h2>
+      <h2>Esqueceu sua senha?</h2>
 
       <div className="space-y-6">
         <Input
@@ -42,32 +41,19 @@ export const SignIn: React.FC = () => {
           required
         />
 
-        <InputPassword
-          control={control}
-          name="password"
-          label="Senha"
-          placeholder="Digite sua senha"
-          className="py-3.5"
-          stylesRightButton="py-3.5 px-3"
-          error={errors.password}
-          loading={loading}
-          disabled={loading}
-          required
-        />
-
         <button
           type="button"
-          onClick={redirectForgotPassword}
-          className="block ml-auto text-sm font-semibold cursor-pointer hover:text-sky-600 transition-all duration-500"
+          onClick={redirectLogin}
+          className="block ml-auto  text-sm font-semibold cursor-pointer hover:text-sky-600 transition-all duration-500"
         >
-          Equeceu a senha?
+          Fazer login
         </button>
 
         <Button
           type="submit"
           disabled={loading}
           className="w-full py-3.5 text-lg"
-          label={loading ? 'Entrando...' : 'Entrar'}
+          label={loading ? 'Enviando código...' : 'Enviar código'}
           icon={
             loading && (
               <CircleNotch

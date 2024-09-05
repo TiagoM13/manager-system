@@ -10,8 +10,8 @@ import { PublicRoute } from './public.route';
 
 const Dashboard = React.lazy(() => import('@/pages/dashboard'));
 const Patients = React.lazy(() => import('@/pages/patients'));
-const Users = React.lazy(() => import('@/pages/users'));
-const User = React.lazy(() => import('@/pages/user'));
+const Users = React.lazy(() => import('@/pages/users/user-list/page'));
+const User = React.lazy(() => import('@/pages/users/user-form/page'));
 
 export const Router: React.FC = () => {
   const isAuthenticated = useIsAuthenticated();

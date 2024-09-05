@@ -5,13 +5,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import BgLogin from '@/assets/img/background-login.jpg';
 import { FormContainer } from '@/components';
 import { IRecoverPasswordData, ISignInData } from '@/interfaces';
-import { forgotPasswordService } from '@/services';
-import { signIn } from '@/store/modules/auth/actions';
+import { forgotPassword, signIn } from '@/store/modules/auth/actions';
 import { toastSuccess } from '@/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { ForgotPasswod } from './components/forgot-pass';
-import { SignIn } from './components/sign-in';
+import { ForgotPasswodForm } from './forms/forgot-pass';
+import { SignInForm } from './forms/sign-in';
 import { FormAuthProps } from './interfaces';
 import { forgotPasswordSchema, loginSchema } from './schemas';
 
@@ -29,15 +28,15 @@ const AuthPage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { handleSubmit } = methods;
 
   const queryClient = useQueryClient();
-  const { mutateAsync: login } = useMutation({
+  const { mutateAsync: signInMutation } = useMutation({
     mutationFn: async (values: ISignInData) => await signIn(values),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
-  const { mutateAsync: forgotPassword } = useMutation({
+  const { mutateAsync: forgotPasswordMutation } = useMutation({
     mutationFn: async (values: IRecoverPasswordData) =>
-      await forgotPasswordService(values),
+      await forgotPassword(values),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
@@ -46,11 +45,13 @@ const AuthPage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const submit = React.useCallback(
     async ({ email, password }: FormAuthProps) => {
       if (location.pathname === '/forgot-password') {
-        forgotPassword(
+        forgotPasswordMutation(
           { email },
           {
             onSuccess: () => {
-              toastSuccess('Código de acesso enviado com sucesso!');
+              toastSuccess(
+                'Uma nova senha foi enviada para seu endereço de e-mail.',
+              );
               navigate('/sign-in', {
                 state: location.state,
                 replace: true,
@@ -59,11 +60,9 @@ const AuthPage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           },
         );
       } else {
-        const values = { email, password };
-
-        login(values as ISignInData, {
+        signInMutation({ email, password } as ISignInData, {
           onSuccess: () => {
-            toastSuccess('Bem-vindo! Acesso aprovado!');
+            toastSuccess('Seja Bem-vindo!');
             navigate('/dashboard', {
               state: location.state,
               replace: true,
@@ -72,7 +71,13 @@ const AuthPage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         });
       }
     },
-    [location.pathname, location.state, forgotPassword, navigate, login],
+    [
+      location.pathname,
+      location.state,
+      forgotPasswordMutation,
+      navigate,
+      signInMutation,
+    ],
   );
 
   return (
@@ -104,7 +109,7 @@ const AuthPage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const SignInPage = () => {
   return (
     <AuthPage>
-      <SignIn />
+      <SignInForm />
     </AuthPage>
   );
 };
@@ -112,7 +117,7 @@ const SignInPage = () => {
 const ForgotPasswordPage = () => {
   return (
     <AuthPage>
-      <ForgotPasswod />
+      <ForgotPasswodForm />
     </AuthPage>
   );
 };
