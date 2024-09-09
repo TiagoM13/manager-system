@@ -12,12 +12,13 @@ export const useUserRoleObservable = () => {
     const subscription = userRole$.subscribe(async (serverRole) => {
       const localUser = getCurrentUser();
 
-      if (localUser?.role !== serverRole) {
-        await logout();
-        window.location.href = 'sign-in';
-        toastInfo(
-          'As suas permissões foram atualizadas. Por favor, faça login novamente.',
-        );
+      if (localUser && localUser?.role !== serverRole) {
+        const response = await logout();
+        if (response) {
+          toastInfo(
+            'As suas permissões foram atualizadas. Por favor, faça login novamente.',
+          );
+        }
       }
     });
 
@@ -30,10 +31,13 @@ export const useUserStatusObservable = () => {
 
   React.useEffect(() => {
     const subscription = userStatus$.subscribe(async (serverStatus) => {
-      if (serverStatus === 'inativo') {
-        await logout();
-        window.location.href = 'sign-in';
-        toastInfo('Sua conta foi desativada. Por favor, contate o suporte.');
+      const localUser = getCurrentUser();
+
+      if (localUser && serverStatus === 'inativo') {
+        const response = await logout();
+        if (response) {
+          toastInfo('Sua conta foi desativada. Por favor, contate o suporte.');
+        }
       }
     });
 

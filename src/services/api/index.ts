@@ -1,6 +1,12 @@
+import { toast } from 'react-toastify';
+
 import axios from 'axios';
 
-import { getAuthTokens, getCurrentUser } from '@/store/modules/auth/actions';
+import {
+  getAuthTokens,
+  getCurrentUser,
+  logout,
+} from '@/store/modules/auth/actions';
 
 export const makeMs = (baseURL: string) => {
   const ms = axios.create({
@@ -28,6 +34,25 @@ export const makeMs = (baseURL: string) => {
 
     return config;
   });
+
+  ms.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (
+        error?.response?.status === 401 &&
+        ![
+          '/auth/sign-in',
+          '/auth/forgot-password',
+          '/users/:userId/change-password',
+        ].includes(error.response?.config?.url!)
+      ) {
+        setTimeout(async () => {
+          await logout();
+        }, 1000);
+      }
+      return Promise.reject(error);
+    },
+  );
 
   return ms;
 };

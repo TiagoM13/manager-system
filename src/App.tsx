@@ -18,21 +18,23 @@ dayjs.extend(relativeTime);
 dayjs.locale('pt-br');
 
 const App = () => {
-  const [ready, setReady] = React.useState(true);
+  const [ready, setReady] = React.useState(false);
 
   useUserRoleObservable();
   useUserStatusObservable();
 
   React.useEffect(() => {
-    const intervalId = setInterval(async () => {
+    const checkUserupdates = async () => {
       await userObservable();
-    }, 1800000); // 3min
-    setReady(false);
+    };
+
+    const intervalId = setInterval(checkUserupdates, 1800000); // 3min
+    setReady(true);
 
     return () => clearInterval(intervalId);
   }, [ready]);
 
-  if (ready) {
+  if (!ready) {
     return <InitializerLoader />;
   }
 

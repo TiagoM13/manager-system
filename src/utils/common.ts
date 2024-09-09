@@ -7,6 +7,8 @@ const ERRORS_MESSAGES_MAPPING: Record<string, string> = {
   'Params not found': 'Dados do token inválidos',
 };
 
+let isTokenExpiredShown = false;
+
 export const handleAPIErrors = (
   err: any = {},
   altMsg = 'Ops... Falha ao processar sua solicitação 😔',
@@ -22,7 +24,14 @@ export const handleAPIErrors = (
 
     if (messages.length) {
       messages.forEach((msg) => {
-        toast.error(ERRORS_MESSAGES_MAPPING[msg] || msg);
+        if (msg === 'O token expirou') {
+          if (!isTokenExpiredShown) {
+            toast.error('Sua sessão expirou. Por favor, faça login novamente.');
+            isTokenExpiredShown = true;
+          }
+        } else {
+          toast.error(ERRORS_MESSAGES_MAPPING[msg] || msg);
+        }
       });
       return;
     }
