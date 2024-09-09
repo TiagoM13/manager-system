@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Role, Status, UserTypes } from '@/enums';
+import { Role, Status } from '@/enums';
 import { render } from '@testing-library/react';
 
 import { Badge } from '.';
@@ -11,7 +11,7 @@ describe('<Badge />', () => {
 
     const container = getByTestId('badge-container');
 
-    expect(getByText(UserTypes.ADMIN)).toBeTruthy();
+    expect(getByText(Role.ADMIN)).toBeTruthy();
     expect(container).toHaveClass('bg-purple-500');
   });
 
@@ -20,7 +20,7 @@ describe('<Badge />', () => {
 
     const container = getByTestId('badge-container');
 
-    expect(getByText(UserTypes.EDITOR)).toBeTruthy();
+    expect(getByText(Role.EDITOR)).toBeTruthy();
     expect(container).toHaveClass('bg-blue-500');
     expect(container).not.toHaveClass('bg-purple-500');
   });

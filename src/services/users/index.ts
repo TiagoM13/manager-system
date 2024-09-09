@@ -4,21 +4,17 @@ import { handleAPIErrors } from '@/utils/common';
 import { msHosp } from '../api';
 
 export const getAllUsersService = async (params: IUsersFilters) => {
-  try {
-    const { name = '', page = 1, page_size = 10 } = params;
+  const { name = '', page = 1, page_size = 10 } = params;
 
-    const { data } = await msHosp.get<IMSResponse<IUser[], 'users'>>(`/users`, {
-      params: {
-        name,
-        page,
-        limit: page_size,
-      },
-    });
+  const { data } = await msHosp.get<IMSResponse<IUser[], 'users'>>(`/users`, {
+    params: {
+      name,
+      page,
+      limit: page_size,
+    },
+  });
 
-    return data;
-  } catch (error) {
-    handleAPIErrors(error);
-  }
+  return data;
 };
 
 export const getUserService = async (id: number) => {

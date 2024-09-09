@@ -2,6 +2,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Card, UploadAvatar, Select, Input } from '@/components';
+import { Role } from '@/enums';
 import { IUser } from '@/interfaces';
 
 interface UserFormProps {
@@ -22,9 +23,9 @@ export const UserForm: React.FC<UserFormProps> = ({
   } = useFormContext<IUser>();
 
   const selectOptions = [
-    { value: 0, label: 'adiministrador' },
-    { value: 1, label: 'editor' },
-    { value: 2, label: 'clínico' },
+    { value: Role.ADMIN, label: Role.ADMIN },
+    { value: Role.EDITOR, label: Role.EDITOR },
+    { value: Role.CLINICAL, label: Role.CLINICAL },
   ];
 
   return (

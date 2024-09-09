@@ -9,6 +9,7 @@ import { IUser, IUsersFilters } from '@/interfaces';
 import { deleteUserService, getAllUsersService } from '@/services';
 import { useDialog } from '@/store';
 import { toastError, toastSuccess } from '@/utils';
+import { handleAPIErrors } from '@/utils/common';
 import {
   useMutation,
   useQueryClient,
@@ -32,7 +33,15 @@ const Users: React.FC = () => {
   const queryClient = useQueryClient();
   const { data, isLoading } = useQueryAllUsers({
     queryKey: ['users', query.page, debouncedQuery],
-    queryFn: async () => await getAllUsersService(query),
+    queryFn: async () => {
+      try {
+        const users = await getAllUsersService(query);
+        return users;
+      } catch (error) {
+        handleAPIErrors(error);
+        return;
+      }
+    },
     placeholderData: keepPreviousData,
   });
   const { mutateAsync: deleteUserFn } = useMutation({

@@ -19,11 +19,9 @@ const schema = z.object({
       message: 'O email é obrigatório',
     }),
   image_url: z.string().nullable().optional(),
-  role: z
-    .union([z.string(), z.number()])
-    .refine((val) => typeof val === 'number', {
-      message: 'Selecione uma opção válida',
-    }),
+  role: z.string().refine((data) => data.trim() !== '', {
+    message: 'Selecione uma opção válida',
+  }),
   status: z
     .string()
     .trim()

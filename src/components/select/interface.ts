@@ -10,7 +10,7 @@ import { OptionProps, GroupBase } from 'react-select';
 import { AsyncProps } from 'react-select/async';
 
 export type Option = {
-  value: number;
+  value: string;
   label: string;
 };
 

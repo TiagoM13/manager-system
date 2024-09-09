@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { AppWrapper, InitializerLoader } from '@/components';
+import { Role } from '@/enums';
 import { useIsAuthenticated } from '@/hooks';
 import { ForgotPasswordPage, SignInPage } from '@/pages/auth';
 
@@ -62,7 +63,9 @@ export const Router: React.FC = () => {
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute allowedRoles={[0, 1, 2]}>
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
                 <Dashboard />
               </PrivateRoute>
             }
@@ -70,7 +73,7 @@ export const Router: React.FC = () => {
           <Route
             path="/users"
             element={
-              <PrivateRoute allowedRoles={[0]}>
+              <PrivateRoute allowedRoles={[Role.ADMIN]}>
                 <Users />
               </PrivateRoute>
             }
@@ -78,7 +81,7 @@ export const Router: React.FC = () => {
           <Route
             path="/users/:id"
             element={
-              <PrivateRoute allowedRoles={[0]}>
+              <PrivateRoute allowedRoles={[Role.ADMIN]}>
                 <User />
               </PrivateRoute>
             }
@@ -86,7 +89,9 @@ export const Router: React.FC = () => {
           <Route
             path="/patients"
             element={
-              <PrivateRoute allowedRoles={[0, 1, 2]}>
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
                 <Patients />
               </PrivateRoute>
             }

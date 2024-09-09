@@ -1,11 +1,12 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { Role } from '@/enums';
 import { useCurrentUser, useIsAuthenticated } from '@/hooks';
 
 type PrivateRouteProps = {
   children: JSX.Element;
-  allowedRoles?: number[];
+  allowedRoles?: Role[];
 };
 
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({
