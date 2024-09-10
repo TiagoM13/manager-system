@@ -5,7 +5,7 @@ import { Avatar } from '../avatar';
 export type UserProfileProps = {
   name: string;
   email: string;
-  imageUrl: string | undefined;
+  imageUrl: string | null;
   small?: boolean;
   color?: 'light' | 'dark';
 };
@@ -28,7 +28,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({
 
       <div className="break-words">
         <h4
-          className={`${color === 'light' ? 'text-slate-300' : 'text-slate-600'} font-semibold text-sm transition-all duration-500`}
+          className={`${color === 'light' ? 'text-slate-300' : 'text-slate-600'} font-semibold text-sm capitalize transition-all duration-500`}
         >
           {name}
         </h4>

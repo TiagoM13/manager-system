@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Pagination /> should render correctly pagination label 1`] = `
+<DocumentFragment>
+  <span
+    class="text-sm"
+  >
+    Mostrando 10 de 30 items
+  </span>
+  <div
+    class="inline-flex items-center gap-8"
+  >
+    <span
+      class="text-sm"
+    >
+      Página 1 de 3
+    </span>
+    <div
+      class="flex gap-1.5"
+      data-testid="btn-actions"
+    >
+      <button
+        class="undefined bg-white hover:bg-slate-200/50 border border-slate-400/50 rounded-md p-1.5 duration-300 disabled:bg-slate-300/50 disabled:hover:bg-slate-300/50 outline-slate-400"
+        disabled=""
+      >
+        <svg
+          class="size-4 text-slate-800"
+          fill="currentColor"
+          height="1em"
+          viewBox="0 0 256 256"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M208.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L137,128ZM57,128l71.52-71.51a12,12,0,0,0-17-17l-80,80a12,12,0,0,0,0,17l80,80a12,12,0,0,0,17-17Z"
+          />
+        </svg>
+      </button>
+      <button
+        class="undefined bg-white hover:bg-slate-200/50 border border-slate-400/50 rounded-md p-1.5 duration-300 disabled:bg-slate-300/50 disabled:hover:bg-slate-300/50 outline-slate-400"
+        disabled=""
+      >
+        <svg
+          class="size-4 text-slate-800"
+          fill="currentColor"
+          height="1em"
+          viewBox="0 0 256 256"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M168.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L97,128Z"
+          />
+        </svg>
+      </button>
+      <button
+        class="undefined bg-white hover:bg-slate-200/50 border border-slate-400/50 rounded-md p-1.5 duration-300 disabled:bg-slate-300/50 disabled:hover:bg-slate-300/50 outline-slate-400"
+      >
+        <svg
+          class="size-4 text-slate-800"
+          fill="currentColor"
+          height="1em"
+          viewBox="0 0 256 256"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"
+          />
+        </svg>
+      </button>
+      <button
+        class="undefined bg-white hover:bg-slate-200/50 border border-slate-400/50 rounded-md p-1.5 duration-300 disabled:bg-slate-300/50 disabled:hover:bg-slate-300/50 outline-slate-400"
+      >
+        <svg
+          class="size-4 text-slate-800"
+          fill="currentColor"
+          height="1em"
+          viewBox="0 0 256 256"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M144.49,136.49l-80,80a12,12,0,0,1-17-17L119,128,47.51,56.49a12,12,0,0,1,17-17l80,80A12,12,0,0,1,144.49,136.49Zm80-17-80-80a12,12,0,1,0-17,17L199,128l-71.52,71.51a12,12,0,0,0,17,17l80-80A12,12,0,0,0,224.49,119.51Z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

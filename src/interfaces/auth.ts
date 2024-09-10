@@ -16,6 +16,5 @@ export interface IRecoverPasswordData {
 
 export interface IChangePasswordData {
   password: string;
-  password_confirmation: string;
-  token: string;
+  confirm_password: string;
 }

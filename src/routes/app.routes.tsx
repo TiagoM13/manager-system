@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { AppWrapper, InitializerLoader } from '@/components';
+import { Role } from '@/enums';
 import { useIsAuthenticated } from '@/hooks';
 import { ForgotPasswordPage, SignInPage } from '@/pages/auth';
 
@@ -10,8 +11,8 @@ import { PublicRoute } from './public.route';
 
 const Dashboard = React.lazy(() => import('@/pages/dashboard'));
 const Patients = React.lazy(() => import('@/pages/patients'));
-const Users = React.lazy(() => import('@/pages/users'));
-const User = React.lazy(() => import('@/pages/user'));
+const Users = React.lazy(() => import('@/pages/users/user-list/page'));
+const User = React.lazy(() => import('@/pages/users/user-form/page'));
 
 export const Router: React.FC = () => {
   const isAuthenticated = useIsAuthenticated();
@@ -27,6 +28,10 @@ export const Router: React.FC = () => {
     }
     if (!isAuthenticated) {
       if (['/'].includes(window.location.pathname)) {
+        navigate('/sign-in', { replace: true });
+      }
+
+      if (window.location.pathname !== '/forgot-password') {
         navigate('/sign-in', { replace: true });
       }
     }
@@ -58,7 +63,9 @@ export const Router: React.FC = () => {
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute>
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
                 <Dashboard />
               </PrivateRoute>
             }
@@ -66,7 +73,7 @@ export const Router: React.FC = () => {
           <Route
             path="/users"
             element={
-              <PrivateRoute>
+              <PrivateRoute allowedRoles={[Role.ADMIN]}>
                 <Users />
               </PrivateRoute>
             }
@@ -74,7 +81,7 @@ export const Router: React.FC = () => {
           <Route
             path="/users/:id"
             element={
-              <PrivateRoute>
+              <PrivateRoute allowedRoles={[Role.ADMIN]}>
                 <User />
               </PrivateRoute>
             }
@@ -82,7 +89,9 @@ export const Router: React.FC = () => {
           <Route
             path="/patients"
             element={
-              <PrivateRoute>
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
                 <Patients />
               </PrivateRoute>
             }

@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { ListDashes, X } from '@phosphor-icons/react';
+import { ListDashes } from '@phosphor-icons/react';
 
 import { useIsAuthenticated, useWindowSize } from '@/hooks';
 import { useMenu } from '@/store';
 
+import { CloseButton } from '../icon-button';
+import { Profile } from '../profile';
 import { SideBar } from './components/sidebar';
 import { ToggleButton } from './components/toggle-button';
 
@@ -59,13 +61,10 @@ export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({
             <StyledSidebar showMenu={showMenu}>
               <div ref={sideBarRef} className="overlay"></div>
               <div className="content-side-bar">
-                <button
-                  onClick={() => toggleMenu(false)}
-                  className="btn-close-sidebar"
+                <CloseButton
                   id="btn-close-sidebar"
-                >
-                  <X className="size-4 text-slate-400" weight="bold" />
-                </button>
+                  onClick={() => toggleMenu(false)}
+                />
                 {renderSideBar}
               </div>
             </StyledSidebar>
@@ -87,6 +86,11 @@ export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({
       >
         {children}
       </Main>
+      {isAuthenticated && (
+        <>
+          <Profile />
+        </>
+      )}
     </Container>
   );
 };

@@ -52,7 +52,7 @@ export const Dialog: React.FC<DialogProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-50"
     >
       <div
         ref={modalRef}
@@ -63,6 +63,7 @@ export const Dialog: React.FC<DialogProps> = ({
             {title}
           </h2>
           <button
+            data-testid="btn-close-dialog"
             aria-label="Close modal"
             onClick={onClose}
             className="text-slate-600 rounded-full p-[0.125rem] hover:bg-slate-200"

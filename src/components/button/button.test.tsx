@@ -19,11 +19,12 @@ describe('<Button />', () => {
   });
 
   test('should render correctly colors variables in the button', () => {
-    const { getByTestId, getByText } = render(
+    const { asFragment, getByTestId, getByText } = render(
       <Button id="teste" variable="danger" label="Delete" />,
     );
 
     expect(getByTestId('btn-teste')).toHaveClass('bg-red-600 hover:bg-red-500');
     expect(getByText('Delete')).toBeTruthy();
+    expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -28,7 +28,8 @@
     "./vite.config.ts",
     "./jest/setup.ts",
     "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
+    "src/__mocks__/fileMock.js"
   ],
   "references": [
     {

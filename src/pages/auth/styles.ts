@@ -35,5 +35,9 @@ export const Container = styled.div`
     input {
       padding: 0.75rem 0.875rem;
     }
+
+    button {
+      padding: 0.75rem 0.625rem;
+    }
   }
 `;

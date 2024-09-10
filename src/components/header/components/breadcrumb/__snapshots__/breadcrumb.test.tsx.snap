@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Breadcrumb/> should render correctly component 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-gJhJTp fvKEBJ"
+  >
+    <div
+      class="flex items-center"
+    >
+      <div
+        class="flex items-center gap-2"
+      >
+        <a
+          href="/"
+        >
+          <div>
+            <svg
+              class="size-4"
+              data-testid="icon-home"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 256 256"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"
+              />
+            </svg>
+          </div>
+          Início
+        </a>
+        &gt;
+      </div>
+    </div>
+    <div
+      class="flex items-center"
+    >
+      <div
+        class="flex items-center gap-2"
+      >
+        <a
+          href="/users"
+        >
+          <div>
+            <svg
+              class="size-4"
+              data-testid="icon-users"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 256 256"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"
+              />
+            </svg>
+          </div>
+          Usuários
+        </a>
+        &gt;
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
