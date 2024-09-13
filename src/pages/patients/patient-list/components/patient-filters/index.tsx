@@ -10,7 +10,7 @@ type PatientFiltersProps = {
 };
 
 export const PatientFilters: React.FC<PatientFiltersProps> = ({ loading }) => {
-  // const { control } = useFormContext<IPatientFilters>();
+  const { reset, control } = useFormContext<IPatientFilters>();
   const [query, setQuery] = useQuery<IPatientFilters>();
 
   const handleChangeQuery = React.useCallback(
@@ -19,11 +19,11 @@ export const PatientFilters: React.FC<PatientFiltersProps> = ({ loading }) => {
         const newQuery = { ...old };
         newQuery[field] = value;
         newQuery.page = 1;
-        // reset(newQuery);
+        reset(newQuery);
         return newQuery;
       });
     },
-    [setQuery],
+    [reset, setQuery],
   );
 
   return (
@@ -31,7 +31,8 @@ export const PatientFilters: React.FC<PatientFiltersProps> = ({ loading }) => {
       <div className="flex flex-col gap-5">
         <div className="flex gap-2.5">
           <InputSearch
-            name="name"
+            name="search"
+            control={control}
             value={query.search || ''}
             disabled={loading}
             placeholder="Pesquisar paciente (Nome ou CPF)"

@@ -26,8 +26,10 @@ export const PatientRow: React.FC<PatientItemProps> = ({ patient }) => {
       <Table.Cell>{calculateAge(patient.birth_date)} anos</Table.Cell>
       <Table.Cell>{patient.sex}</Table.Cell>
       <Table.Cell>{formatDate(patient.birth_date)}</Table.Cell>
-      <Table.Cell>{formatCPF(String(patient.cpf))}</Table.Cell>
-      <Table.Cell>{patient.cns}</Table.Cell>
+      <Table.Cell>
+        {patient.cpf ? formatCPF(String(patient.cpf)) : '-'}
+      </Table.Cell>
+      <Table.Cell>{patient.cns ? patient.cns : '-'}</Table.Cell>
       <Table.Cell>
         <Badge type={patient.status} />
       </Table.Cell>
