@@ -4,3 +4,5 @@ export * from './menu';
 export * from './toasts';
 export * from './navigate';
 export * from './observable';
+export * from './format-cpf';
+export * from './calculate-age';
