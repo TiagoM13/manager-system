@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { patient } from '@/__mocks__/patient';
-import { Table } from '@/components';
+import { Pagination, Table } from '@/components';
 import { IPatient, IResponseMeta } from '@/interfaces';
 
 import { PatientRow } from '../patient-item';
@@ -37,6 +37,20 @@ export const PatientsTable: React.FC<PatientTableProps> = () => {
           <PatientRow key={index} patient={patient} />
         ))}
       </tbody>
+      <tfoot>
+        <Table.Row border={false}>
+          <Table.Cell colSpan={3}>
+            <Pagination.Label
+              currentPageData={10}
+              totalItems={10}
+              paginationLabel={{ single: 'paciente', several: 'pacientes' }}
+            />
+          </Table.Cell>
+          <Table.Cell className="text-right" colSpan={4}>
+            <Pagination.Actions totalPages={1} />
+          </Table.Cell>
+        </Table.Row>
+      </tfoot>
     </Table.Container>
   );
 };

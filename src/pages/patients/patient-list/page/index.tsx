@@ -1,15 +1,27 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Card, Divider, FormContainer, Header } from '@/components';
-import { useWindowSize } from '@/hooks';
+import { useQuery, useWindowSize } from '@/hooks';
+import { IPatientFilters } from '@/interfaces';
 
+import { PatientFilters } from '../components/patient-filters';
 import { PatientsTable } from '../components/patients-table';
 
 const Patients: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [, , isMobile] = useWindowSize();
+
+  const [query, setQuery] = useQuery<IPatientFilters>();
+
+  // Hook Form
+  const methods = useForm({
+    defaultValues: query,
+    mode: 'onChange',
+    shouldUnregister: false,
+  });
 
   const handleNewRegister = React.useCallback(() => {
     navigate('/patients/new', {
@@ -18,7 +30,7 @@ const Patients: React.FC = () => {
   }, [location, navigate]);
 
   return (
-    <FormContainer>
+    <FormContainer {...methods}>
       <div className="flex flex-col">
         <Header
           title="Pacientes"
@@ -28,7 +40,11 @@ const Patients: React.FC = () => {
 
         <Divider />
 
-        <Card>{isMobile ? <div></div> : <PatientsTable />}</Card>
+        <Card>
+          <PatientFilters />
+
+          {isMobile ? <div></div> : <PatientsTable />}
+        </Card>
       </div>
     </FormContainer>
   );
