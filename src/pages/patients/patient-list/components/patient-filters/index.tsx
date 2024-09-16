@@ -14,7 +14,7 @@ export const PatientFilters: React.FC<PatientFiltersProps> = ({ loading }) => {
   const [query, setQuery] = useQuery<IPatientFilters>();
 
   const handleChangeQuery = React.useCallback(
-    (field: 'search', value?: string) => {
+    (field: 'name', value?: string) => {
       setQuery((old) => {
         const newQuery = { ...old };
         newQuery[field] = value;
@@ -27,16 +27,16 @@ export const PatientFilters: React.FC<PatientFiltersProps> = ({ loading }) => {
   );
 
   return (
-    <div className="w-full">
+    <div>
       <div className="flex flex-col gap-5">
         <div className="flex gap-2.5">
           <InputSearch
-            name="search"
+            name="name"
             control={control}
-            value={query.search || ''}
+            value={query.name || ''}
             disabled={loading}
-            placeholder="Pesquisar paciente (Nome ou CPF)"
-            onChange={(e) => handleChangeQuery('search', e.target.value)}
+            placeholder="Pesquisar paciente"
+            onChange={(e) => handleChangeQuery('name', e.target.value)}
             className="w-[260px]"
           />
         </div>

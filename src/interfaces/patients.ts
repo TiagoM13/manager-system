@@ -23,7 +23,7 @@ export interface IPatient {
 }
 
 export interface IPatientFilters {
-  search?: string;
+  name?: string;
   page?: number;
   page_size?: number;
 }

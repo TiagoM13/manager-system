@@ -28,7 +28,7 @@ const Patients: React.FC = () => {
     shouldUnregister: false,
   });
 
-  const debouncedQuery = useDebounce(query.search || '', 500);
+  const debouncedQuery = useDebounce(query.name || '', 500);
   const { data, isLoading } = useQueryAllPatients({
     queryKey: ['patients', query.page, debouncedQuery],
     queryFn: async () => {
