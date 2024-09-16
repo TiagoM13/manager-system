@@ -1,7 +1,7 @@
 import { Status } from '@/enums';
 
 export interface IPatient {
-  id?: number;
+  id?: string;
   name: string;
   birth_date: Date;
   sex: string;
@@ -12,13 +12,14 @@ export interface IPatient {
   father_name?: string | null;
   material_status?: string | null;
   occupation?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  health_agent?: string;
   status: Status;
 
   created_at?: Date;
   updated_at?: Date;
   // queries: IQuery[]
-  // health_agent?: String
-  // chronic_disease?: String
 }
 
 export interface IPatientFilters {

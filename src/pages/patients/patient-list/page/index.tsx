@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Card, Divider, Header } from '@/components';
 import { useDebounce, useQuery, useWindowSize } from '@/hooks';
-import { IPatientFilters } from '@/interfaces';
+import { IPatient, IPatientFilters } from '@/interfaces';
 import { getAllPatientsService } from '@/services';
 import { handleAPIErrors } from '@/utils/common';
 import {
@@ -12,7 +12,7 @@ import {
   keepPreviousData,
 } from '@tanstack/react-query';
 
-import { PatientFilters, PatientsTable } from '../components';
+import { PatientFilters, PatientsTable, PatientsCard } from '../components';
 import { filterSchema } from '../schemas';
 
 const Patients: React.FC = () => {
@@ -21,7 +21,6 @@ const Patients: React.FC = () => {
   const [query, setQuery] = useQuery<IPatientFilters>();
   const [, , isMobile] = useWindowSize();
 
-  // Hook Form
   const methods = useForm({
     defaultValues: query,
     mode: 'onChange',
@@ -52,6 +51,15 @@ const Patients: React.FC = () => {
     });
   }, [location, navigate]);
 
+  const handleEdit = React.useCallback(
+    (patient: IPatient) => {
+      navigate(`/patients/${patient.id}`, {
+        state: { from: location },
+      });
+    },
+    [location, navigate],
+  );
+
   React.useEffect(() => {
     if (data?.patients && data?.meta?.total_current_records === 0) {
       setQuery({ page: 1 });
@@ -73,7 +81,7 @@ const Patients: React.FC = () => {
           <PatientFilters />
 
           {isMobile ? (
-            <div></div>
+            <PatientsCard data={data} loading={loading} onEdit={handleEdit} />
           ) : (
             <PatientsTable data={data} loading={loading} />
           )}

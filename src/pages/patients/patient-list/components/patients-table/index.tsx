@@ -23,7 +23,7 @@ export const PatientsTable: React.FC<PatientTableProps> = ({
     <Table.Container>
       <thead>
         <Table.Row>
-          <Table.Header>Nome/ID</Table.Header>
+          <Table.Header>Nome</Table.Header>
           <Table.Header>Idade</Table.Header>
           <Table.Header>Sexo</Table.Header>
           <Table.Header>Data de Nasc.</Table.Header>
