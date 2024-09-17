@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { Eye } from '@phosphor-icons/react';
 
-import { Badge, Button, Table } from '@/components';
+import { Avatar, Badge, Button, Table } from '@/components';
 import { IPatient } from '@/interfaces';
 import { calculateAge, formatCPF, formatDate } from '@/utils';
 
@@ -20,14 +20,15 @@ export const PatientRow: React.FC<PatientItemProps> = ({ patient }) => {
       <Table.Cell>
         <Link
           to={`/patients/${patient.id}`}
-          className="flex flex-col justify-center gap-1 hover:text-sky-500 transition-all"
+          className="flex items-center gap-3 hover:text-sky-500 transition-all"
         >
-          <strong>{patient.name}</strong>
+          <Avatar color="dark" name={patient.name} imageUrl={null} small />
+          <span className="text-sm font-semibold">{patient.name}</span>
         </Link>
       </Table.Cell>
+      <Table.Cell>{formatDate(patient.birth_date)}</Table.Cell>
       <Table.Cell>{calculateAge(patient.birth_date)} anos</Table.Cell>
       <Table.Cell>{patient.sex}</Table.Cell>
-      <Table.Cell>{formatDate(patient.birth_date)}</Table.Cell>
       <Table.Cell>
         {patient.cpf ? formatCPF(String(patient.cpf)) : '-'}
       </Table.Cell>

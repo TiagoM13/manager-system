@@ -37,7 +37,6 @@ export const PatientFilters: React.FC<PatientFiltersProps> = ({ loading }) => {
             disabled={loading}
             placeholder="Pesquisar paciente"
             onChange={(e) => handleChangeQuery('name', e.target.value)}
-            className="w-[260px]"
           />
         </div>
       </div>
