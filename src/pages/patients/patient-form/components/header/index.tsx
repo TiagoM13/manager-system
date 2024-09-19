@@ -46,7 +46,11 @@ export const Header: React.FC<HeaderProps> = ({
           )}
           <div>
             <span className="text-sm text-slate-600">{subtitle}</span>
-            <h2 className="text-3xl font-semibold">{title}</h2>
+            <h2
+              className={`${subtitle ? 'text-2xl' : 'text-3xl'} font-semibold`}
+            >
+              {title}
+            </h2>
           </div>
         </div>
 
