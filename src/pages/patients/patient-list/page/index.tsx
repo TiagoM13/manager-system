@@ -2,7 +2,7 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Card, Divider, Header } from '@/components';
+import { Card } from '@/components';
 import { useDebounce, useQuery, useWindowSize } from '@/hooks';
 import { IPatient, IPatientFilters } from '@/interfaces';
 import { getAllPatientsService } from '@/services';
@@ -12,6 +12,7 @@ import {
   keepPreviousData,
 } from '@tanstack/react-query';
 
+import { Header } from '../../patient-form/components/header';
 import { PatientFilters, PatientsTable, PatientsCard } from '../components';
 import { filterSchema } from '../schemas';
 
@@ -70,14 +71,12 @@ const Patients: React.FC = () => {
     <FormProvider {...methods}>
       <div className="flex flex-col">
         <Header
-          title="Pacientes"
-          labelAction="cadastrar paciente"
-          newRegister={handleNewRegister}
+          title="Lista de Pacientes"
+          labelRegister="adicionar paciente"
+          onRegister={handleNewRegister}
         />
 
-        <Divider />
-
-        <Card>
+        <Card className="mt-4">
           <PatientFilters />
 
           {isMobile ? (
