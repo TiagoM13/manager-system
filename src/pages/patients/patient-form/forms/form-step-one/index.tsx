@@ -3,14 +3,24 @@ import { useFormContext } from 'react-hook-form';
 
 import { Input, Select } from '@/components';
 import { IPatient } from '@/interfaces';
+import { formatCPF } from '@/utils';
 
 import { maritalStatusOptions, sexOptions } from '../../utils/options';
 
 export const FormStepOne: React.FC<{ loading?: boolean }> = ({ loading }) => {
   const {
     control,
+    setValue,
     formState: { errors },
   } = useFormContext<IPatient>();
+
+  const handleCPFChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const formattedCPF = formatCPF(e.target.value);
+      setValue('cpf', formattedCPF);
+    },
+    [setValue],
+  );
 
   return (
     <div className="p-2">
@@ -33,6 +43,8 @@ export const FormStepOne: React.FC<{ loading?: boolean }> = ({ loading }) => {
           label="CPF"
           placeholder="Digite o CPF do paciente"
           control={control}
+          maxLength={14}
+          onChange={handleCPFChange}
           error={errors.cpf}
           disabled={loading}
         />

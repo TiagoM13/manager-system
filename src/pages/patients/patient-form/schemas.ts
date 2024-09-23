@@ -57,7 +57,7 @@ const schema = z.object({
     .refine((data) => data.trim() !== '', {
       message: 'Selecione uma opção válida',
     }),
-  cpf: OptionalStringField.refine((value) => !value || value.length === 11, {
+  cpf: OptionalStringField.refine((value) => !value || value.length === 14, {
     message: 'O CPF deve ter no máximo 11 dígitos.',
   }),
   cns: OptionalStringField.refine((value) => !value || value.length === 15, {

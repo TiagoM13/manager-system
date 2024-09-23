@@ -13,6 +13,7 @@ import {
 } from '@phosphor-icons/react';
 
 import { Button, Card, FormContainer } from '@/components';
+import { formatPatientProps } from '@/helpers/format-patient-props';
 import { IPatient } from '@/interfaces';
 import { createPatientService } from '@/services';
 import { backWithQuery, toastSuccess } from '@/utils';
@@ -104,7 +105,7 @@ const PatientForm: React.FC = () => {
   const submit = React.useCallback(
     async (values: IPatient) => {
       if (values) {
-        const response = await createPatient(values);
+        const response = await createPatient(formatPatientProps(values));
 
         if (response) {
           toastSuccess('Paciente adicionado com sucesso!');

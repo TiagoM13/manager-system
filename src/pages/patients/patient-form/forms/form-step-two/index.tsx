@@ -3,12 +3,30 @@ import { useFormContext } from 'react-hook-form';
 
 import { Input } from '@/components';
 import { IPatient } from '@/interfaces';
+import { formatPhone } from '@/utils';
 
 export const FormStepTwo: React.FC<{ loading?: boolean }> = ({ loading }) => {
   const {
     control,
+    setValue,
     formState: { errors },
   } = useFormContext<IPatient>();
+
+  const handlePhoneChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const formattedPhobe = formatPhone(e.target.value);
+      setValue('phone', formattedPhobe);
+    },
+    [setValue],
+  );
+
+  const handlePhoneEmergencyChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const formattedPhobe = formatPhone(e.target.value);
+      setValue('contact_emergency', formattedPhobe);
+    },
+    [setValue],
+  );
 
   return (
     <div className="p-2">
@@ -40,14 +58,17 @@ export const FormStepTwo: React.FC<{ loading?: boolean }> = ({ loading }) => {
           label="Telefone"
           placeholder="Digite um número de telefone"
           control={control}
+          onChange={handlePhoneChange}
           error={errors.phone}
           disabled={loading}
         />
 
         <Input
-          name="phone_contact_emergency"
+          name="contact_emergency"
           label="Telefone de emergência"
           placeholder="Digite um número de telefone"
+          onChange={handlePhoneEmergencyChange}
+          control={control}
           disabled={loading}
         />
 
