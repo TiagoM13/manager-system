@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Card } from '@/components';
-import { useDebounce, useQuery, useWindowSize } from '@/hooks';
+import { useQuery, useWindowSize } from '@/hooks';
 import { IPatient, IPatientFilters } from '@/interfaces';
 import { getAllPatientsService } from '@/services';
 import { handleAPIErrors } from '@/utils/common';
@@ -19,7 +19,7 @@ import { filterSchema } from '../schemas';
 const Patients: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [query, setQuery] = useQuery<IPatientFilters>();
+  const [query] = useQuery<IPatientFilters>();
   const [, , isMobile] = useWindowSize();
 
   const methods = useForm({
@@ -29,9 +29,8 @@ const Patients: React.FC = () => {
     shouldUnregister: false,
   });
 
-  const debouncedQuery = useDebounce(query.name || '', 500);
   const { data, isLoading } = useQueryAllPatients({
-    queryKey: ['patients', query.page, debouncedQuery],
+    queryKey: ['patients', query],
     queryFn: async () => {
       try {
         const patients = getAllPatientsService(query);
@@ -61,12 +60,6 @@ const Patients: React.FC = () => {
     [location, navigate],
   );
 
-  React.useEffect(() => {
-    if (data?.patients && data?.meta?.total_current_records === 0) {
-      setQuery({ page: 1 });
-    }
-  }, [data?.meta?.total_current_records, data?.patients, setQuery]);
-
   return (
     <FormProvider {...methods}>
       <div className="flex flex-col">
@@ -77,7 +70,7 @@ const Patients: React.FC = () => {
         />
 
         <Card className="mt-4">
-          <PatientFilters />
+          <PatientFilters loading={loading} />
 
           {isMobile ? (
             <PatientsCard data={data} loading={loading} onEdit={handleEdit} />
