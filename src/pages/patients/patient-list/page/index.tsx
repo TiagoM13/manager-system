@@ -2,8 +2,8 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Card, Divider, Header } from '@/components';
-import { useDebounce, useQuery, useWindowSize } from '@/hooks';
+import { Card } from '@/components';
+import { useQuery, useWindowSize } from '@/hooks';
 import { IPatient, IPatientFilters } from '@/interfaces';
 import { getAllPatientsService } from '@/services';
 import { handleAPIErrors } from '@/utils/common';
@@ -12,25 +12,28 @@ import {
   keepPreviousData,
 } from '@tanstack/react-query';
 
+import { Header } from '../../patient-form/components/header';
 import { PatientFilters, PatientsTable, PatientsCard } from '../components';
-import { filterSchema } from '../schemas';
+import { schemaFilterPatient, SchemaFilterPatientType } from '../schemas';
 
 const Patients: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [query, setQuery] = useQuery<IPatientFilters>();
+  const [query] = useQuery<IPatientFilters>();
   const [, , isMobile] = useWindowSize();
 
-  const methods = useForm({
-    defaultValues: query,
+  const methods = useForm<SchemaFilterPatientType>({
+    defaultValues: {
+      name: query.name,
+      page: String(query.page),
+    },
     mode: 'onChange',
-    resolver: filterSchema,
+    resolver: schemaFilterPatient,
     shouldUnregister: false,
   });
 
-  const debouncedQuery = useDebounce(query.name || '', 500);
   const { data, isLoading } = useQueryAllPatients({
-    queryKey: ['patients', query.page, debouncedQuery],
+    queryKey: ['patients', query],
     queryFn: async () => {
       try {
         const patients = getAllPatientsService(query);
@@ -60,25 +63,17 @@ const Patients: React.FC = () => {
     [location, navigate],
   );
 
-  React.useEffect(() => {
-    if (data?.patients && data?.meta?.total_current_records === 0) {
-      setQuery({ page: 1 });
-    }
-  }, [data?.meta?.total_current_records, data?.patients, setQuery]);
-
   return (
     <FormProvider {...methods}>
       <div className="flex flex-col">
         <Header
-          title="Pacientes"
-          labelAction="cadastrar paciente"
-          newRegister={handleNewRegister}
+          title="Lista de Pacientes"
+          labelRegister="adicionar paciente"
+          onRegister={handleNewRegister}
         />
 
-        <Divider />
-
-        <Card>
-          <PatientFilters />
+        <Card className="mt-4">
+          <PatientFilters loading={loading} />
 
           {isMobile ? (
             <PatientsCard data={data} loading={loading} onEdit={handleEdit} />

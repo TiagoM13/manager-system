@@ -113,7 +113,7 @@ const Users: React.FC = () => {
 
         <Divider />
 
-        <Card>
+        <Card className="mt-4">
           <UsersFilters />
 
           {!isMobile ? (

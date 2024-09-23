@@ -16,12 +16,14 @@ export type ButtonProps = React.ComponentProps<'button'> & {
   variable?: keyof typeof Variables;
   className?: string;
   clear?: boolean;
+  iconPosition?: 'right' | 'left';
 };
 
 export const Button: React.FC<ButtonProps> = ({
   id,
   label = 'Salvar',
   icon,
+  iconPosition = 'left',
   variable = Variables.primary,
   className = '',
   clear,
@@ -47,8 +49,9 @@ export const Button: React.FC<ButtonProps> = ({
       )}
       {...rest}
     >
-      {!!icon && icon}
+      {!!icon && iconPosition === 'left' && icon}
       {label}
+      {!!icon && iconPosition === 'right' && icon}
     </button>
   );
 };

@@ -14,13 +14,16 @@ export interface IPatient {
   occupation?: string | null;
   email?: string | null;
   phone?: string | null;
-  health_agent?: string;
-  status: Status;
+  health_agent?: string | null;
+  status: Status | null;
+  contact_emergency?: string | null;
 
   created_at?: Date;
   updated_at?: Date;
-  // queries: IQuery[]
 }
+
+// eslint-disable-next-line prettier/prettier
+export interface IPatientForm extends Omit<IPatient, 'status'> { }
 
 export interface IPatientFilters {
   name?: string;
