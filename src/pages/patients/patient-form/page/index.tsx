@@ -14,7 +14,7 @@ import {
 
 import { Button, Card, FormContainer } from '@/components';
 import { formatPatientProps } from '@/helpers/format-patient-props';
-import { IPatient } from '@/interfaces';
+import { IPatientForm, IPatient } from '@/interfaces';
 import { createPatientService } from '@/services';
 import { backWithQuery, toastSuccess } from '@/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -22,7 +22,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormProgress } from '../components/form-progress';
 import { Header } from '../components/header';
 import { FormStepOne, FormStepThree, FormStepTwo } from '../forms';
-import { formSchema } from '../schemas';
+import { schemaCreatePatient, SchemaCreatePatientType } from '../schemas';
 
 const PatientForm: React.FC = () => {
   // hooks
@@ -33,10 +33,10 @@ const PatientForm: React.FC = () => {
   const [currentStep, setCurrentStep] = React.useState(0);
 
   // hook form
-  const methods = useForm<IPatient>({
+  const methods = useForm<SchemaCreatePatientType>({
     mode: 'onChange',
     shouldUnregister: false,
-    resolver: formSchema,
+    resolver: schemaCreatePatient,
   });
 
   const { handleSubmit, trigger } = methods;
@@ -103,7 +103,7 @@ const PatientForm: React.FC = () => {
   };
 
   const submit = React.useCallback(
-    async (values: IPatient) => {
+    async (values: IPatientForm) => {
       if (values) {
         const response = await createPatient(formatPatientProps(values));
 

@@ -1,7 +1,8 @@
-import { IPatient } from '@/interfaces';
+import { Status } from '@/enums';
+import { IPatientForm, IPatient } from '@/interfaces';
 
-export const formatPatientProps = (patientForm: IPatient): IPatient => {
-  const patient = { ...patientForm };
+export const formatPatientProps = (patientForm: IPatientForm): IPatient => {
+  const patient = { ...patientForm, status: Status.ACTIVE };
 
   if (patient.cpf) patient.cpf = patient.cpf.replace(/\D/g, '');
 

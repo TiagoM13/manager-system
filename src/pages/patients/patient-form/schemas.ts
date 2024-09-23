@@ -29,13 +29,12 @@ const calculateAge = (birthDate: Date) => {
   return age;
 };
 
-const schema = z.object({
+const SchemaCreatePatient = z.object({
   name: FieldTextRequired,
   birth_date: z
     .preprocess(
       (arg) => {
         if (typeof arg === 'string') {
-          // Tenta transformar a string de entrada em data
           const parsedDate = new Date(arg);
           return isNaN(parsedDate.getTime()) ? undefined : parsedDate;
         }
@@ -73,4 +72,6 @@ const schema = z.object({
   health_agent: OptionalStringField,
 });
 
-export const formSchema = zodResolver(schema);
+export type SchemaCreatePatientType = z.infer<typeof SchemaCreatePatient>;
+
+export const schemaCreatePatient = zodResolver(SchemaCreatePatient);
