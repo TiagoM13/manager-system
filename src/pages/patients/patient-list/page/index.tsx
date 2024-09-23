@@ -14,7 +14,7 @@ import {
 
 import { Header } from '../../patient-form/components/header';
 import { PatientFilters, PatientsTable, PatientsCard } from '../components';
-import { filterSchema } from '../schemas';
+import { schemaFilterPatient, SchemaFilterPatientType } from '../schemas';
 
 const Patients: React.FC = () => {
   const navigate = useNavigate();
@@ -22,10 +22,13 @@ const Patients: React.FC = () => {
   const [query] = useQuery<IPatientFilters>();
   const [, , isMobile] = useWindowSize();
 
-  const methods = useForm({
-    defaultValues: query,
+  const methods = useForm<SchemaFilterPatientType>({
+    defaultValues: {
+      name: query.name,
+      page: String(query.page),
+    },
     mode: 'onChange',
-    resolver: filterSchema,
+    resolver: schemaFilterPatient,
     shouldUnregister: false,
   });
 

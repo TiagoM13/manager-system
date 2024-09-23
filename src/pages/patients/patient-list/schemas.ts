@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const schema = z.object({
+const SchemaFilterPatient = z.object({
   name: z
     .string()
     .trim()
@@ -11,4 +11,6 @@ const schema = z.object({
   page: z.string().optional(),
 });
 
-export const filterSchema = zodResolver(schema);
+export type SchemaFilterPatientType = z.infer<typeof SchemaFilterPatient>;
+
+export const schemaFilterPatient = zodResolver(SchemaFilterPatient);
