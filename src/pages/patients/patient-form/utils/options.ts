@@ -43,6 +43,17 @@ export const conditionsOptions = [
   },
 ];
 
+export const optionsHealthAgent = [
+  {
+    label: 'Ana Maria (Area A)',
+    value: 'Ana Maria (Area A)',
+  },
+  {
+    label: 'Jose Brito (Area B)',
+    value: 'Jose Brito (Area B)',
+  },
+];
+
 export const pregnantOptions = [
   {
     label: 'Sim',

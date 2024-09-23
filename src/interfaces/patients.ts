@@ -19,7 +19,6 @@ export interface IPatient {
 
   created_at?: Date;
   updated_at?: Date;
-  // queries: IQuery[]
 }
 
 export interface IPatientFilters {
