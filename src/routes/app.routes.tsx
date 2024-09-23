@@ -10,7 +10,10 @@ import { PrivateRoute } from './private.route';
 import { PublicRoute } from './public.route';
 
 const Dashboard = React.lazy(() => import('@/pages/dashboard'));
-const Patients = React.lazy(() => import('@/pages/patients'));
+const Patients = React.lazy(() => import('@/pages/patients/patient-list/page'));
+const PatientForm = React.lazy(
+  () => import('@/pages/patients/patient-form/page'),
+);
 const Users = React.lazy(() => import('@/pages/users/user-list/page'));
 const User = React.lazy(() => import('@/pages/users/user-form/page'));
 
@@ -93,6 +96,16 @@ export const Router: React.FC = () => {
                 allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
               >
                 <Patients />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/patients/new"
+            element={
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
+                <PatientForm />
               </PrivateRoute>
             }
           />

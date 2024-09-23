@@ -20,13 +20,13 @@ export type SelectOption<T> = React.ComponentType<
 
 export interface ISelectProps<T, Fields extends FieldValues> {
   className?: string;
-  control: Control<Fields, unknown>;
+  control?: Control<Fields, unknown>;
   name: Path<Fields>;
   label?: string | React.ReactNode;
   required?: boolean;
   error?: FieldError;
   options?: Option[];
-  setValue: UseFormSetValue<Fields>;
+  setValue?: UseFormSetValue<Fields>;
   defaultValue?: any;
   defaultOptions?: [];
   disabled?: boolean;

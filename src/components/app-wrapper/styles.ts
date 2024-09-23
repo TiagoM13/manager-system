@@ -118,7 +118,7 @@ export const Aside = styled.aside<IMenuBarProps>`
 
 export const Main = styled.main<IMenuBarProps>`
   flex: 1;
-
+  background-color: #f1f5f9;
   transition: 0.1s all;
   justify-content: center;
   padding: ${({ isAuthenticated }) => (isAuthenticated ? '22px' : '0')};
