@@ -63,6 +63,7 @@ export const FormStepOne: React.FC<{ loading?: boolean }> = ({ loading }) => {
           name="cns"
           label="CNS (cartão do sus)"
           placeholder="Digite o CNS do paciente"
+          maxLength={15}
           control={control}
           error={errors.cns}
           disabled={loading}

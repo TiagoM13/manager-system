@@ -9,6 +9,7 @@ import {
   MinLengthCPF,
   RequiredField,
   InvalidDateField,
+  PositiveNumber,
 } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -74,8 +75,18 @@ const SchemaPatient = z.object({
   contact_emergency: OptionalStringField,
   name_contact_emergency: OptionalStringField,
   health_agent: OptionalStringField,
-  height: z.number().optional(),
-  weight: z.number().optional(),
+  height: z
+    .number()
+    .positive({ message: PositiveNumber })
+    .min(50, { message: 'Altura mínima permitida é 50 cm' })
+    .max(300, { message: 'Altura máxima permitida é 300 cm' })
+    .optional(),
+  weight: z
+    .number()
+    .positive({ message: PositiveNumber })
+    .min(50, { message: 'Altura mínima permitida é 50 cm' })
+    .max(300, { message: 'Altura máxima permitida é 300 cm' })
+    .optional(),
 });
 
 export type SchemaPatientType = z.infer<typeof SchemaPatient>;

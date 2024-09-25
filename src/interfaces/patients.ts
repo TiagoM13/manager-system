@@ -18,6 +18,8 @@ export interface IPatient {
   status: Status | null;
   contact_emergency?: string | null;
   name_contact_emergency?: string | null;
+  height?: number | null;
+  weight?: number | null;
 
   created_at?: Date;
   updated_at?: Date;
