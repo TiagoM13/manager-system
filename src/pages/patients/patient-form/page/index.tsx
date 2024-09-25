@@ -22,7 +22,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormProgress } from '../components/form-progress';
 import { Header } from '../components/header';
 import { FormStepOne, FormStepThree, FormStepTwo } from '../forms';
-import { schemaCreatePatient, SchemaCreatePatientType } from '../schemas';
+import { schemaPatient, SchemaPatientType } from '../schemas';
 
 const PatientForm: React.FC = () => {
   // hooks
@@ -33,10 +33,10 @@ const PatientForm: React.FC = () => {
   const [currentStep, setCurrentStep] = React.useState(0);
 
   // hook form
-  const methods = useForm<SchemaCreatePatientType>({
+  const methods = useForm<SchemaPatientType>({
     mode: 'onChange',
     shouldUnregister: false,
-    resolver: schemaCreatePatient,
+    resolver: schemaPatient,
   });
 
   const { handleSubmit, trigger } = methods;

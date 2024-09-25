@@ -69,6 +69,7 @@ export const FormStepTwo: React.FC<{ loading?: boolean }> = ({ loading }) => {
           placeholder="Digite um número de telefone"
           onChange={handlePhoneEmergencyChange}
           control={control}
+          error={errors.contact_emergency}
           disabled={loading}
         />
 
@@ -76,6 +77,8 @@ export const FormStepTwo: React.FC<{ loading?: boolean }> = ({ loading }) => {
           name="name_contact_emergency"
           label="Nome do contato de emergência"
           placeholder="Digite o nome do contato de emergência"
+          control={control}
+          error={errors.name_contact_emergency}
           disabled={loading}
         />
       </div>
