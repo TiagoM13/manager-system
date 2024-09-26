@@ -80,12 +80,14 @@ const SchemaPatient = z.object({
     .positive({ message: PositiveNumber })
     .min(50, { message: 'Altura mínima permitida é 50 cm' })
     .max(300, { message: 'Altura máxima permitida é 300 cm' })
+    .nullable()
     .optional(),
   weight: z
     .number()
     .positive({ message: PositiveNumber })
     .min(50, { message: 'Altura mínima permitida é 50 cm' })
     .max(300, { message: 'Altura máxima permitida é 300 cm' })
+    .nullable()
     .optional(),
 });
 

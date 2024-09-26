@@ -1,15 +1,11 @@
 import React from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 
 import { twMerge } from 'tailwind-merge';
 
 import { MagnifyingGlass } from '@phosphor-icons/react';
 
-type InputSearchProps = React.ComponentProps<'input'> & {
-  name?: string;
-  control?: Control;
-  className?: string;
-};
+import { InputSearchProps } from './interfaces';
 
 export const InputSearch: React.FC<InputSearchProps> = ({
   name,

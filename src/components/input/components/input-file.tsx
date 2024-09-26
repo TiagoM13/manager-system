@@ -1,22 +1,13 @@
 import React from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 
 import { CircleNotch, UploadSimple } from '@phosphor-icons/react';
 
 import { ErrorMessage } from '@/components';
 
-interface FileUploadButtonProps {
-  placeholder?: string;
-  defaultValue?: string;
-  loading?: boolean;
-  disabled?: boolean;
-  control?: Control;
-  error?: FieldError | undefined;
-  name: string;
-  onChangeFileSelected: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+import { FileUploadInputProps } from './interfaces';
 
-export const FileUploadInput: React.FC<FileUploadButtonProps> = ({
+export const FileUploadInput: React.FC<FileUploadInputProps> = ({
   placeholder = 'Escolher foto',
   loading = false,
   disabled = false,

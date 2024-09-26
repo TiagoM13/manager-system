@@ -1,20 +1,9 @@
 import React from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
 
 import { ErrorMessage } from '@/components/error-message';
 
-interface InputRadioProps {
-  required?: boolean;
-  disabled?: boolean;
-  label?: string;
-  name?: string;
-  control?: Control<any>;
-  options: {
-    opt1: string;
-    opt2: string;
-  };
-  error?: FieldError | undefined;
-}
+import { InputRadioProps } from './interfaces';
 
 export const InputRadio: React.FC<InputRadioProps> = ({
   required = false,

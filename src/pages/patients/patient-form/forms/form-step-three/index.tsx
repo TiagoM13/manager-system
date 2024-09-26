@@ -9,7 +9,6 @@ import { conditionsOptions, optionsHealthAgent } from '../../utils/options';
 export const FormStepThree: React.FC<{ loading?: boolean }> = ({ loading }) => {
   const {
     control,
-    setValue,
     formState: { errors },
   } = useFormContext<IPatient>();
 
@@ -36,10 +35,6 @@ export const FormStepThree: React.FC<{ loading?: boolean }> = ({ loading }) => {
           name="height"
           label="Altura"
           placeholder="Digite a alura do paciente"
-          onChange={(e) => {
-            const value = e.target.value ? parseFloat(e.target.value) : null;
-            setValue('height', value);
-          }}
           control={control}
           error={errors.height}
           disabled={loading}
@@ -59,10 +54,6 @@ export const FormStepThree: React.FC<{ loading?: boolean }> = ({ loading }) => {
           type="number"
           name="weight"
           label="Peso"
-          onChange={(e) => {
-            const value = e.target.value ? parseFloat(e.target.value) : null;
-            setValue('weight', value);
-          }}
           placeholder="Digite o peso do paciente"
           control={control}
           error={errors.weight}

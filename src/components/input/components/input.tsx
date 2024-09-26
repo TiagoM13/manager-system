@@ -1,24 +1,9 @@
 import React from 'react';
-import {
-  Control,
-  Controller,
-  FieldError,
-  FieldPath,
-  FieldValues,
-} from 'react-hook-form';
+import { Controller, FieldValues } from 'react-hook-form';
 
 import { ErrorMessage } from '@/components/error-message';
 
-interface InputProps<T extends FieldValues>
-  extends React.ComponentProps<'input'> {
-  label?: string;
-  required?: boolean;
-  className?: string;
-  defaultValue?: any;
-  control?: Control<T>;
-  name: FieldPath<T>;
-  error?: FieldError | undefined;
-}
+import { InputProps } from './interfaces';
 
 export const Input = <T extends FieldValues>({
   label,
@@ -30,6 +15,15 @@ export const Input = <T extends FieldValues>({
   error,
   ...props
 }: InputProps<T>) => {
+  const classNames = `${className} w-full rounded-md border border-slate-400 py-2 px-4 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`;
+  const handleNumberChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    onChange: (value: any) => void,
+  ) => {
+    const value = e.target.value ? parseFloat(e.target.value) : null;
+    onChange(value);
+  };
+
   return (
     <div className="w-full">
       <label htmlFor={name} className="block text-sm text-slate-600 mb-2">
@@ -42,21 +36,27 @@ export const Input = <T extends FieldValues>({
             name={name}
             control={control}
             defaultValue={defaultValue || ''}
-            render={({ field }) => (
-              <input
-                {...field}
-                {...props}
-                className={`${className} w-full rounded-md border border-slate-400 py-2 px-4 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`}
-              />
-            )}
+            render={({ field }) => {
+              if (props.type === 'number')
+                return (
+                  <input
+                    {...field}
+                    {...props}
+                    data-testid={`input-${name}`}
+                    type="number"
+                    inputMode="numeric"
+                    onChange={(e) => handleNumberChange(e, field.onChange)}
+                    className={classNames}
+                  />
+                );
+
+              return <input {...field} {...props} className={classNames} />;
+            }}
           />
         </>
       ) : (
         <>
-          <input
-            {...props}
-            className={`${className} w-full rounded-md border border-slate-400 py-2 px-4 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`}
-          />
+          <input {...props} className={classNames} />
         </>
       )}
 

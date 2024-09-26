@@ -1,28 +1,11 @@
 import React from 'react';
-import {
-  Control,
-  Controller,
-  FieldError,
-  FieldPath,
-  FieldValues,
-} from 'react-hook-form';
+import { Controller, FieldValues } from 'react-hook-form';
 
 import { Eye, EyeSlash } from '@phosphor-icons/react';
 
 import { ErrorMessage } from '@/components/error-message';
 
-interface InputProps<T extends FieldValues>
-  extends React.ComponentProps<'input'> {
-  label?: string;
-  required?: boolean;
-  className?: string;
-  stylesRightButton?: string;
-  defaultValue?: any;
-  control?: Control<T>;
-  name: FieldPath<T>;
-  error?: FieldError | undefined;
-  loading?: boolean;
-}
+import { InputPasswordProps } from './interfaces';
 
 export const InputPassword = <T extends FieldValues>({
   label,
@@ -35,7 +18,7 @@ export const InputPassword = <T extends FieldValues>({
   loading = false,
   stylesRightButton = '',
   ...props
-}: InputProps<T>) => {
+}: InputPasswordProps<T>) => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const togglePasswordVisibility = () => {
