@@ -1,67 +1,17 @@
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { FormProvider } from 'react-hook-form';
 
 import { Card } from '@/components';
-import { useQuery, useWindowSize } from '@/hooks';
-import { IPatient, IPatientFilters } from '@/interfaces';
-import { getAllPatientsService } from '@/services';
-import { handleAPIErrors } from '@/utils/common';
-import {
-  useQuery as useQueryAllPatients,
-  keepPreviousData,
-} from '@tanstack/react-query';
+import { useWindowSize } from '@/hooks';
 
 import { Header } from '../../patient-form/components/header';
 import { PatientFilters, PatientsTable, PatientsCard } from '../components';
-import { schemaFilterPatient, SchemaFilterPatientType } from '../schemas';
+import { usePatientList } from '../hooks/use-patient-list';
 
 const Patients: React.FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [query] = useQuery<IPatientFilters>();
   const [, , isMobile] = useWindowSize();
-
-  const methods = useForm<SchemaFilterPatientType>({
-    defaultValues: {
-      name: query.name,
-      page: String(query.page),
-    },
-    mode: 'onChange',
-    resolver: schemaFilterPatient,
-    shouldUnregister: false,
-  });
-
-  const { data, isLoading } = useQueryAllPatients({
-    queryKey: ['patients', query],
-    queryFn: async () => {
-      try {
-        const patients = getAllPatientsService(query);
-        return patients;
-      } catch (error) {
-        handleAPIErrors(error);
-        return;
-      }
-    },
-    placeholderData: keepPreviousData,
-  });
-
-  const loading = React.useMemo(() => isLoading, [isLoading]);
-
-  const handleNewRegister = React.useCallback(() => {
-    navigate('/patients/new', {
-      state: { from: location },
-    });
-  }, [location, navigate]);
-
-  const handleEdit = React.useCallback(
-    (patient: IPatient) => {
-      navigate(`/patients/${patient.id}`, {
-        state: { from: location },
-      });
-    },
-    [location, navigate],
-  );
+  const { data, loading, methods, handleNewRegister, handleEdit } =
+    usePatientList();
 
   return (
     <FormProvider {...methods}>

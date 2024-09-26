@@ -23,9 +23,9 @@ export const UserForm: React.FC<UserFormProps> = ({
   } = useFormContext<IUser>();
 
   const selectOptions = [
-    { value: Role.ADMIN, label: Role.ADMIN },
-    { value: Role.EDITOR, label: Role.EDITOR },
-    { value: Role.CLINICAL, label: Role.CLINICAL },
+    { value: Role.ADMIN, label: 'Administrador' },
+    { value: Role.EDITOR, label: 'Editor' },
+    { value: Role.CLINICAL, label: 'Clínico' },
   ];
 
   return (
