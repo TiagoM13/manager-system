@@ -32,6 +32,12 @@ const calculateAge = (birthDate: Date) => {
   return age;
 };
 
+const stringToNumber = (value: string | number | null | undefined) => {
+  if (value === null || value === undefined || value === '') return null;
+  const parsed = parseFloat(value as string);
+  return isNaN(parsed) ? null : parsed;
+};
+
 const SchemaPatient = z.object({
   name: NameFieldRequired,
   birth_date: z
@@ -76,18 +82,32 @@ const SchemaPatient = z.object({
   name_contact_emergency: OptionalStringField,
   health_agent: OptionalStringField,
   height: z
-    .number()
-    .positive({ message: PositiveNumber })
-    .min(50, { message: 'Altura mínima permitida é 50 cm' })
-    .max(300, { message: 'Altura máxima permitida é 300 cm' })
-    .nullable()
+    .union([z.string(), z.number(), z.null()])
+    .transform((value) => stringToNumber(value))
+    .refine((val) => val === null || (typeof val === 'number' && val > 0), {
+      message: PositiveNumber,
+    })
+    .refine(
+      (val) =>
+        val === null || (typeof val === 'number' && val >= 50 && val <= 300),
+      {
+        message: 'A altura deve ser entre 50 cm e 300 cm',
+      },
+    )
     .optional(),
   weight: z
-    .number()
-    .positive({ message: PositiveNumber })
-    .min(50, { message: 'Altura mínima permitida é 50 cm' })
-    .max(300, { message: 'Altura máxima permitida é 300 cm' })
-    .nullable()
+    .union([z.string(), z.number(), z.null()])
+    .transform((value) => stringToNumber(value))
+    .refine((val) => val === null || (typeof val === 'number' && val > 0), {
+      message: PositiveNumber,
+    })
+    .refine(
+      (val) =>
+        val === null || (typeof val === 'number' && val >= 0.5 && val <= 500),
+      {
+        message: 'O peso deve ser entre 0.5 kg e 500 kg',
+      },
+    )
     .optional(),
 });
 

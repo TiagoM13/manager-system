@@ -14,7 +14,6 @@ export const Container = styled.div`
     [class$='-menu'],
     [class$='-menuList'] {
       background-color: white !important;
-      text-transform: capitalize;
     }
 
     [class$='-control'] {
@@ -25,7 +24,6 @@ export const Container = styled.div`
     [class$='-singleValue'] {
       color: var(--slate-600);
       font-size: 0.875rem;
-      text-transform: capitalize;
     }
 
     [class$='-placeholder'] {
@@ -36,7 +34,6 @@ export const Container = styled.div`
     [class$='-ValueContainer'],
     [class$='-Input'] {
       padding: 0;
-      text-transform: capitalize;
     }
 
     [class$='-indicatorContainer'] {

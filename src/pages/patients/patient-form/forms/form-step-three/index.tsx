@@ -34,6 +34,7 @@ export const FormStepThree: React.FC<{ loading?: boolean }> = ({ loading }) => {
           type="number"
           name="height"
           label="Altura"
+          inputMode="numeric"
           placeholder="Digite a alura do paciente"
           control={control}
           error={errors.height}
@@ -54,6 +55,7 @@ export const FormStepThree: React.FC<{ loading?: boolean }> = ({ loading }) => {
           type="number"
           name="weight"
           label="Peso"
+          inputMode="numeric"
           placeholder="Digite o peso do paciente"
           control={control}
           error={errors.weight}

@@ -16,13 +16,6 @@ export const Input = <T extends FieldValues>({
   ...props
 }: InputProps<T>) => {
   const classNames = `${className} w-full rounded-md border border-slate-400 py-2 px-4 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`;
-  const handleNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    onChange: (value: any) => void,
-  ) => {
-    const value = e.target.value ? parseFloat(e.target.value) : null;
-    onChange(value);
-  };
 
   return (
     <div className="w-full">
@@ -36,22 +29,9 @@ export const Input = <T extends FieldValues>({
             name={name}
             control={control}
             defaultValue={defaultValue || ''}
-            render={({ field }) => {
-              if (props.type === 'number')
-                return (
-                  <input
-                    {...field}
-                    {...props}
-                    data-testid={`input-${name}`}
-                    type="number"
-                    inputMode="numeric"
-                    onChange={(e) => handleNumberChange(e, field.onChange)}
-                    className={classNames}
-                  />
-                );
-
-              return <input {...field} {...props} className={classNames} />;
-            }}
+            render={({ field }) => (
+              <input {...field} {...props} className={classNames} />
+            )}
           />
         </>
       ) : (
