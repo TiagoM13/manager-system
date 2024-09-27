@@ -28,17 +28,19 @@ export const usePatientList = () => {
     shouldUnregister: false,
   });
 
+  const getAllPatients = React.useCallback(async () => {
+    try {
+      const patients = getAllPatientsService(query);
+      return patients;
+    } catch (error) {
+      handleAPIErrors(error);
+      return;
+    }
+  }, [query]);
+
   const { data, isLoading } = useQueryAllPatients({
     queryKey: ['patients', query],
-    queryFn: async () => {
-      try {
-        const patients = getAllPatientsService(query);
-        return patients;
-      } catch (error) {
-        handleAPIErrors(error);
-        return;
-      }
-    },
+    queryFn: getAllPatients,
     placeholderData: keepPreviousData,
   });
 
