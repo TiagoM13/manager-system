@@ -8,5 +8,8 @@ export const formatPatientProps = (patientForm: IPatientForm): IPatient => {
 
   if (patient.phone) patient.phone = patient.phone.replace(/\D/g, '');
 
+  if (patient.contact_emergency)
+    patient.contact_emergency = patient.contact_emergency.replace(/\D/g, '');
+
   return patient;
 };

@@ -4,6 +4,7 @@ import { Pagination, Table } from '@/components';
 import { IPatient, IResponseMeta } from '@/interfaces';
 
 import { PatientRow } from '../patient-item';
+import { SkeletonTablePatients } from '../skeletons';
 
 type IPatientData = {
   patients: IPatient[];
@@ -34,7 +35,11 @@ export const PatientsTable: React.FC<PatientTableProps> = ({
       </thead>
       <tbody>
         {loading ? (
-          <></>
+          <>
+            {Array.from({ length: 10 }).map((_, index) => (
+              <SkeletonTablePatients key={index} />
+            ))}
+          </>
         ) : (
           <>
             {data?.patients.map((patient, index) => (

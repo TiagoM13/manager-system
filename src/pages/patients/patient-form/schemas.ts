@@ -1,14 +1,17 @@
 import { z } from 'zod';
 
+import {
+  NameFieldRequired,
+  InvalidSelect,
+  MaxDateField,
+  MinDateField,
+  MinLengthCNS,
+  MinLengthCPF,
+  RequiredField,
+  InvalidDateField,
+  PositiveNumber,
+} from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-const FieldTextRequired = z
-  .string({
-    required_error: 'O campo é obrigatório',
-  })
-  .trim()
-  .min(3, { message: 'O nome deve ter no mínimo 3 caracteres' })
-  .max(255, { message: 'O nome deve ter no máximo 255 caracteres' });
 
 const OptionalStringField = z
   .string()
@@ -29,8 +32,14 @@ const calculateAge = (birthDate: Date) => {
   return age;
 };
 
-const SchemaCreatePatient = z.object({
-  name: FieldTextRequired,
+const stringToNumber = (value: string | number | null | undefined) => {
+  if (value === null || value === undefined || value === '') return null;
+  const parsed = parseFloat(value as string);
+  return isNaN(parsed) ? null : parsed;
+};
+
+const SchemaPatient = z.object({
+  name: NameFieldRequired,
   birth_date: z
     .preprocess(
       (arg) => {
@@ -41,26 +50,26 @@ const SchemaCreatePatient = z.object({
         return arg;
       },
       z.date({
-        invalid_type_error: 'Data inválida, por favor insira uma data válida',
-        required_error: 'O campo é obrigatório',
+        invalid_type_error: InvalidDateField,
+        required_error: RequiredField,
       }),
     )
     .refine((data) => data <= new Date(), {
-      message: 'A data de nascimento não pode ser futura',
+      message: MinDateField,
     })
     .refine((data) => calculateAge(data) <= 105, {
-      message: 'A idade não pode ser maior que 105 anos',
+      message: MaxDateField,
     }),
   sex: z
-    .string({ required_error: 'O campo é obrigatório.' })
+    .string({ required_error: RequiredField })
     .refine((data) => data.trim() !== '', {
-      message: 'Selecione uma opção válida',
+      message: InvalidSelect,
     }),
   cpf: OptionalStringField.refine((value) => !value || value.length === 14, {
-    message: 'O CPF deve ter no máximo 11 dígitos.',
+    message: MinLengthCPF,
   }),
   cns: OptionalStringField.refine((value) => !value || value.length === 15, {
-    message: 'O CNS deve ter no máximo 15 dígitos.',
+    message: MinLengthCNS,
   }),
   address: OptionalStringField,
   mother_name: OptionalStringField,
@@ -69,9 +78,39 @@ const SchemaCreatePatient = z.object({
   occupation: OptionalStringField,
   email: OptionalStringField,
   phone: OptionalStringField,
+  contact_emergency: OptionalStringField,
+  name_contact_emergency: OptionalStringField,
   health_agent: OptionalStringField,
+  height: z
+    .union([z.string(), z.number(), z.null()])
+    .transform((value) => stringToNumber(value))
+    .refine((val) => val === null || (typeof val === 'number' && val > 0), {
+      message: PositiveNumber,
+    })
+    .refine(
+      (val) =>
+        val === null || (typeof val === 'number' && val >= 50 && val <= 300),
+      {
+        message: 'A altura deve ser entre 50 cm e 300 cm',
+      },
+    )
+    .optional(),
+  weight: z
+    .union([z.string(), z.number(), z.null()])
+    .transform((value) => stringToNumber(value))
+    .refine((val) => val === null || (typeof val === 'number' && val > 0), {
+      message: PositiveNumber,
+    })
+    .refine(
+      (val) =>
+        val === null || (typeof val === 'number' && val >= 0.5 && val <= 500),
+      {
+        message: 'O peso deve ser entre 0.5 kg e 500 kg',
+      },
+    )
+    .optional(),
 });
 
-export type SchemaCreatePatientType = z.infer<typeof SchemaCreatePatient>;
+export type SchemaPatientType = z.infer<typeof SchemaPatient>;
 
-export const schemaCreatePatient = zodResolver(SchemaCreatePatient);
+export const schemaPatient = zodResolver(SchemaPatient);

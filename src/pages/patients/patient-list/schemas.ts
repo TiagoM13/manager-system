@@ -1,13 +1,10 @@
 import { z } from 'zod';
 
+import { MaxLengthText } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const SchemaFilterPatient = z.object({
-  name: z
-    .string()
-    .trim()
-    .max(255, { message: 'O máximo de caracteres permitos é 255' })
-    .optional(),
+  name: z.string().trim().max(255, { message: MaxLengthText }).optional(),
   page: z.string().optional(),
 });
 

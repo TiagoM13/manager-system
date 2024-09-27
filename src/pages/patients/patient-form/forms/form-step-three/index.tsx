@@ -31,9 +31,13 @@ export const FormStepThree: React.FC<{ loading?: boolean }> = ({ loading }) => {
         />
 
         <Input
+          type="number"
           name="height"
           label="Altura"
+          inputMode="numeric"
           placeholder="Digite a alura do paciente"
+          control={control}
+          error={errors.height}
           disabled={loading}
         />
 
@@ -48,9 +52,13 @@ export const FormStepThree: React.FC<{ loading?: boolean }> = ({ loading }) => {
         />
 
         <Input
+          type="number"
           name="weight"
           label="Peso"
+          inputMode="numeric"
           placeholder="Digite o peso do paciente"
+          control={control}
+          error={errors.weight}
           disabled={loading}
         />
       </div>

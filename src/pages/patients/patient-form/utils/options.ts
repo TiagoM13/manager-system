@@ -12,23 +12,23 @@ export const sexOptions = [
 export const maritalStatusOptions = [
   {
     label: 'Solteiro(a)',
-    value: 'solteiro',
+    value: 'solteiro(a)',
   },
   {
     label: 'Casado(a)',
-    value: 'casado',
+    value: 'casado(a)',
   },
   {
     label: 'Divorciado(a)',
-    value: 'divorciado',
+    value: 'divorciado(a)',
   },
   {
     label: 'Viúvo(a)',
-    value: 'viuvo',
+    value: 'viuvo(a)',
   },
   {
     label: 'Separado(a)',
-    value: 'separado',
+    value: 'separado(a)',
   },
 ];
 
