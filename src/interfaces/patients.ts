@@ -25,8 +25,7 @@ export interface IPatient {
   updated_at?: Date;
 }
 
-// eslint-disable-next-line prettier/prettier
-export interface IPatientForm extends Omit<IPatient, 'status'> { }
+export interface IPatientForm extends Omit<IPatient, 'status'> {}
 
 export interface IPatientFilters {
   name?: string;
