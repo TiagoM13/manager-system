@@ -1,18 +1,21 @@
 import React from 'react';
 
+import { CustomLoadingSkeleton } from '@/components';
 import { IPatient } from '@/interfaces';
 import { formatDateTime } from '@/utils';
 
 import { calculateCompletionPercentage } from '../../utils/percentage';
-import { EditButton } from '../clear-button';
+
+import { EditButton } from '..';
 
 interface PatientCompletionStatusProps {
   patient?: IPatient;
+  loading?: boolean;
 }
 
 export const PatientCompletionStatus: React.FC<
   PatientCompletionStatusProps
-> = ({ patient }) => {
+> = ({ patient, loading }) => {
   const completionPercentage = React.useMemo(
     () => (patient ? calculateCompletionPercentage(patient) : '0'),
     [patient],
@@ -23,12 +26,16 @@ export const PatientCompletionStatus: React.FC<
   return (
     <div className="flex flex-col items-end gap-[20px]">
       <div className="flex items-center gap-2">
-        <span className="block text-xs text-slate-600">
-          última atualização em{' '}
-          <strong>{formatDateTime(patient?.updated_at as Date)}</strong>
-        </span>
+        {loading ? (
+          <CustomLoadingSkeleton className="h-2 w-64" />
+        ) : (
+          <span className="block text-xs text-slate-600">
+            última atualização em{' '}
+            <strong>{formatDateTime(patient?.updated_at as Date)}</strong>
+          </span>
+        )}
 
-        <EditButton />
+        {!loading && <EditButton />}
       </div>
 
       <span className="block text-xs">
@@ -36,7 +43,7 @@ export const PatientCompletionStatus: React.FC<
         <strong
           className={`${isMinimumCompleted ? 'text-red-600' : 'text-sky-600'}`}
         >
-          {`${completionPercentage}%`}
+          {loading ? '0%' : `${completionPercentage}%`}
         </strong>
       </span>
     </div>

@@ -26,6 +26,11 @@ const PatientDetails: React.FC = () => {
     queryFn: async () => await getPatientService(String(id)),
   });
 
+  const loading = React.useMemo(
+    () => isLoading || isFetching,
+    [isFetching, isLoading],
+  );
+
   return (
     <>
       <Header
@@ -37,13 +42,13 @@ const PatientDetails: React.FC = () => {
       <div className="max-w-[1440px] space-y-6">
         <Card>
           <div className="flex items-center justify-between">
-            <PatientHeader patient={patient} />
+            <PatientHeader patient={patient} loading={loading} />
 
-            <PatientCompletionStatus patient={patient} />
+            <PatientCompletionStatus patient={patient} loading={loading} />
           </div>
         </Card>
 
-        <PatientInfoSections patient={patient} />
+        <PatientInfoSections patient={patient} loading={loading} />
       </div>
     </>
   );
