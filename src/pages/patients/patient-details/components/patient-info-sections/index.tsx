@@ -6,14 +6,18 @@ import { formatPhone, calculateAge, formatDate } from '@/utils';
 
 import { EditButton, InfoItem } from '..';
 
+import { ModalSection } from '../../types/modal';
+
 interface PatientInfoSectionsProps {
   patient?: IPatient;
   loading?: boolean;
+  onEdit: (section: ModalSection) => void;
 }
 
 export const PatientInfoSections: React.FC<PatientInfoSectionsProps> = ({
   patient,
   loading,
+  onEdit,
 }) => {
   return (
     <>
@@ -24,7 +28,7 @@ export const PatientInfoSections: React.FC<PatientInfoSectionsProps> = ({
         >
           {!loading && (
             <div className="absolute right-4 top-0">
-              <EditButton />
+              <EditButton onClick={() => onEdit('contact-info')} />
             </div>
           )}
 
@@ -62,7 +66,7 @@ export const PatientInfoSections: React.FC<PatientInfoSectionsProps> = ({
         <Card title="Informações gerais" className="px-6 space-y-4 relative">
           {!loading && (
             <div className="absolute right-4 top-0">
-              <EditButton />
+              <EditButton onClick={() => onEdit('general-info')} />
             </div>
           )}
 
@@ -110,7 +114,7 @@ export const PatientInfoSections: React.FC<PatientInfoSectionsProps> = ({
       <Card title="Informações médicas" className="px-6 space-y-4 relative">
         {!loading && (
           <div className="absolute right-4 top-0">
-            <EditButton />
+            <EditButton onClick={() => onEdit('medical-info')} />
           </div>
         )}
 

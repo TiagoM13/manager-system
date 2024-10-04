@@ -11,11 +11,23 @@ import {
   PatientHeader,
   PatientCompletionStatus,
   PatientInfoSections,
+  DialogForm,
 } from '../components';
+import { ModalSection } from '../types/modal';
 
 const PatientDetails: React.FC = () => {
   const { goBack } = useAppNavigation();
   const { id } = useParams<{ id: string }>();
+
+  const [openModal, setOpenModal] = React.useState<ModalSection | null>(null);
+
+  const handleOpenModal = (section: ModalSection) => {
+    setOpenModal(section);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(null);
+  };
 
   const {
     data: patient,
@@ -44,12 +56,22 @@ const PatientDetails: React.FC = () => {
           <div className="flex items-center justify-between">
             <PatientHeader patient={patient} loading={loading} />
 
-            <PatientCompletionStatus patient={patient} loading={loading} />
+            <PatientCompletionStatus
+              patient={patient}
+              loading={loading}
+              onEdit={handleOpenModal}
+            />
           </div>
         </Card>
 
-        <PatientInfoSections patient={patient} loading={loading} />
+        <PatientInfoSections
+          patient={patient}
+          loading={loading}
+          onEdit={handleOpenModal}
+        />
       </div>
+
+      <DialogForm section={openModal} onClose={handleCloseModal} />
     </>
   );
 };
