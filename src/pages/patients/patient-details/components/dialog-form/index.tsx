@@ -3,7 +3,7 @@ import { FormProvider } from 'react-hook-form';
 
 import { X } from '@phosphor-icons/react';
 
-import { Button, Dialog, FormContainer } from '@/components';
+import { Button, Dialog, FormContainer, StatusIcon } from '@/components';
 import { IPatient } from '@/interfaces';
 
 import {
@@ -14,7 +14,6 @@ import {
 } from '../../forms';
 import { usePatientFormUpdate } from '../../hooks/patient-form-update';
 import { ModalSection } from '../../types/modal';
-import { Icon } from '../icon';
 
 interface PatientEditSectionDialogProps {
   activeSection: ModalSection | null;
@@ -30,7 +29,7 @@ export const PatientEditSectionDialog: React.FC<
 
   // memos
   const renderIcon = React.useMemo(
-    () => <Icon loading={isPending} />,
+    () => <StatusIcon loading={isPending} />,
     [isPending],
   );
 
