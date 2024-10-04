@@ -84,6 +84,7 @@ export const PatientEditSectionDialog: React.FC<
                 onClose();
                 reset();
               }}
+              disabled={isPending}
             />
             <Button
               id="saved"
@@ -91,6 +92,7 @@ export const PatientEditSectionDialog: React.FC<
               icon={renderIcon}
               className="min-w-[100px]"
               label="atualizar"
+              disabled={isPending}
             />
           </div>
         </FormContainer>

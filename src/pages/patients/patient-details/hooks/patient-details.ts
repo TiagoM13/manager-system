@@ -1,21 +1,12 @@
 import React from 'react';
 
 import { getPatientService } from '@/services';
+import { usePatientFormDialog } from '@/store';
 import { useQuery } from '@tanstack/react-query';
 
-import { ModalSection } from '../types/modal';
-
 export const usePatientDetails = (id: string) => {
-  // states
-  const [openModal, setOpenModal] = React.useState<ModalSection | null>(null);
-
-  const handleOpenModal = (activeSection: ModalSection) => {
-    setOpenModal(activeSection);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(null);
-  };
+  // hooks
+  const { activeModal, openModal, closeModal } = usePatientFormDialog();
 
   // queries
   const {
@@ -35,8 +26,8 @@ export const usePatientDetails = (id: string) => {
   return {
     patient,
     loading,
+    activeModal,
     openModal,
-    handleOpenModal,
-    handleCloseModal,
+    closeModal,
   };
 };

@@ -17,7 +17,7 @@ const PatientDetails: React.FC = () => {
   const { goBack } = useAppNavigation();
   const { id } = useParams<{ id: string }>();
 
-  const { patient, loading, openModal, handleOpenModal, handleCloseModal } =
+  const { patient, loading, activeModal, openModal, closeModal } =
     usePatientDetails(String(id));
 
   return (
@@ -36,7 +36,7 @@ const PatientDetails: React.FC = () => {
             <PatientCompletionStatus
               patient={patient}
               loading={loading}
-              onEdit={handleOpenModal}
+              onEdit={openModal}
             />
           </div>
         </Card>
@@ -44,14 +44,14 @@ const PatientDetails: React.FC = () => {
         <PatientInfoSections
           patient={patient}
           loading={loading}
-          onEdit={handleOpenModal}
+          onEdit={openModal}
         />
       </div>
 
       <PatientEditSectionDialog
         patient={patient}
-        activeSection={openModal}
-        onClose={handleCloseModal}
+        activeSection={activeModal}
+        onClose={closeModal}
       />
     </>
   );
