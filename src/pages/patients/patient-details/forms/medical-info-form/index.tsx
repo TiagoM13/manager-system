@@ -1,6 +1,8 @@
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import { Input, Select } from '@/components';
+import { IPatient } from '@/interfaces';
 import {
   optionsHealthAgent,
   conditionsOptions,
@@ -13,6 +15,11 @@ interface MedicalInfoFormProps {
 export const MedicalInfoForm: React.FC<MedicalInfoFormProps> = ({
   loading,
 }) => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<IPatient>();
+
   return (
     <>
       <Input
@@ -21,6 +28,8 @@ export const MedicalInfoForm: React.FC<MedicalInfoFormProps> = ({
         label="Altura"
         inputMode="numeric"
         placeholder="Digite a alura do paciente"
+        control={control}
+        error={errors.height}
         disabled={loading}
       />
 
@@ -30,6 +39,8 @@ export const MedicalInfoForm: React.FC<MedicalInfoFormProps> = ({
         label="Peso"
         inputMode="numeric"
         placeholder="Digite o peso do paciente"
+        control={control}
+        error={errors.weight}
         disabled={loading}
       />
 
@@ -40,6 +51,8 @@ export const MedicalInfoForm: React.FC<MedicalInfoFormProps> = ({
         labelAs="label"
         valueAs="value"
         options={optionsHealthAgent}
+        control={control}
+        error={errors.health_agent}
         disabled={loading}
       />
 

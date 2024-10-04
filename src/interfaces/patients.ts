@@ -15,7 +15,7 @@ export interface IPatient {
   email?: string | null;
   phone?: string | null;
   health_agent?: string | null;
-  status: Status;
+  status?: Status;
   contact_emergency?: string | null;
   name_contact_emergency?: string | null;
   height?: number | null;
@@ -25,7 +25,7 @@ export interface IPatient {
   updated_at?: Date;
 }
 
-export interface IPatientForm extends Omit<IPatient, 'status'> {}
+export interface IPatientForm extends Omit<IPatient, 'status'> { }
 
 export interface IPatientFilters {
   name?: string;

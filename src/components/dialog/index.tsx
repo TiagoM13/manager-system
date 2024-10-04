@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { twMerge } from 'tailwind-merge';
+
 import { X } from '@phosphor-icons/react/dist/ssr';
 
 interface DialogProps {
@@ -58,7 +60,10 @@ export const Dialog: React.FC<DialogProps> = ({
     >
       <div
         ref={modalRef}
-        className={`bg-white rounded-lg max-w-lg shadow-lg w-full p-4 ${contentClassNames}`}
+        className={twMerge(
+          `bg-white rounded-lg max-w-lg shadow-lg w-full p-4`,
+          contentClassNames,
+        )}
       >
         <div className="flex justify-between items-center mb-2">
           <h2 id="modal-title" className="text-xl font-semibold">

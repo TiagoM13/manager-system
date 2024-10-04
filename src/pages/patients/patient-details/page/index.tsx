@@ -3,45 +3,22 @@ import { useParams } from 'react-router-dom';
 
 import { Card } from '@/components';
 import { useAppNavigation } from '@/hooks';
-import { getPatientService } from '@/services';
-import { useQuery } from '@tanstack/react-query';
 
 import { Header } from '../../patient-form/components/header';
 import {
   PatientHeader,
   PatientCompletionStatus,
   PatientInfoSections,
-  DialogForm,
+  PatientEditSectionDialog,
 } from '../components';
-import { ModalSection } from '../types/modal';
+import { usePatientDetails } from '../hooks/patient-details';
 
 const PatientDetails: React.FC = () => {
   const { goBack } = useAppNavigation();
   const { id } = useParams<{ id: string }>();
 
-  const [openModal, setOpenModal] = React.useState<ModalSection | null>(null);
-
-  const handleOpenModal = (section: ModalSection) => {
-    setOpenModal(section);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(null);
-  };
-
-  const {
-    data: patient,
-    isLoading,
-    isFetching,
-  } = useQuery({
-    queryKey: ['patient'],
-    queryFn: async () => await getPatientService(String(id)),
-  });
-
-  const loading = React.useMemo(
-    () => isLoading || isFetching,
-    [isFetching, isLoading],
-  );
+  const { patient, loading, openModal, handleOpenModal, handleCloseModal } =
+    usePatientDetails(String(id));
 
   return (
     <>
@@ -71,7 +48,11 @@ const PatientDetails: React.FC = () => {
         />
       </div>
 
-      <DialogForm section={openModal} onClose={handleCloseModal} />
+      <PatientEditSectionDialog
+        patient={patient}
+        activeSection={openModal}
+        onClose={handleCloseModal}
+      />
     </>
   );
 };
