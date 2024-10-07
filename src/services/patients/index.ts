@@ -41,10 +41,11 @@ export const createPatientService = async (values: IPatient) => {
 
 export const updatePatientService = async (id: string, values: IPatient) => {
   try {
-    return await msHosp.post<IMSResponse<IPatient, 'patient'>>(
+    const { data } = await msHosp.put<IMSResponse<IPatient, 'patient'>>(
       `/patients/${id}`,
       values,
     );
+    return data;
   } catch (error) {
     handleAPIErrors(error);
     return;
