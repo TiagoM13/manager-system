@@ -25,7 +25,7 @@ export interface IPatient {
   updated_at?: Date;
 }
 
-export interface IPatientForm extends Omit<IPatient, 'status'> { }
+export interface IPatientForm extends Omit<IPatient, 'status'> {}
 
 export interface IPatientFilters {
   name?: string;
