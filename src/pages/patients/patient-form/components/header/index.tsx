@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 
-import { CaretLeft, Plus } from '@phosphor-icons/react';
+import { CaretLeft, Check, Plus } from '@phosphor-icons/react';
 
-import { Button, Divider } from '@/components';
+import { Button, Divider, StatusIcon } from '@/components';
 import { Breadcrumb } from '@/components/header/components/breadcrumb';
 
 import { HeaderContainer } from './styles';
@@ -10,14 +10,15 @@ import { HeaderContainer } from './styles';
 type HeaderProps = {
   title?: string;
   subtitle?: string;
-  labelRegister?: string;
-  pathItems?: PathItemsProps[];
+  actionLabel?: string;
+  breadcrumbItems?: BreadcrumbItem[];
+  isSubmit?: boolean;
   goBack?: () => void;
   onRegister?: () => void;
   loading?: boolean;
 };
 
-type PathItemsProps = {
+type BreadcrumbItem = {
   label: string | ReactNode;
   path?: string;
   icon?: React.ReactNode;
@@ -27,10 +28,37 @@ export const Header: React.FC<HeaderProps> = ({
   title,
   subtitle,
   goBack,
-  pathItems,
+  breadcrumbItems,
   onRegister,
-  labelRegister: labelAction = 'adicionar',
+  isSubmit,
+  loading,
+  actionLabel,
 }) => {
+  const renderActionButton = React.useMemo(() => {
+    if (onRegister) {
+      return (
+        <Button
+          id="header"
+          type="button"
+          icon={<Plus className="size-5" weight="bold" />}
+          label={actionLabel || 'adicionar'}
+          onClick={onRegister}
+        />
+      );
+    }
+
+    if (isSubmit) {
+      return (
+        <Button
+          id="btn-submit"
+          type="submit"
+          icon={<StatusIcon loading={loading} />}
+          label={actionLabel}
+        />
+      );
+    }
+  }, [actionLabel, loading, onRegister, isSubmit]);
+
   return (
     <>
       <HeaderContainer>
@@ -45,7 +73,9 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           )}
           <div>
-            <span className="text-sm text-slate-600">{subtitle}</span>
+            {subtitle && (
+              <span className="text-sm text-slate-600">{subtitle}</span>
+            )}
             <h2
               className={`${subtitle ? 'text-2xl' : 'text-3xl'} font-semibold`}
             >
@@ -54,20 +84,12 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {!!onRegister && (
-          <Button
-            id="header"
-            type="button"
-            icon={<Plus className="size-5" weight="bold" />}
-            label={labelAction}
-            onClick={onRegister}
-          />
-        )}
+        {renderActionButton}
       </HeaderContainer>
 
       <Divider />
 
-      {pathItems && <Breadcrumb pathItems={pathItems} />}
+      {breadcrumbItems && <Breadcrumb pathItems={breadcrumbItems} />}
     </>
   );
 };

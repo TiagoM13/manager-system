@@ -1,7 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Card } from '@/components';
+import { House, UserPlus, UsersFour } from '@phosphor-icons/react';
+
+import { Card, CustomLoadingSkeleton } from '@/components';
 import { useAppNavigation } from '@/hooks';
 
 import { Header } from '../../patient-form/components/header';
@@ -20,15 +22,38 @@ const PatientDetails: React.FC = () => {
   const { patient, loading, activeModal, openModal, closeModal } =
     usePatientDetails(String(id));
 
+  const breadcrumbsPathItems = [
+    {
+      label: 'Início',
+      path: '/',
+      icon: <House className="size-4" />,
+    },
+    {
+      label: 'Pacientes',
+      path: '/patients',
+      icon: <UsersFour className="size-4" />,
+    },
+    {
+      label: loading ? (
+        <CustomLoadingSkeleton className="h-5 w-40 rounded-lg" />
+      ) : (
+        patient?.name
+      ),
+      icon: <UserPlus className="size-4" />,
+    },
+  ];
+
   return (
     <>
       <Header
         subtitle="voltar a lista de pacientes"
         title="Detalhes do Paciente"
         goBack={goBack}
+        breadcrumbItems={breadcrumbsPathItems}
+        isSubmit
       />
 
-      <div className="max-w-[1440px] space-y-6">
+      <div className="max-w-[1440px] space-y-6 mt-6">
         <Card>
           <div className="flex items-center justify-between">
             <PatientHeader patient={patient} loading={loading} />

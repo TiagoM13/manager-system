@@ -68,7 +68,7 @@ const PatientForm: React.FC = () => {
         <Header
           subtitle="voltar a lista de pacientes"
           title="Adicionar Paciente"
-          pathItems={breadcrumbsPathItems}
+          breadcrumbItems={breadcrumbsPathItems}
           goBack={goBack}
         />
 

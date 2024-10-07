@@ -18,7 +18,7 @@ const Patients: React.FC = () => {
       <div className="flex flex-col">
         <Header
           title="Lista de Pacientes"
-          labelRegister="adicionar paciente"
+          actionLabel="adicionar paciente"
           onRegister={handleNewRegister}
         />
 
