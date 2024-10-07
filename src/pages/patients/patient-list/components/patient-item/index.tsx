@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { Eye } from '@phosphor-icons/react';
 
@@ -15,11 +15,15 @@ interface PatientItemProps {
 }
 
 export const PatientRow: React.FC<PatientItemProps> = ({ patient }) => {
+  const location = useLocation();
+
   return (
     <Table.Row hoverable>
       <Table.Cell>
         <Link
           to={`/patients/${patient.id}`}
+          state={{ from: location }}
+          preventScrollReset={true}
           className="flex items-center gap-3 hover:text-sky-500 transition-all"
         >
           <Avatar color="dark" name={patient.name} imageUrl={null} small />

@@ -141,7 +141,7 @@ export const CustomLoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
     <SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
       <Skeleton
         count={count}
-        containerClassName="flex w-full h-full"
+        containerClassName="flex-1 w-full h-full"
         className={className}
       />
     </SkeletonTheme>

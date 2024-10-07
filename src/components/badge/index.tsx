@@ -3,7 +3,7 @@ import React from 'react';
 import { Role, Status } from '@/enums';
 
 export type BadgeProps = {
-  type: Status | Role;
+  type: Status | Role | undefined;
 };
 
 export const Badge: React.FC<BadgeProps> = ({ type }) => {
