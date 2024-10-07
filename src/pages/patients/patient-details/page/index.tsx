@@ -3,33 +3,22 @@ import { useParams } from 'react-router-dom';
 
 import { Card } from '@/components';
 import { useAppNavigation } from '@/hooks';
-import { getPatientService } from '@/services';
-import { useQuery } from '@tanstack/react-query';
 
 import { Header } from '../../patient-form/components/header';
 import {
   PatientHeader,
   PatientCompletionStatus,
   PatientInfoSections,
+  PatientEditSectionDialog,
 } from '../components';
+import { usePatientDetails } from '../hooks/patient-details';
 
 const PatientDetails: React.FC = () => {
   const { goBack } = useAppNavigation();
   const { id } = useParams<{ id: string }>();
 
-  const {
-    data: patient,
-    isLoading,
-    isFetching,
-  } = useQuery({
-    queryKey: ['patient'],
-    queryFn: async () => await getPatientService(String(id)),
-  });
-
-  const loading = React.useMemo(
-    () => isLoading || isFetching,
-    [isFetching, isLoading],
-  );
+  const { patient, loading, activeModal, openModal, closeModal } =
+    usePatientDetails(String(id));
 
   return (
     <>
@@ -44,12 +33,26 @@ const PatientDetails: React.FC = () => {
           <div className="flex items-center justify-between">
             <PatientHeader patient={patient} loading={loading} />
 
-            <PatientCompletionStatus patient={patient} loading={loading} />
+            <PatientCompletionStatus
+              patient={patient}
+              loading={loading}
+              onEdit={openModal}
+            />
           </div>
         </Card>
 
-        <PatientInfoSections patient={patient} loading={loading} />
+        <PatientInfoSections
+          patient={patient}
+          loading={loading}
+          onEdit={openModal}
+        />
       </div>
+
+      <PatientEditSectionDialog
+        patient={patient}
+        activeSection={activeModal}
+        onClose={closeModal}
+      />
     </>
   );
 };

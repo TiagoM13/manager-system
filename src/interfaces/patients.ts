@@ -15,7 +15,7 @@ export interface IPatient {
   email?: string | null;
   phone?: string | null;
   health_agent?: string | null;
-  status: Status;
+  status?: Status;
   contact_emergency?: string | null;
   name_contact_emergency?: string | null;
   height?: number | null;

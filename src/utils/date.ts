@@ -13,3 +13,8 @@ export const formatDateTime = (date: Date): string => {
     return formattedDate.format('D [de] MMMM [de] YYYY [às] HH:mm');
   }
 };
+
+export const formatDateToISODate = (dateString: Date) => {
+  const date = new Date(dateString);
+  return !isNaN(date.getTime()) ? date.toISOString().split('T')[0] : '';
+};

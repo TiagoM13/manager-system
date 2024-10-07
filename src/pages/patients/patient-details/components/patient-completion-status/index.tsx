@@ -4,6 +4,7 @@ import { CustomLoadingSkeleton } from '@/components';
 import { IPatient } from '@/interfaces';
 import { formatDateTime } from '@/utils';
 
+import { ModalSection } from '../../types/modal';
 import { calculateCompletionPercentage } from '../../utils/percentage';
 
 import { EditButton } from '..';
@@ -11,11 +12,12 @@ import { EditButton } from '..';
 interface PatientCompletionStatusProps {
   patient?: IPatient;
   loading?: boolean;
+  onEdit: (section: ModalSection) => void;
 }
 
 export const PatientCompletionStatus: React.FC<
   PatientCompletionStatusProps
-> = ({ patient, loading }) => {
+> = ({ patient, loading, onEdit }) => {
   const completionPercentage = React.useMemo(
     () => (patient ? calculateCompletionPercentage(patient) : '0'),
     [patient],
@@ -24,7 +26,7 @@ export const PatientCompletionStatus: React.FC<
   const isMinimumCompleted = Number(completionPercentage) < 50;
 
   return (
-    <div className="flex flex-col items-end gap-[20px]">
+    <div className="flex flex-col items-end gap-5">
       <div className="flex items-center gap-2">
         {loading ? (
           <CustomLoadingSkeleton className="h-2 w-64" />
@@ -35,7 +37,7 @@ export const PatientCompletionStatus: React.FC<
           </span>
         )}
 
-        {!loading && <EditButton />}
+        {!loading && <EditButton onClick={() => onEdit('patient-info')} />}
       </div>
 
       <span className="block text-xs">

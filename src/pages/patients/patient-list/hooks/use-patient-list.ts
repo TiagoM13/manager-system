@@ -30,7 +30,7 @@ export const usePatientList = () => {
 
   const getAllPatients = React.useCallback(async () => {
     try {
-      const patients = getAllPatientsService(query);
+      const patients = await getAllPatientsService(query);
       return patients;
     } catch (error) {
       handleAPIErrors(error);
