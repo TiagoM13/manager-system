@@ -11,11 +11,10 @@ import {
   UsersFour,
 } from '@phosphor-icons/react';
 
-import { Button, Card, FormContainer } from '@/components';
+import { Button, Card, FormContainer, Header } from '@/components';
 import { useAppNavigation } from '@/hooks';
 
 import { FormProgress } from '../components/form-progress';
-import { Header } from '../components/header';
 import { FormStepOne, FormStepThree, FormStepTwo } from '../forms';
 import { useFormSteps } from '../hooks/form-steps';
 import { usePatientForm } from '../hooks/use-patient-form';

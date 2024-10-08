@@ -2,7 +2,7 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Card, Divider, Header } from '@/components';
+import { Card, Header } from '@/components';
 import { useQuery, useWindowSize } from '@/hooks';
 import { useDebounce } from '@/hooks/debounce';
 import { IUser, IUsersFilters } from '@/interfaces';
@@ -106,12 +106,10 @@ const Users: React.FC = () => {
     <FormProvider {...methods}>
       <div className="flex flex-col">
         <Header
-          title="Usuários"
-          labelAction="cadastrar usuário"
-          newRegister={handleNewRegister}
+          title="Lista de Usuários"
+          actionLabel="adicionar usuário"
+          onRegister={handleNewRegister}
         />
-
-        <Divider />
 
         <Card className="mt-4">
           <UsersFilters />

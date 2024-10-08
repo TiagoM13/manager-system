@@ -1,22 +1,18 @@
 import { ReactNode } from 'react';
 
-export type PathItemsProps = {
+export type HeaderProps = {
+  title?: string;
+  subtitle?: string;
+  actionLabel?: string;
+  breadcrumbItems?: BreadcrumbItem[];
+  isSubmit?: boolean;
+  goBack?: () => void;
+  onRegister?: () => void;
+  loading?: boolean;
+};
+
+export type BreadcrumbItem = {
   label: string | ReactNode;
   path?: string;
   icon?: React.ReactNode;
-};
-
-export type HeaderProps = {
-  title?: string;
-  labelAction?: string;
-  hasActions?: boolean;
-  pathItems?: PathItemsProps[];
-  onCancel?: () => void;
-  newRegister?: () => void;
-  hasRegister?: boolean;
-  buttonLabels?: {
-    cancel?: string;
-    saved?: string;
-  };
-  loading?: boolean;
 };

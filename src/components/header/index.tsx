@@ -1,53 +1,62 @@
 import React from 'react';
 
-import { Plus } from '@phosphor-icons/react';
+import { CaretLeft } from '@phosphor-icons/react';
 
-import { Button, TextTitle } from '@/components';
+import { Divider } from '@/components';
 
-import { HeaderActions } from './components/actions';
 import { Breadcrumb } from './components/breadcrumb';
+import { ButtonAction } from './components/button-actions';
 import { HeaderProps } from './interfaces';
 
 import { HeaderContainer } from './styles';
 
 export const Header: React.FC<HeaderProps> = ({
   title,
-  labelAction = 'Cadastrar',
-  hasActions = false,
-  pathItems,
-  onCancel,
-  hasRegister = true,
-  newRegister,
-  buttonLabels,
-  loading = false,
+  subtitle,
+  goBack,
+  breadcrumbItems,
+  onRegister,
+  isSubmit,
+  loading,
+  actionLabel,
 }) => {
   return (
-    <HeaderContainer>
-      <div className="flex flex-col">
-        <TextTitle>{title}</TextTitle>
+    <>
+      <HeaderContainer>
+        <div className="flex items-center gap-2">
+          {!!goBack && (
+            <button
+              type="button"
+              onClick={goBack}
+              data-testid="btn-cancel"
+              className="bg-slate-300 rounded-md p-2 hover:brightness-95"
+            >
+              <CaretLeft className="size-8" />
+            </button>
+          )}
+          <div>
+            {subtitle && (
+              <span className="text-sm text-slate-600">{subtitle}</span>
+            )}
+            <h2
+              className={`${subtitle ? 'text-2xl' : 'text-3xl'} font-semibold`}
+            >
+              {title}
+            </h2>
+          </div>
+        </div>
 
-        {pathItems && <Breadcrumb pathItems={pathItems} />}
-      </div>
+        <ButtonAction
+          onRegister={onRegister}
+          isSubmit={isSubmit}
+          actionLabel={actionLabel}
+          loading={loading}
+        />
+      </HeaderContainer>
 
-      <div className="flex gap-4 items-end">
-        {hasRegister && (
-          <Button
-            id="header"
-            type="button"
-            icon={<Plus className="size-5" weight="bold" />}
-            label={labelAction}
-            onClick={newRegister}
-          />
-        )}
+      <Divider />
 
-        {hasActions && (
-          <HeaderActions
-            loading={loading}
-            onCancel={onCancel}
-            buttonLabels={buttonLabels}
-          />
-        )}
-      </div>
-    </HeaderContainer>
+      {breadcrumbItems && <Breadcrumb breadcrumbItems={breadcrumbItems} />}
+    </>
   );
 };

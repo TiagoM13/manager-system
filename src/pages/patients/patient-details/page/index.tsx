@@ -1,12 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { House, UserPlus, UsersFour } from '@phosphor-icons/react';
+import { House, User, UsersFour } from '@phosphor-icons/react';
 
-import { Card, CustomLoadingSkeleton } from '@/components';
+import { Card, CustomLoadingSkeleton, Header } from '@/components';
 import { useAppNavigation } from '@/hooks';
 
-import { Header } from '../../patient-form/components/header';
 import {
   PatientHeader,
   PatientCompletionStatus,
@@ -39,7 +38,7 @@ const PatientDetails: React.FC = () => {
       ) : (
         patient?.name
       ),
-      icon: <UserPlus className="size-4" />,
+      icon: <User className="size-4" />,
     },
   ];
 
@@ -50,7 +49,6 @@ const PatientDetails: React.FC = () => {
         title="Detalhes do Paciente"
         goBack={goBack}
         breadcrumbItems={breadcrumbsPathItems}
-        isSubmit
       />
 
       <div className="max-w-[1440px] space-y-6 mt-6">

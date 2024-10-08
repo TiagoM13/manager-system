@@ -8,12 +8,7 @@ import {
   Users as UsersIcon,
 } from '@phosphor-icons/react';
 
-import {
-  Header,
-  Divider,
-  FormContainer,
-  CustomLoadingSkeleton,
-} from '@/components';
+import { Header, FormContainer, CustomLoadingSkeleton } from '@/components';
 import { useCurrentUser } from '@/hooks';
 import { IUser } from '@/interfaces';
 import {
@@ -234,18 +229,15 @@ const User: React.FC = () => {
         <div className="flex flex-col">
           <Header
             title={title}
-            pathItems={breadcrumbsPathItems}
-            onCancel={handleCancel}
+            subtitle="voltar para a lista de usuários"
+            actionLabel={newUser ? 'salvar usuário' : 'atualizar usuário'}
+            breadcrumbItems={breadcrumbsPathItems}
+            goBack={handleCancel}
             loading={loading}
-            hasRegister={false}
-            hasActions
-            buttonLabels={{
-              saved: newUser ? 'salvar usuário' : 'atualizar usuário',
-            }}
+            isSubmit
           />
-          <Divider />
 
-          <div className="max-w-[1440px] flex gap-5">
+          <div className="max-w-[1440px] flex gap-5 mt-4">
             <div className="w-[60%]">
               <UserForm
                 isUpdatingItself={isUpdatingItself}
