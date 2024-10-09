@@ -71,8 +71,8 @@ const User: React.FC = () => {
             isSubmit
           />
 
-          <div className="max-w-[1440px] flex gap-5 mt-4">
-            <div className="w-[60%]">
+          <div className="max-w-[1440px] flex gap-5 mt-4  max-md:flex-col">
+            <div className="w-[60%] max-md:w-full">
               <UserForm
                 isUpdatingItself={isUpdatingItself}
                 loading={loading}
@@ -81,7 +81,7 @@ const User: React.FC = () => {
             </div>
 
             {!newUser && (
-              <div className="w-[40%]">
+              <div className="w-[40%] max-md:w-full">
                 <StatusForm
                   isUpdatingItself={isUpdatingItself}
                   loading={loading}

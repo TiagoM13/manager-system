@@ -7,6 +7,12 @@ export const HeaderContainer = styled.header`
 
   position: relative;
   margin-top: 0.25rem;
+
+  @media (max-width: 460px) {
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+  }
 `;
 
 export const BreadcrumbContainer = styled.div`
