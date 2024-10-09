@@ -1,10 +1,9 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { Card } from '@/components';
+import { Card, Header } from '@/components';
 import { useWindowSize } from '@/hooks';
 
-import { Header } from '../../patient-form/components/header';
 import { PatientFilters, PatientsTable, PatientsCard } from '../components';
 import { usePatientList } from '../hooks/use-patient-list';
 
@@ -18,7 +17,7 @@ const Patients: React.FC = () => {
       <div className="flex flex-col">
         <Header
           title="Lista de Pacientes"
-          labelRegister="adicionar paciente"
+          actionLabel="adicionar paciente"
           onRegister={handleNewRegister}
         />
 

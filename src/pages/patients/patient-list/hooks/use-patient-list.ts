@@ -2,20 +2,17 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
-import { useAppNavigation, useQuery } from '@/hooks';
+import { useAppNavigation, useQueryParams } from '@/hooks';
 import { IPatient, IPatientFilters } from '@/interfaces';
 import { getAllPatientsService } from '@/services';
 import { handleAPIErrors } from '@/utils/common';
-import {
-  keepPreviousData,
-  useQuery as useQueryAllPatients,
-} from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { SchemaFilterPatientType, schemaFilterPatient } from '../schemas';
 
 export const usePatientList = () => {
   const location = useLocation();
-  const [query] = useQuery<IPatientFilters>();
+  const [query] = useQueryParams<IPatientFilters>();
   const { navigateTo } = useAppNavigation();
 
   const methods = useForm<SchemaFilterPatientType>({
@@ -38,7 +35,7 @@ export const usePatientList = () => {
     }
   }, [query]);
 
-  const { data, isLoading } = useQueryAllPatients({
+  const { data, isLoading } = useQuery({
     queryKey: ['patients', query],
     queryFn: getAllPatients,
     placeholderData: keepPreviousData,

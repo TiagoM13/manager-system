@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { FormContainer, InputSearch } from '@/components';
-import { useQuery } from '@/hooks';
+import { useQueryParams } from '@/hooks';
 import { IPatientFilters } from '@/interfaces';
 
 type PatientFiltersProps = {
@@ -11,7 +11,7 @@ type PatientFiltersProps = {
 
 export const PatientFilters: React.FC<PatientFiltersProps> = ({ loading }) => {
   const { control, handleSubmit } = useFormContext<IPatientFilters>();
-  const [_, setQuery] = useQuery<IPatientFilters>();
+  const [_, setQuery] = useQueryParams<IPatientFilters>();
 
   const handleFilterPatients = React.useCallback(
     ({ name }: IPatientFilters) => {

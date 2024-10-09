@@ -5,10 +5,10 @@ import { HeaderProps } from '../../interfaces';
 
 import { BreadcrumbContainer } from '../../styles';
 
-export const Breadcrumb: React.FC<HeaderProps> = ({ pathItems }) => {
+export const Breadcrumb: React.FC<HeaderProps> = ({ breadcrumbItems }) => {
   return (
     <BreadcrumbContainer>
-      {pathItems?.map((item, index) => (
+      {breadcrumbItems?.map((item, index) => (
         <div className="flex items-center" key={index}>
           {item.path ? (
             <div className="flex items-center gap-2">
