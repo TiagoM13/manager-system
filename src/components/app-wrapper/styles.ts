@@ -129,4 +129,9 @@ export const Main = styled.main<IMenuBarProps>`
     margin-top: ${({ isAuthenticated }) => (isAuthenticated ? '60px' : '0')};
     padding-bottom: 100px;
   }
+
+  @media (max-width: 460px) {
+    padding: ${({ isAuthenticated }) => (isAuthenticated ? '16px' : '0')};
+    padding-bottom: 100px;
+  }
 `;
