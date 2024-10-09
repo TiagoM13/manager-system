@@ -2,14 +2,14 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
-import { useQuery, useAppNavigation } from '@/hooks';
+import { useQueryParams, useAppNavigation } from '@/hooks';
 import { IUsersFilters, IUser } from '@/interfaces';
 import { getAllUsersService, deleteUserService } from '@/services';
 import { useDialog } from '@/store';
 import { toastSuccess, toastError } from '@/utils';
 import { handleAPIErrors } from '@/utils/common';
 import {
-  useQuery as useQueryAllUsers,
+  useQuery,
   useQueryClient,
   keepPreviousData,
   useMutation,
@@ -21,7 +21,7 @@ export const useUserList = () => {
   // kooks
   const location = useLocation();
   const { navigateTo } = useAppNavigation();
-  const [query, setQuery] = useQuery<IUsersFilters>();
+  const [query, setQuery] = useQueryParams<IUsersFilters>();
   const { confirmDialog } = useDialog();
 
   const getAllUsers = React.useCallback(async () => {
@@ -36,7 +36,7 @@ export const useUserList = () => {
 
   // queries
   const queryClient = useQueryClient();
-  const { data, isLoading } = useQueryAllUsers({
+  const { data, isLoading } = useQuery({
     queryKey: ['users', query],
     queryFn: getAllUsers,
     placeholderData: keepPreviousData,
@@ -48,9 +48,7 @@ export const useUserList = () => {
       toastSuccess('Usuário deletado com sucesso!');
       queryClient.invalidateQueries({ queryKey: ['users'] });
     },
-    onError: () => {
-      toastError('Erro ao deletar o usuário');
-    },
+    onError: () => toastError('Erro ao deletar o usuário'),
   });
 
   // Hook Form

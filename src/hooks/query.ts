@@ -7,12 +7,14 @@ interface Query {
 
 type SetQuery<T> = T | ((prevState: T) => T);
 
-type IUseQuery = <T extends Record<string, any> = Query>() => [
+type IUseQueryParams = <T extends Record<string, any> = Query>() => [
   T,
   (query: SetQuery<T>) => void,
 ];
 
-const useQuery: IUseQuery = <T extends Record<string, any> = Query>() => {
+export const useQueryParams: IUseQueryParams = <
+  T extends Record<string, any> = Query,
+>() => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -56,5 +58,3 @@ const useQuery: IUseQuery = <T extends Record<string, any> = Query>() => {
 
   return [current, setQuery];
 };
-
-export { useQuery };

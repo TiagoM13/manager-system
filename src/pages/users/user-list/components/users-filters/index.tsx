@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { FormContainer, InputSearch } from '@/components';
-import { useQuery } from '@/hooks';
+import { useQueryParams } from '@/hooks';
 import { IUsersFilters } from '@/interfaces';
 
 type UserFiltersProps = {
@@ -11,7 +11,7 @@ type UserFiltersProps = {
 
 export const UsersFilters: React.FC<UserFiltersProps> = ({ loading }) => {
   const { control, handleSubmit } = useFormContext<IUsersFilters>();
-  const [_, setQuery] = useQuery<IUsersFilters>();
+  const [_, setQuery] = useQueryParams<IUsersFilters>();
 
   const handleFilterUsers = React.useCallback(
     ({ name }: IUsersFilters) => {

@@ -18,11 +18,11 @@ import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { formSchema } from '../schemas';
 
 export const useUserForm = () => {
+  // hooks
   const navigate = useNavigate();
   const { setImageUrl } = useImageUrl();
   const { setName } = useName();
   const { id } = useParams<{ id: string }>();
-
   const currentUser = useCurrentUser();
 
   const newUser = React.useMemo(() => id === 'new', [id]);
@@ -37,41 +37,35 @@ export const useUserForm = () => {
     }
   }, [id]);
 
+  // queries
   const queryClient = useQueryClient();
-  const { data: user, isLoading } = useQuery({
+  const { data: user, isLoading: isLoadingGetUser } = useQuery({
     queryKey: ['user'],
     queryFn: getUser,
     enabled: !newUser,
   });
-  const { mutateAsync: createUser, isPending: isLoadingCreateUser } =
+  // mutations
+  const { mutateAsync: createUserMutation, isPending: isLoadingCreateUser } =
     useMutation({
       mutationFn: async (newUser: IUser) => await createUserService(newUser),
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['user'] });
-      },
+      onSuccess: () => queryClient.invalidateQueries({ queryKey: ['user'] }),
     });
-  const { mutateAsync: updateUser, isPending: isLoadingUpdateUser } =
+  const { mutateAsync: updateUserMutation, isPending: isLoadingUpdateUser } =
     useMutation({
       mutationFn: async (values: IUser) =>
         await updateUserService(Number(id), values),
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['user'] });
-      },
+      onSuccess: () => queryClient.invalidateQueries({ queryKey: ['user'] }),
     });
-  const { mutateAsync: uploadFile, isPending: isLoadingUploadFile } =
+  const { mutateAsync: uploadFileMutation, isPending: isLoadingFileUpload } =
     useMutation({
       mutationFn: upladFileService,
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['user'] });
-      },
-      onError: () => {
-        toastError('Falha ao processar imagem');
-      },
+      onSuccess: () => queryClient.invalidateQueries({ queryKey: ['user'] }),
+      onError: () => toastError('Falha ao processar imagem'),
     });
 
   const isUpdatingItself = !newUser && user?.id === currentUser.id;
 
-  // Hook Form
+  // hook form
   const methods = useForm<IUser>({
     resolver: formSchema as any,
     shouldUnregister: false,
@@ -79,18 +73,23 @@ export const useUserForm = () => {
 
   const { handleSubmit, reset } = methods;
 
-  // Memos
+  // memos
   const loading = React.useMemo(
     () =>
-      isLoading ||
-      isLoadingUploadFile ||
+      isLoadingGetUser ||
+      isLoadingFileUpload ||
       isLoadingCreateUser ||
       isLoadingUpdateUser,
-    [isLoading, isLoadingCreateUser, isLoadingUpdateUser, isLoadingUploadFile],
+    [
+      isLoadingGetUser,
+      isLoadingCreateUser,
+      isLoadingUpdateUser,
+      isLoadingFileUpload,
+    ],
   );
 
-  // Callbacks
-  const handleUploadFile = React.useCallback(
+  // callbacks
+  const handleFileUpload = React.useCallback(
     async (form: HTMLFormElement) => {
       const formData = new FormData(form);
       const fileToUpload = formData.get('image_url');
@@ -98,15 +97,13 @@ export const useUserForm = () => {
       if (fileToUpload && fileToUpload instanceof File) {
         const uploadFormData = new FormData();
         uploadFormData.set('file', fileToUpload);
-        const upload = await uploadFile(uploadFormData);
-        const imageUrl = upload?.data.fileUrl;
-
-        return imageUrl;
+        const uploadResponse = await uploadFileMutation(uploadFormData);
+        return uploadResponse?.data.fileUrl || null;
       }
 
       return null;
     },
-    [uploadFile],
+    [uploadFileMutation],
   );
 
   const submit = React.useCallback(
@@ -120,50 +117,37 @@ export const useUserForm = () => {
         values.image_url !== undefined &&
         values.image_url !== user?.image_url;
 
-      let uploadedImageUrl = '';
-
-      if (isValidImageUrl) {
-        const response = await handleUploadFile(formElement);
-
-        uploadedImageUrl = response;
-      }
+      const uploadedImageUrl = isValidImageUrl
+        ? await handleFileUpload(formElement)
+        : null;
 
       const savedValues = {
         ...values,
         image_url: uploadedImageUrl || values.image_url,
       };
 
-      let response: IUser | undefined = undefined;
-
       if (savedValues) {
         if (newUser) {
-          const res = await createUser(savedValues);
-
-          response = res?.data as any;
+          await createUserMutation(savedValues);
+          toastSuccess('Usuário criado com sucesso!');
         } else {
-          const res = await updateUser(savedValues);
-
-          response = res?.data as any;
+          await updateUserMutation(savedValues);
+          toastSuccess('Usuário atualizado com sucesso!');
         }
-
-        if (response) {
-          const message = newUser ? 'criado' : 'atualizado';
-
-          toastSuccess(`Usuário ${message} com sucesso!`);
-          navigate('/users');
-        }
+        navigate('/users');
       }
     },
     [
-      createUser,
-      handleUploadFile,
+      createUserMutation,
+      handleFileUpload,
       navigate,
       newUser,
-      updateUser,
+      updateUserMutation,
       user?.image_url,
     ],
   );
 
+  // effects
   React.useEffect(() => {
     if (newUser && !loading) {
       reset();
