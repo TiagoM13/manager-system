@@ -1,5 +1,4 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 
 import { House, User, UsersFour } from '@phosphor-icons/react';
 
@@ -16,10 +15,9 @@ import { usePatientDetails } from '../hooks/patient-details';
 
 const PatientDetails: React.FC = () => {
   const { goBack } = useAppNavigation();
-  const { id } = useParams<{ id: string }>();
 
   const { patient, loading, activeModal, openModal, closeModal } =
-    usePatientDetails(String(id));
+    usePatientDetails();
 
   const breadcrumbsPathItems = [
     {
