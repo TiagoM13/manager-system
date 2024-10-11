@@ -10,6 +10,7 @@ export const Container = styled.div`
     border-radius: 0.5rem;
     border: 1px solid var(--slate-400);
     color: var(--slate-600);
+    height: 35px;
 
     [class$='-menu'],
     [class$='-menuList'] {

@@ -44,7 +44,7 @@ export const InputSearch: React.FC<InputSearchProps> = ({
 
       <button
         type="submit"
-        className="flex items-center bg-sky-600 disabled:bg-sky-700 rounded-r-lg py-1 px-2.5 h-[36px] hover:bg-sky-500"
+        className="flex items-center bg-sky-600 disabled:bg-sky-700 outline-offset-0 outline-sky-500 rounded-r-lg py-1 px-2.5 h-[36px] hover:bg-sky-500"
       >
         <MagnifyingGlass
           data-testid="icon-search"
