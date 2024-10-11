@@ -108,7 +108,8 @@ export const Profile: React.FC = () => {
                   <Button
                     onClick={() => setShowPasswordInput(true)}
                     label="Alterar senha"
-                    className="text-slate-400 hover:text-sky-500"
+                    variable="secondary"
+                    className="text-slate-400 hover:bg-slate-950"
                     clear
                   />
                 </div>

@@ -3,7 +3,7 @@
 exports[`<ButtonAction/> should render register button 1`] = `
 <DocumentFragment>
   <button
-    class="bg-sky-600 outline-sky-500 hover:bg-sky-500 disabled:bg-sky-700 rounded-lg py-2.5 px-3 font-medium text-sm text-white flex gap-2 items-center justify-center"
+    class="bg-sky-600 outline-sky-500 hover:bg-sky-500 text-white disabled:bg-sky-700 rounded-lg py-2.5 px-3 font-medium text-sm flex gap-2 items-center justify-center"
     data-testid="btn-header"
     type="button"
   >

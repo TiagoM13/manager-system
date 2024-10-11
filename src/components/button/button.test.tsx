@@ -27,4 +27,10 @@ describe('<Button />', () => {
     expect(getByText('Delete')).toBeTruthy();
     expect(asFragment()).toMatchSnapshot();
   });
+
+  test('should render the button with border', () => {
+    const { getByTestId } = render(<Button id="teste" clear />);
+
+    expect(getByTestId('btn-teste')).toHaveClass('border border-sky-600');
+  });
 });
