@@ -9,7 +9,7 @@ exports[`<Dialog/> should render correctly component 1`] = `
     role="dialog"
   >
     <div
-      class="bg-white rounded-lg shadow-lg max-w-md w-full p-4"
+      class="bg-white rounded-lg max-w-lg shadow-lg w-full p-4"
     >
       <div
         class="flex justify-between items-center mb-2"

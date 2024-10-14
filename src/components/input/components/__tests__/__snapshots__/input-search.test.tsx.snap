@@ -6,12 +6,13 @@ exports[`<InputSearch/> should change the input search 1`] = `
     class="flex items-center"
   >
     <input
-      class="text-sm border-r-0 border border-slate-400 py-1.5 px-4 rounded-l-lg h-[36px] outline-sky-500 min-w-60"
+      class="w-full text-sm border border-slate-400 py-1.5 px-4 rounded-l-lg h-[36px] outline-offset-0 outline-sky-500 disabled:opacity-60"
       placeholder="Pesquisar aqui"
       type="search"
     />
-    <div
-      class="flex items-center bg-sky-600 disabled:bg-sky-700 rounded-r-lg py-1 px-2.5 h-[36px]"
+    <button
+      class="flex items-center bg-sky-600 disabled:bg-sky-700 outline-offset-0 outline-sky-500 rounded-r-lg py-1 px-2.5 h-[36px] hover:bg-sky-500"
+      type="submit"
     >
       <svg
         class="size-5"
@@ -26,7 +27,7 @@ exports[`<InputSearch/> should change the input search 1`] = `
           d="M232.49,215.51,185,168a92.12,92.12,0,1,0-17,17l47.53,47.54a12,12,0,0,0,17-17ZM44,112a68,68,0,1,1,68,68A68.07,68.07,0,0,1,44,112Z"
         />
       </svg>
-    </div>
+    </button>
   </div>
 </DocumentFragment>
 `;

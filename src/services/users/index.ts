@@ -10,7 +10,7 @@ export const getAllUsersService = async (params: IUsersFilters) => {
     params: {
       name,
       page,
-      limit: page_size,
+      page_size,
     },
   });
 

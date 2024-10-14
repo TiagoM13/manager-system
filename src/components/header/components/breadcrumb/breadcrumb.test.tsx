@@ -24,7 +24,7 @@ describe('<Breadcrumb/>', () => {
   test('should render correctly component', () => {
     const { getByText, getByTestId, asFragment } = render(
       <BrowserRouter>
-        <Breadcrumb pathItems={breadcrumb} />
+        <Breadcrumb breadcrumbItems={breadcrumb} />
       </BrowserRouter>,
     );
 

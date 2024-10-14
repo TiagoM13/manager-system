@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { CardLoadingSkeleton, Pagination } from '@/components';
+import { Pagination } from '@/components';
 import { IResponseMeta, IUser } from '@/interfaces';
 
+import { SkeletonCardUsers } from '../skeletons';
 import { UserCard } from '../user-item';
 
 import { Container } from './styles';
@@ -31,7 +32,7 @@ export const UsersCard: React.FC<UsersCardProps> = ({
         {loading ? (
           <>
             {Array.from({ length: 10 }).map((_, index) => (
-              <CardLoadingSkeleton key={index} />
+              <SkeletonCardUsers key={index} />
             ))}
           </>
         ) : (

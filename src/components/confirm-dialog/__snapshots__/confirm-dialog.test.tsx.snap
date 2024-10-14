@@ -9,7 +9,7 @@ exports[`>ConfirmDialog/> should render correctly component 1`] = `
     role="dialog"
   >
     <div
-      class="bg-white rounded-lg shadow-lg max-w-md w-full p-4"
+      class="bg-white rounded-lg max-w-lg shadow-lg w-full p-4"
     >
       <div
         class="flex justify-between items-center mb-2"
@@ -74,7 +74,7 @@ exports[`>ConfirmDialog/> should render correctly component 1`] = `
           class="flex justify-end gap-4 mt-10"
         >
           <button
-            class="bg-slate-600 outline-slate-500 hover:bg-slate-500 disabled:bg-slate-700 rounded-lg py-2.5 px-3 font-medium text-sm text-white flex gap-2 items-center justify-center w-full"
+            class="bg-slate-600 outline-slate-500 hover:bg-slate-500 text-white disabled:bg-slate-700 rounded-lg py-2.5 px-3 font-medium text-sm flex gap-2 items-center justify-center w-full"
             data-testid="btn-undefined"
           >
             <svg
@@ -92,7 +92,7 @@ exports[`>ConfirmDialog/> should render correctly component 1`] = `
             Não
           </button>
           <button
-            class="bg-red-600 outline-red-500 hover:bg-red-500 disabled:bg-red-700 rounded-lg py-2.5 px-3 font-medium text-sm text-white flex gap-2 items-center justify-center w-full"
+            class="bg-red-600 outline-red-500 hover:bg-red-500 text-white disabled:bg-red-700 rounded-lg py-2.5 px-3 font-medium text-sm flex gap-2 items-center justify-center w-full"
             data-testid="btn-undefined"
           >
             <svg

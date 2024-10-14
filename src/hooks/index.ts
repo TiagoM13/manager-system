@@ -3,3 +3,5 @@ export * from './query';
 export * from './image-loader';
 export * from './auth';
 export * from './observable';
+export * from './debounce';
+export * from './navigate';

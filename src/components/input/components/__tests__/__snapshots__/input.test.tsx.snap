@@ -12,7 +12,7 @@ exports[`<Input/> should change the input value 1`] = `
       Input Teste 
     </label>
     <input
-      class=" w-full rounded-md border border-slate-400 py-2 px-4 outline-sky-500 text-sm text-slate-600 disabled:opacity-60"
+      class=" w-full rounded-md border border-slate-400 py-2 px-4 outline-offset-0 outline-sky-500 text-sm text-slate-600 disabled:opacity-60"
       placeholder="Escreva algo"
     />
   </div>

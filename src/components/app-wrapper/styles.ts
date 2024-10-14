@@ -118,7 +118,7 @@ export const Aside = styled.aside<IMenuBarProps>`
 
 export const Main = styled.main<IMenuBarProps>`
   flex: 1;
-
+  background-color: #f1f5f9;
   transition: 0.1s all;
   justify-content: center;
   padding: ${({ isAuthenticated }) => (isAuthenticated ? '22px' : '0')};
@@ -127,6 +127,11 @@ export const Main = styled.main<IMenuBarProps>`
 
   @media (max-width: 960px) {
     margin-top: ${({ isAuthenticated }) => (isAuthenticated ? '60px' : '0')};
+    padding-bottom: 100px;
+  }
+
+  @media (max-width: 460px) {
+    padding: ${({ isAuthenticated }) => (isAuthenticated ? '16px' : '0')};
     padding-bottom: 100px;
   }
 `;

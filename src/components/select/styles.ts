@@ -10,11 +10,11 @@ export const Container = styled.div`
     border-radius: 0.5rem;
     border: 1px solid var(--slate-400);
     color: var(--slate-600);
+    height: 35px;
 
     [class$='-menu'],
     [class$='-menuList'] {
       background-color: white !important;
-      text-transform: capitalize;
     }
 
     [class$='-control'] {
@@ -25,7 +25,6 @@ export const Container = styled.div`
     [class$='-singleValue'] {
       color: var(--slate-600);
       font-size: 0.875rem;
-      text-transform: capitalize;
     }
 
     [class$='-placeholder'] {
@@ -36,7 +35,6 @@ export const Container = styled.div`
     [class$='-ValueContainer'],
     [class$='-Input'] {
       padding: 0;
-      text-transform: capitalize;
     }
 
     [class$='-indicatorContainer'] {

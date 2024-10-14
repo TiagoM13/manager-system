@@ -1,28 +1,11 @@
 import React from 'react';
-import {
-  Control,
-  Controller,
-  FieldError,
-  FieldPath,
-  FieldValues,
-} from 'react-hook-form';
+import { Controller, FieldValues } from 'react-hook-form';
 
 import { Eye, EyeSlash } from '@phosphor-icons/react';
 
 import { ErrorMessage } from '@/components/error-message';
 
-interface InputProps<T extends FieldValues>
-  extends React.ComponentProps<'input'> {
-  label?: string;
-  required?: boolean;
-  className?: string;
-  stylesRightButton?: string;
-  defaultValue?: any;
-  control?: Control<T>;
-  name: FieldPath<T>;
-  error?: FieldError | undefined;
-  loading?: boolean;
-}
+import { InputPasswordProps } from './interfaces';
 
 export const InputPassword = <T extends FieldValues>({
   label,
@@ -35,7 +18,7 @@ export const InputPassword = <T extends FieldValues>({
   loading = false,
   stylesRightButton = '',
   ...props
-}: InputProps<T>) => {
+}: InputPasswordProps<T>) => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const togglePasswordVisibility = () => {
@@ -79,7 +62,7 @@ export const InputPassword = <T extends FieldValues>({
                 {...field}
                 {...props}
                 type={showPassword ? 'text' : 'password'}
-                className={`${className} w-full rounded-s-md border-y border-l border-slate-400 py-2 px-4 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`}
+                className={`${className} w-full rounded-s-md border-y border-l border-slate-400 py-2 px-4 outline-offset-0 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`}
               />
             )}
           />
@@ -87,7 +70,7 @@ export const InputPassword = <T extends FieldValues>({
           <input
             {...props}
             type={showPassword ? 'password' : 'text'}
-            className={`${className} w-full rounded-s-md border-y border-l border-slate-400 py-2 px-4 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`}
+            className={`${className} w-full rounded-s-md border-y border-l border-slate-400 py-2 px-4 outline-offset-0 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`}
           />
         )}
 

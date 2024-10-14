@@ -8,7 +8,7 @@ import {
   CaretDoubleRight,
 } from '@phosphor-icons/react';
 
-import { useQuery } from '@/hooks';
+import { useQueryParams } from '@/hooks';
 import { IUsersFilters } from '@/interfaces';
 
 import { IconButton } from '../icon-button';
@@ -21,7 +21,7 @@ export const PaginationActions: React.FC<PaginateProps> = ({ totalPages }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [query] = useQuery<IUsersFilters>();
+  const [query] = useQueryParams<IUsersFilters>();
   const currentPage = React.useMemo(
     () => Number(query.page) || 1,
     [query.page],
