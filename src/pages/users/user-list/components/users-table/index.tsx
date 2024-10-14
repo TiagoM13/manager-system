@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Table as T, Pagination, TableLoadingSkeleton } from '@/components';
+import { Table as T, Pagination } from '@/components';
 import { IResponseMeta, IUser } from '@/interfaces';
 
+import { SkeletonTableUsers } from '../skeletons';
 import { UserRow } from '../user-item';
 
 type IUserData = {
@@ -40,7 +41,7 @@ export const UsersTable: React.FC<UserTableProps> = ({
           {loading ? (
             <>
               {Array.from({ length: 10 }).map((_, index) => (
-                <TableLoadingSkeleton key={index} />
+                <SkeletonTableUsers key={index} />
               ))}
             </>
           ) : (

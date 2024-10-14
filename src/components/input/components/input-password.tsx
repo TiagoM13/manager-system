@@ -62,7 +62,7 @@ export const InputPassword = <T extends FieldValues>({
                 {...field}
                 {...props}
                 type={showPassword ? 'text' : 'password'}
-                className={`${className} w-full rounded-s-md border-y border-l border-slate-400 py-2 px-4 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`}
+                className={`${className} w-full rounded-s-md border-y border-l border-slate-400 py-2 px-4 outline-offset-0 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`}
               />
             )}
           />
@@ -70,7 +70,7 @@ export const InputPassword = <T extends FieldValues>({
           <input
             {...props}
             type={showPassword ? 'password' : 'text'}
-            className={`${className} w-full rounded-s-md border-y border-l border-slate-400 py-2 px-4 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`}
+            className={`${className} w-full rounded-s-md border-y border-l border-slate-400 py-2 px-4 outline-offset-0 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`}
           />
         )}
 

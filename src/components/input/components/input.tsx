@@ -15,7 +15,7 @@ export const Input = <T extends FieldValues>({
   error,
   ...props
 }: InputProps<T>) => {
-  const classNames = `${className} w-full rounded-md border border-slate-400 py-2 px-4 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`;
+  const classNames = `${className} w-full rounded-md border border-slate-400 py-2 px-4 outline-offset-0 outline-sky-500 text-sm text-slate-600 disabled:opacity-60`;
 
   return (
     <div className="w-full">
