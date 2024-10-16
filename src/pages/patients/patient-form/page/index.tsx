@@ -4,14 +4,12 @@ import { FormProvider } from 'react-hook-form';
 import {
   ArrowLeft,
   ArrowRight,
-  Check,
-  CircleNotch,
   House,
   UserPlus,
   UsersFour,
 } from '@phosphor-icons/react';
 
-import { Button, Card, FormContainer, Header } from '@/components';
+import { Button, Card, FormContainer, Header, StatusIcon } from '@/components';
 import { useAppNavigation } from '@/hooks';
 
 import { FormProgress } from '../components/form-progress';
@@ -50,17 +48,6 @@ const PatientForm: React.FC = () => {
     nextStep(isValid);
   }, [methods, nextStep]);
 
-  const icon = IsLoading ? (
-    <CircleNotch
-      data-testid="icon-loading"
-      weight="bold"
-      color="white"
-      className="size-4 animate-spin"
-    />
-  ) : (
-    <Check data-testid="icon-check" className="size-4" weight="bold" />
-  );
-
   return (
     <FormProvider {...methods}>
       <FormContainer id="form-patient" noValidate>
@@ -96,7 +83,7 @@ const PatientForm: React.FC = () => {
                     <Button
                       label="finalizar"
                       type="button"
-                      icon={icon}
+                      icon={<StatusIcon loading={IsLoading} />}
                       className="min-w-28 justify-between px-4"
                       onClick={handleSubmit(submit)}
                     />

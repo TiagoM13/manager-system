@@ -14,7 +14,8 @@ export const EditButton: React.FC<Props> = ({ onClick }) => {
       label=""
       onClick={onClick}
       icon={<PencilSimple className="size-4 text-sky-600" weight="bold" />}
-      className="p-1 bg-transparent border border-sky-600 hover:bg-sky-100"
+      className="p-1"
+      clear
     />
   );
 };
