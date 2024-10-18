@@ -1,5 +1,7 @@
 import { Status } from '@/enums';
 
+import { IAppointment } from './appointment';
+
 export interface IPatient {
   id?: string;
   name: string;
@@ -20,6 +22,7 @@ export interface IPatient {
   name_contact_emergency?: string | null;
   height?: number | null;
   weight?: number | null;
+  appointments: IAppointment[];
 
   created_at?: Date;
   updated_at?: Date;
