@@ -10,6 +10,8 @@ import {
   PatientCompletionStatus,
   PatientInfoSections,
   PatientEditSectionDialog,
+  AppointmentsHistory,
+  HospitalizationsHistory,
 } from '../components';
 import { usePatientDetails } from '../hooks/patient-details';
 
@@ -67,6 +69,15 @@ const PatientDetails: React.FC = () => {
           loading={loading}
           onEdit={openModal}
         />
+
+        <div className="flex space-x-6">
+          <AppointmentsHistory
+            appointments={patient?.appointments}
+            loading={loading}
+          />
+
+          <HospitalizationsHistory />
+        </div>
       </div>
 
       <PatientEditSectionDialog

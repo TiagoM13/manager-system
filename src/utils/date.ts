@@ -18,3 +18,13 @@ export const formatDateToISODate = (dateString: Date) => {
   const date = new Date(dateString);
   return !isNaN(date.getTime()) ? date.toISOString().split('T')[0] : '';
 };
+
+export const formatAppointmentDate = (
+  scheduledDate: Date,
+  createdAt: Date,
+): string => {
+  const formattedDate = dayjs(scheduledDate).format('D [de] MMMM, YYYY');
+  const formattedTime = dayjs(createdAt).format('HH:mm A');
+
+  return `${formattedDate} - ${formattedTime}`;
+};
