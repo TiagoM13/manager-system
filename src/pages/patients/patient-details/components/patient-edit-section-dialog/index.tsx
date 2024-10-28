@@ -12,7 +12,7 @@ import {
   MedicalInfoForm,
   PatientInfoForm,
 } from '../../forms';
-import { usePatientFormUpdate } from '../../hooks/patient-form-update';
+import { usePatientFormUpdateModel } from '../../model/patient-form-update.model';
 import { ModalSection } from '../../types/modal';
 
 interface PatientEditSectionDialogProps {
@@ -25,7 +25,7 @@ export const PatientEditSectionDialog: React.FC<
   PatientEditSectionDialogProps
 > = ({ activeSection, onClose, patient }) => {
   const { methods, handleSubmit, submit, reset, isPending } =
-    usePatientFormUpdate(patient as IPatient);
+    usePatientFormUpdateModel(patient as IPatient);
 
   // memos
   const renderIcon = React.useMemo(

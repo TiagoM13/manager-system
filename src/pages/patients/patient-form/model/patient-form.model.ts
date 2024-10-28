@@ -10,7 +10,7 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import { SchemaPatientType, schemaPatient } from '../schemas';
 
-export const usePatientForm = () => {
+export const usePatientFormModel = () => {
   const navigate = useNavigate();
   const methods = useForm<SchemaPatientType>({
     mode: 'onChange',

@@ -5,7 +5,7 @@ import { getPatientService } from '@/services';
 import { usePatientFormDialog } from '@/store';
 import { useQuery } from '@tanstack/react-query';
 
-export const usePatientDetails = () => {
+export const usePatientDetailsModel = () => {
   // hooks
   const { id } = useParams<{ id: string }>();
   const { activeModal, openModal, closeModal } = usePatientFormDialog();

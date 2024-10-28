@@ -10,7 +10,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { SchemaFilterPatientType, schemaFilterPatient } from '../schemas';
 
-export const usePatientList = () => {
+export const usePatientListModel = () => {
   const location = useLocation();
   const [query] = useQueryParams<IPatientFilters>();
   const { navigateTo } = useAppNavigation();

@@ -5,12 +5,12 @@ import { Card, Header } from '@/components';
 import { useWindowSize } from '@/hooks';
 
 import { PatientFilters, PatientsTable, PatientsCard } from '../components';
-import { usePatientList } from '../hooks/use-patient-list';
+import { usePatientListModel } from '../model/patient-list.model';
 
 const Patients: React.FC = () => {
   const [, , isMobile] = useWindowSize();
   const { data, loading, methods, handleNewRegister, handleEdit } =
-    usePatientList();
+    usePatientListModel();
 
   return (
     <FormProvider {...methods}>

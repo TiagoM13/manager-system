@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Badge } from '@/components';
-import { AppointmentStatus } from '@/enums';
 import { IAppointment } from '@/interfaces';
 import { formatAppointmentDate } from '@/utils';
 
@@ -21,13 +20,13 @@ export const AppointmentInfoCard: React.FC<AppointmentInfoCardProps> = ({
         <h4 className="text-sm font-semibold">Sheron Sttephany</h4>
         <span className="text-sm leading-3">
           {formatAppointmentDate(
-            appointment.scheduled_date,
+            appointment.created_at as Date,
             appointment.created_at as Date,
           )}
         </span>
       </div>
 
-      <Badge type={AppointmentStatus.CONPLETED} />
+      <Badge type={appointment.status} />
     </div>
   );
 };

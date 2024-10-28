@@ -11,7 +11,7 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import { SchemaPatientType, schemaPatient } from '../../patient-form/schemas';
 
-export const usePatientFormUpdate = (patient: IPatient) => {
+export const usePatientFormUpdateModel = (patient: IPatient) => {
   const { closeModal } = usePatientFormDialog();
   // hook form
   const methods = useForm<SchemaPatientType>({

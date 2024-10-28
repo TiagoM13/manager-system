@@ -13,13 +13,13 @@ import {
   AppointmentsHistory,
   HospitalizationsHistory,
 } from '../components';
-import { usePatientDetails } from '../hooks/patient-details';
+import { usePatientDetailsModel } from '../model/patient-details.model';
 
 const PatientDetails: React.FC = () => {
   const { goBack } = useAppNavigation();
 
   const { patient, loading, activeModal, openModal, closeModal } =
-    usePatientDetails();
+    usePatientDetailsModel();
 
   const breadcrumbsPathItems = [
     {

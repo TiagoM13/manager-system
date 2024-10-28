@@ -10,19 +10,18 @@ import {
 } from '@phosphor-icons/react';
 
 import { Button, Card, FormContainer, Header, StatusIcon } from '@/components';
-import { useAppNavigation } from '@/hooks';
+import { useAppNavigation, useFormSteps } from '@/hooks';
 
 import { FormProgress } from '../components/form-progress';
 import { FormStepOne, FormStepThree, FormStepTwo } from '../forms';
-import { useFormSteps } from '../hooks/form-steps';
-import { usePatientForm } from '../hooks/use-patient-form';
+import { usePatientFormModel } from '../model/patient-form.model';
 import { steps } from '../utils/constants';
 
 const PatientForm: React.FC = () => {
   // hooks
   const { goBack } = useAppNavigation();
   const { currentStep, isLastStep, prevStep, nextStep } = useFormSteps(steps);
-  const { methods, IsLoading, handleSubmit, submit } = usePatientForm();
+  const { methods, IsLoading, handleSubmit, submit } = usePatientFormModel();
 
   // constants
   const breadcrumbsPathItems = [
