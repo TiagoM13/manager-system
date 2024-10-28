@@ -3,23 +3,34 @@ import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
 import { useCurrentUser, useAuth, useAppNavigation } from '@/hooks';
-import { IUser, IChangePasswordData } from '@/interfaces';
 import {
-  updateUserService,
-  upladFileService,
-  changePasswordService,
-} from '@/services';
+  IUser,
+  IChangePasswordData,
+  IMSResponse,
+  IUploadFile,
+} from '@/interfaces';
+import { changePasswordService } from '@/services';
 import { useMenuProfile } from '@/store';
 import { toastSuccess, toastError, toastWarning } from '@/utils';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
-import { profileSchema } from './schemas';
+import { profileSchema } from './profile.schema';
+
+type UserRequestResult = IMSResponse<IUser, 'user'> | undefined;
 
 interface IUserProfile extends IChangePasswordData {
   name: string;
 }
 
-export const useAccountSettings = () => {
+interface IAccountSettingsModelProps {
+  updateUser: (id: number, data: IUser) => Promise<UserRequestResult>;
+  uploadFile: (data: FormData) => Promise<IUploadFile | undefined>;
+}
+
+export const useAccountSettingsModel = ({
+  updateUser,
+  uploadFile,
+}: IAccountSettingsModelProps) => {
   // states
   const [initialAvatarUrl, setInitialAvatarUrl] = React.useState<string | null>(
     null,
@@ -61,16 +72,22 @@ export const useAccountSettings = () => {
   const { mutateAsync: updateUserMutation, isPending: isLoadingUpdateUser } =
     useMutation({
       mutationFn: async (values: IUser) =>
-        await updateUserService(Number(user.id), values),
+        await updateUser(Number(user.id), values),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['users'] });
         toastSuccess('Perfil atualizado com sucesso!');
         toggle(false);
       },
+      onError: () => {
+        toastError(
+          'Não foi possivel atualizar o perfil, por favor tente novamente mais tarde!',
+        );
+        toggle(false);
+      },
     });
   const { mutateAsync: uploadFileMutation, isPending: isLoadingUploadFile } =
     useMutation({
-      mutationFn: upladFileService,
+      mutationFn: uploadFile,
       onSuccess: () => queryClient.invalidateQueries({ queryKey: ['users'] }),
       onError: () => toastError('Falha ao processar imagem'),
     });
@@ -95,7 +112,7 @@ export const useAccountSettings = () => {
   };
 
   // callbacks
-  const handleUploadFile = React.useCallback(
+  const handleFileUpload = React.useCallback(
     async (form: HTMLFormElement) => {
       const formData = new FormData(form);
       const fileToUpload = formData.get('image_perfil');
@@ -103,8 +120,9 @@ export const useAccountSettings = () => {
       if (fileToUpload && fileToUpload instanceof File) {
         const uploadFormData = new FormData();
         uploadFormData.set('file', fileToUpload);
-        const upload = await uploadFileMutation(uploadFormData);
-        return upload?.data.fileUrl as string;
+        const uploadResponse = await uploadFileMutation(uploadFormData);
+
+        return uploadResponse?.fileUrl;
       }
 
       return null;
@@ -132,11 +150,11 @@ export const useAccountSettings = () => {
         '#form-profile',
       ) as HTMLFormElement;
 
-      let uploadedImageUrl: string | null = null;
+      let uploadedImageUrl = null;
 
       // Updated avatar
       if (avatarUrl !== initialAvatarUrl) {
-        uploadedImageUrl = await handleUploadFile(formElement);
+        uploadedImageUrl = await handleFileUpload(formElement);
       }
 
       // Updated username
@@ -147,8 +165,8 @@ export const useAccountSettings = () => {
           image_url: uploadedImageUrl || user.image_url,
         });
 
-        if (response.data.success) {
-          setCurrentUser(response.data.user!);
+        if (response?.success) {
+          setCurrentUser(response.user);
         }
       }
 
@@ -168,7 +186,7 @@ export const useAccountSettings = () => {
       avatarUrl,
       changePasswordMutation,
       handleExit,
-      handleUploadFile,
+      handleFileUpload,
       initialAvatarUrl,
       setCurrentUser,
       updateUserMutation,

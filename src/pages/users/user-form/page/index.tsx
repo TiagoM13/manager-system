@@ -25,7 +25,7 @@ const User: React.FC = () => {
     getUser: (id) => getUserService(httpClient, id),
     createUser: (data) => createUserService(httpClient, data),
     updateUser: (id, data) => updateUserService(httpClient, id, data),
-    upladFile: (data) => uploadFileService(httpClient, data),
+    uploadFile: (data) => uploadFileService(httpClient, data),
   });
 
   const title = React.useMemo(() => {

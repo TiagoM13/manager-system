@@ -17,14 +17,14 @@ interface IUserFormModelProps {
   getUser: (id: number) => Promise<UserDataResponse>;
   createUser: (data: IUser) => Promise<UserRequestResult>;
   updateUser: (id: number, data: IUser) => Promise<UserRequestResult>;
-  upladFile: (data: FormData) => Promise<IUploadFile | undefined>;
+  uploadFile: (data: FormData) => Promise<IUploadFile | undefined>;
 }
 
 export const useUserFormModel = ({
   getUser,
   createUser,
   updateUser,
-  upladFile,
+  uploadFile,
 }: IUserFormModelProps) => {
   // hooks
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ export const useUserFormModel = ({
     });
   const { mutateAsync: uploadFileMutation, isPending: isLoadingFileUpload } =
     useMutation({
-      mutationFn: upladFile,
+      mutationFn: uploadFile,
       onSuccess: () => queryClient.invalidateQueries({ queryKey: ['user'] }),
       onError: () => toastError('Falha ao processar imagem'),
     });
