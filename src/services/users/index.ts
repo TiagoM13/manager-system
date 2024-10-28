@@ -1,43 +1,83 @@
+import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
 import { IMSResponse, IUser, IUsersFilters } from '@/interfaces';
 import { handleAPIErrors } from '@/utils/common';
 
-import { msHosp } from '../api';
-
-export const getAllUsersService = async (params: IUsersFilters) => {
-  const { name = '', page = 1, page_size = 10 } = params;
-
-  const { data } = await msHosp.get<IMSResponse<IUser[], 'users'>>(`/users`, {
-    params: {
-      name,
-      page,
-      page_size,
-    },
-  });
-
-  return data;
-};
-
-export const getUserService = async (id: number) => {
-  const { data } = await msHosp.get<IMSResponse<IUser, 'user'>>(`/users/${id}`);
-  return data.user;
-};
-
-export const createUserService = async (data: IUser) => {
+export const getAllUsersService = async (
+  client: IHttpClient,
+  params: IUsersFilters,
+) => {
   try {
-    return await msHosp.post<IMSResponse<IUser, 'user'>>('/users', data);
+    const { name = '', page = 1, page_size = 10 } = params;
+
+    const response = await client.sendRequest<IMSResponse<IUser[], 'users'>>(
+      HttpMethod.GET,
+      '/users',
+      {
+        params: {
+          name,
+          page,
+          page_size,
+        },
+      },
+    );
+
+    return response;
   } catch (error) {
     handleAPIErrors(error);
     return;
   }
 };
 
-export const updateUserService = async (id: number, data: IUser) => {
-  return await msHosp.put<IMSResponse<IUser, 'user'>>(`/users/${id}`, data);
+export const getUserService = async (client: IHttpClient, id: number) => {
+  try {
+    const { user } = await client.sendRequest<IMSResponse<IUser, 'user'>>(
+      HttpMethod.GET,
+      `/users/${id}`,
+    );
+
+    return user;
+  } catch (error) {
+    handleAPIErrors(error);
+    return;
+  }
 };
 
-export const deleteUserService = async (id: number) => {
+export const createUserService = async (client: IHttpClient, data: IUser) => {
   try {
-    return await msHosp.delete<IMSResponse<IUser, 'user'>>(`/users/${id}`);
+    return await client.sendRequest<IMSResponse<IUser, 'user'>>(
+      HttpMethod.POST,
+      '/users',
+      { data },
+    );
+  } catch (error) {
+    handleAPIErrors(error);
+    return;
+  }
+};
+
+export const updateUserService = async (
+  client: IHttpClient,
+  id: number,
+  data: IUser,
+) => {
+  try {
+    return await client.sendRequest<IMSResponse<IUser, 'user'>>(
+      HttpMethod.PUT,
+      `/users/${id}`,
+      { data },
+    );
+  } catch (error) {
+    handleAPIErrors(error);
+    return;
+  }
+};
+
+export const deleteUserService = async (client: IHttpClient, id: number) => {
+  try {
+    return await client.sendRequest<IMSResponse<IUser, 'user'>>(
+      HttpMethod.DELETE,
+      `/users/${id}`,
+    );
   } catch (error) {
     handleAPIErrors(error);
     return;

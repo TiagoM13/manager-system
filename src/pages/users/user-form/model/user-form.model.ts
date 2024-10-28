@@ -2,63 +2,62 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useCurrentUser } from '@/hooks';
-import { IUser } from '@/interfaces';
-import {
-  getUserService,
-  createUserService,
-  updateUserService,
-  upladFileService,
-} from '@/services';
+import { useAppNavigation, useCurrentUser } from '@/hooks';
+import { IMSResponse, IUploadFile, IUser } from '@/interfaces';
 import { useImageUrl, useName } from '@/store';
 import { toastError, toastSuccess } from '@/utils';
-import { handleAPIErrors } from '@/utils/common';
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
 
-import { formSchema } from '../schemas';
+import { formSchema } from '../user-form.schema';
 
-export const useUserForm = () => {
+type UserDataResponse = IUser | undefined;
+type UserRequestResult = IMSResponse<IUser, 'user'> | undefined;
+
+interface IUserFormModelProps {
+  getUser: (id: number) => Promise<UserDataResponse>;
+  createUser: (data: IUser) => Promise<UserRequestResult>;
+  updateUser: (id: number, data: IUser) => Promise<UserRequestResult>;
+  upladFile: (data: FormData) => Promise<IUploadFile | undefined>;
+}
+
+export const useUserFormModel = ({
+  getUser,
+  createUser,
+  updateUser,
+  upladFile,
+}: IUserFormModelProps) => {
   // hooks
   const navigate = useNavigate();
+  const { goBack } = useAppNavigation();
   const { setImageUrl } = useImageUrl();
   const { setName } = useName();
   const { id } = useParams<{ id: string }>();
   const currentUser = useCurrentUser();
+  const queryClient = useQueryClient();
 
   const newUser = React.useMemo(() => id === 'new', [id]);
 
-  const getUser = React.useCallback(async () => {
-    try {
-      const user = await getUserService(Number(id));
-      return user;
-    } catch (error) {
-      handleAPIErrors(error);
-      return;
-    }
-  }, [id]);
-
   // queries
-  const queryClient = useQueryClient();
-  const { data: user, isLoading: isLoadingGetUser } = useQuery({
-    queryKey: ['user'],
-    queryFn: getUser,
-    enabled: !newUser,
-  });
+  const { data: user, isLoading: isLoadingGetUser } =
+    useQuery<UserDataResponse>({
+      queryKey: ['user'],
+      queryFn: async () => await getUser(Number(id)),
+      enabled: !newUser,
+    });
   // mutations
   const { mutateAsync: createUserMutation, isPending: isLoadingCreateUser } =
     useMutation({
-      mutationFn: async (newUser: IUser) => await createUserService(newUser),
+      mutationFn: async (newUser: IUser) => await createUser(newUser),
       onSuccess: () => queryClient.invalidateQueries({ queryKey: ['user'] }),
     });
   const { mutateAsync: updateUserMutation, isPending: isLoadingUpdateUser } =
     useMutation({
-      mutationFn: async (values: IUser) =>
-        await updateUserService(Number(id), values),
+      mutationFn: async (values: IUser) => await updateUser(Number(id), values),
       onSuccess: () => queryClient.invalidateQueries({ queryKey: ['user'] }),
     });
   const { mutateAsync: uploadFileMutation, isPending: isLoadingFileUpload } =
     useMutation({
-      mutationFn: upladFileService,
+      mutationFn: upladFile,
       onSuccess: () => queryClient.invalidateQueries({ queryKey: ['user'] }),
       onError: () => toastError('Falha ao processar imagem'),
     });
@@ -98,7 +97,8 @@ export const useUserForm = () => {
         const uploadFormData = new FormData();
         uploadFormData.set('file', fileToUpload);
         const uploadResponse = await uploadFileMutation(uploadFormData);
-        return uploadResponse?.data.fileUrl || null;
+
+        return uploadResponse?.fileUrl;
       }
 
       return null;
@@ -112,28 +112,34 @@ export const useUserForm = () => {
         '#form-user',
       ) as HTMLFormElement;
 
+      let uploadedImageUrl = null;
+
       const isValidImageUrl =
         values.image_url !== null &&
         values.image_url !== undefined &&
         values.image_url !== user?.image_url;
 
-      const uploadedImageUrl = isValidImageUrl
-        ? await handleFileUpload(formElement)
-        : null;
+      if (isValidImageUrl && formElement) {
+        const imageUrl = await handleFileUpload(formElement);
+        uploadedImageUrl = imageUrl;
+      }
 
       const savedValues = {
         ...values,
         image_url: uploadedImageUrl || values.image_url,
       };
 
-      if (savedValues) {
-        if (newUser) {
-          await createUserMutation(savedValues);
-          toastSuccess('Usuário criado com sucesso!');
-        } else {
-          await updateUserMutation(savedValues);
-          toastSuccess('Usuário atualizado com sucesso!');
-        }
+      let saved: UserRequestResult = undefined;
+
+      if (newUser) {
+        saved = await createUserMutation(savedValues);
+      } else {
+        saved = await updateUserMutation(savedValues);
+      }
+
+      if (saved) {
+        const message = newUser ? 'criado' : 'atualizado';
+        toastSuccess(`Usuário ${message} com sucesso!`);
         navigate('/users');
       }
     },
@@ -147,16 +153,17 @@ export const useUserForm = () => {
     ],
   );
 
-  // effects
   React.useEffect(() => {
-    if (newUser && !loading) {
-      reset();
-      setImageUrl(undefined);
-      setName('');
-    } else if (user && !loading) {
-      reset(user);
-      setImageUrl(user.image_url);
-      setName(user.name);
+    if (!loading) {
+      if (newUser) {
+        reset();
+        setImageUrl(undefined);
+        setName('');
+      } else if (user) {
+        reset(user);
+        setImageUrl(user.image_url);
+        setName(user.name);
+      }
     }
   }, [loading, newUser, reset, setImageUrl, setName, user]);
 
@@ -169,5 +176,6 @@ export const useUserForm = () => {
     submit,
     handleSubmit,
     loading,
+    goBack,
   };
 };

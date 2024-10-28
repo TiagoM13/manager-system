@@ -2,12 +2,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
-import { useQueryParams, useAppNavigation } from '@/hooks';
-import { IUsersFilters, IUser } from '@/interfaces';
-import { getAllUsersService, deleteUserService } from '@/services';
+import { useQueryParams, useAppNavigation, useWindowSize } from '@/hooks';
+import { IUsersFilters, IUser, IMSResponse } from '@/interfaces';
 import { useDialog } from '@/store';
 import { toastSuccess, toastError } from '@/utils';
-import { handleAPIErrors } from '@/utils/common';
 import {
   useQuery,
   useQueryClient,
@@ -15,35 +13,36 @@ import {
   useMutation,
 } from '@tanstack/react-query';
 
-import { filterSchema } from '../schemas';
+import { filterSchema } from '../user-list.schema';
 
-export const useUserList = () => {
-  // kooks
+type UserListModelResponse = IMSResponse<IUser[], 'users'> | undefined;
+
+type UserListModelProps = {
+  getAllUsers: (query: IUsersFilters) => Promise<UserListModelResponse>;
+  deleteUser: (id: number) => Promise<IMSResponse<IUser, 'user'> | undefined>;
+};
+
+export const useUserListModel = ({
+  getAllUsers,
+  deleteUser,
+}: UserListModelProps) => {
+  // hooks
   const location = useLocation();
   const { navigateTo } = useAppNavigation();
   const [query, setQuery] = useQueryParams<IUsersFilters>();
   const { confirmDialog } = useDialog();
-
-  const getAllUsers = React.useCallback(async () => {
-    try {
-      const users = await getAllUsersService(query);
-      return users;
-    } catch (error) {
-      handleAPIErrors(error);
-      return;
-    }
-  }, [query]);
+  const [, , isMobile] = useWindowSize();
+  const queryClient = useQueryClient();
 
   // queries
-  const queryClient = useQueryClient();
-  const { data, isLoading } = useQuery({
+  const { data, isLoading } = useQuery<UserListModelResponse>({
     queryKey: ['users', query],
-    queryFn: getAllUsers,
+    queryFn: async () => await getAllUsers(query),
     placeholderData: keepPreviousData,
   });
   // mutations
-  const { mutateAsync: deleteUserFn } = useMutation({
-    mutationFn: deleteUserService,
+  const { mutateAsync: deleteUserFn, isPending } = useMutation({
+    mutationFn: async (id: number) => deleteUser(id),
     onSuccess: () => {
       toastSuccess('Usuário deletado com sucesso!');
       queryClient.invalidateQueries({ queryKey: ['users'] });
@@ -59,7 +58,10 @@ export const useUserList = () => {
     shouldUnregister: false,
   });
 
-  const loading = React.useMemo(() => isLoading, [isLoading]);
+  const loading = React.useMemo(
+    () => isLoading || isPending,
+    [isLoading, isPending],
+  );
 
   // callbacks
   const handleNewRegister = React.useCallback(() => {
@@ -100,5 +102,6 @@ export const useUserList = () => {
     handleDelete,
     handleEdit,
     methods,
+    isMobile,
   };
 };

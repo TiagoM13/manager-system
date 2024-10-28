@@ -3,3 +3,4 @@ export * from './auth';
 export * from './api';
 export * from './patients';
 export * from './appointment';
+export * from './upload';
