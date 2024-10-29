@@ -1,10 +1,9 @@
 import React from 'react';
-import { FormProvider } from 'react-hook-form';
 
-import { X } from '@phosphor-icons/react';
-
-import { Button, Dialog, FormContainer, StatusIcon } from '@/components';
+import { StatusIcon } from '@/components';
+import { HttpClient } from '@/infra/http/http-client';
 import { IPatient } from '@/interfaces';
+import { updatePatientService } from '@/services';
 
 import {
   ContactInfoForm,
@@ -12,8 +11,9 @@ import {
   MedicalInfoForm,
   PatientInfoForm,
 } from '../../forms';
-import { usePatientFormUpdateModel } from '../../model/patient-form-update.model';
 import { ModalSection } from '../../types/modal';
+import { usePatientEditSectionDialogModel } from './patient-edit-section-dialog.model';
+import { PatientEditSectionDialogView } from './patient-edit-section-dialog.view';
 
 interface PatientEditSectionDialogProps {
   activeSection: ModalSection | null;
@@ -24,8 +24,13 @@ interface PatientEditSectionDialogProps {
 export const PatientEditSectionDialog: React.FC<
   PatientEditSectionDialogProps
 > = ({ activeSection, onClose, patient }) => {
-  const { methods, handleSubmit, submit, reset, isPending } =
-    usePatientFormUpdateModel(patient as IPatient);
+  const http = new HttpClient();
+  const methods = usePatientEditSectionDialogModel({
+    patient,
+    updatePatient: (id, data) => updatePatientService(http, id, data),
+  });
+
+  const { isPending } = methods;
 
   // memos
   const renderIcon = React.useMemo(
@@ -64,39 +69,13 @@ export const PatientEditSectionDialog: React.FC<
   }, [isPending, activeSection]);
 
   return (
-    <Dialog isOpen={!!activeSection} contentClassNames="max-w-[650px]">
-      <FormProvider {...methods}>
-        <FormContainer className="p-3" onSubmit={handleSubmit(submit)}>
-          <h3 className="font-bold text-xl leading-5">{renderDialogTitle}</h3>
-
-          <div className="mt-6 py-2 grid grid-cols-2 gap-8">
-            {renderFormContent}
-          </div>
-
-          <div className="flex items-center justify-end gap-4 mt-8">
-            <Button
-              id="cancel"
-              type="button"
-              variable="danger"
-              icon={<X className="size-5" weight="bold" />}
-              label="cancelar"
-              onClick={() => {
-                onClose();
-                reset();
-              }}
-              disabled={isPending}
-            />
-            <Button
-              id="saved"
-              type="submit"
-              icon={renderIcon}
-              className="min-w-[100px]"
-              label="atualizar"
-              disabled={isPending}
-            />
-          </div>
-        </FormContainer>
-      </FormProvider>
-    </Dialog>
+    <PatientEditSectionDialogView
+      renderDialogTitle={renderDialogTitle}
+      renderFormContent={renderFormContent}
+      renderIcon={renderIcon}
+      activeSection={!!activeSection}
+      onClose={onClose}
+      {...methods}
+    />
   );
 };

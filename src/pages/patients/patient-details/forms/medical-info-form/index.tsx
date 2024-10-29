@@ -6,7 +6,7 @@ import { IPatient } from '@/interfaces';
 import {
   optionsHealthAgent,
   conditionsOptions,
-} from '@/pages/patients/patient-form/utils/options';
+} from '@/pages/patients/utils/options';
 
 interface MedicalInfoFormProps {
   loading?: boolean;

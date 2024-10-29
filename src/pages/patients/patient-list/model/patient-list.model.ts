@@ -2,18 +2,30 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
-import { useAppNavigation, useQueryParams } from '@/hooks';
-import { IPatient, IPatientFilters } from '@/interfaces';
-import { getAllPatientsService } from '@/services';
-import { handleAPIErrors } from '@/utils/common';
+import { useAppNavigation, useQueryParams, useWindowSize } from '@/hooks';
+import { IMSResponse, IPatient, IPatientFilters } from '@/interfaces';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { SchemaFilterPatientType, schemaFilterPatient } from '../schemas';
+import {
+  SchemaFilterPatientType,
+  schemaFilterPatient,
+} from '../patient-list.schema';
 
-export const usePatientListModel = () => {
+type PatientListModelResponse = IMSResponse<IPatient[], 'patients'> | undefined;
+
+interface PatientListModelProps {
+  getAllPatients: (
+    params: IPatientFilters,
+  ) => Promise<PatientListModelResponse>;
+}
+
+export const usePatientListModel = ({
+  getAllPatients,
+}: PatientListModelProps) => {
   const location = useLocation();
   const [query] = useQueryParams<IPatientFilters>();
   const { navigateTo } = useAppNavigation();
+  const [, , isMobile] = useWindowSize();
 
   const methods = useForm<SchemaFilterPatientType>({
     defaultValues: {
@@ -25,19 +37,9 @@ export const usePatientListModel = () => {
     shouldUnregister: false,
   });
 
-  const getAllPatients = React.useCallback(async () => {
-    try {
-      const patients = await getAllPatientsService(query);
-      return patients;
-    } catch (error) {
-      handleAPIErrors(error);
-      return;
-    }
-  }, [query]);
-
   const { data, isLoading } = useQuery({
     queryKey: ['patients', query],
-    queryFn: getAllPatients,
+    queryFn: async () => await getAllPatients(query),
     placeholderData: keepPreviousData,
   });
 
@@ -60,5 +62,6 @@ export const usePatientListModel = () => {
     data,
     handleNewRegister,
     handleEdit,
+    isMobile,
   };
 };

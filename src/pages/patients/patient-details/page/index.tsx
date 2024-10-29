@@ -2,24 +2,21 @@ import React from 'react';
 
 import { House, User, UsersFour } from '@phosphor-icons/react';
 
-import { Card, CustomLoadingSkeleton, Header } from '@/components';
-import { useAppNavigation } from '@/hooks';
+import { CustomLoadingSkeleton } from '@/components';
+import { HttpClient } from '@/infra/http/http-client';
+import { getPatientService } from '@/services';
 
-import {
-  PatientHeader,
-  PatientCompletionStatus,
-  PatientInfoSections,
-  PatientEditSectionDialog,
-  AppointmentsHistory,
-  HospitalizationsHistory,
-} from '../components';
 import { usePatientDetailsModel } from '../model/patient-details.model';
+import { PatientDetailsView } from '../view/patient-details.view';
 
 const PatientDetails: React.FC = () => {
-  const { goBack } = useAppNavigation();
+  const http = new HttpClient();
 
-  const { patient, loading, activeModal, openModal, closeModal } =
-    usePatientDetailsModel();
+  const methods = usePatientDetailsModel({
+    getPatient: (id) => getPatientService(http, id),
+  });
+
+  const { patient, loading } = methods;
 
   const breadcrumbsPathItems = [
     {
@@ -43,49 +40,10 @@ const PatientDetails: React.FC = () => {
   ];
 
   return (
-    <>
-      <Header
-        subtitle="voltar a lista de pacientes"
-        title="Detalhes do Paciente"
-        goBack={goBack}
-        breadcrumbItems={breadcrumbsPathItems}
-      />
-
-      <div className="max-w-[1440px] space-y-6 mt-6">
-        <Card>
-          <div className="flex items-center justify-between">
-            <PatientHeader patient={patient} loading={loading} />
-
-            <PatientCompletionStatus
-              patient={patient}
-              loading={loading}
-              onEdit={openModal}
-            />
-          </div>
-        </Card>
-
-        <PatientInfoSections
-          patient={patient}
-          loading={loading}
-          onEdit={openModal}
-        />
-
-        <div className="flex space-x-6">
-          <AppointmentsHistory
-            appointments={patient?.appointments}
-            loading={loading}
-          />
-
-          <HospitalizationsHistory />
-        </div>
-      </div>
-
-      <PatientEditSectionDialog
-        patient={patient}
-        activeSection={activeModal}
-        onClose={closeModal}
-      />
-    </>
+    <PatientDetailsView
+      breadcrumbsPathItems={breadcrumbsPathItems}
+      {...methods}
+    />
   );
 };
 

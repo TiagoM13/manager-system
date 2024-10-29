@@ -2,10 +2,10 @@ import React from 'react';
 
 import { CustomLoadingSkeleton } from '@/components';
 import { IPatient } from '@/interfaces';
+import { calculateCompletionPercentage } from '@/pages/patients/utils/percentage';
 import { formatDateTime } from '@/utils';
 
 import { ModalSection } from '../../types/modal';
-import { calculateCompletionPercentage } from '../../utils/percentage';
 
 import { EditButton } from '..';
 

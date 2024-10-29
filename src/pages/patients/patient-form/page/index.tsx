@@ -1,27 +1,24 @@
 import React from 'react';
-import { FormProvider } from 'react-hook-form';
 
-import {
-  ArrowLeft,
-  ArrowRight,
-  House,
-  UserPlus,
-  UsersFour,
-} from '@phosphor-icons/react';
+import { House, UserPlus, UsersFour } from '@phosphor-icons/react';
 
-import { Button, Card, FormContainer, Header, StatusIcon } from '@/components';
-import { useAppNavigation, useFormSteps } from '@/hooks';
+import { useFormSteps } from '@/hooks';
+import { HttpClient } from '@/infra/http/http-client';
+import { createPatientService } from '@/services';
 
-import { FormProgress } from '../components/form-progress';
-import { FormStepOne, FormStepThree, FormStepTwo } from '../forms';
+import { steps } from '../../utils/constants';
 import { usePatientFormModel } from '../model/patient-form.model';
-import { steps } from '../utils/constants';
+import { PatientFormView } from '../view/patient-form.view';
 
 const PatientForm: React.FC = () => {
-  // hooks
-  const { goBack } = useAppNavigation();
-  const { currentStep, isLastStep, prevStep, nextStep } = useFormSteps(steps);
-  const { methods, IsLoading, handleSubmit, submit } = usePatientFormModel();
+  const http = new HttpClient();
+  const methodsFormSteps = useFormSteps(steps);
+  const methodsModel = usePatientFormModel({
+    createPatient: (data) => createPatientService(http, data),
+  });
+
+  const { methods } = methodsModel;
+  const { nextStep } = methodsFormSteps;
 
   // constants
   const breadcrumbsPathItems = [
@@ -48,61 +45,12 @@ const PatientForm: React.FC = () => {
   }, [methods, nextStep]);
 
   return (
-    <FormProvider {...methods}>
-      <FormContainer id="form-patient" noValidate>
-        <Header
-          subtitle="voltar a lista de pacientes"
-          title="Adicionar Paciente"
-          breadcrumbItems={breadcrumbsPathItems}
-          goBack={goBack}
-        />
-
-        <div className="max-w-[1440px]">
-          <Card bordered className="mt-4">
-            <div className="flex gap-6 p-2">
-              <FormProgress currentStep={currentStep} steps={steps} />
-
-              <div className="w-full flex flex-col justify-between">
-                {currentStep === 0 && <FormStepOne />}
-                {currentStep === 1 && <FormStepTwo />}
-                {isLastStep && <FormStepThree />}
-
-                <div className="flex ml-auto gap-2">
-                  {currentStep > 0 && (
-                    <Button
-                      label="anterior"
-                      type="button"
-                      variable="secondary"
-                      icon={<ArrowLeft className="size-4 text-white" />}
-                      onClick={prevStep}
-                      className="min-w-28 justify-between px-4"
-                    />
-                  )}
-                  {isLastStep ? (
-                    <Button
-                      label="finalizar"
-                      type="button"
-                      icon={<StatusIcon loading={IsLoading} />}
-                      className="min-w-28 justify-between px-4"
-                      onClick={handleSubmit(submit)}
-                    />
-                  ) : (
-                    <Button
-                      label="próximo"
-                      type="button"
-                      icon={<ArrowRight className="size-4 text-white" />}
-                      onClick={handleNextStep}
-                      iconPosition="right"
-                      className="min-w-28 justify-between px-4"
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </FormContainer>
-    </FormProvider>
+    <PatientFormView
+      breadcrumbsPathItems={breadcrumbsPathItems}
+      handleNextStep={handleNextStep}
+      {...methodsModel}
+      {...methodsFormSteps}
+    />
   );
 };
 

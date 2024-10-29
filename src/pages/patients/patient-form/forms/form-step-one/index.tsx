@@ -3,9 +3,11 @@ import { useFormContext } from 'react-hook-form';
 
 import { Input, InputMask, Select } from '@/components';
 import { IPatient } from '@/interfaces';
+import {
+  maritalStatusOptions,
+  sexOptions,
+} from '@/pages/patients/utils/options';
 import { formatCPF } from '@/utils';
-
-import { maritalStatusOptions, sexOptions } from '../../utils/options';
 
 export const FormStepOne: React.FC<{ loading?: boolean }> = ({ loading }) => {
   const {

@@ -3,15 +3,32 @@ import { useForm } from 'react-hook-form';
 
 import { formatPatientProps } from '@/helpers/format-patient-props';
 import { formatPatientRequest } from '@/helpers/format-patient-request';
-import { IPatient } from '@/interfaces';
-import { updatePatientService } from '@/services';
+import { IMSResponse, IPatient } from '@/interfaces';
+import {
+  ERROR_UPDATING_PATIENT,
+  PATIENT_UPDATED_SUCCESSFULLY,
+} from '@/pages/patients/utils/messages';
 import { usePatientFormDialog } from '@/store';
 import { toastError, toastSuccess } from '@/utils';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
-import { SchemaPatientType, schemaPatient } from '../../patient-form/schemas';
+import {
+  SchemaPatientType,
+  schemaPatient,
+} from '../../../patient-form/patient-form.schema';
 
-export const usePatientFormUpdateModel = (patient: IPatient) => {
+interface PatientEditSectionDialogModelProps {
+  patient?: IPatient;
+  updatePatient: (
+    id: string,
+    data: IPatient,
+  ) => Promise<IMSResponse<IPatient, 'patient'> | undefined>;
+}
+
+export const usePatientEditSectionDialogModel = ({
+  patient,
+  updatePatient,
+}: PatientEditSectionDialogModelProps) => {
   const { closeModal } = usePatientFormDialog();
   // hook form
   const methods = useForm<SchemaPatientType>({
@@ -24,32 +41,25 @@ export const usePatientFormUpdateModel = (patient: IPatient) => {
 
   // mutation
   const queryClient = useQueryClient();
-  const { mutateAsync: updatePatient, isPending } = useMutation({
+  const { mutateAsync: updatePatientMutation, isPending } = useMutation({
     mutationFn: async (values: IPatient) =>
-      await updatePatientService(String(values.id), values),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['patient'] });
+      await updatePatient(String(values.id), values),
+    onSuccess: (data) => {
+      if (data?.success) {
+        queryClient.invalidateQueries({ queryKey: ['patient'] });
+        toastSuccess(PATIENT_UPDATED_SUCCESSFULLY);
+        closeModal();
+      }
     },
-    onError: () => {
-      toastError(
-        'Ocorreu um erro ao tentar atualizar os dados do paciente, tente mais tarde!',
-      );
-    },
+    onError: () => toastError(ERROR_UPDATING_PATIENT),
   });
 
   // callbacks
   const submit = React.useCallback(
     async (values: SchemaPatientType) => {
-      if (values) {
-        const response = await updatePatient(formatPatientProps(values));
-
-        if (response) {
-          closeModal();
-          toastSuccess('Dados do paciente atualizado com sucesso!');
-        }
-      }
+      await updatePatientMutation(formatPatientProps(values));
     },
-    [closeModal, updatePatient],
+    [updatePatientMutation],
   );
 
   // effects

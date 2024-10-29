@@ -1,37 +1,54 @@
+import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
 import { IMSResponse, IPatient, IPatientFilters } from '@/interfaces';
 import { handleAPIErrors } from '@/utils/common';
 
-import { msHosp } from '../api';
+export const getAllPatientsService = async (
+  client: IHttpClient,
+  params: IPatientFilters,
+) => {
+  try {
+    const { name = '', page = 1, page_size = 10 } = params;
 
-export const getAllPatientsService = async (params: IPatientFilters) => {
-  const { name = '', page = 1, page_size = 10 } = params;
-
-  const { data } = await msHosp.get<IMSResponse<IPatient[], 'patients'>>(
-    '/patients',
-    {
+    const response = await client.sendRequest<
+      IMSResponse<IPatient[], 'patients'>
+    >(HttpMethod.GET, '/patients', {
       params: {
         name,
         page,
         page_size,
       },
-    },
-  );
+    });
 
-  return data;
+    return response;
+  } catch (error) {
+    handleAPIErrors(error);
+    return;
+  }
 };
 
-export const getPatientService = async (id: string) => {
-  const { data } = await msHosp.get<IMSResponse<IPatient, 'patient'>>(
-    `/patients/${id}`,
-  );
-  return data.patient;
-};
-
-export const createPatientService = async (values: IPatient) => {
+export const getPatientService = async (client: IHttpClient, id: string) => {
   try {
-    return await msHosp.post<IMSResponse<IPatient, 'patient'>>(
+    const response = await client.sendRequest<IMSResponse<IPatient, 'patient'>>(
+      HttpMethod.GET,
+      `/patients/${id}`,
+    );
+
+    return response.patient;
+  } catch (error) {
+    handleAPIErrors(error);
+    return;
+  }
+};
+
+export const createPatientService = async (
+  client: IHttpClient,
+  data: IPatient,
+) => {
+  try {
+    return await client.sendRequest<IMSResponse<IPatient, 'patient'>>(
+      HttpMethod.POST,
       '/patients',
-      values,
+      { data },
     );
   } catch (error) {
     handleAPIErrors(error);
@@ -39,13 +56,17 @@ export const createPatientService = async (values: IPatient) => {
   }
 };
 
-export const updatePatientService = async (id: string, values: IPatient) => {
+export const updatePatientService = async (
+  client: IHttpClient,
+  id: string,
+  data: IPatient,
+) => {
   try {
-    const { data } = await msHosp.put<IMSResponse<IPatient, 'patient'>>(
+    return await client.sendRequest<IMSResponse<IPatient, 'patient'>>(
+      HttpMethod.PUT,
       `/patients/${id}`,
-      values,
+      { data },
     );
-    return data;
   } catch (error) {
     handleAPIErrors(error);
     return;
