@@ -5,6 +5,7 @@ export enum HttpMethod {
   POST = 'post',
   PUT = 'put',
   DELETE = 'delete',
+  PATCH = 'patch',
 }
 
 export interface IHttpClient {

@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { AppWrapper, InitializerLoader } from '@/components';
 import { Role } from '@/enums';
 import { useIsAuthenticated } from '@/hooks';
-import { ForgotPasswordPage, SignInPage } from '@/pages/auth';
+import { ForgotPasswordPage, SignInPage } from '@/pages/auth/page';
 
 import { PrivateRoute } from './private.route';
 import { PublicRoute } from './public.route';

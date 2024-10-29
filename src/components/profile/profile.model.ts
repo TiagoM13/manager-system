@@ -2,6 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
+import { AxiosResponse } from 'axios';
+
 import { useCurrentUser, useAuth, useAppNavigation } from '@/hooks';
 import {
   IUser,
@@ -9,7 +11,6 @@ import {
   IMSResponse,
   IUploadFile,
 } from '@/interfaces';
-import { changePasswordService } from '@/services';
 import { useMenuProfile } from '@/store';
 import { toastSuccess, toastError, toastWarning } from '@/utils';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
@@ -31,11 +32,16 @@ interface IUserProfile extends IChangePasswordData {
 interface IAccountSettingsModelProps {
   updateUser: (id: number, data: IUser) => Promise<UserRequestResult>;
   uploadFile: (data: FormData) => Promise<IUploadFile | undefined>;
+  changePassword: (
+    id: number,
+    data: IChangePasswordData,
+  ) => Promise<AxiosResponse<IUser> | undefined>;
 }
 
 export const useAccountSettingsModel = ({
   updateUser,
   uploadFile,
+  changePassword,
 }: IAccountSettingsModelProps) => {
   // states
   const [initialAvatarUrl, setInitialAvatarUrl] = React.useState<string | null>(
@@ -46,6 +52,7 @@ export const useAccountSettingsModel = ({
   // hooks
   const location = useLocation();
   const user = useCurrentUser();
+  const queryClient = useQueryClient();
   const { setCurrentUser, logout } = useAuth();
   const { navigateTo } = useAppNavigation();
   const { show, toggle, avatarUrl, setAvatarUrl } = useMenuProfile();
@@ -74,15 +81,16 @@ export const useAccountSettingsModel = ({
   const profileRef = React.useRef<HTMLDivElement>(null);
 
   // mutations
-  const queryClient = useQueryClient();
   const { mutateAsync: updateUserMutation, isPending: isLoadingUpdateUser } =
     useMutation({
       mutationFn: async (values: IUser) =>
         await updateUser(Number(user.id), values),
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['users'] });
-        toastSuccess(UPDATED_PROFILE_SUCCESS);
-        toggle(false);
+      onSuccess: (data) => {
+        if (data?.success) {
+          queryClient.invalidateQueries({ queryKey: ['users'] });
+          toastSuccess(UPDATED_PROFILE_SUCCESS);
+          toggle(false);
+        }
       },
       onError: () => {
         toastError(ERROR_UPDATING_PROFILE);
@@ -100,10 +108,12 @@ export const useAccountSettingsModel = ({
     isPending: isLoadingChangePassword,
   } = useMutation({
     mutationFn: async (values: IChangePasswordData) =>
-      changePasswordService(user.id, values),
-    onSuccess: () => {
-      toastWarning(LOGIN_AGAIN);
-      toggle(false);
+      changePassword(user.id, values),
+    onSuccess: (data) => {
+      if (data) {
+        toastWarning(LOGIN_AGAIN);
+        toggle(false);
+      }
     },
   });
 
@@ -238,13 +248,10 @@ export const useAccountSettingsModel = ({
 
   React.useEffect(() => {
     reset(user);
-    if (user.image_url !== null) setAvatarUrl(user.image_url || null);
-  }, [reset, setAvatarUrl, show, user]);
-
-  React.useEffect(() => {
-    setAvatarUrl(user.image_url || null);
-    setInitialAvatarUrl(user.image_url || null);
-  }, [setAvatarUrl, user.image_url]);
+    const imageUrl = user.image_url || null;
+    setAvatarUrl(imageUrl);
+    setInitialAvatarUrl(imageUrl);
+  }, [reset, setAvatarUrl, user, show]);
 
   return {
     user,

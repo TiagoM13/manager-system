@@ -1,8 +1,12 @@
 import React from 'react';
 
 import { HttpClient } from '@/infra/http/http-client';
-import { IUser } from '@/interfaces';
-import { updateUserService, uploadFileService } from '@/services';
+import { IChangePasswordData, IUser } from '@/interfaces';
+import {
+  changePasswordService,
+  updateUserService,
+  uploadFileService,
+} from '@/services';
 import { useMenuProfile } from '@/store';
 
 import { useAccountSettingsModel } from './profile.model';
@@ -14,6 +18,8 @@ export const Profile: React.FC = () => {
   const services = {
     updateUser: (id: number, data: IUser) => updateUserService(http, id, data),
     uploadFile: (data: FormData) => uploadFileService(http, data),
+    changePassword: (id: number, data: IChangePasswordData) =>
+      changePasswordService(http, id, data),
   };
 
   const methods = useAccountSettingsModel(services);

@@ -25,3 +25,6 @@ export const MIN_DATE_FIELD =
 export const INVALID_DATE_FIELD =
   'Data inválida, por favor insira uma data válida';
 export const POSITIVE_NUMBER = 'O número deve ser um número positivo';
+
+export const PASSWORD_REQUIRED = 'A senha é obrigatória';
+export const PASSWORD_MIN_LENGTH = 'A senha deve ter no mínimo 6 caracteres';
