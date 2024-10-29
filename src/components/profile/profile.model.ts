@@ -14,6 +14,12 @@ import { useMenuProfile } from '@/store';
 import { toastSuccess, toastError, toastWarning } from '@/utils';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
+import {
+  ERROR_PROCESSING_IMAGE,
+  ERROR_UPDATING_PROFILE,
+  LOGIN_AGAIN,
+  UPDATED_PROFILE_SUCCESS,
+} from './profile.messages';
 import { profileSchema } from './profile.schema';
 
 type UserRequestResult = IMSResponse<IUser, 'user'> | undefined;
@@ -75,13 +81,11 @@ export const useAccountSettingsModel = ({
         await updateUser(Number(user.id), values),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['users'] });
-        toastSuccess('Perfil atualizado com sucesso!');
+        toastSuccess(UPDATED_PROFILE_SUCCESS);
         toggle(false);
       },
       onError: () => {
-        toastError(
-          'Não foi possivel atualizar o perfil, por favor tente novamente mais tarde!',
-        );
+        toastError(ERROR_UPDATING_PROFILE);
         toggle(false);
       },
     });
@@ -89,7 +93,7 @@ export const useAccountSettingsModel = ({
     useMutation({
       mutationFn: uploadFile,
       onSuccess: () => queryClient.invalidateQueries({ queryKey: ['users'] }),
-      onError: () => toastError('Falha ao processar imagem'),
+      onError: () => toastError(ERROR_PROCESSING_IMAGE),
     });
   const {
     mutateAsync: changePasswordMutation,
@@ -98,7 +102,7 @@ export const useAccountSettingsModel = ({
     mutationFn: async (values: IChangePasswordData) =>
       changePasswordService(user.id, values),
     onSuccess: () => {
-      toastWarning('Sua senha foi alterada! Por favor, faça login novamente.');
+      toastWarning(LOGIN_AGAIN);
       toggle(false);
     },
   });

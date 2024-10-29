@@ -1,34 +1,29 @@
 import { z } from 'zod';
 
+import {
+  INVALID_EMAIL,
+  INVALID_SELECT,
+  NAME_FIELD_REQUIRED,
+  REQUIRED_FIELD,
+  SELECT_REQUIRED,
+} from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const schema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(3, { message: 'O nome deve ter no mínimo 3 caracteres' })
-    .max(255, { message: 'O nome deve ter no máximo 255 caracteres' })
-    .refine((data) => data.trim() !== '', {
-      message: 'O nome é obrigatório',
-    }),
+const userSchema = z.object({
+  name: NAME_FIELD_REQUIRED,
   email: z
     .string()
     .trim()
-    .email({ message: 'O email é inválido' })
-    .refine((data) => data.trim() !== '', {
-      message: 'O email é obrigatório',
-    }),
+    .email(INVALID_EMAIL)
+    .refine((data) => data.trim() !== '', REQUIRED_FIELD),
   image_url: z.string().nullable().optional(),
-  role: z.string().refine((data) => data.trim() !== '', {
-    message: 'Selecione uma opção válida',
-  }),
+  role: z.string().refine((data) => data.trim() !== '', INVALID_SELECT),
   status: z
     .string()
     .trim()
-    .refine((data) => data.trim() !== '', {
-      message: 'Selecione uma opção',
-    })
+    .refine((data) => data.trim() !== '', SELECT_REQUIRED)
     .optional(),
 });
 
-export const formSchema = zodResolver(schema);
+export type UserDataSchemaType = z.infer<typeof userSchema>;
+export const userDataSchema = zodResolver(userSchema);

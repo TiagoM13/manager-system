@@ -13,6 +13,7 @@ import {
   useMutation,
 } from '@tanstack/react-query';
 
+import { USER_DELETE_ERROR, USER_DELETE_SUCCESS } from '../user-list.messges';
 import { filterSchema } from '../user-list.schema';
 
 type UserListModelResponse = IMSResponse<IUser[], 'users'> | undefined;
@@ -44,10 +45,10 @@ export const useUserListModel = ({
   const { mutateAsync: deleteUserFn, isPending } = useMutation({
     mutationFn: async (id: number) => deleteUser(id),
     onSuccess: () => {
-      toastSuccess('Usuário deletado com sucesso!');
+      toastSuccess(USER_DELETE_SUCCESS);
       queryClient.invalidateQueries({ queryKey: ['users'] });
     },
-    onError: () => toastError('Erro ao deletar o usuário'),
+    onError: () => toastError(USER_DELETE_ERROR),
   });
 
   // Hook Form

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { NameFieldRequired } from '@/utils';
+import { NAME_FIELD_REQUIRED } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
@@ -12,7 +12,7 @@ import {
 
 const schema = z
   .object({
-    name: NameFieldRequired,
+    name: NAME_FIELD_REQUIRED,
     password: z
       .string({
         required_error: PASSWORD_REQUIRED,

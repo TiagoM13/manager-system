@@ -2,13 +2,20 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { ERROR_PROCESSING_IMAGE } from '@/components/profile/profile.messages';
 import { useAppNavigation, useCurrentUser } from '@/hooks';
 import { IMSResponse, IUploadFile, IUser } from '@/interfaces';
 import { useImageUrl, useName } from '@/store';
 import { toastError, toastSuccess } from '@/utils';
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
 
-import { formSchema } from '../user-form.schema';
+import {
+  ERROR_CREATING_USER,
+  ERROR_UPDATING_USER,
+  USER_CREATED_SUCCESSFULLY,
+  USER_UPDATED_SUCCESSFULLY,
+} from '../user-form.messages';
+import { userDataSchema, UserDataSchemaType } from '../user-form.schema';
 
 type UserDataResponse = IUser | undefined;
 type UserRequestResult = IMSResponse<IUser, 'user'> | undefined;
@@ -48,25 +55,39 @@ export const useUserFormModel = ({
   const { mutateAsync: createUserMutation, isPending: isLoadingCreateUser } =
     useMutation({
       mutationFn: async (newUser: IUser) => await createUser(newUser),
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: ['user'] }),
+      onSuccess: (data) => {
+        if (data?.success) {
+          queryClient.invalidateQueries({ queryKey: ['user'] });
+          toastSuccess(USER_CREATED_SUCCESSFULLY);
+          navigate('/users');
+        }
+      },
+      onError: () => toastError(ERROR_CREATING_USER),
     });
   const { mutateAsync: updateUserMutation, isPending: isLoadingUpdateUser } =
     useMutation({
       mutationFn: async (values: IUser) => await updateUser(Number(id), values),
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: ['user'] }),
+      onSuccess: (data) => {
+        if (data?.success) {
+          queryClient.invalidateQueries({ queryKey: ['user'] });
+          toastSuccess(USER_UPDATED_SUCCESSFULLY);
+          navigate('/users');
+        }
+      },
+      onError: () => toastError(ERROR_UPDATING_USER),
     });
   const { mutateAsync: uploadFileMutation, isPending: isLoadingFileUpload } =
     useMutation({
       mutationFn: uploadFile,
       onSuccess: () => queryClient.invalidateQueries({ queryKey: ['user'] }),
-      onError: () => toastError('Falha ao processar imagem'),
+      onError: () => toastError(ERROR_PROCESSING_IMAGE),
     });
 
   const isUpdatingItself = !newUser && user?.id === currentUser.id;
 
   // hook form
-  const methods = useForm<IUser>({
-    resolver: formSchema as any,
+  const methods = useForm<UserDataSchemaType>({
+    resolver: userDataSchema as any,
     shouldUnregister: false,
   });
 
@@ -129,24 +150,15 @@ export const useUserFormModel = ({
         image_url: uploadedImageUrl || values.image_url,
       };
 
-      let saved: UserRequestResult = undefined;
-
       if (newUser) {
-        saved = await createUserMutation(savedValues);
+        await createUserMutation(savedValues);
       } else {
-        saved = await updateUserMutation(savedValues);
-      }
-
-      if (saved) {
-        const message = newUser ? 'criado' : 'atualizado';
-        toastSuccess(`Usuário ${message} com sucesso!`);
-        navigate('/users');
+        await updateUserMutation(savedValues);
       }
     },
     [
       createUserMutation,
       handleFileUpload,
-      navigate,
       newUser,
       updateUserMutation,
       user?.image_url,

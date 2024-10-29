@@ -8,6 +8,7 @@ import {
 
 import { CustomLoadingSkeleton } from '@/components';
 import { HttpClient } from '@/infra/http/http-client';
+import { IUser } from '@/interfaces';
 import {
   createUserService,
   getUserService,
@@ -21,12 +22,15 @@ import { UserFormView } from '../view/user-form.view';
 const User: React.FC = () => {
   const httpClient = new HttpClient();
 
-  const methods = useUserFormModel({
-    getUser: (id) => getUserService(httpClient, id),
-    createUser: (data) => createUserService(httpClient, data),
-    updateUser: (id, data) => updateUserService(httpClient, id, data),
-    uploadFile: (data) => uploadFileService(httpClient, data),
-  });
+  const services = {
+    getUser: (id: number) => getUserService(httpClient, id),
+    createUser: (data: IUser) => createUserService(httpClient, data),
+    updateUser: (id: number, data: IUser) =>
+      updateUserService(httpClient, id, data),
+    uploadFile: (data: FormData) => uploadFileService(httpClient, data),
+  };
+
+  const methods = useUserFormModel(services);
 
   const title = React.useMemo(() => {
     if (methods.newUser) return 'Cadastrar usuário';

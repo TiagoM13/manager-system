@@ -2,15 +2,15 @@ import { z } from 'zod';
 
 import { Status } from '@/enums';
 import {
-  NameFieldRequired,
-  InvalidSelect,
-  MaxDateField,
-  MinDateField,
-  MinLengthCNS,
-  MinLengthCPF,
-  RequiredField,
-  InvalidDateField,
-  PositiveNumber,
+  NAME_FIELD_REQUIRED,
+  INVALID_SELECT,
+  MAX_DATE_FIELD,
+  MIN_DATE_FIELD,
+  MIN_LENGTH_CNS,
+  MIN_LENGTH_CPF,
+  REQUIRED_FIELD,
+  INVALID_DATE_FIELD,
+  POSITIVE_NUMBER,
 } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -41,7 +41,7 @@ const stringToNumber = (value: string | number | null | undefined) => {
 
 const SchemaPatient = z.object({
   id: z.string().uuid().optional(),
-  name: NameFieldRequired,
+  name: NAME_FIELD_REQUIRED,
   birth_date: z
     .preprocess(
       (arg) => {
@@ -52,26 +52,26 @@ const SchemaPatient = z.object({
         return arg;
       },
       z.date({
-        invalid_type_error: InvalidDateField,
-        required_error: RequiredField,
+        invalid_type_error: INVALID_DATE_FIELD,
+        required_error: REQUIRED_FIELD,
       }),
     )
     .refine((data) => data <= new Date(), {
-      message: MinDateField,
+      message: MIN_DATE_FIELD,
     })
     .refine((data) => calculateAge(data) <= 105, {
-      message: MaxDateField,
+      message: MAX_DATE_FIELD,
     }),
   sex: z
-    .string({ required_error: RequiredField })
+    .string({ required_error: REQUIRED_FIELD })
     .refine((data) => data.trim() !== '', {
-      message: InvalidSelect,
+      message: INVALID_SELECT,
     }),
   cpf: OptionalStringField.refine((value) => !value || value.length === 14, {
-    message: MinLengthCPF,
+    message: MIN_LENGTH_CPF,
   }),
   cns: OptionalStringField.refine((value) => !value || value.length === 15, {
-    message: MinLengthCNS,
+    message: MIN_LENGTH_CNS,
   }),
   address: OptionalStringField,
   mother_name: OptionalStringField,
@@ -87,7 +87,7 @@ const SchemaPatient = z.object({
     .union([z.string(), z.number(), z.null()])
     .transform((value) => stringToNumber(value))
     .refine((val) => val === null || (typeof val === 'number' && val > 0), {
-      message: PositiveNumber,
+      message: POSITIVE_NUMBER,
     })
     .refine(
       (val) =>
@@ -101,7 +101,7 @@ const SchemaPatient = z.object({
     .union([z.string(), z.number(), z.null()])
     .transform((value) => stringToNumber(value))
     .refine((val) => val === null || (typeof val === 'number' && val > 0), {
-      message: PositiveNumber,
+      message: POSITIVE_NUMBER,
     })
     .refine(
       (val) =>
