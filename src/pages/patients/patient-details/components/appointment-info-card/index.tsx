@@ -20,8 +20,8 @@ export const AppointmentInfoCard: React.FC<AppointmentInfoCardProps> = ({
         <h4 className="text-sm font-semibold">Sheron Sttephany</h4>
         <span className="text-sm leading-3">
           {formatAppointmentDate(
-            appointment.created_at as Date,
-            appointment.created_at as Date,
+            appointment.scheduled_date as Date,
+            appointment.updated_at as Date,
           )}
         </span>
       </div>

@@ -23,8 +23,12 @@ export const formatAppointmentDate = (
   scheduledDate: Date,
   createdAt: Date,
 ): string => {
-  const formattedDate = dayjs(scheduledDate).format('D [de] MMMM, YYYY');
-  const formattedTime = dayjs(createdAt).format('HH:mm A');
+  const formattedDate = dayjs
+    .utc(scheduledDate)
+    .hour(12)
+    .local()
+    .format('D [de] MMMM, YYYY');
+  const formattedTime = dayjs.utc(createdAt).local().format('hh:mm A');
 
   return `${formattedDate} - ${formattedTime}`;
 };
