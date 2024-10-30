@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
 import { formatPatientProps } from '@/helpers/format-patient-props';
 import { formatPatientRequest } from '@/helpers/format-patient-request';
@@ -30,6 +31,7 @@ export const usePatientEditSectionDialogModel = ({
   updatePatient,
 }: PatientEditSectionDialogModelProps) => {
   const { closeModal } = usePatientFormDialog();
+  const { id } = useParams<{ id: string }>();
   // hook form
   const methods = useForm<SchemaPatientType>({
     mode: 'onChange',
@@ -43,7 +45,7 @@ export const usePatientEditSectionDialogModel = ({
   const queryClient = useQueryClient();
   const { mutateAsync: updatePatientMutation, isPending } = useMutation({
     mutationFn: async (values: IPatient) =>
-      await updatePatient(String(values.id), values),
+      await updatePatient(String(id), values),
     onSuccess: (data) => {
       if (data?.success) {
         queryClient.invalidateQueries({ queryKey: ['patient'] });

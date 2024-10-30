@@ -40,7 +40,6 @@ const stringToNumber = (value: string | number | null | undefined) => {
 };
 
 const SchemaPatient = z.object({
-  id: z.string().uuid().optional(),
   name: NAME_FIELD_REQUIRED,
   birth_date: z
     .preprocess(
@@ -111,7 +110,6 @@ const SchemaPatient = z.object({
       },
     )
     .optional(),
-  status: z.nativeEnum(Status).optional(),
 });
 
 export type SchemaPatientType = z.infer<typeof SchemaPatient>;
