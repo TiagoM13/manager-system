@@ -22,13 +22,13 @@ export interface IPatient {
   name_contact_emergency?: string | null;
   height?: number | null;
   weight?: number | null;
-  appointments: IAppointment[];
+  appointments?: IAppointment[];
 
   created_at?: Date;
   updated_at?: Date;
 }
 
-export interface IPatientForm extends Omit<IPatient, 'status'> {}
+export interface IPatientForm extends Omit<IPatient, 'status'> { }
 
 export interface IPatientFilters {
   name?: string;

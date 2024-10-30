@@ -4,9 +4,9 @@ import { useFormContext } from 'react-hook-form';
 import { Input, Select } from '@/components';
 import { IPatient } from '@/interfaces';
 import {
-  maritalStatusOptions,
   sexOptions,
-} from '@/pages/patients/patient-form/utils/options';
+  maritalStatusOptions,
+} from '@/pages/patients/utils/options';
 
 interface GeneralInfoFormProps {
   loading?: boolean;

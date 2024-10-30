@@ -1,54 +1,20 @@
 import React from 'react';
-import { FormProvider } from 'react-hook-form';
 
-import { Card, Header } from '@/components';
-import { useWindowSize } from '@/hooks';
+import { HttpClient } from '@/infra/http/http-client';
+import { getAllUsersService, deleteUserService } from '@/services';
 
-import { UsersFilters, UsersTable, UsersCard } from '../components';
-import { useUserList } from '../hooks/user-list';
+import { useUserListModel } from '../model/user-list.model';
+import { UserListView } from '../view/user-list.view';
 
 const Users: React.FC = () => {
-  const [, , isMobile] = useWindowSize();
-  const {
-    methods,
-    data,
-    handleDelete,
-    handleEdit,
-    handleNewRegister,
-    loading,
-  } = useUserList();
+  const httpClient = new HttpClient();
 
-  return (
-    <FormProvider {...methods}>
-      <div className="flex flex-col">
-        <Header
-          title="Lista de Usuários"
-          actionLabel="adicionar usuário"
-          onRegister={handleNewRegister}
-        />
+  const methods = useUserListModel({
+    getAllUsers: (filters) => getAllUsersService(httpClient, filters),
+    deleteUser: (id) => deleteUserService(httpClient, id),
+  });
 
-        <Card className="mt-4">
-          <UsersFilters />
-
-          {!isMobile ? (
-            <UsersTable
-              data={data}
-              loading={loading}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ) : (
-            <UsersCard
-              data={data}
-              loading={loading}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          )}
-        </Card>
-      </div>
-    </FormProvider>
-  );
+  return <UserListView {...methods} />;
 };
 
 export default Users;

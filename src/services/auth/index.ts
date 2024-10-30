@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 
+import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
 import {
   IAuthData,
   IChangePasswordData,
@@ -7,28 +8,33 @@ import {
   ISignInData,
   IUser,
 } from '@/interfaces';
-import { msHosp } from '@/services';
 import { handleAPIErrors } from '@/utils/common';
 
 export const signInService = (
+  client: IHttpClient,
   data: ISignInData,
-): Promise<AxiosResponse<IAuthData>> => msHosp.post('/auth/sign-in', data);
+): Promise<IAuthData> =>
+  client.sendRequest(HttpMethod.POST, '/auth/sign-in', { data });
 
 export const forgotPasswordService = (
+  client: IHttpClient,
   data: IRecoverPasswordData,
-): Promise<AxiosResponse<void>> => msHosp.post('/auth/forgot-password', data);
+): Promise<AxiosResponse> =>
+  client.sendRequest(HttpMethod.POST, '/auth/forgot-password', { data });
 
 export const changePasswordService = async (
+  client: IHttpClient,
   id: number,
   data: IChangePasswordData,
 ) => {
   try {
-    return await msHosp.patch<AxiosResponse<IUser>>(
+    return await client.sendRequest<AxiosResponse<IUser>>(
+      HttpMethod.PATCH,
       `/users/${id}/change-password`,
-      data,
+      { data },
     );
   } catch (error) {
     handleAPIErrors(error);
-    return null;
+    return;
   }
 };
