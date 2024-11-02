@@ -3,7 +3,7 @@ import { FormProvider } from 'react-hook-form';
 
 import { X } from '@phosphor-icons/react';
 
-import { Dialog, FormContainer, Button } from '@/components';
+import { Dialog, FormContainer, Button, StatusIcon } from '@/components';
 
 import { usePatientEditSectionDialogModel } from './patient-edit-section-dialog.model';
 
@@ -11,7 +11,6 @@ type Props = ReturnType<typeof usePatientEditSectionDialogModel> & {
   activeSection: boolean;
   renderDialogTitle: string;
   renderFormContent: React.ReactNode;
-  renderIcon: React.ReactNode;
   onClose: () => void;
 };
 
@@ -25,7 +24,6 @@ export const PatientEditSectionDialogView: React.FC<Props> = (props) => {
     activeSection,
     renderDialogTitle,
     renderFormContent,
-    renderIcon,
     onClose,
   } = props;
 
@@ -55,7 +53,7 @@ export const PatientEditSectionDialogView: React.FC<Props> = (props) => {
             <Button
               id="saved"
               type="submit"
-              icon={renderIcon}
+              icon={<StatusIcon loading={isPending} />}
               className="min-w-[100px]"
               label="atualizar"
               disabled={isPending}

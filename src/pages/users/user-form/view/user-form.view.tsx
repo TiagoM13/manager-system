@@ -18,8 +18,8 @@ export const UserFormView: React.FC<UserFormViewProps> = (props) => {
     methods,
     handleSubmit,
     submit,
-    newUser,
-    loading,
+    isCreatingNewUser,
+    isLoading,
     isUpdatingItself,
     goBack,
     breadcrumbsPathItems,
@@ -32,10 +32,12 @@ export const UserFormView: React.FC<UserFormViewProps> = (props) => {
           <Header
             title={title}
             subtitle="voltar para a lista de usuários"
-            actionLabel={newUser ? 'salvar usuário' : 'atualizar usuário'}
+            actionLabel={
+              isCreatingNewUser ? 'salvar usuário' : 'atualizar usuário'
+            }
             breadcrumbItems={breadcrumbsPathItems}
             goBack={goBack}
-            loading={loading}
+            loading={isLoading}
             isSubmit
           />
 
@@ -43,16 +45,16 @@ export const UserFormView: React.FC<UserFormViewProps> = (props) => {
             <div className="w-[60%] max-md:w-full">
               <UserForm
                 isUpdatingItself={isUpdatingItself}
-                loading={loading}
-                isNew={newUser}
+                loading={isLoading}
+                isNew={isCreatingNewUser}
               />
             </div>
 
-            {!newUser && (
+            {!isCreatingNewUser && (
               <div className="w-[40%] max-md:w-full">
                 <StatusForm
                   isUpdatingItself={isUpdatingItself}
-                  loading={loading}
+                  loading={isLoading}
                 />
               </div>
             )}

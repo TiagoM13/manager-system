@@ -25,6 +25,8 @@ export const usePatientFormModel = ({
 }: PatientFormModelProps) => {
   const navigate = useNavigate();
   const { goBack } = useAppNavigation();
+  const queryClient = useQueryClient();
+
   const methods = useForm<SchemaPatientType>({
     mode: 'onChange',
     shouldUnregister: false,
@@ -34,7 +36,6 @@ export const usePatientFormModel = ({
   const { handleSubmit } = methods;
 
   // mutation
-  const queryClient = useQueryClient();
   const { mutateAsync: createPatientMutation, isPending: IsLoading } =
     useMutation({
       mutationFn: async (values: IPatient) => createPatient(values),

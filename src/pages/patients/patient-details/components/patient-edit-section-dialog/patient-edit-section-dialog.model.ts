@@ -30,8 +30,10 @@ export const usePatientEditSectionDialogModel = ({
   patient,
   updatePatient,
 }: PatientEditSectionDialogModelProps) => {
-  const { closeModal } = usePatientFormDialog();
   const { id } = useParams<{ id: string }>();
+  const { closeModal } = usePatientFormDialog();
+  const queryClient = useQueryClient();
+
   // hook form
   const methods = useForm<SchemaPatientType>({
     mode: 'onChange',
@@ -42,7 +44,6 @@ export const usePatientEditSectionDialogModel = ({
   const { handleSubmit, reset } = methods;
 
   // mutation
-  const queryClient = useQueryClient();
   const { mutateAsync: updatePatientMutation, isPending } = useMutation({
     mutationFn: async (values: IPatient) =>
       await updatePatient(String(id), values),
