@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { StatusIcon } from '@/components';
 import { HttpClient } from '@/infra/http/http-client';
 import { IPatient } from '@/interfaces';
 import { updatePatientService } from '@/services';
@@ -33,10 +32,6 @@ export const PatientEditSectionDialog: React.FC<
   const { isPending } = methods;
 
   // memos
-  const renderIcon = React.useMemo(
-    () => <StatusIcon loading={isPending} />,
-    [isPending],
-  );
 
   const renderDialogTitle = React.useMemo((): string => {
     switch (activeSection) {
@@ -72,7 +67,6 @@ export const PatientEditSectionDialog: React.FC<
     <PatientEditSectionDialogView
       renderDialogTitle={renderDialogTitle}
       renderFormContent={renderFormContent}
-      renderIcon={renderIcon}
       activeSection={!!activeSection}
       onClose={onClose}
       {...methods}

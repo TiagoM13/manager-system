@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
 import { IMSResponse, IUser, IUsersFilters } from '@/interfaces';
 import { handleAPIErrors } from '@/utils/common';
@@ -66,6 +68,27 @@ export const updateUserService = async (
       `/users/${id}`,
       { data },
     );
+  } catch (error) {
+    handleAPIErrors(error);
+    return;
+  }
+};
+
+export const updateUserStatusService = async (
+  client: IHttpClient,
+  id: number,
+  status: string,
+): Promise<string | undefined> => {
+  try {
+    const response = await client.sendRequest<AxiosResponse<string>>(
+      HttpMethod.PATCH,
+      `/users/${id}/status`,
+      {
+        data: { status },
+      },
+    );
+
+    return response.data;
   } catch (error) {
     handleAPIErrors(error);
     return;

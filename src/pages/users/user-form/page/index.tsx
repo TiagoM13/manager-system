@@ -13,6 +13,7 @@ import {
   createUserService,
   getUserService,
   updateUserService,
+  updateUserStatusService,
   uploadFileService,
 } from '@/services';
 
@@ -27,15 +28,18 @@ const User: React.FC = () => {
     createUser: (data: IUser) => createUserService(httpClient, data),
     updateUser: (id: number, data: IUser) =>
       updateUserService(httpClient, id, data),
+    updateUserStatus: (id: number, status: string) =>
+      updateUserStatusService(httpClient, id, status),
     uploadFile: (data: FormData) => uploadFileService(httpClient, data),
   };
 
   const methods = useUserFormModel(services);
+  const { user, isLoading, isCreatingNewUser } = methods;
 
   const title = React.useMemo(() => {
-    if (methods.newUser) return 'Cadastrar usuário';
+    if (isCreatingNewUser) return 'Cadastrar usuário';
     return 'Atualizar usuário';
-  }, [methods.newUser]);
+  }, [isCreatingNewUser]);
 
   const breadcrumbsPathItems = React.useMemo(
     () => [
@@ -50,17 +54,17 @@ const User: React.FC = () => {
         icon: <UsersIcon className="size-4" />,
       },
       {
-        label: methods.newUser ? (
+        label: isCreatingNewUser ? (
           'Cadastrar'
-        ) : methods.loading ? (
+        ) : isLoading ? (
           <CustomLoadingSkeleton className="h-5 w-40 rounded-lg" />
         ) : (
-          `${methods.user?.name}`
+          `${user?.name}`
         ),
         icon: <UserIcon className="size-4" />,
       },
     ],
-    [methods.loading, methods.newUser, methods.user?.name],
+    [isLoading, isCreatingNewUser, user?.name],
   );
 
   return (
