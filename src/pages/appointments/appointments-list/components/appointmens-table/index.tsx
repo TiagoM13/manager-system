@@ -1,0 +1,61 @@
+import React from 'react';
+
+import { Pagination, Table } from '@/components';
+import { IAppointment, IResponseMeta } from '@/interfaces';
+
+import { AppointmentRow } from '../appointment-item';
+
+type IAppointmentData = {
+  'list-all-appointments': IAppointment[];
+  meta?: IResponseMeta;
+};
+
+type AppointmentTableProps = {
+  data?: IAppointmentData;
+  loading?: boolean;
+};
+
+export const AppointmentsTable: React.FC<AppointmentTableProps> = ({
+  data,
+  loading,
+}) => {
+  return (
+    <Table.Container>
+      <thead>
+        <Table.Row>
+          <Table.Header>Nome</Table.Header>
+          <Table.Header>Data da consulta</Table.Header>
+          <Table.Header>Hora</Table.Header>
+          <Table.Header>Médico</Table.Header>
+          <Table.Header>Tipo de atendimento</Table.Header>
+          <Table.Header>Status</Table.Header>
+        </Table.Row>
+      </thead>
+      <tbody>
+        {loading ? (
+          <span>Carregando...</span>
+        ) : (
+          <>
+            {data?.['list-all-appointments'].map((appointment) => (
+              <AppointmentRow key={appointment.id} appointment={appointment} />
+            ))}
+          </>
+        )}
+      </tbody>
+      <tfoot>
+        <Table.Row border={false}>
+          <Table.Cell colSpan={3}>
+            <Pagination.Label
+              currentPageData={data?.meta?.total_current_records || 0}
+              totalItems={data?.meta?.total_records || 0}
+              paginationLabel={{ single: 'consulta', several: 'consultas' }}
+            />
+          </Table.Cell>
+          <Table.Cell className="text-right" colSpan={4}>
+            <Pagination.Actions totalPages={data?.meta?.total_pages || 1} />
+          </Table.Cell>
+        </Table.Row>
+      </tfoot>
+    </Table.Container>
+  );
+};

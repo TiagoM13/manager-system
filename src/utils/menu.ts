@@ -1,4 +1,10 @@
-import { ChartBar, Icon, Users, UsersThree } from '@phosphor-icons/react';
+import {
+  ChartBar,
+  CheckSquare,
+  Icon,
+  Users,
+  UsersThree,
+} from '@phosphor-icons/react';
 
 import { Role } from '@/enums';
 
@@ -26,6 +32,12 @@ export const menus: Menus[] = [
     title: 'Pacientes',
     url: '/patients',
     icon: UsersThree,
+    roles: [Role.ADMIN, Role.EDITOR, Role.CLINICAL],
+  },
+  {
+    title: 'Consultas',
+    url: '/appointments',
+    icon: CheckSquare,
     roles: [Role.ADMIN, Role.EDITOR, Role.CLINICAL],
   },
 ];

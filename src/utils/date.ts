@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 export const formatDate = (date: Date): string => {
-  return dayjs(date).format('DD/MM/YYYY');
+  return dayjs.utc(date).hour(12).local().format('DD/MM/YYYY');
 };
 
 export const formatDateTime = (date: Date): string => {
@@ -32,3 +32,6 @@ export const formatAppointmentDate = (
 
   return `${formattedDate} - ${formattedTime}`;
 };
+
+export const formattedTime = (date: Date) =>
+  dayjs.utc(date).local().format('hh:mm A');
