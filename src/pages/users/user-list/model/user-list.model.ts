@@ -36,7 +36,7 @@ export const useUserListModel = ({
   const queryClient = useQueryClient();
 
   // queries
-  const { data, isLoading } = useQuery<UserListModelResponse>({
+  const { data, isLoading } = useQuery({
     queryKey: ['users', query],
     queryFn: async () => await getAllUsers(query),
     placeholderData: keepPreviousData,

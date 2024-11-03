@@ -1,10 +1,12 @@
+import { Role, Status } from '@/enums';
+
 export interface IUser {
   id?: number;
   name: string;
   email: string;
   image_url?: string | null;
-  role: string;
-  status?: string;
+  role: Role;
+  status?: Status;
   created_at?: Date;
   updated_at?: Date;
   last_access?: Date;

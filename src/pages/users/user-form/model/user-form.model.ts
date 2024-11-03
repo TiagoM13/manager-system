@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { ERROR_PROCESSING_IMAGE } from '@/components/profile/profile.messages';
+import { Role } from '@/enums';
 import { useAppNavigation, useCurrentUser } from '@/hooks';
 import { IMSResponse, IUploadFile, IUser } from '@/interfaces';
 import { useImageUrl, useName } from '@/store';
@@ -160,7 +161,7 @@ export const useUserFormModel = ({
       const savedValues: IUser = {
         name: values.name,
         email: values.email,
-        role: values.role,
+        role: values.role as Role,
         image_url: updatedImageUrl,
       };
 
