@@ -4,6 +4,7 @@ import { Pagination, Table } from '@/components';
 import { IAppointment, IResponseMeta } from '@/interfaces';
 
 import { AppointmentRow } from '../appointment-item';
+import { SkeletonTableAppintments } from '../skeletons';
 
 type IAppointmentData = {
   'list-all-appointments': IAppointment[];
@@ -33,7 +34,9 @@ export const AppointmentsTable: React.FC<AppointmentTableProps> = ({
       </thead>
       <tbody>
         {loading ? (
-          <span>Carregando...</span>
+          Array.from({ length: 10 }).map((_, index) => (
+            <SkeletonTableAppintments key={index} />
+          ))
         ) : (
           <>
             {data?.['list-all-appointments'].map((appointment) => (
