@@ -28,7 +28,10 @@ export const useAppointmentsListModel = ({
   const [query] = useQueryParams<IAppointmentFilters>();
 
   const methods = useForm<AppointmentFiltersSchemaType>({
-    defaultValues: query,
+    defaultValues: {
+      name: query.name || '',
+      appointment_type: query.appointment_type || '',
+    },
     mode: 'onChange',
     resolver: appointmentFiltersSchemaResolver,
     shouldUnregister: false,
