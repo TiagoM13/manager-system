@@ -50,6 +50,7 @@ export const Select = <T, Fields extends FieldValues>(
     labelAs,
     valueAs,
     isSearchable = false,
+    clearable = false,
     error,
   } = props;
 
@@ -60,9 +61,11 @@ export const Select = <T, Fields extends FieldValues>(
 
   return (
     <Container>
-      <label className="block text-sm text-slate-600 mb-2">
-        {label} {required && <span className="text-red-500">*</span>}
-      </label>
+      {label && (
+        <label className="block text-sm text-slate-600 mb-2">
+          {label} {required && <span className="text-red-500">*</span>}
+        </label>
+      )}
 
       <SelectContent>
         <div id="content">
@@ -88,6 +91,7 @@ export const Select = <T, Fields extends FieldValues>(
                     getOptionLabel={getOptionLabel}
                     getOptionValue={getOptionValue}
                     isSearchable={isSearchable}
+                    isClearable={clearable}
                     className={`${disabled ? 'opacity-60' : 'opacity-100'}`}
                   />
                 )}
