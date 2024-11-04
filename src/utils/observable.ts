@@ -18,7 +18,7 @@ export const userObservable = async () => {
   if (!localUser) return;
 
   try {
-    const serverUser = await getUserService(httpClient, localUser.id);
+    const serverUser = await getUserService(httpClient, Number(localUser.id));
 
     if (serverUser) {
       userRole$.next(serverUser.role);

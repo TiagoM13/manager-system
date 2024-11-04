@@ -108,7 +108,7 @@ export const useAccountSettingsModel = ({
     isPending: isLoadingChangePassword,
   } = useMutation({
     mutationFn: async (values: IChangePasswordData) =>
-      changePassword(user.id, values),
+      changePassword(Number(user.id), values),
     onSuccess: (data) => {
       if (data) {
         toastWarning(LOGIN_AGAIN);
