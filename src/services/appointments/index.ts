@@ -1,6 +1,7 @@
 import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
 import { IAppointment, IAppointmentFilters, IMSResponse } from '@/interfaces';
 import { handleAPIErrors } from '@/utils/common';
+import { delayPromise } from '@/utils/resolver';
 
 export const listAllAppointmentsService = async (
   client: IHttpClient,
@@ -19,6 +20,8 @@ export const listAllAppointmentsService = async (
         page_size,
       },
     });
+
+    await delayPromise(2000);
 
     return response;
   } catch (error) {
