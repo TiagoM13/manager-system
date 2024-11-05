@@ -26,8 +26,8 @@ export const AppointmentRow: React.FC<IAppointmentItem> = ({ appointment }) => {
           </span>
         </Link>
       </Table.Cell>
-      <Table.Cell>{formatDate(appointment.scheduled_date as Date)}</Table.Cell>
-      <Table.Cell>{formattedTime(appointment.created_at as Date)}</Table.Cell>
+      <Table.Cell>{formatDate(appointment.scheduled_date)}</Table.Cell>
+      <Table.Cell>{formattedTime(appointment.scheduled_date)}</Table.Cell>
       <Table.Cell>{appointment.doctor.name}</Table.Cell>
       <Table.Cell>{appointment.appointment_type}</Table.Cell>
       <Table.Cell>

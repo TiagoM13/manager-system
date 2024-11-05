@@ -19,19 +19,15 @@ export const formatDateToISODate = (dateString: Date) => {
   return !isNaN(date.getTime()) ? date.toISOString().split('T')[0] : '';
 };
 
-export const formatAppointmentDate = (
-  scheduledDate: Date,
-  createdAt: Date,
-): string => {
+export const formatAppointmentDate = (date: Date): string => {
   const formattedDate = dayjs
-    .utc(scheduledDate)
+    .utc(date)
     .hour(12)
     .local()
     .format('D [de] MMMM, YYYY');
-  const formattedTime = dayjs.utc(createdAt).local().format('hh:mm A');
+  const formattedTime = dayjs.utc(date).format('HH:mm A');
 
   return `${formattedDate} - ${formattedTime}`;
 };
 
-export const formattedTime = (date: Date) =>
-  dayjs.utc(date).local().format('hh:mm A');
+export const formattedTime = (date: Date) => dayjs.utc(date).format('HH:mm A');
