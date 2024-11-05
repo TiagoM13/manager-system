@@ -31,6 +31,8 @@ export const useAppointmentsListModel = ({
     defaultValues: {
       name: query.name || '',
       appointment_type: query.appointment_type || '',
+      start_date: query.start_date,
+      end_date: query.end_date,
     },
     mode: 'onChange',
     resolver: appointmentFiltersSchemaResolver,

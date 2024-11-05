@@ -4,9 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { FormContainer, Input, InputSearch, Select } from '@/components';
 import { useQueryParams } from '@/hooks';
 import { IAppointmentFilters } from '@/interfaces';
-import { selectOptions } from '@/utils';
-
-import { AppointmentFiltersSchemaType } from '../../appointments-list.schema';
+import { formatDateToISODate, selectOptions } from '@/utils';
 
 type AppointmentFiltersProps = {
   loading?: boolean;
@@ -22,14 +20,23 @@ export const AppointmentFilters: React.FC<AppointmentFiltersProps> = ({
     watch,
     formState: { errors },
   } = useFormContext<IAppointmentFilters>();
-  const [_, setQuery] = useQueryParams<AppointmentFiltersSchemaType>();
+  const [_, setQuery] = useQueryParams<IAppointmentFilters>();
 
   const appointment_type = watch('appointment_type');
 
   const handleFilterAppointments = React.useCallback(
-    ({ name, appointment_type }: AppointmentFiltersSchemaType) => {
-      const cleanedFilters = { name, appointment_type, page: 1 };
-      setQuery(cleanedFilters);
+    (filters: IAppointmentFilters) => {
+      const { name, appointment_type, start_date, end_date } = filters;
+
+      const startDate = formatDateToISODate(start_date as any);
+      const endDate = formatDateToISODate(end_date as any);
+      setQuery({
+        name,
+        appointment_type,
+        start_date: startDate as any,
+        end_date: endDate as any,
+        page: 1,
+      });
     },
     [setQuery],
   );
@@ -66,6 +73,7 @@ export const AppointmentFilters: React.FC<AppointmentFiltersProps> = ({
             control={control}
             error={errors.start_date}
             disabled={loading}
+            max="9999-12-31"
           />
 
           <Input
@@ -74,6 +82,7 @@ export const AppointmentFilters: React.FC<AppointmentFiltersProps> = ({
             control={control}
             error={errors.end_date}
             disabled={loading}
+            max="9999-12-31"
           />
         </div>
       </div>

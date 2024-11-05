@@ -25,6 +25,12 @@ export const MIN_DATE_FIELD =
 export const INVALID_DATE_FIELD =
   'Data inválida, por favor insira uma data válida';
 export const POSITIVE_NUMBER = 'O número deve ser um número positivo';
+export const INVALID_START_DATE_FIELD =
+  'Data de início inválida. Use o formato YYYY-MM-DD';
+export const INVALID_END_DATE_FIELD =
+  'Data de fim inválida. Use o formato YYYY-MM-DD';
+export const START_DATE_CANNOT_BE_GREATER_THAN_END_DATE =
+  'A data de início não pode ser maior que a data de fim';
 
 export const PASSWORD_REQUIRED = 'A senha é obrigatória';
 export const PASSWORD_MIN_LENGTH = 'A senha deve ter no mínimo 6 caracteres';
