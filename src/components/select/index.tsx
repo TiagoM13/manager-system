@@ -51,6 +51,7 @@ export const Select = <T, Fields extends FieldValues>(
     valueAs,
     isSearchable = false,
     clearable = false,
+    loading = false,
     error,
   } = props;
 
@@ -87,6 +88,7 @@ export const Select = <T, Fields extends FieldValues>(
                     styles={styles}
                     options={options}
                     isDisabled={disabled}
+                    isLoading={loading}
                     placeholder={placeholder}
                     getOptionLabel={getOptionLabel}
                     getOptionValue={getOptionValue}

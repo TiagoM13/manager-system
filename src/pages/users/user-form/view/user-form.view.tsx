@@ -31,7 +31,7 @@ export const UserFormView: React.FC<UserFormViewProps> = (props) => {
         <div className="flex flex-col">
           <Header
             title={title}
-            subtitle="voltar para a lista de usuários"
+            subtitle="voltar para lista de usuários"
             actionLabel={
               isCreatingNewUser ? 'salvar usuário' : 'atualizar usuário'
             }

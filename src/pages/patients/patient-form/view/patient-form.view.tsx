@@ -37,7 +37,7 @@ export const PatientFormView: React.FC<PatientFormViewProps> = (props) => {
     <FormProvider {...methods}>
       <FormContainer id="form-patient" noValidate>
         <Header
-          subtitle="voltar a lista de pacientes"
+          subtitle="voltar para lista de pacientes"
           title="Adicionar Paciente"
           breadcrumbItems={breadcrumbsPathItems}
           goBack={goBack}
@@ -53,7 +53,7 @@ export const PatientFormView: React.FC<PatientFormViewProps> = (props) => {
                 {currentStep === 1 && <FormStepTwo />}
                 {isLastStep && <FormStepThree />}
 
-                <div className="flex ml-auto gap-2">
+                <div className="flex ml-auto gap-2 p-2">
                   {currentStep > 0 && (
                     <Button
                       label="anterior"

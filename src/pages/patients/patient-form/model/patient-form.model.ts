@@ -38,7 +38,7 @@ export const usePatientFormModel = ({
   // mutation
   const { mutateAsync: createPatientMutation, isPending: IsLoading } =
     useMutation({
-      mutationFn: async (values: IPatient) => createPatient(values),
+      mutationFn: async (values: IPatient) => await createPatient(values),
       onSuccess: (data) => {
         if (data?.success) {
           queryClient.invalidateQueries({ queryKey: ['patients'] });
