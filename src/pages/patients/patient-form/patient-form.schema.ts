@@ -1,8 +1,7 @@
 import { z } from 'zod';
 
-import { Status } from '@/enums';
 import {
-  NAME_FIELD_REQUIRED,
+  NameFieldRequired,
   INVALID_SELECT,
   MAX_DATE_FIELD,
   MIN_DATE_FIELD,
@@ -40,7 +39,7 @@ const stringToNumber = (value: string | number | null | undefined) => {
 };
 
 const SchemaPatient = z.object({
-  name: NAME_FIELD_REQUIRED,
+  name: NameFieldRequired,
   birth_date: z
     .preprocess(
       (arg) => {
