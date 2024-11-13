@@ -29,3 +29,22 @@ export const listAllAppointmentsService = async (
     return;
   }
 };
+
+export const createAppointmentService = async (
+  client: IHttpClient,
+  patientId: string,
+  data: IAppointment,
+) => {
+  try {
+    const response = await client.sendRequest<
+      IMSResponse<IAppointment, 'appointment'>
+    >(HttpMethod.POST, `/appointments/${patientId}`, {
+      data,
+    });
+
+    return response;
+  } catch (error) {
+    handleAPIErrors(error);
+    return;
+  }
+};

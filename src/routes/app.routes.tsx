@@ -19,8 +19,11 @@ const PatientForm = React.lazy(
 const PatientDetails = React.lazy(
   () => import('@/pages/patients/patient-details/page'),
 );
-export const Appointments = React.lazy(
+const Appointments = React.lazy(
   () => import('@/pages/appointments/appointments-list/page'),
+);
+const AppointmentForm = React.lazy(
+  () => import('@/pages/appointments/appointment-form/page'),
 );
 
 export const Router: React.FC = () => {
@@ -132,6 +135,16 @@ export const Router: React.FC = () => {
                 allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
               >
                 <Appointments />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/appointments/:patientId/"
+            element={
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
+                <AppointmentForm />
               </PrivateRoute>
             }
           />

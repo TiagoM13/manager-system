@@ -1,21 +1,21 @@
-import { AppointmentStatus, AppointmentType } from '@/enums';
+import { AppointmentStatus } from '@/enums';
 
 import { IDoctor } from './doctor';
 import { IPatient } from './patients';
 
 export interface IAppointment {
-  id: number;
-  appointment_type: AppointmentType;
+  id?: number;
+  appointment_type: string;
   examination?: string | null;
   diagnosis_summary?: string | null;
   scheduled_date: Date;
   created_at?: Date;
   updated_at?: Date;
-  patient_id: string;
-  patient: IPatient;
+  patient_id?: string;
+  patient?: IPatient;
   doctor_id: number;
-  doctor: IDoctor;
-  status: AppointmentStatus;
+  doctor?: IDoctor;
+  status?: AppointmentStatus;
 }
 
 export interface IAppointmentFilters {

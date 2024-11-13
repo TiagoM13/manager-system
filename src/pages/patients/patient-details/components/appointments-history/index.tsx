@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 import { Plus } from '@phosphor-icons/react';
 
 import { Button, Card } from '@/components';
+import { useAppNavigation } from '@/hooks';
 import { IAppointment } from '@/interfaces';
 
 import { AppointmentInfoCard } from '../appointment-info-card';
@@ -17,7 +18,17 @@ export const AppointmentsHistory: React.FC<AppointmentsHistoryProps> = ({
   appointments,
 }) => {
   const MAX_DISPLAY = 3;
+  const location = useLocation();
+  const { id } = useParams<{ id: string }>();
+  const { navigateTo } = useAppNavigation();
   const isNotHaveAppointments = appointments?.length === 0;
+
+  const handleRedirectCreateAppointment = (id?: string) => {
+    navigateTo({
+      route: `/appointments/${!id ? 'new' : id}`,
+      state: location.state,
+    });
+  };
 
   return (
     <Card title="Histórico de consultas" className="px-6 space-y-2 h-full">
@@ -50,7 +61,7 @@ export const AppointmentsHistory: React.FC<AppointmentsHistoryProps> = ({
 
           {appointments && appointments?.length > MAX_DISPLAY && (
             <Link
-              to="appointments"
+              to={`/appointments/${id}/list`}
               className="text-sm text-sky-600 font-medium hover:underline"
             >
               visualizar mais
@@ -60,6 +71,7 @@ export const AppointmentsHistory: React.FC<AppointmentsHistoryProps> = ({
           <Button
             label="adicionar consulta"
             icon={<Plus className="size-4" weight="bold" />}
+            onClick={() => handleRedirectCreateAppointment(id)}
           />
         </div>
       </div>

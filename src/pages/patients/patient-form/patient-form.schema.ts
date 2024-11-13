@@ -1,11 +1,11 @@
 import { z } from 'zod';
 
 import {
+  validateCNS,
   NameFieldRequired,
   INVALID_SELECT,
   MAX_DATE_FIELD,
   MIN_DATE_FIELD,
-  MIN_LENGTH_CNS,
   MIN_LENGTH_CPF,
   REQUIRED_FIELD,
   INVALID_DATE_FIELD,
@@ -68,9 +68,7 @@ const SchemaPatient = z.object({
   cpf: OptionalStringField.refine((value) => !value || value.length === 14, {
     message: MIN_LENGTH_CPF,
   }),
-  cns: OptionalStringField.refine((value) => !value || value.length === 15, {
-    message: MIN_LENGTH_CNS,
-  }),
+  cns: OptionalStringField.superRefine(validateCNS),
   address: OptionalStringField,
   mother_name: OptionalStringField,
   father_name: OptionalStringField,

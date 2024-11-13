@@ -43,7 +43,7 @@ export const usePatientFormModel = ({
         if (data?.success) {
           queryClient.invalidateQueries({ queryKey: ['patients'] });
           toastSuccess(PATIENT_CREATED_SUCCESSFULLY);
-          navigate('/patients');
+          navigate(`/patients/${data.patient.id}`);
         }
       },
       onError: () => toastError(ERROR_CREATING_PATIENT),

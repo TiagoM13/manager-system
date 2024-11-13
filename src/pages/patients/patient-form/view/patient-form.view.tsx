@@ -40,7 +40,7 @@ export const PatientFormView: React.FC<PatientFormViewProps> = (props) => {
           subtitle="voltar para lista de pacientes"
           title="Adicionar Paciente"
           breadcrumbItems={breadcrumbsPathItems}
-          goBack={goBack}
+          goBack={() => goBack('/patients')}
         />
 
         <div className="max-w-[1440px]">
