@@ -33,7 +33,6 @@ export const PatientDetailsView: React.FC<PatientDetailsViewProps> = (
   return (
     <>
       <Header
-        subtitle="voltar para lista de pacientes"
         title="Detalhes do Paciente"
         goBack={() => goBack('/patients')}
         breadcrumbItems={breadcrumbsPathItems}

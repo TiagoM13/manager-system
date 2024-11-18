@@ -19,6 +19,7 @@ export const MAX_LENGTH_FIELD_PHONE =
   'O número de telefone deve ter no máximo 11 dígitos.';
 export const MIN_LENGTH_CPF = 'O CPF deve ter no máximo 11 dígitos.';
 export const MIN_LENGTH_CNS = 'O CNS deve ter no máximo 15 dígitos.';
+export const ONLY_NUMBERS_CNS = 'O CNS deve conter apenas números';
 export const MAX_DATE_FIELD = 'A idade não pode ser maior que 105 anos';
 export const MIN_DATE_FIELD =
   'A data de nascimento não pode ser maior que a data atual';

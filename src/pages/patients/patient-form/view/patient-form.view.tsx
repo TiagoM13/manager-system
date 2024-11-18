@@ -37,7 +37,6 @@ export const PatientFormView: React.FC<PatientFormViewProps> = (props) => {
     <FormProvider {...methods}>
       <FormContainer id="form-patient" noValidate>
         <Header
-          subtitle="voltar para lista de pacientes"
           title="Adicionar Paciente"
           breadcrumbItems={breadcrumbsPathItems}
           goBack={() => goBack('/patients')}
