@@ -6,7 +6,7 @@ import { IAppointment } from '@/interfaces';
 
 import { optionsAppointmentType } from '../../utils/options';
 
-export const AppointmentCardForm: React.FC<{
+export const AppointmentForm: React.FC<{
   loading?: boolean;
   doctors: {
     label: string;

@@ -1,15 +1,17 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { Plus } from '@phosphor-icons/react';
-
 import { Header, Card, Button, StatusIcon } from '@/components';
 import { BreadcrumbItem } from '@/components/header/interfaces';
 import { PatientHeader } from '@/pages/patients/patient-details/components';
 
-import { PatientCard } from '../components/patient-card';
-import { AppointmentCardForm } from '../forms/appointment-form';
-import { PatientSearchForm } from '../forms/patient-search-form';
+import { NotFoundPatient, PatientCard } from '../components';
+import {
+  AppointmentForm,
+  HealthInformationForm,
+  PatientForm,
+  PatientSearchForm,
+} from '../forms';
 import { useAppointmentFormModel } from '../model/appointment-form.model';
 
 type AppointmentFormViewProps = ReturnType<typeof useAppointmentFormModel> & {
@@ -27,6 +29,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
     submit,
     formMethods,
     searchFormMethods,
+    patientFormMethods,
     patientResponse,
     allPatientsResponse,
     doctorOptions,
@@ -63,30 +66,25 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
                   ))}
                 </>
               ) : (
-                <div className="flex flex-col items-center justify-center gap-2 text-center">
-                  <span className="text-sm">
-                    Nenhum paciente corresponde à sua pesquisa.
-                  </span>
-                  <span className="text-sm">
-                    Verifique as informações e tente novamente, ou adicione um
-                    novo paciente.
-                  </span>
-                  <Button
-                    type="button"
-                    label="adicionar novo paciente"
-                    icon={<Plus className="size-4" weight="bold" />}
-                    onClick={() => navigateTo({ route: '/patients/new' })}
-                  />
-                </div>
+                <NotFoundPatient
+                  onNavigate={() => navigateTo({ route: '/patients/new' })}
+                />
               )}
             </div>
           </Card>
         )}
 
         {!isCreatingNewAppointment && (
-          <Card>
-            <PatientHeader patient={patientResponse} loading={isLoading} />
-          </Card>
+          <>
+            <Card>
+              <PatientHeader patient={patientResponse} loading={isLoading} />
+            </Card>
+
+            <FormProvider {...patientFormMethods}>
+              <PatientForm loading={isLoading} />
+              <HealthInformationForm loading={isLoading} />
+            </FormProvider>
+          </>
         )}
 
         {!isCreatingNewAppointment && (
@@ -95,7 +93,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
               <Card bordered>
                 <div className="flex gap-6 p-2">
                   <div className="w-full flex flex-col justify-between">
-                    <AppointmentCardForm
+                    <AppointmentForm
                       loading={isLoading}
                       doctors={doctorOptions as any}
                     />

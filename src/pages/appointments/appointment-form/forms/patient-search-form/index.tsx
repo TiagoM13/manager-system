@@ -65,6 +65,7 @@ export const PatientSearchForm: React.FC<PatientSearchFormProps> = ({
             placeholder="Buscar pelo nome do paciente"
             control={control}
             error={errors.name}
+            disabled={loading}
           />
 
           <InputMask
@@ -73,9 +74,9 @@ export const PatientSearchForm: React.FC<PatientSearchFormProps> = ({
             placeholder="Buscar pelo CPF"
             mask={formatCPF}
             maxLength={14}
-            disabled={loading}
             control={control}
             error={errors.cpf}
+            disabled={loading}
           />
 
           <Input
@@ -84,6 +85,7 @@ export const PatientSearchForm: React.FC<PatientSearchFormProps> = ({
             placeholder="Buscar pelo CNS (cartão do sus)"
             control={control}
             error={errors.cns}
+            disabled={loading}
           />
 
           <Button

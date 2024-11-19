@@ -5,8 +5,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 import { Status } from '@/enums';
+import { formatPatientRequest } from '@/helpers/format-patient-request';
 import { useAppNavigation, useQueryParams } from '@/hooks';
 import { IAppointment, IDoctor, IMSResponse, IPatient } from '@/interfaces';
+import { schemaPatient } from '@/pages/patients/patient-form/patient-form.schema';
 import { toastSuccess } from '@/utils';
 import { useQueryClient, useQuery, useMutation } from '@tanstack/react-query';
 
@@ -46,6 +48,7 @@ export const useAppointmentFormModel = ({
     [patientId],
   );
 
+  // appointment form
   const formMethods = useForm<AppointmentFormType>({
     resolver: appointmentFormResolver,
     shouldUnregister: false,
@@ -53,8 +56,15 @@ export const useAppointmentFormModel = ({
       scheduled_date: dayjs().format('YYYY-MM-DD') as any,
     },
   });
+  // search patient form
   const searchFormMethods = useForm<PatientSearchType>({
     resolver: patientSearchResolver,
+    shouldUnregister: false,
+    defaultValues: query,
+  });
+  // patient form
+  const patientFormMethods = useForm<IPatient>({
+    resolver: schemaPatient,
     shouldUnregister: false,
   });
 
@@ -96,6 +106,12 @@ export const useAppointmentFormModel = ({
         queryClient.invalidateQueries({ queryKey: ['appointments'] });
         navigate('/appointments');
       }
+    },
+    onMutate: (newAppointment) => {
+      queryClient.setQueryData(['appointments'], (old: any) => [
+        ...(old || []),
+        newAppointment,
+      ]);
     },
   });
 
@@ -146,6 +162,11 @@ export const useAppointmentFormModel = ({
     [createAppointmentMutation],
   );
 
+  React.useEffect(() => {
+    if (patientResponse)
+      patientFormMethods.reset(formatPatientRequest(patientResponse));
+  }, [isLoading, patientResponse, patientFormMethods]);
+
   return {
     query,
     goBack,
@@ -155,6 +176,7 @@ export const useAppointmentFormModel = ({
     isPending,
     formMethods,
     searchFormMethods,
+    patientFormMethods,
     isCreatingNewAppointment,
     doctorResponse,
     patientResponse,
