@@ -8,7 +8,6 @@ import {
   createAppointmentService,
   getAllPatientsService,
   getPatientService,
-  getAllDoctorsService,
 } from '@/services';
 
 import { useAppointmentFormModel } from '../model/appointment-form.model';

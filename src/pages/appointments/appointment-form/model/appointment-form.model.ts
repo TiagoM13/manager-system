@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import dayjs from 'dayjs';
 
@@ -38,7 +38,6 @@ export const useAppointmentFormModel = ({
   createAppointment,
 }: AppointmentFormModelProps) => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
   const { goBack, navigateTo } = useAppNavigation();
   const { patientId } = useParams<{ patientId: string }>();
   const [query] = useQueryParams<PatientSearchType>();
@@ -102,9 +101,9 @@ export const useAppointmentFormModel = ({
       await createAppointment(String(patientId), values),
     onSuccess: (data) => {
       if (data) {
-        toastSuccess('Nova consulta adicionada com sucesso!');
+        toastSuccess('Consulta adicionada com sucesso!');
         queryClient.invalidateQueries({ queryKey: ['appointments'] });
-        navigate('/appointments');
+        navigateTo({ route: '/appointments' });
       }
     },
     onMutate: (newAppointment) => {

@@ -32,6 +32,8 @@ export const INVALID_END_DATE_FIELD =
   'Data de fim inválida. Use o formato YYYY-MM-DD';
 export const START_DATE_CANNOT_BE_GREATER_THAN_END_DATE =
   'A data de início não pode ser maior que a data de fim';
+export const INVALID_SCHEDULED_DATE =
+  'A data de consulta não pode ser maior que a data atual';
 
 export const PASSWORD_REQUIRED = 'A senha é obrigatória';
 export const PASSWORD_MIN_LENGTH = 'A senha deve ter no mínimo 6 caracteres';

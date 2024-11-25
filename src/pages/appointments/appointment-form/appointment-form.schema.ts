@@ -6,6 +6,7 @@ import {
   INVALID_DATE_FIELD,
   REQUIRED_FIELD,
   SELECT_REQUIRED,
+  INVALID_SCHEDULED_DATE,
 } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -27,7 +28,7 @@ export const appointmentFormSchema = z.object({
         required_error: REQUIRED_FIELD,
       })
       .max(new Date(), {
-        message: 'A data de consulta não pode ser maior que a data atual',
+        message: INVALID_SCHEDULED_DATE,
       }),
   ),
   doctor_id: z
