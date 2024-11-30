@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import dayjs from 'dayjs';
 
@@ -9,7 +9,7 @@ import { formatPatientRequest } from '@/helpers/format-patient-request';
 import { useAppNavigation, useQueryParams } from '@/hooks';
 import { IAppointment, IDoctor, IMSResponse, IPatient } from '@/interfaces';
 import { schemaPatient } from '@/pages/patients/patient-form/patient-form.schema';
-import { toastSuccess } from '@/utils';
+import { formatDateWithCurrentTime, toastSuccess } from '@/utils';
 import { useQueryClient, useQuery, useMutation } from '@tanstack/react-query';
 
 import {
@@ -38,7 +38,6 @@ export const useAppointmentFormModel = ({
   createAppointment,
 }: AppointmentFormModelProps) => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
   const { goBack, navigateTo } = useAppNavigation();
   const { patientId } = useParams<{ patientId: string }>();
   const [query] = useQueryParams<PatientSearchType>();
@@ -102,9 +101,9 @@ export const useAppointmentFormModel = ({
       await createAppointment(String(patientId), values),
     onSuccess: (data) => {
       if (data) {
-        toastSuccess('Nova consulta adicionada com sucesso!');
+        toastSuccess('Consulta adicionada com sucesso!');
         queryClient.invalidateQueries({ queryKey: ['appointments'] });
-        navigate('/appointments');
+        navigateTo({ route: '/appointments' });
       }
     },
     onMutate: (newAppointment) => {
@@ -121,7 +120,7 @@ export const useAppointmentFormModel = ({
         ?.filter((doctor) => doctor.status !== Status.INACTIVE)
         .map((doctor) => ({
           label: doctor.name,
-          value: doctor.id,
+          value: Number(doctor.id),
         })),
     [doctorResponse],
   );
@@ -144,17 +143,9 @@ export const useAppointmentFormModel = ({
 
   const submit = React.useCallback(
     async (values: AppointmentFormType) => {
-      const selectedDate = dayjs(values.scheduled_date)
-        .utc()
-        .hour(dayjs().hour())
-        .minute(dayjs().minute())
-        .second(dayjs().second())
-        .millisecond(dayjs().millisecond())
-        .toISOString();
-
       const payload: IAppointment = {
         ...values,
-        scheduled_date: selectedDate as any,
+        scheduled_date: formatDateWithCurrentTime(values.scheduled_date) as any,
       };
 
       await createAppointmentMutation(payload);

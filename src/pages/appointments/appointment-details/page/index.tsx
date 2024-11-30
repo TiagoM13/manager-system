@@ -5,27 +5,29 @@ import { House, CheckSquare, IdentificationBadge } from '@phosphor-icons/react';
 import { CustomLoadingSkeleton } from '@/components';
 import { HttpClient } from '@/infra/http/http-client';
 import {
-  createAppointmentService,
   getAllDoctorsPaginatedService,
-  getAllPatientsService,
+  getAppointmentService,
   getPatientService,
+  updateAppointmentService,
+  updateAppointmentStatusService,
 } from '@/services';
 
-import { useAppointmentFormModel } from '../model/appointment-form.model';
-import { AppointmentFormView } from '../view/appointment-form.view';
+import { useAppointmentDetailsModel } from '../model/appointment-details.model';
+import { AppointmentDetailsView } from '../view/appointment-details.view';
 
-const AppointmentForm: React.FC = () => {
+const AppointmentDetails: React.FC = () => {
   const http = new HttpClient();
 
-  const methodsModel = useAppointmentFormModel({
-    getAllPatients: (values) => getAllPatientsService(http, values),
+  const methods = useAppointmentDetailsModel({
     getPatient: (id) => getPatientService(http, id),
+    getAppointment: (patientId, appointmentId) =>
+      getAppointmentService(http, patientId, appointmentId),
     getAllDoctors: () => getAllDoctorsPaginatedService(http),
-    createAppointment: (id, values) =>
-      createAppointmentService(http, String(id), values),
+    updateAppointment: (patientId, appointmentId, values) =>
+      updateAppointmentService(http, patientId, appointmentId, values),
+    updateAppointmentStatus: (patientId, appointmentId, status) =>
+      updateAppointmentStatusService(http, patientId, appointmentId, status),
   });
-
-  const { isCreatingNewAppointment, isLoading, patientResponse } = methodsModel;
 
   const breadcrumbsPathItems = React.useMemo(
     () => [
@@ -40,25 +42,23 @@ const AppointmentForm: React.FC = () => {
         icon: <CheckSquare className="size-4" />,
       },
       {
-        label: isCreatingNewAppointment ? (
-          'Cadastrar'
-        ) : isLoading ? (
+        label: methods.isLoading ? (
           <CustomLoadingSkeleton className="h-5 w-40 rounded-lg" />
         ) : (
-          `${patientResponse?.name}`
+          `${methods.patientResponse?.name}`
         ),
         icon: <IdentificationBadge className="size-4" />,
       },
     ],
-    [isCreatingNewAppointment, isLoading, patientResponse],
+    [methods.isLoading, methods.patientResponse?.name],
   );
 
   return (
-    <AppointmentFormView
+    <AppointmentDetailsView
       breadcrumbsPathItems={breadcrumbsPathItems}
-      {...methodsModel}
+      {...methods}
     />
   );
 };
 
-export default AppointmentForm;
+export default AppointmentDetails;

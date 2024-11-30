@@ -17,8 +17,7 @@ export const AppointmentRow: React.FC<IAppointmentItem> = ({ appointment }) => {
       <Table.Cell>
         <Link
           to={`/appointments/${appointment.patient_id}/appointment/${appointment.id}`}
-          state={{ from: location.state }}
-          preventScrollReset
+          state={{ from: location }}
           className="flex items-center gap-3 hover:text-sky-500 transition-all"
         >
           <span className="text-sm font-semibold">

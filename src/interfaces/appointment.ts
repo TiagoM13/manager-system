@@ -26,3 +26,6 @@ export interface IAppointmentFilters {
   end_date?: Date;
   appointment_type?: string;
 }
+
+export interface IAppointmentFiltersWithoutName
+  extends Omit<IAppointmentFilters, 'name'> {}

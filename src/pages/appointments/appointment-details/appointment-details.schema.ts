@@ -1,16 +1,16 @@
 import { z } from 'zod';
 
 import {
-  validateCNS,
-  OptionalStringField,
   INVALID_DATE_FIELD,
   REQUIRED_FIELD,
-  SELECT_REQUIRED,
   INVALID_SCHEDULED_DATE,
+  SELECT_REQUIRED,
+  MAX_LENGTH_TEXT,
+  MIN_LENGTH_TEXT,
 } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-export const appointmentFormSchema = z.object({
+export const appointmentDetailsSchema = z.object({
   appointment_type: z
     .string()
     .refine((data) => data.trim() !== '', SELECT_REQUIRED),
@@ -37,15 +37,15 @@ export const appointmentFormSchema = z.object({
       invalid_type_error: SELECT_REQUIRED,
     })
     .int(),
+  diagnosis_summary: z
+    .string({
+      required_error: REQUIRED_FIELD,
+      invalid_type_error: REQUIRED_FIELD,
+    })
+    .min(3, MIN_LENGTH_TEXT)
+    .max(255, MAX_LENGTH_TEXT)
+    .nullable(),
 });
 
-export const patientSearchSchema = z.object({
-  name: z.string().optional(),
-  cpf: OptionalStringField,
-  cns: OptionalStringField.superRefine(validateCNS),
-});
-
-export const appointmentFormResolver = zodResolver(appointmentFormSchema);
-export const patientSearchResolver = zodResolver(patientSearchSchema);
-export type AppointmentFormType = z.infer<typeof appointmentFormSchema>;
-export type PatientSearchType = z.infer<typeof patientSearchSchema>;
+export const appointmentDetailsResolver = zodResolver(appointmentDetailsSchema);
+export type AppointmentDetailsType = z.infer<typeof appointmentDetailsSchema>;

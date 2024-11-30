@@ -14,7 +14,7 @@ export const PatientCard: React.FC<PatientCardProps> = ({ patient }) => {
 
   return (
     <div className="flex items-center justify-between bg-zinc-200 rounded-lg py-3 px-4">
-      <div className="flex flex-col text-sm text-zinc-900 font-medium space-y-1">
+      <div className="flex flex-col text-sm text-zinc-900 space-y-1">
         <span>
           <strong>Nome: </strong>
           {patient.name}

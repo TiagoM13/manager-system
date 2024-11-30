@@ -1,18 +1,25 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Select, Input } from '@/components';
+import { Select, Input, Textarea } from '@/components';
 import { IAppointment } from '@/interfaces';
 
 import { optionsAppointmentType } from '../../utils/options';
 
-export const AppointmentForm: React.FC<{
+interface AppointmentFormProps {
   loading?: boolean;
-  doctors: {
+  isUpdating?: boolean;
+  doctors?: {
     label: string;
     value: number;
   }[];
-}> = ({ loading, doctors }) => {
+}
+
+export const AppointmentForm: React.FC<AppointmentFormProps> = ({
+  loading,
+  isUpdating,
+  doctors,
+}) => {
   const {
     control,
     formState: { errors },
@@ -21,7 +28,9 @@ export const AppointmentForm: React.FC<{
   return (
     <>
       <h2 className="text-xl font-semibold">
-        Preencha as informações de atendimento
+        {isUpdating
+          ? 'Atualizar e finalizar o atendimento'
+          : 'Preencha as informações de atendimento'}
       </h2>
       <div className="w-full grid grid-cols-2 gap-6 mt-3">
         <Select
@@ -59,6 +68,20 @@ export const AppointmentForm: React.FC<{
           required
         />
       </div>
+
+      {isUpdating && (
+        <div className="my-6">
+          <Textarea
+            name="diagnosis_summary"
+            label="Diagnóstico"
+            placeholder="Escreva o diagnóstico do paciente..."
+            control={control}
+            error={errors.diagnosis_summary}
+            disabled={loading}
+            required
+          />
+        </div>
+      )}
     </>
   );
 };

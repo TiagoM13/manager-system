@@ -2,6 +2,8 @@ import React from 'react';
 
 import { twMerge } from 'tailwind-merge';
 
+import { CircleNotch } from '@phosphor-icons/react';
+
 export enum Variables {
   primary = 'primary',
   danger = 'danger',
@@ -17,6 +19,7 @@ export type ButtonProps = React.ComponentProps<'button'> & {
   className?: string;
   clear?: boolean;
   iconPosition?: 'right' | 'left';
+  loading?: boolean;
 };
 
 export const Button: React.FC<ButtonProps> = ({
@@ -27,6 +30,7 @@ export const Button: React.FC<ButtonProps> = ({
   variable = Variables.primary,
   className = '',
   clear,
+  loading = false,
   ...rest
 }) => {
   const colorMap: Record<keyof typeof Variables, string> = {
@@ -54,6 +58,21 @@ export const Button: React.FC<ButtonProps> = ({
   const color = colorMap[variable];
   const clearColors = colorBorderMap[variable];
 
+  const renderIcon = React.useMemo(
+    () =>
+      loading ? (
+        <CircleNotch
+          data-testid="icon-loading"
+          weight="bold"
+          color="white"
+          className="size-5 animate-spin"
+        />
+      ) : (
+        icon
+      ),
+    [icon, loading],
+  );
+
   return (
     <button
       data-testid={`btn-${id}`}
@@ -63,9 +82,9 @@ export const Button: React.FC<ButtonProps> = ({
       )}
       {...rest}
     >
-      {!!icon && iconPosition === 'left' && icon}
+      {!!icon && iconPosition === 'left' && renderIcon}
       {label}
-      {!!icon && iconPosition === 'right' && icon}
+      {!!icon && iconPosition === 'right' && renderIcon}
     </button>
   );
 };

@@ -19,6 +19,15 @@ export const formatDateToISODate = (dateString: Date) => {
   return !isNaN(date.getTime()) ? date.toISOString().split('T')[0] : '';
 };
 
+export const formatDateWithCurrentTime = (value: Date) =>
+  dayjs(value)
+    .utc()
+    .hour(dayjs().hour())
+    .minute(dayjs().minute())
+    .second(dayjs().second())
+    .millisecond(dayjs().millisecond())
+    .toISOString();
+
 export const formatAppointmentDate = (date: Date): string => {
   const formattedDate = dayjs
     .utc(date)
