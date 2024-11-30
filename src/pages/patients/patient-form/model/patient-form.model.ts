@@ -38,12 +38,12 @@ export const usePatientFormModel = ({
   // mutation
   const { mutateAsync: createPatientMutation, isPending: IsLoading } =
     useMutation({
-      mutationFn: async (values: IPatient) => createPatient(values),
+      mutationFn: async (values: IPatient) => await createPatient(values),
       onSuccess: (data) => {
         if (data?.success) {
           queryClient.invalidateQueries({ queryKey: ['patients'] });
           toastSuccess(PATIENT_CREATED_SUCCESSFULLY);
-          navigate('/patients');
+          navigate(`/patients/${data.patient.id}`);
         }
       },
       onError: () => toastError(ERROR_CREATING_PATIENT),

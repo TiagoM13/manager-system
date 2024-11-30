@@ -16,19 +16,18 @@ export const AppointmentRow: React.FC<IAppointmentItem> = ({ appointment }) => {
     <Table.Row hoverable>
       <Table.Cell>
         <Link
-          to={`/appointemts/${appointment.id}`}
-          state={{ from: location.state }}
-          preventScrollReset
+          to={`/appointments/${appointment.patient_id}/appointment/${appointment.id}`}
+          state={{ from: location }}
           className="flex items-center gap-3 hover:text-sky-500 transition-all"
         >
           <span className="text-sm font-semibold">
-            {appointment.patient.name}
+            {appointment.patient?.name}
           </span>
         </Link>
       </Table.Cell>
-      <Table.Cell>{formatDate(appointment.scheduled_date as Date)}</Table.Cell>
-      <Table.Cell>{formattedTime(appointment.created_at as Date)}</Table.Cell>
-      <Table.Cell>{appointment.doctor.name}</Table.Cell>
+      <Table.Cell>{formatDate(appointment.scheduled_date)}</Table.Cell>
+      <Table.Cell>{formattedTime(appointment.scheduled_date)}</Table.Cell>
+      <Table.Cell>{appointment.doctor?.name}</Table.Cell>
       <Table.Cell>{appointment.appointment_type}</Table.Cell>
       <Table.Cell>
         <Badge type={appointment.status} />

@@ -1,6 +1,7 @@
 import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
 import { IMSResponse, IPatient, IPatientFilters } from '@/interfaces';
 import { handleAPIErrors } from '@/utils/common';
+import { delayPromise } from '@/utils/resolver';
 
 export const getAllPatientsService = async (
   client: IHttpClient,
@@ -19,6 +20,8 @@ export const getAllPatientsService = async (
       },
     });
 
+    await delayPromise(2000);
+
     return response;
   } catch (error) {
     handleAPIErrors(error);
@@ -33,6 +36,8 @@ export const getPatientService = async (client: IHttpClient, id: string) => {
       `/patients/${id}`,
     );
 
+    await delayPromise(2000);
+
     return response.patient;
   } catch (error) {
     handleAPIErrors(error);
@@ -45,6 +50,8 @@ export const createPatientService = async (
   data: IPatient,
 ) => {
   try {
+    await delayPromise(2000);
+
     return await client.sendRequest<IMSResponse<IPatient, 'patient'>>(
       HttpMethod.POST,
       '/patients',
@@ -62,6 +69,8 @@ export const updatePatientService = async (
   data: IPatient,
 ) => {
   try {
+    await delayPromise(2000);
+
     return await client.sendRequest<IMSResponse<IPatient, 'patient'>>(
       HttpMethod.PUT,
       `/patients/${id}`,

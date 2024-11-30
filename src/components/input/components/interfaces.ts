@@ -46,3 +46,15 @@ export interface FileUploadInputProps {
   name: string;
   onChangeFileSelected: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
+
+export interface TextareaProps<T extends FieldValues>
+  extends React.ComponentProps<'textarea'> {
+  label?: string;
+  required?: boolean;
+  className?: string;
+  defaultValue?: any;
+  control?: Control<T>;
+  name: FieldPath<T>;
+  error?: FieldError | undefined;
+  loading?: boolean;
+}

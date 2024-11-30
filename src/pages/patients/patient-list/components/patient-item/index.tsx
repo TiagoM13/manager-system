@@ -23,7 +23,6 @@ export const PatientRow: React.FC<PatientItemProps> = ({ patient }) => {
         <Link
           to={`/patients/${patient.id}`}
           state={{ from: location }}
-          preventScrollReset={true}
           className="flex items-center gap-3 hover:text-sky-500 transition-all"
         >
           <Avatar color="dark" name={patient.name} imageUrl={null} small />

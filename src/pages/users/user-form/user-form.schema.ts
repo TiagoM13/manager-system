@@ -3,14 +3,14 @@ import { z } from 'zod';
 import {
   INVALID_EMAIL,
   INVALID_SELECT,
-  NAME_FIELD_REQUIRED,
+  NameFieldRequired,
   REQUIRED_FIELD,
   SELECT_REQUIRED,
 } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const userSchema = z.object({
-  name: NAME_FIELD_REQUIRED,
+  name: NameFieldRequired,
   email: z
     .string()
     .trim()
