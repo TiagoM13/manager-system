@@ -47,9 +47,11 @@ export const InputPassword = <T extends FieldValues>({
 
   return (
     <div className="w-full">
-      <label htmlFor={name} className="block text-sm text-slate-600 mb-2">
-        {label} {required && <span className="text-red-500">*</span>}
-      </label>
+      {label && (
+        <label htmlFor={name} className="block text-sm text-slate-600 mb-2">
+          {label} {required && <span className="text-red-500">*</span>}
+        </label>
+      )}
 
       <div className="relative flex items-center">
         {control ? (

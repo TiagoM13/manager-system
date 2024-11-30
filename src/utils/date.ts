@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 export const formatDate = (date: Date): string => {
-  return dayjs(date).format('DD/MM/YYYY');
+  return dayjs.utc(date).hour(12).local().format('DD/MM/YYYY');
 };
 
 export const formatDateTime = (date: Date): string => {
@@ -18,3 +18,25 @@ export const formatDateToISODate = (dateString: Date) => {
   const date = new Date(dateString);
   return !isNaN(date.getTime()) ? date.toISOString().split('T')[0] : '';
 };
+
+export const formatDateWithCurrentTime = (value: Date) =>
+  dayjs(value)
+    .utc()
+    .hour(dayjs().hour())
+    .minute(dayjs().minute())
+    .second(dayjs().second())
+    .millisecond(dayjs().millisecond())
+    .toISOString();
+
+export const formatAppointmentDate = (date: Date): string => {
+  const formattedDate = dayjs
+    .utc(date)
+    .hour(12)
+    .local()
+    .format('D [de] MMMM, YYYY');
+  const formattedTime = dayjs.utc(date).format('HH:mm A');
+
+  return `${formattedDate} - ${formattedTime}`;
+};
+
+export const formattedTime = (date: Date) => dayjs.utc(date).format('HH:mm A');

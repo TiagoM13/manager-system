@@ -19,9 +19,11 @@ export const Input = <T extends FieldValues>({
 
   return (
     <div className="w-full">
-      <label htmlFor={name} className="block text-sm text-slate-600 mb-2">
-        {label} {required && <span className="text-red-500">*</span>}
-      </label>
+      {label && (
+        <label htmlFor={name} className="block text-sm text-slate-600 mb-2">
+          {label} {required && <span className="text-red-500">*</span>}
+        </label>
+      )}
 
       {control ? (
         <>

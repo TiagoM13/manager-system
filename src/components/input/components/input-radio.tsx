@@ -16,9 +16,11 @@ export const InputRadio: React.FC<InputRadioProps> = ({
 }) => {
   return (
     <>
-      <label className="block text-sm text-slate-600 mb-2">
-        {label} {required && <span className="text-red-500">*</span>}
-      </label>
+      {label && (
+        <label className="block text-sm text-slate-600 mb-2">
+          {label} {required && <span className="text-red-500">*</span>}
+        </label>
+      )}
 
       <div className="flex gap-6">
         <OptionRadio

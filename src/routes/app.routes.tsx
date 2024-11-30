@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { AppWrapper, InitializerLoader } from '@/components';
 import { Role } from '@/enums';
 import { useIsAuthenticated } from '@/hooks';
-import { ForgotPasswordPage, SignInPage } from '@/pages/auth';
+import { ForgotPasswordPage, SignInPage } from '@/pages/auth/page';
 
 import { PrivateRoute } from './private.route';
 import { PublicRoute } from './public.route';
@@ -18,6 +18,15 @@ const PatientForm = React.lazy(
 );
 const PatientDetails = React.lazy(
   () => import('@/pages/patients/patient-details/page'),
+);
+const Appointments = React.lazy(
+  () => import('@/pages/appointments/appointments-list/page'),
+);
+const AppointmentForm = React.lazy(
+  () => import('@/pages/appointments/appointment-form/page'),
+);
+const AppointmentDetails = React.lazy(
+  () => import('@/pages/appointments/appointment-details/page'),
 );
 
 export const Router: React.FC = () => {
@@ -119,6 +128,36 @@ export const Router: React.FC = () => {
                 allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
               >
                 <PatientDetails />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/appointments"
+            element={
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
+                <Appointments />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/appointments/:patientId/"
+            element={
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
+                <AppointmentForm />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/appointments/:patientId/appointment/:appointmentId"
+            element={
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
+                <AppointmentDetails />
               </PrivateRoute>
             }
           />

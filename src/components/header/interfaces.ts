@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 
 export type HeaderProps = {
   title?: string;
-  subtitle?: string;
   actionLabel?: string;
   breadcrumbItems?: BreadcrumbItem[];
   isSubmit?: boolean;

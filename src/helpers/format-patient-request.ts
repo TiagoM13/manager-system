@@ -1,9 +1,8 @@
-import { Status } from '@/enums';
 import { IPatient, IPatientForm } from '@/interfaces';
 import { formatCPF, formatDateToISODate, formatPhone } from '@/utils';
 
 export const formatPatientRequest = (patientForm: IPatientForm): IPatient => {
-  const patient = { ...patientForm, status: Status.ACTIVE };
+  const patient = patientForm;
 
   if (patient.birth_date)
     patient.birth_date = formatDateToISODate(patient.birth_date) as any;

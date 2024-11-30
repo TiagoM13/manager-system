@@ -10,7 +10,7 @@ import { OptionProps, GroupBase } from 'react-select';
 import { AsyncProps } from 'react-select/async';
 
 export type Option = {
-  value: string;
+  value: string | number;
   label: string;
 };
 
@@ -41,5 +41,6 @@ export interface ISelectProps<T, Fields extends FieldValues> {
   optionComponent?: React.ComponentType<OptionProps<T, false, GroupBase<T>>>;
   shouldUnregister?: boolean;
   isSearchable?: boolean;
+  loading?: boolean;
   onChange?: (props: any) => void;
 }

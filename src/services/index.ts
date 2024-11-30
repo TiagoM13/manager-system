@@ -4,3 +4,5 @@ export * from './api';
 export * from './query';
 export * from './auth';
 export * from './upload';
+export * from './appointments';
+export * from './doctors';

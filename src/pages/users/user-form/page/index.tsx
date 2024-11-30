@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormProvider } from 'react-hook-form';
 
 import {
   House,
@@ -7,29 +6,40 @@ import {
   Users as UsersIcon,
 } from '@phosphor-icons/react';
 
-import { Header, FormContainer, CustomLoadingSkeleton } from '@/components';
-import { useAppNavigation } from '@/hooks';
+import { CustomLoadingSkeleton } from '@/components';
+import { HttpClient } from '@/infra/http/http-client';
+import { IUser } from '@/interfaces';
+import {
+  createUserService,
+  getUserService,
+  updateUserService,
+  updateUserStatusService,
+  uploadFileService,
+} from '@/services';
 
-import { StatusForm, UserForm } from '../forms';
-import { useUserForm } from '../hooks/user-form';
+import { useUserFormModel } from '../model/user-form.model';
+import { UserFormView } from '../view/user-form.view';
 
 const User: React.FC = () => {
-  const { goBack } = useAppNavigation();
+  const httpClient = new HttpClient();
 
-  const {
-    user,
-    newUser,
-    isUpdatingItself,
-    methods,
-    handleSubmit,
-    submit,
-    loading,
-  } = useUserForm();
+  const services = {
+    getUser: (id: number) => getUserService(httpClient, id),
+    createUser: (data: IUser) => createUserService(httpClient, data),
+    updateUser: (id: number, data: IUser) =>
+      updateUserService(httpClient, id, data),
+    updateUserStatus: (id: number, status: string) =>
+      updateUserStatusService(httpClient, id, status),
+    uploadFile: (data: FormData) => uploadFileService(httpClient, data),
+  };
+
+  const methods = useUserFormModel(services);
+  const { user, isLoading, isCreatingNewUser } = methods;
 
   const title = React.useMemo(() => {
-    if (newUser) return 'Cadastrar usuário';
+    if (isCreatingNewUser) return 'Cadastrar usuário';
     return 'Atualizar usuário';
-  }, [newUser]);
+  }, [isCreatingNewUser]);
 
   const breadcrumbsPathItems = React.useMemo(
     () => [
@@ -44,9 +54,9 @@ const User: React.FC = () => {
         icon: <UsersIcon className="size-4" />,
       },
       {
-        label: newUser ? (
+        label: isCreatingNewUser ? (
           'Cadastrar'
-        ) : loading ? (
+        ) : isLoading ? (
           <CustomLoadingSkeleton className="h-5 w-40 rounded-lg" />
         ) : (
           `${user?.name}`
@@ -54,44 +64,15 @@ const User: React.FC = () => {
         icon: <UserIcon className="size-4" />,
       },
     ],
-    [loading, newUser, user?.name],
+    [isLoading, isCreatingNewUser, user?.name],
   );
 
   return (
-    <FormProvider {...methods}>
-      <FormContainer id="form-user" noValidate onSubmit={handleSubmit(submit)}>
-        <div className="flex flex-col">
-          <Header
-            title={title}
-            subtitle="voltar para a lista de usuários"
-            actionLabel={newUser ? 'salvar usuário' : 'atualizar usuário'}
-            breadcrumbItems={breadcrumbsPathItems}
-            goBack={goBack}
-            loading={loading}
-            isSubmit
-          />
-
-          <div className="max-w-[1440px] flex gap-5 mt-4  max-md:flex-col">
-            <div className="w-[60%] max-md:w-full">
-              <UserForm
-                isUpdatingItself={isUpdatingItself}
-                loading={loading}
-                isNew={newUser}
-              />
-            </div>
-
-            {!newUser && (
-              <div className="w-[40%] max-md:w-full">
-                <StatusForm
-                  isUpdatingItself={isUpdatingItself}
-                  loading={loading}
-                />
-              </div>
-            )}
-          </div>
-        </div>
-      </FormContainer>
-    </FormProvider>
+    <UserFormView
+      title={title}
+      breadcrumbsPathItems={breadcrumbsPathItems}
+      {...methods}
+    />
   );
 };
 

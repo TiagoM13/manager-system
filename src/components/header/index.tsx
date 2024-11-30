@@ -12,7 +12,6 @@ import { HeaderContainer } from './styles';
 
 export const Header: React.FC<HeaderProps> = ({
   title,
-  subtitle,
   goBack,
   breadcrumbItems,
   onRegister,
@@ -35,11 +34,13 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           )}
           <div>
-            {subtitle && (
-              <span className="text-sm text-slate-600">{subtitle}</span>
+            {!!goBack && (
+              <span className="text-sm text-slate-600">
+                Voltar à página anterior
+              </span>
             )}
             <h2
-              className={`${subtitle ? 'text-2xl' : 'text-3xl'} font-semibold`}
+              className={`${!!goBack ? 'text-2xl' : 'text-3xl'} font-semibold`}
             >
               {title}
             </h2>

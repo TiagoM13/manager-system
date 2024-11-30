@@ -1,10 +1,14 @@
+import { IHttpClient } from '@/infra/http/http-client-contract';
 import { IRecoverPasswordData, ISignInData, IUser } from '@/interfaces';
 import { forgotPasswordService, signInService } from '@/services/auth';
 import { handleAPIErrors } from '@/utils/common';
 
 import { initialState, useAuthStore } from '.';
 
-export const signIn = async (values: ISignInData) => {
+export const authenticateUser = async (
+  client: IHttpClient,
+  values: ISignInData,
+): Promise<boolean> => {
   const { setAuthTokens, setCurrentUser } = useAuthStore.getState();
 
   try {
@@ -16,10 +20,11 @@ export const signIn = async (values: ISignInData) => {
       },
     }));
 
-    const { data } = await signInService(values);
+    const response = await signInService(client, values);
 
-    setAuthTokens(data.token!);
-    setCurrentUser(data.user!);
+    console.log(response);
+    setAuthTokens(response.token!);
+    setCurrentUser(response.user!);
 
     return true;
   } catch (error) {
@@ -42,7 +47,10 @@ export const signIn = async (values: ISignInData) => {
   }
 };
 
-export const forgotPassword = async (values: IRecoverPasswordData) => {
+export const requestPasswordRecovery = async (
+  client: IHttpClient,
+  values: IRecoverPasswordData,
+): Promise<boolean> => {
   try {
     useAuthStore.setState((state) => ({
       ...state,
@@ -52,7 +60,7 @@ export const forgotPassword = async (values: IRecoverPasswordData) => {
       },
     }));
 
-    await forgotPasswordService(values);
+    await forgotPasswordService(client, values);
 
     return true;
   } catch (error) {

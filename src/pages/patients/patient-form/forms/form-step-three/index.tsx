@@ -3,8 +3,10 @@ import { useFormContext } from 'react-hook-form';
 
 import { Input, Select } from '@/components';
 import { IPatient } from '@/interfaces';
-
-import { conditionsOptions, optionsHealthAgent } from '../../utils/options';
+import {
+  conditionsOptions,
+  optionsHealthAgent,
+} from '@/pages/patients/utils/options';
 
 export const FormStepThree: React.FC<{ loading?: boolean }> = ({ loading }) => {
   const {
