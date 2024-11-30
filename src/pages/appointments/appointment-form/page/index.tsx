@@ -6,12 +6,12 @@ import { CustomLoadingSkeleton } from '@/components';
 import { HttpClient } from '@/infra/http/http-client';
 import {
   createAppointmentService,
+  getAllDoctorsPaginatedService,
   getAllPatientsService,
   getPatientService,
 } from '@/services';
 
 import { useAppointmentFormModel } from '../model/appointment-form.model';
-import { getAllDoctorsPaginatedService } from '../services/doctor';
 import { AppointmentFormView } from '../view/appointment-form.view';
 
 const AppointmentForm: React.FC = () => {

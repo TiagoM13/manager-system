@@ -94,8 +94,8 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
                 <div className="flex gap-6 p-2">
                   <div className="w-full flex flex-col justify-between">
                     <AppointmentForm
-                      loading={isLoading}
-                      doctors={doctorOptions as any}
+                      loading={isLoading || isPending}
+                      doctors={doctorOptions}
                     />
 
                     <div className="flex ml-auto gap-2 p-2">

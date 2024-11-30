@@ -1,3 +1,4 @@
+import { AppointmentStatus } from '@/enums';
 import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
 import {
   IAppointment,
@@ -71,7 +72,7 @@ export const getAppointmentService = async (
 ) => {
   try {
     const response = await client.sendRequest<
-      IMSResponse<IAppointment[], 'appointment'>
+      IMSResponse<IAppointment, 'appointment'>
     >(
       HttpMethod.GET,
       `/appointments/${patientId}/appointment/${appointmentId}`,
@@ -80,7 +81,7 @@ export const getAppointmentService = async (
     // TO-DO
     await delayPromise(2000);
 
-    return response;
+    return response.appointment;
   } catch (error) {
     handleAPIErrors(error);
     return;
@@ -140,16 +141,19 @@ export const updateAppointmentStatusService = async (
   client: IHttpClient,
   patientId: string,
   appointmentId: number,
-  data: IAppointment,
+  status: AppointmentStatus,
 ) => {
   try {
     const response = await client.sendRequest<
-      IMSResponse<IAppointment, 'appointment'>
+      Promise<{
+        success: boolean;
+        status: string;
+      }>
     >(
-      HttpMethod.PUT,
+      HttpMethod.PATCH,
       `/appointments/${patientId}/appointment/${appointmentId}/status`,
       {
-        data,
+        data: { status },
       },
     );
 

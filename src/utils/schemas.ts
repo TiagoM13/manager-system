@@ -14,7 +14,8 @@ export const INVALID_EMAIL = 'O email é inválido';
 export const SELECT_REQUIRED = 'Selecione uma opção';
 export const INVALID_SELECT = 'Selecione uma opção válida';
 export const REQUIRED_FIELD = 'O campo é obrigatório';
-export const MAX_LENGTH_TEXT = 'O máximo de caracteres permitidos é 255';
+export const MIN_LENGTH_TEXT = 'O campo deve ter no mínimo 3 caracteres';
+export const MAX_LENGTH_TEXT = 'O campo deve ter no máximo 255 caracteres';
 export const MAX_LENGTH_FIELD_PHONE =
   'O número de telefone deve ter no máximo 11 dígitos.';
 export const MIN_LENGTH_CPF = 'O CPF deve ter no máximo 11 dígitos.';
