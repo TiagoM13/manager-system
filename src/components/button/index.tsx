@@ -24,7 +24,7 @@ export type ButtonProps = React.ComponentProps<'button'> & {
 
 export const Button: React.FC<ButtonProps> = ({
   id,
-  label = 'Salvar',
+  label,
   icon,
   iconPosition = 'left',
   variable = Variables.primary,
@@ -65,7 +65,7 @@ export const Button: React.FC<ButtonProps> = ({
           data-testid="icon-loading"
           weight="bold"
           color="white"
-          className="size-5 animate-spin"
+          className="size-4 animate-spin"
         />
       ) : (
         icon

@@ -7,13 +7,13 @@ import { Button } from '.';
 
 describe('<Button />', () => {
   test('should render correctly component', () => {
-    const { getByText } = render(<Button />);
+    const { getByText } = render(<Button label="Salvar" />);
 
     expect(getByText('Salvar')).toBeTruthy();
   });
 
   test('should render correctly classNames', () => {
-    const { getByTestId } = render(<Button id="teste" />);
+    const { getByTestId } = render(<Button label="Salvar" id="teste" />);
 
     expect(getByTestId('btn-teste')).toHaveClass('bg-sky-600 hover:bg-sky-500');
   });
@@ -29,7 +29,7 @@ describe('<Button />', () => {
   });
 
   test('should render the button with border', () => {
-    const { getByTestId } = render(<Button id="teste" clear />);
+    const { getByTestId } = render(<Button label="Salvar" id="teste" clear />);
 
     expect(getByTestId('btn-teste')).toHaveClass('border border-sky-600');
   });

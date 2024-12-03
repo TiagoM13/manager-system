@@ -18,6 +18,7 @@ import { useAppointmentDetailsModel } from '../model/appointment-details.model';
 type AppointmentDetailsViewProps = ReturnType<
   typeof useAppointmentDetailsModel
 > & {
+  title: string;
   breadcrumbsPathItems: BreadcrumbItem[];
 };
 
@@ -35,11 +36,12 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
   isAppointmentPending,
   submit,
   breadcrumbsPathItems,
+  title,
 }) => {
   return (
     <div className="max-w-[1440px]">
       <Header
-        title="Atualizar consulta"
+        title={title}
         goBack={() => goBack('/appointments')}
         breadcrumbItems={breadcrumbsPathItems}
       />

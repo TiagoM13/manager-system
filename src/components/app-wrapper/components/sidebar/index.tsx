@@ -37,10 +37,12 @@ export const SideBar: React.FC = () => {
 
   const handleLogout = React.useCallback(() => {
     confirmDialog({
-      header: 'Você esta prestes a sair!',
-      message: 'Tem certeza de que deseja sair?',
-      acceptLabel: 'confirmar',
+      header: 'Confirmação de Logout',
+      message:
+        'Você realmente deseja sair da aplicação? Todas as alterações não salvas serão perdidas.',
+      acceptLabel: 'sair',
       rejectLabel: 'cancelar',
+      acceptIcon: <SignOut className="text-white size-4" />,
       accept: handleExit,
     });
   }, [confirmDialog, handleExit]);

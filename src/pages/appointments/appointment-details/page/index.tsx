@@ -53,8 +53,17 @@ const AppointmentDetails: React.FC = () => {
     [methods.isLoading, methods.patientResponse?.name],
   );
 
+  const title = React.useMemo(() => {
+    if (methods.isLoading) return 'Carregando...';
+
+    if (methods.isAppointmentPending) return 'Atualizar consulta';
+
+    return 'Detalhes da consulta';
+  }, [methods.isAppointmentPending, methods.isLoading]);
+
   return (
     <AppointmentDetailsView
+      title={title}
       breadcrumbsPathItems={breadcrumbsPathItems}
       {...methods}
     />
