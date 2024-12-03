@@ -5,6 +5,7 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 
 interface UseGetPatientProps {
   getPatient: (id: string) => Promise<IPatient | undefined>;
+  isEnabled?: boolean;
 }
 
 interface UseGetPatientReturn {
@@ -14,6 +15,7 @@ interface UseGetPatientReturn {
 
 export const useGetPatient = ({
   getPatient,
+  isEnabled,
 }: UseGetPatientProps): UseGetPatientReturn => {
   const {
     data: patient,
@@ -22,6 +24,7 @@ export const useGetPatient = ({
   }: UseQueryResult<IPatient | undefined> = useQuery({
     queryKey: ['patient'],
     queryFn: async (id) => await getPatient(String(id)),
+    enabled: isEnabled,
   });
 
   const loading = React.useMemo(
