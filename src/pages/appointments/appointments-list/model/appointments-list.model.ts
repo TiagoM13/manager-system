@@ -14,9 +14,7 @@ import {
 interface AppointmentsListModelProps {
   listAllAppointments: (
     params: IAppointmentFilters,
-  ) => Promise<
-    IMSResponse<IAppointment[], 'list-all-appointments'> | undefined
-  >;
+  ) => Promise<IMSResponse<IAppointment[], 'get-all-appointments'> | undefined>;
 }
 
 export const useAppointmentsListModel = ({

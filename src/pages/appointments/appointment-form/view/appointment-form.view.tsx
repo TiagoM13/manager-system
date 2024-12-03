@@ -26,7 +26,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
     goBack,
     navigateTo,
     isCreatingNewAppointment,
-    submit,
+    handleCreateNewAppointment,
     formMethods,
     searchFormMethods,
     patientFormMethods,
@@ -35,6 +35,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
     doctorOptions,
     isLoading,
     isPending,
+    isLoadingAllPatients,
     breadcrumbsPathItems,
   } = props;
 
@@ -49,11 +50,11 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
       <div className="max-w-[1440px] mt-6 space-y-6">
         {isCreatingNewAppointment && (
           <FormProvider {...searchFormMethods}>
-            <PatientSearchForm loading={isLoading} />
+            <PatientSearchForm loading={isLoadingAllPatients} />
           </FormProvider>
         )}
 
-        {query.name && allPatientsResponse && (
+        {query.name && allPatientsResponse && isCreatingNewAppointment && (
           <Card bordered>
             <div className="space-y-4 p-2">
               {allPatientsResponse.patients.length > 0 ? (
@@ -102,7 +103,9 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
                       <Button
                         type="button"
                         label="salvar consulta"
-                        onClick={formMethods.handleSubmit(submit)}
+                        onClick={formMethods.handleSubmit(
+                          handleCreateNewAppointment,
+                        )}
                         icon={<StatusIcon loading={isPending} />}
                         className="min-w-28 justify-between px-4 disabled:cursor-not-allowed"
                         disabled={isPending || isLoading}
