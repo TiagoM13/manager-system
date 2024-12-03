@@ -7,7 +7,7 @@ import { AppointmentRow } from '../appointment-item';
 import { SkeletonTableAppintments } from '../skeletons';
 
 type IAppointmentData = {
-  'list-all-appointments': IAppointment[];
+  'get-all-appointments': IAppointment[];
   meta?: IResponseMeta;
 };
 
@@ -39,7 +39,7 @@ export const AppointmentsTable: React.FC<AppointmentTableProps> = ({
           ))
         ) : (
           <>
-            {data?.['list-all-appointments'].map((appointment) => (
+            {data?.['get-all-appointments']?.map((appointment) => (
               <AppointmentRow key={appointment.id} appointment={appointment} />
             ))}
           </>

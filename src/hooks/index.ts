@@ -6,3 +6,5 @@ export * from './observable';
 export * from './debounce';
 export * from './navigate';
 export * from './form-steps';
+export * from './patient';
+export * from './appointment';
