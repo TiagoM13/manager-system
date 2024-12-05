@@ -35,7 +35,6 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
     doctorOptions,
     isLoading,
     isPending,
-    isLoadingAllPatients,
     breadcrumbsPathItems,
   } = props;
 
@@ -50,7 +49,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
       <div className="max-w-[1440px] mt-6 space-y-6">
         {isCreatingNewAppointment && (
           <FormProvider {...searchFormMethods}>
-            <PatientSearchForm loading={isLoadingAllPatients} />
+            <PatientSearchForm loading={isLoading} />
           </FormProvider>
         )}
 

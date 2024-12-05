@@ -22,11 +22,11 @@ export const AppointmentsByPatientView: React.FC<
 > = (props) => {
   const {
     breadcrumbsPathItems,
-    loading,
+    isLoading,
     goBack,
     methods,
-    patient,
-    appointments,
+    patientResponse,
+    appointmentsResponse,
     handleEdiAppointment,
     isLoadingGetPatient,
     isMobile,
@@ -42,16 +42,19 @@ export const AppointmentsByPatientView: React.FC<
 
       <div className="max-w-[1440px] mt-6 space-y-6">
         <Card>
-          <PatientHeader patient={patient} loading={isLoadingGetPatient} />
+          <PatientHeader
+            patient={patientResponse}
+            loading={isLoadingGetPatient}
+          />
         </Card>
 
         <Card className="mt-4">
           <FormProvider {...methods}>
-            <AppointmentsByPatientFilters loading={loading} />
+            <AppointmentsByPatientFilters loading={isLoading} />
 
             <AppointmentsByPatientTable
-              data={appointments}
-              loading={loading}
+              data={appointmentsResponse}
+              loading={isLoading}
               onEdit={handleEdiAppointment}
             />
           </FormProvider>

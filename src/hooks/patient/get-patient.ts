@@ -5,35 +5,28 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 
 interface UseGetPatientProps {
   getPatient: (id: string) => Promise<IPatient | undefined>;
+  patientId: string;
   isEnabled?: boolean;
-}
-
-interface UseGetPatientReturn {
-  patient: IPatient | undefined;
-  loading: boolean;
 }
 
 export const useGetPatient = ({
   getPatient,
+  patientId,
   isEnabled,
-}: UseGetPatientProps): UseGetPatientReturn => {
+}: UseGetPatientProps) => {
   const {
-    data: patient,
+    data: patientResponse,
     isLoading,
     isFetching,
   }: UseQueryResult<IPatient | undefined> = useQuery({
     queryKey: ['patient'],
-    queryFn: async (id) => await getPatient(String(id)),
+    queryFn: async () => await getPatient(patientId),
     enabled: isEnabled,
   });
 
-  const loading = React.useMemo(
-    () => isLoading || isFetching,
-    [isFetching, isLoading],
-  );
-
   return {
-    patient,
-    loading,
+    patientResponse,
+    isLoading,
+    isFetching,
   };
 };

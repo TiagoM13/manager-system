@@ -11,7 +11,8 @@ type AppointmentsListViewProps = ReturnType<typeof useAppointmentsListModel>;
 export const AppointmentsListView: React.FC<AppointmentsListViewProps> = (
   props,
 ) => {
-  const { data, isLoading, handleNewRegister, methods } = props;
+  const { allAppointmentsResponse, isLoading, handleNewRegister, methods } =
+    props;
 
   return (
     <FormProvider {...methods}>
@@ -25,7 +26,10 @@ export const AppointmentsListView: React.FC<AppointmentsListViewProps> = (
         <Card className="mt-4">
           <AppointmentFilters loading={isLoading} />
 
-          <AppointmentsTable data={data} loading={isLoading} />
+          <AppointmentsTable
+            data={allAppointmentsResponse}
+            loading={isLoading}
+          />
         </Card>
       </div>
     </FormProvider>

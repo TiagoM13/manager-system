@@ -38,9 +38,9 @@ const AppComponentByPatient: React.FC = () => {
         label: methods.isLoadingGetPatient ? (
           <CustomLoadingSkeleton className="h-5 w-40 rounded-lg" />
         ) : (
-          methods?.patient?.name
+          methods?.patientResponse?.name
         ),
-        path: `/patients/${methods?.patient?.id}`,
+        path: `/patients/${methods?.patientResponse?.id}`,
         icon: <IdentificationBadge className="size-4" />,
       },
       {
@@ -48,7 +48,11 @@ const AppComponentByPatient: React.FC = () => {
         icon: <List className="size-4" />,
       },
     ],
-    [methods.isLoadingGetPatient, methods?.patient?.id, methods?.patient?.name],
+    [
+      methods.isLoadingGetPatient,
+      methods?.patientResponse?.id,
+      methods?.patientResponse?.name,
+    ],
   );
 
   return (

@@ -1,9 +1,5 @@
 import { IAppointment, IMSResponse } from '@/interfaces';
-import {
-  useQueryClient,
-  useMutation,
-  UseMutateAsyncFunction,
-} from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import { useAppNavigation } from '../navigate';
 import { useNotification } from '../notification';
@@ -16,20 +12,10 @@ interface UseCreateAppointmentProps {
   patientId: string;
 }
 
-interface UseCreateAppointmentReturn {
-  create: UseMutateAsyncFunction<
-    IMSResponse<IAppointment, 'appointment'> | undefined,
-    Error,
-    IAppointment,
-    void
-  >;
-  isPending: boolean;
-}
-
 export const useCreateAppointment = ({
   createAppointment,
   patientId,
-}: UseCreateAppointmentProps): UseCreateAppointmentReturn => {
+}: UseCreateAppointmentProps) => {
   const notify = useNotification();
   const queryClient = useQueryClient();
   const { navigateTo } = useAppNavigation();

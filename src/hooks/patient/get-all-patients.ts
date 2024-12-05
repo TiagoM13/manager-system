@@ -23,7 +23,7 @@ export const useGetAllPatients = ({
   isEnabled,
 }: UseGetAllPatientsProps) => {
   const {
-    data: allPatients,
+    data: allPatientsResponse,
     isLoading,
     isFetching,
   } = useQuery({
@@ -36,13 +36,9 @@ export const useGetAllPatients = ({
     enabled: isEnabled,
   });
 
-  const loading = React.useMemo(
-    () => isLoading || isFetching,
-    [isFetching, isLoading],
-  );
-
   return {
-    allPatients,
-    loading,
+    allPatientsResponse,
+    isLoading,
+    isFetching,
   };
 };

@@ -16,12 +16,13 @@ import {
 import { IAppointment, IDoctor, IMSResponse, IPatient } from '@/interfaces';
 import { schemaPatient } from '@/pages/patients/patient-form/patient-form.schema';
 import { formatDateWithCurrentTime } from '@/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
   PatientSearchType,
   AppointmentFormType,
-  appointmentFormResolver,
-  patientSearchResolver,
+  appointmentFormSchema,
+  patientSearchSchema,
 } from '../appointment-form.schema';
 
 interface AppointmentFormModelProps {
@@ -51,41 +52,47 @@ export const useAppointmentFormModel = ({
     [patientId],
   );
 
-  const { allPatients: allPatientsResponse, loading: isLoadingAllPatients } =
-    useGetAllPatients({
-      getAllPatients: getAllPatients,
-      query,
-      isEnabled: !!query.name,
-    });
-  const { patient: patientResponse, loading: isLoadingPatient } = useGetPatient(
-    {
-      getPatient: () => getPatient(String(patientId)),
-      isEnabled: !isCreatingNewAppointment,
-    },
-  );
   const {
-    doctors: doctorResponse,
-    loading: isLoadingDoctors,
+    allPatientsResponse,
+    isLoading: isLoadingAllPatients,
+    isFetching: isFetchingAllPatients,
+  } = useGetAllPatients({
+    getAllPatients: getAllPatients,
+    query,
+    isEnabled: !!query.name,
+  });
+  const {
+    patientResponse,
+    isLoading: isLoadingPatient,
+    isFetching: isFetchingPatient,
+  } = useGetPatient({
+    getPatient,
+    patientId: String(patientId),
+    isEnabled: !isCreatingNewAppointment,
+  });
+  const {
+    doctorsResponse,
+    isLoading: isLoadingDoctors,
+    isFetching: isFetchingDoctors,
     doctorOptions,
   } = useGetAllDoctors({
     getAllDoctors,
     isEnabled: !isCreatingNewAppointment,
   });
-
   const { create, isPending } = useCreateAppointment({
     createAppointment,
     patientId: String(patientId),
   });
 
   const formMethods = useForm<AppointmentFormType>({
-    resolver: appointmentFormResolver,
+    resolver: zodResolver(appointmentFormSchema),
     shouldUnregister: false,
     defaultValues: {
       scheduled_date: dayjs().format('YYYY-MM-DD') as any,
     },
   });
   const searchFormMethods = useForm<PatientSearchType>({
-    resolver: patientSearchResolver,
+    resolver: zodResolver(patientSearchSchema),
     shouldUnregister: false,
     defaultValues: query,
   });
@@ -95,8 +102,21 @@ export const useAppointmentFormModel = ({
   });
 
   const isLoading = React.useMemo(
-    () => isLoadingDoctors || isLoadingPatient || isLoadingAllPatients,
-    [isLoadingDoctors, isLoadingPatient, isLoadingAllPatients],
+    () =>
+      isLoadingDoctors ||
+      isFetchingDoctors ||
+      isLoadingPatient ||
+      isFetchingPatient ||
+      isLoadingAllPatients ||
+      isFetchingAllPatients,
+    [
+      isLoadingDoctors,
+      isFetchingDoctors,
+      isLoadingPatient,
+      isFetchingPatient,
+      isLoadingAllPatients,
+      isFetchingAllPatients,
+    ],
   );
 
   const handleCreateNewAppointment = React.useCallback(
@@ -130,7 +150,7 @@ export const useAppointmentFormModel = ({
     searchFormMethods,
     patientFormMethods,
     isCreatingNewAppointment,
-    doctorResponse,
+    doctorsResponse,
     patientResponse,
     allPatientsResponse,
     doctorOptions,

@@ -8,7 +8,6 @@ import {
   SELECT_REQUIRED,
   INVALID_SCHEDULED_DATE,
 } from '@/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 export const appointmentFormSchema = z.object({
   appointment_type: z
@@ -45,7 +44,5 @@ export const patientSearchSchema = z.object({
   cns: OptionalStringField.superRefine(validateCNS),
 });
 
-export const appointmentFormResolver = zodResolver(appointmentFormSchema);
-export const patientSearchResolver = zodResolver(patientSearchSchema);
 export type AppointmentFormType = z.infer<typeof appointmentFormSchema>;
 export type PatientSearchType = z.infer<typeof patientSearchSchema>;

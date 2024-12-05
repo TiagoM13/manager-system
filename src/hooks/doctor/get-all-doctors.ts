@@ -9,21 +9,12 @@ interface UseAllDoctorsProps {
   isEnabled?: boolean;
 }
 
-interface UseAllDoctorsReturn {
-  doctors: IDoctor[] | undefined;
-  loading: boolean;
-  doctorOptions?: {
-    label: string;
-    value: number;
-  }[];
-}
-
 export const useGetAllDoctors = ({
   getAllDoctors,
   isEnabled,
-}: UseAllDoctorsProps): UseAllDoctorsReturn => {
+}: UseAllDoctorsProps) => {
   const {
-    data: doctors,
+    data: doctorsResponse,
     isLoading,
     isFetching,
   } = useQuery({
@@ -32,25 +23,21 @@ export const useGetAllDoctors = ({
     enabled: isEnabled,
   });
 
-  const loading = React.useMemo(
-    () => isLoading || isFetching,
-    [isFetching, isLoading],
-  );
-
   const doctorOptions = React.useMemo(
     () =>
-      doctors
+      doctorsResponse
         ?.filter((doctor) => doctor.status !== Status.INACTIVE)
         .map((doctor) => ({
           label: doctor.name,
           value: Number(doctor.id),
         })),
-    [doctors],
+    [doctorsResponse],
   );
 
   return {
-    doctors,
-    loading,
+    doctorsResponse,
+    isLoading,
+    isFetching,
     doctorOptions,
   };
 };
