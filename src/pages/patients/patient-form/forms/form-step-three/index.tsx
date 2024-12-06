@@ -2,11 +2,11 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Input, Select } from '@/components';
-import { IPatient } from '@/interfaces';
 import {
-  conditionsOptions,
-  optionsHealthAgent,
-} from '@/pages/patients/utils/options';
+  medicalConditionsOptions,
+  healthAgentOptions,
+} from '@/constants/select-options';
+import { IPatient } from '@/interfaces';
 
 export const FormStepThree: React.FC<{ loading?: boolean }> = ({ loading }) => {
   const {
@@ -26,7 +26,7 @@ export const FormStepThree: React.FC<{ loading?: boolean }> = ({ loading }) => {
           placeholder="Selecione o agent de sáude"
           labelAs="label"
           valueAs="value"
-          options={optionsHealthAgent}
+          options={healthAgentOptions}
           control={control}
           error={errors.health_agent}
           disabled={loading}
@@ -49,7 +49,7 @@ export const FormStepThree: React.FC<{ loading?: boolean }> = ({ loading }) => {
           placeholder="Selecione as condições"
           labelAs="label"
           valueAs="value"
-          options={conditionsOptions}
+          options={medicalConditionsOptions}
           disabled={loading}
         />
 

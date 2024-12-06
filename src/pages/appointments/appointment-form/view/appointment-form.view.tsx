@@ -53,7 +53,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
           </FormProvider>
         )}
 
-        {query.name && allPatientsResponse && isCreatingNewAppointment && (
+        {!!query && allPatientsResponse && isCreatingNewAppointment && (
           <Card bordered>
             <div className="space-y-4 p-2">
               {allPatientsResponse.patients.length > 0 ? (

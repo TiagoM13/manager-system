@@ -19,13 +19,17 @@ export const AppointmentsHistory: React.FC<AppointmentsHistoryProps> = ({
 }) => {
   const MAX_DISPLAY = 3;
   const location = useLocation();
-  const { id } = useParams<{ id: string }>();
+  const { patientId } = useParams<{ patientId: string }>();
   const { navigateTo } = useAppNavigation();
   const isNotHaveAppointments = appointments?.length === 0;
 
-  const handleRedirectCreateAppointment = (id?: string) => {
+  const navigateToAppointmentForm = (patientId?: string) => {
+    const route = patientId
+      ? `/appointments/${patientId}`
+      : '/appointments/new';
+
     navigateTo({
-      route: `/appointments/${!id ? 'new' : id}`,
+      route,
       state: location.state,
     });
   };
@@ -61,7 +65,7 @@ export const AppointmentsHistory: React.FC<AppointmentsHistoryProps> = ({
 
           {appointments && appointments?.length > MAX_DISPLAY && (
             <Link
-              to={`/appointments/${id}/list`}
+              to={`/appointments/${patientId}/list`}
               className="text-sm text-sky-600 font-medium hover:underline"
             >
               visualizar mais
@@ -71,7 +75,7 @@ export const AppointmentsHistory: React.FC<AppointmentsHistoryProps> = ({
           <Button
             label="adicionar consulta"
             icon={<Plus className="size-4" weight="bold" />}
-            onClick={() => handleRedirectCreateAppointment(id)}
+            onClick={() => navigateToAppointmentForm(patientId)}
           />
         </div>
       </div>

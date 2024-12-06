@@ -2,9 +2,8 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Select, Input, Textarea } from '@/components';
+import { appointmentTypeOptions } from '@/constants/select-options';
 import { IAppointment } from '@/interfaces';
-
-import { optionsAppointmentType } from '../../utils/options';
 
 interface AppointmentFormProps {
   loading?: boolean;
@@ -38,7 +37,7 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
           label="Tipo de atendimento"
           placeholder="Selecione uma opção"
           defaultValue=""
-          options={optionsAppointmentType}
+          options={appointmentTypeOptions}
           disabled={loading}
           control={control}
           error={errors.appointment_type}

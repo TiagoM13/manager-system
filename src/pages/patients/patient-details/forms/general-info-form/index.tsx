@@ -2,11 +2,11 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Input, Select } from '@/components';
-import { IPatient } from '@/interfaces';
 import {
-  sexOptions,
+  genderOptions,
   maritalStatusOptions,
-} from '@/pages/patients/utils/options';
+} from '@/constants/select-options';
+import { IPatient } from '@/interfaces';
 
 interface GeneralInfoFormProps {
   loading?: boolean;
@@ -26,7 +26,7 @@ export const GeneralInfoForm: React.FC<GeneralInfoFormProps> = ({
         name="sex"
         label="Sexo"
         placeholder="Selecione o sexo"
-        options={sexOptions}
+        options={genderOptions}
         control={control}
         error={errors.sex}
         disabled={loading}
