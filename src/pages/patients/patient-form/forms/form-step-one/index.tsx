@@ -2,7 +2,10 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Input, InputMask, Select } from '@/components';
-import { maritalStatusOptions, genderOptions } from '@/constants/select-options';
+import {
+  maritalStatusOptions,
+  genderOptions,
+} from '@/constants/select-options';
 import { IPatient } from '@/interfaces';
 import { formatCPF } from '@/utils';
 
