@@ -22,7 +22,7 @@ export const PatientListView = (props: PatientListViewProps) => {
     <FormProvider {...methods}>
       <div className="flex flex-col">
         <Header
-          title="Lista de Pacientes"
+          title="Pacientes"
           actionLabel="adicionar paciente"
           onRegister={handleNewRegister}
         />
@@ -33,11 +33,15 @@ export const PatientListView = (props: PatientListViewProps) => {
           {isMobile ? (
             <PatientsCard
               data={allPatientsResponse}
-              loading={isLoading}
               onEdit={handleEditPatient}
+              loading={isLoading}
             />
           ) : (
-            <PatientsTable data={allPatientsResponse} loading={isLoading} />
+            <PatientsTable
+              data={allPatientsResponse}
+              onEdit={handleEditPatient}
+              loading={isLoading}
+            />
           )}
         </Card>
       </div>

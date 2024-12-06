@@ -1,7 +1,9 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { Header, Card, Button, StatusIcon } from '@/components';
+import { Check } from '@phosphor-icons/react';
+
+import { Header, Card, Button } from '@/components';
 import { BreadcrumbItem } from '@/components/header/interfaces';
 import { PatientHeader } from '@/pages/patients/patient-details/components';
 
@@ -105,9 +107,10 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
                         onClick={formMethods.handleSubmit(
                           handleCreateNewAppointment,
                         )}
-                        icon={<StatusIcon loading={isPending} />}
+                        icon={<Check className="size-4" weight="bold" />}
                         className="min-w-28 justify-between px-4 disabled:cursor-not-allowed"
                         disabled={isPending || isLoading}
+                        loading={isPending}
                       />
                     </div>
                   </div>

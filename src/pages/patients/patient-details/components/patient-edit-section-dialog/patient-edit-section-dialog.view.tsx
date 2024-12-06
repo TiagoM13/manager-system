@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { X } from '@phosphor-icons/react';
+import { Check, X } from '@phosphor-icons/react';
 
-import { Dialog, FormContainer, Button, StatusIcon } from '@/components';
+import { Dialog, FormContainer, Button } from '@/components';
 
 import { usePatientEditSectionDialogModel } from './patient-edit-section-dialog.model';
 
@@ -44,7 +44,7 @@ export const PatientEditSectionDialogView: React.FC<Props> = (props) => {
               id="cancel"
               type="button"
               variable="danger"
-              icon={<X className="size-5" weight="bold" />}
+              icon={<X className="size-4" weight="bold" />}
               label="cancelar"
               onClick={() => {
                 onClose();
@@ -55,10 +55,11 @@ export const PatientEditSectionDialogView: React.FC<Props> = (props) => {
             <Button
               id="saved"
               type="submit"
-              icon={<StatusIcon loading={isPending} />}
+              icon={<Check className="size-4" weight="bold" />}
               className="min-w-[100px]"
               label="atualizar"
               disabled={isPending}
+              loading={isPending}
             />
           </div>
         </FormContainer>
