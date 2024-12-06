@@ -18,26 +18,29 @@ const PatientDetails: React.FC = () => {
 
   const { patient, loading } = methods;
 
-  const breadcrumbsPathItems = [
-    {
-      label: 'Início',
-      path: '/',
-      icon: <House className="size-4" />,
-    },
-    {
-      label: 'Pacientes',
-      path: '/patients',
-      icon: <UsersFour className="size-4" />,
-    },
-    {
-      label: loading ? (
-        <CustomLoadingSkeleton className="h-5 w-40 rounded-lg" />
-      ) : (
-        patient?.name
-      ),
-      icon: <User className="size-4" />,
-    },
-  ];
+  const breadcrumbsPathItems = React.useMemo(
+    () => [
+      {
+        label: 'Início',
+        path: '/',
+        icon: <House className="size-4" />,
+      },
+      {
+        label: 'Pacientes',
+        path: '/patients',
+        icon: <UsersFour className="size-4" />,
+      },
+      {
+        label: loading ? (
+          <CustomLoadingSkeleton className="h-5 w-40 rounded-lg" />
+        ) : (
+          patient?.name
+        ),
+        icon: <User className="size-4" />,
+      },
+    ],
+    [loading, patient?.name],
+  );
 
   return (
     <PatientDetailsView

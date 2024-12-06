@@ -42,15 +42,23 @@ export const useAppointmentsByPatientModel = ({
   const [query] = useQueryParams<IAppointmentsByPatientFilters>();
   const { patientId } = useParams<{ patientId: string }>();
 
-  const { patient, loading: isLoadingGetPatient } = useGetPatient({
-    getPatient: () => getPatient(String(patientId)),
+  const {
+    patientResponse,
+    isLoading: isLoadingGetPatient,
+    isFetching: isFetchingGetPatient,
+  } = useGetPatient({
+    getPatient,
+    patientId: String(patientId),
   });
-  const { appointments, loading: isLoadingAppointments } =
-    useAppointmentsByPatient({
-      getAppointmentsByPatient,
-      patientId: String(patientId),
-      filters: query,
-    });
+  const {
+    appointmentsResponse,
+    isLoading: isLoadingAppointments,
+    isFetching: isFetchingAppointments,
+  } = useAppointmentsByPatient({
+    getAppointmentsByPatient,
+    patientId: String(patientId),
+    filters: query,
+  });
 
   const methods = useForm<AppointmentsByPatientFiltersSchemaType>({
     defaultValues: {
@@ -72,15 +80,24 @@ export const useAppointmentsByPatientModel = ({
     [location.state, navigateTo, patientId],
   );
 
-  const loading = React.useMemo(
-    () => isLoadingGetPatient || isLoadingAppointments,
-    [isLoadingGetPatient, isLoadingAppointments],
+  const isLoading = React.useMemo(
+    () =>
+      isLoadingGetPatient ||
+      isFetchingGetPatient ||
+      isLoadingAppointments ||
+      isFetchingAppointments,
+    [
+      isLoadingGetPatient,
+      isFetchingGetPatient,
+      isLoadingAppointments,
+      isFetchingAppointments,
+    ],
   );
 
   return {
-    patient,
-    appointments,
-    loading,
+    patientResponse,
+    appointmentsResponse,
+    isLoading,
     isMobile,
     methods,
     goBack,

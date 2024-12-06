@@ -4,14 +4,22 @@ import { useParams } from 'react-router-dom';
 
 import dayjs from 'dayjs';
 
-import { AppointmentStatus, Status } from '@/enums';
-import { useAppNavigation } from '@/hooks';
+import { AppointmentStatus } from '@/enums';
+import {
+  useAppNavigation,
+  useGetAllDoctors,
+  useGetAppointment,
+  useGetPatient,
+  useNotification,
+  useUpdateAppointment,
+  useUpdateAppointmentStatus,
+} from '@/hooks';
 import { IAppointment, IDoctor, IMSResponse, IPatient } from '@/interfaces';
-import { formatDate, formatDateWithCurrentTime, toastSuccess } from '@/utils';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { formatDate, formatDateWithCurrentTime } from '@/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
-  appointmentDetailsResolver,
+  appointmentDetailsSchema,
   AppointmentDetailsType,
 } from '../appointment-details.schema';
 
@@ -46,73 +54,55 @@ export const useAppointmentDetailsModel = ({
   updateAppointment,
   updateAppointmentStatus,
 }: AppointmentDetailsModelProps) => {
-  const queryClient = useQueryClient();
+  const notify = useNotification();
   const { goBack, navigateTo } = useAppNavigation();
   const { patientId, appointmentId } = useParams<{
     patientId: string;
     appointmentId: string;
   }>();
 
-  const methods = useForm<AppointmentDetailsType>({
-    resolver: appointmentDetailsResolver,
-    shouldUnregister: false,
-  });
-
   const {
-    data: patientResponse,
+    patientResponse,
     isLoading: isLoadingPatient,
     isFetching: isFetchingPatient,
-  } = useQuery({
-    queryKey: ['patient'],
-    queryFn: async () => await getPatient(String(patientId)),
+  } = useGetPatient({
+    getPatient,
+    patientId: String(patientId),
   });
   const {
-    data: appointmentResponse,
+    appointmentResponse,
     isLoading: isLoadingAppointment,
     isFetching: isFetchingAppointment,
-  } = useQuery({
-    queryKey: ['appointment'],
-    queryFn: async () =>
-      await getAppointment(String(patientId), Number(appointmentId)),
+  } = useGetAppointment({
+    getAppointment,
+    patientId: String(patientId),
+    appointmentId: Number(appointmentId),
   });
   const {
-    data: doctorResponse,
     isLoading: isLoadingDoctors,
     isFetching: isFetchingDoctors,
-  } = useQuery({
-    queryKey: ['doctors'],
-    queryFn: async () => await getAllDoctors(),
+    doctorOptions,
+  } = useGetAllDoctors({
+    getAllDoctors,
   });
+  const { updateAppointmentMutation, isPending: isPendingUpdateAppointment } =
+    useUpdateAppointment({
+      updateAppointment,
+      patientId: String(patientId),
+      appointmentId: Number(appointmentId),
+    });
   const {
-    mutateAsync: updateAppointmentMutation,
-    isPending: isPendingUpdateAppointment,
-  } = useMutation({
-    mutationFn: async (values: IAppointment) =>
-      await updateAppointment(String(patientId), Number(appointmentId), values),
-    onSuccess: (data) => {
-      if (data) {
-        toastSuccess('Consulta finalizada com sucesso!');
-        navigateTo({ route: '/appointments' });
-        queryClient.invalidateQueries({
-          queryKey: ['appointments', appointmentId],
-        });
-      }
-    },
-  });
-  const {
-    mutateAsync: updateAppointmentStatusMutation,
+    updateAppointmentStatusMutation,
     isPending: isPendingUpdateAppointmentStatus,
-  } = useMutation({
-    mutationFn: async (status: AppointmentStatus) =>
-      await updateAppointmentStatus(
-        String(patientId),
-        Number(appointmentId),
-        status,
-      ),
-    onSuccess: () =>
-      queryClient.invalidateQueries({
-        queryKey: ['appointments', appointmentId],
-      }),
+  } = useUpdateAppointmentStatus({
+    updateAppointmentStatus,
+    patientId: String(patientId),
+    appointmentId: Number(appointmentId),
+  });
+
+  const methods = useForm<AppointmentDetailsType>({
+    resolver: zodResolver(appointmentDetailsSchema),
+    shouldUnregister: false,
   });
 
   const isAppointmentPending = React.useMemo(
@@ -120,17 +110,6 @@ export const useAppointmentDetailsModel = ({
       appointmentResponse &&
       appointmentResponse.status === AppointmentStatus.PENDING,
     [appointmentResponse],
-  );
-
-  const doctorOptions = React.useMemo(
-    () =>
-      doctorResponse
-        ?.filter((doctor) => doctor.status !== Status.INACTIVE)
-        ?.map((doctor) => ({
-          label: doctor.name,
-          value: Number(doctor.id),
-        })),
-    [doctorResponse],
   );
 
   const isLoading = React.useMemo(
@@ -156,15 +135,23 @@ export const useAppointmentDetailsModel = ({
     [isPendingUpdateAppointment, isPendingUpdateAppointmentStatus],
   );
 
-  const submit = React.useCallback(
-    async (values: AppointmentDetailsType) => {
+  const validateScheduledDate = React.useCallback(
+    (values: AppointmentDetailsType) => {
       const isDateChanged =
         formatDate(values.scheduled_date) !==
         formatDate(appointmentResponse?.scheduled_date as Date);
 
-      const scheduledDate = isDateChanged
-        ? formatDateWithCurrentTime(values.scheduled_date)
-        : appointmentResponse?.scheduled_date;
+      if (isDateChanged)
+        return formatDateWithCurrentTime(values.scheduled_date);
+
+      return appointmentResponse?.scheduled_date;
+    },
+    [appointmentResponse?.scheduled_date],
+  );
+
+  const handleUpdateAppointment = React.useCallback(
+    async (values: AppointmentDetailsType) => {
+      const scheduledDate = validateScheduledDate(values);
 
       const payload: IAppointment = {
         ...values,
@@ -175,19 +162,19 @@ export const useAppointmentDetailsModel = ({
       await updateAppointmentStatusMutation(AppointmentStatus.CONPLETED);
     },
     [
-      appointmentResponse?.scheduled_date,
       updateAppointmentMutation,
       updateAppointmentStatusMutation,
+      validateScheduledDate,
     ],
   );
 
   const handleCancelAppointment = React.useCallback(
     async (values: AppointmentStatus) => {
       await updateAppointmentStatusMutation(values);
-      toastSuccess('Consulta cancelada com sucesso!');
       navigateTo({ route: '/appointments' });
+      notify.success('Consulta cancelada com sucesso!');
     },
-    [navigateTo, updateAppointmentStatusMutation],
+    [navigateTo, notify, updateAppointmentStatusMutation],
   );
 
   React.useEffect(() => {
@@ -204,8 +191,6 @@ export const useAppointmentDetailsModel = ({
       });
   }, [appointmentResponse, methods]);
 
-  const showActions = !isLoading && isAppointmentPending;
-
   return {
     goBack,
     patientResponse,
@@ -218,7 +203,6 @@ export const useAppointmentDetailsModel = ({
     isPendingUpdateAppointmentStatus,
     handleCancelAppointment,
     isAppointmentPending,
-    showActions,
-    submit,
+    handleUpdateAppointment,
   };
 };

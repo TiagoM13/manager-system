@@ -16,34 +16,25 @@ interface UseAppointmentsByPatientProps {
   filters: IAppointmentFilters;
 }
 
-interface UseAppointmentsByPatientReturn {
-  appointments: AppointmentsResponse;
-  loading: boolean;
-  isLoading: boolean;
-  isFetching: boolean;
-}
-
 export const useAppointmentsByPatient = ({
   getAppointmentsByPatient,
   patientId,
   filters,
-}: UseAppointmentsByPatientProps): UseAppointmentsByPatientReturn => {
-  const { data, isLoading, isFetching } = useQuery({
+}: UseAppointmentsByPatientProps) => {
+  const {
+    data: appointmentsResponse,
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: ['appointments', patientId, filters],
     queryFn: async () =>
       await getAppointmentsByPatient(String(patientId), filters),
     placeholderData: keepPreviousData,
   });
 
-  const loading = React.useMemo(
-    () => isLoading || isFetching,
-    [isLoading, isFetching],
-  );
-
   return {
-    appointments: data,
+    appointmentsResponse,
     isLoading,
     isFetching,
-    loading,
   };
 };

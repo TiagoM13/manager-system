@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { HttpClient } from '@/infra/http/http-client';
-import { IPatient } from '@/interfaces';
+import { IPatient, ModalSection } from '@/interfaces';
 import { updatePatientService } from '@/services';
 
 import {
@@ -10,7 +10,6 @@ import {
   MedicalInfoForm,
   PatientInfoForm,
 } from '../../forms';
-import { ModalSection } from '../../types/modal';
 import { usePatientEditSectionDialogModel } from './patient-edit-section-dialog.model';
 import { PatientEditSectionDialogView } from './patient-edit-section-dialog.view';
 
@@ -30,8 +29,6 @@ export const PatientEditSectionDialog: React.FC<
   });
 
   const { isPending } = methods;
-
-  // memos
 
   const renderDialogTitle = React.useMemo((): string => {
     switch (activeSection) {

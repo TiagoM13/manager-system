@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { ModalSection } from '@/pages/patients/patient-details/types/modal';
+import { ModalSection } from '@/interfaces';
 
 interface IPatientFormDialogState {
   activeModal: ModalSection | null;

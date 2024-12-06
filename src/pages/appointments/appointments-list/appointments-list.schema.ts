@@ -5,7 +5,6 @@ import {
   INVALID_START_DATE_FIELD,
   START_DATE_CANNOT_BE_GREATER_THAN_END_DATE,
 } from '@/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 const isValidDate = (val: unknown) => {
   if (typeof val === 'string') {
@@ -56,10 +55,6 @@ export const appointmentFiltersSchema = z
       path: ['start_date'],
     },
   );
-
-export const appointmentFiltersSchemaResolver = zodResolver(
-  appointmentFiltersSchema,
-);
 
 export type AppointmentFiltersSchemaType = z.infer<
   typeof appointmentFiltersSchema

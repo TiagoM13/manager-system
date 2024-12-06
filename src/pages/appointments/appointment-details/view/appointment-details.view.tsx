@@ -1,18 +1,19 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { CircleNotch } from '@phosphor-icons/react';
+import { Check, CircleNotch, X } from '@phosphor-icons/react';
 
-import { Header, Card } from '@/components';
+import { Header, Card, Button } from '@/components';
 import { BreadcrumbItem } from '@/components/header/interfaces';
+import { AppointmentStatus } from '@/enums';
 import { PatientHeader } from '@/pages/patients/patient-details/components';
 
+import { AppointmentForm } from '../../appointment-form/forms';
 import {
   PatientDetailsCard,
   HealthInformationDetailsCard,
   AppointmentDetailsCard,
 } from '../components';
-import { AppointmentDetailsForm } from '../forms/appointment-details-form';
 import { useAppointmentDetailsModel } from '../model/appointment-details.model';
 
 type AppointmentDetailsViewProps = ReturnType<
@@ -34,8 +35,8 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
   isPendingUpdateAppointmentStatus,
   handleCancelAppointment,
   isAppointmentPending,
-  submit,
   breadcrumbsPathItems,
+  handleUpdateAppointment,
   title,
 }) => {
   return (
@@ -70,19 +71,42 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
 
         {!isLoading && isAppointmentPending && (
           <FormProvider {...methods}>
-            <AppointmentDetailsForm
-              isLoading={isLoading}
-              isPending={isPending}
-              isAppointmentPending={isAppointmentPending}
-              isPendingUpdateAppointment={isPendingUpdateAppointment}
-              isPendingUpdateAppointmentStatus={
-                isPendingUpdateAppointmentStatus
-              }
-              doctorOptions={doctorOptions}
-              handleCancelAppointment={handleCancelAppointment}
-              methods={methods}
-              submit={submit}
-            />
+            <Card bordered>
+              <div className="flex gap-6 p-2">
+                <div className="w-full flex flex-col justify-between">
+                  <AppointmentForm
+                    loading={isLoading || isPending}
+                    isUpdating={isAppointmentPending}
+                    doctors={doctorOptions}
+                  />
+
+                  <div className="flex ml-auto gap-2 p-2">
+                    <Button
+                      type="button"
+                      variable="danger"
+                      label="encerrar consulta"
+                      onClick={() =>
+                        handleCancelAppointment(AppointmentStatus.CANCELLED)
+                      }
+                      icon={<X className="size-5" weight="bold" />}
+                      className="min-w-28 justify-between px-4 disabled:cursor-not-allowed"
+                      disabled={isLoading || isPending}
+                      loading={isPendingUpdateAppointmentStatus}
+                    />
+
+                    <Button
+                      type="button"
+                      label="finalizar consulta"
+                      onClick={methods.handleSubmit(handleUpdateAppointment)}
+                      icon={<Check className="size-5" weight="bold" />}
+                      className="min-w-28 justify-between px-4 disabled:cursor-not-allowed"
+                      disabled={isLoading || isPending}
+                      loading={isPendingUpdateAppointment}
+                    />
+                  </div>
+                </div>
+              </div>
+            </Card>
           </FormProvider>
         )}
 

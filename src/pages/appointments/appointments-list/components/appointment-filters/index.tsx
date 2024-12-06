@@ -2,9 +2,10 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { FormContainer, Input, InputSearch, Select } from '@/components';
+import { appointmentTypeOptions } from '@/constants/select-options';
 import { useQueryParams } from '@/hooks';
 import { IAppointmentFilters } from '@/interfaces';
-import { formatDateToISODate, selectOptions } from '@/utils';
+import { formatDateToISODate } from '@/utils';
 
 type AppointmentFiltersProps = {
   loading?: boolean;
@@ -60,7 +61,7 @@ export const AppointmentFilters: React.FC<AppointmentFiltersProps> = ({
 
           <Select
             name="appointment_type"
-            options={selectOptions}
+            options={appointmentTypeOptions}
             control={control}
             disabled={loading}
             isSearchable

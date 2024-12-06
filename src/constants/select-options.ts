@@ -1,4 +1,29 @@
-export const sexOptions = [
+import { AppointmentType } from '@/enums';
+
+export const appointmentTypeOptions = [
+  {
+    label: 'Consulta',
+    value: AppointmentType.QUERY,
+  },
+  {
+    label: 'Acidente de trânsito',
+    value: AppointmentType.ACCIDENT,
+  },
+  {
+    label: 'Ferimento por arma branca',
+    value: AppointmentType.WHITE_WEAPON_INJURY,
+  },
+  {
+    label: 'Ferimento por arma de fogo',
+    value: AppointmentType.FIREARM_INJURY,
+  },
+  {
+    label: 'Outros',
+    value: AppointmentType.OTHER,
+  },
+];
+
+export const genderOptions = [
   {
     label: 'Masculino',
     value: 'masculino',
@@ -32,7 +57,7 @@ export const maritalStatusOptions = [
   },
 ];
 
-export const conditionsOptions = [
+export const medicalConditionsOptions = [
   {
     label: 'Hipertenso',
     value: 'hipertenso',
@@ -43,7 +68,7 @@ export const conditionsOptions = [
   },
 ];
 
-export const optionsHealthAgent = [
+export const healthAgentOptions = [
   {
     label: 'Ana Maria (Area A)',
     value: 'Ana Maria (Area A)',
@@ -54,7 +79,7 @@ export const optionsHealthAgent = [
   },
 ];
 
-export const pregnantOptions = [
+export const pregnancyOptions = [
   {
     label: 'Sim',
     value: 'sim',
