@@ -16,11 +16,10 @@ type Props = ReturnType<typeof usePatientEditSectionDialogModel> & {
 
 export const PatientEditSectionDialogView: React.FC<Props> = (props) => {
   const {
-    handleSubmit,
-    isPending,
     methods,
-    reset,
-    submit,
+    handleSubmit,
+    handleUpdatePatient,
+    isPending,
     activeSection,
     renderDialogTitle,
     renderFormContent,
@@ -30,7 +29,10 @@ export const PatientEditSectionDialogView: React.FC<Props> = (props) => {
   return (
     <Dialog isOpen={activeSection} contentClassNames="max-w-[650px]">
       <FormProvider {...methods}>
-        <FormContainer className="p-3" onSubmit={handleSubmit(submit)}>
+        <FormContainer
+          className="p-3"
+          onSubmit={handleSubmit(handleUpdatePatient)}
+        >
           <h3 className="font-bold text-xl leading-5">{renderDialogTitle}</h3>
 
           <div className="mt-6 py-2 grid grid-cols-2 gap-8">
@@ -46,7 +48,7 @@ export const PatientEditSectionDialogView: React.FC<Props> = (props) => {
               label="cancelar"
               onClick={() => {
                 onClose();
-                reset();
+                methods.reset();
               }}
               disabled={isPending}
             />

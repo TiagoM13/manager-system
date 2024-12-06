@@ -9,8 +9,14 @@ import { usePatientListModel } from '../model/patient-list.model';
 type PatientListViewProps = ReturnType<typeof usePatientListModel>;
 
 export const PatientListView = (props: PatientListViewProps) => {
-  const { data, loading, methods, handleNewRegister, handleEdit, isMobile } =
-    props;
+  const {
+    allPatientsResponse,
+    isLoading,
+    handleNewRegister,
+    handleEditPatient,
+    methods,
+    isMobile,
+  } = props;
 
   return (
     <FormProvider {...methods}>
@@ -22,12 +28,16 @@ export const PatientListView = (props: PatientListViewProps) => {
         />
 
         <Card className="mt-4">
-          <PatientFilters loading={loading} />
+          <PatientFilters loading={isLoading} />
 
           {isMobile ? (
-            <PatientsCard data={data} loading={loading} onEdit={handleEdit} />
+            <PatientsCard
+              data={allPatientsResponse}
+              loading={isLoading}
+              onEdit={handleEditPatient}
+            />
           ) : (
-            <PatientsTable data={data} loading={loading} />
+            <PatientsTable data={allPatientsResponse} loading={isLoading} />
           )}
         </Card>
       </div>

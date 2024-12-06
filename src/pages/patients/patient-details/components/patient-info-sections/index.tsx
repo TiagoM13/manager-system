@@ -1,12 +1,10 @@
 import React from 'react';
 
 import { Card } from '@/components';
-import { IPatient } from '@/interfaces';
+import { IPatient, ModalSection } from '@/interfaces';
 import { formatPhone, calculateAge, formatDate } from '@/utils';
 
 import { EditButton, InfoItem } from '..';
-
-import { ModalSection } from '../../types/modal';
 
 interface PatientInfoSectionsProps {
   patient?: IPatient;

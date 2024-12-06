@@ -1,3 +1,7 @@
+import {
+  APPOINTMENT_CREATED_SUCCESSFULLY,
+  ERROR_CREATING_APPOINTMENT,
+} from '@/constants/messages';
 import { IAppointment, IMSResponse } from '@/interfaces';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
@@ -25,9 +29,10 @@ export const useCreateAppointment = ({
       await createAppointment(patientId, values),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['appointments'] });
-      notify.success('Consulta adicionada com sucesso!');
+      notify.success(APPOINTMENT_CREATED_SUCCESSFULLY);
       navigateTo({ route: '/appointments' });
     },
+    onError: () => notify.error(ERROR_CREATING_APPOINTMENT),
     onMutate: (newAppointment) => {
       queryClient.setQueryData(['appointments'], (old: any) => [
         ...(old || []),
@@ -37,7 +42,7 @@ export const useCreateAppointment = ({
   });
 
   return {
-    create: createAppointmentMutation,
+    createAppointmentMutation,
     isPending,
   };
 };

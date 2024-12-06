@@ -125,7 +125,7 @@ export const Router: React.FC = () => {
             }
           />
           <Route
-            path="/patients/:id"
+            path="/patients/:patientId"
             element={
               <PrivateRoute
                 allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}

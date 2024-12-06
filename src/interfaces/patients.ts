@@ -28,10 +28,18 @@ export interface IPatient {
   updated_at?: Date;
 }
 
-export interface IPatientForm extends Omit<IPatient, 'status'> {}
+export interface IPatientForm extends Omit<IPatient, 'status'> { }
 
 export interface IPatientFilters {
-  name?: string;
+  name?: string | undefined;
+  cpf?: string | null | undefined;
+  cns?: string | null | undefined;
   page?: number;
   page_size?: number;
 }
+
+export type PatientSearchType = {
+  name?: string | undefined;
+  cpf?: string | null | undefined;
+  cns?: string | null | undefined;
+};

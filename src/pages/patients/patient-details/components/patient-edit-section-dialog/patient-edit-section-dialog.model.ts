@@ -1,17 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
 
 import { formatPatientProps } from '@/helpers/format-patient-props';
 import { formatPatientRequest } from '@/helpers/format-patient-request';
+import { useUpdatePatient } from '@/hooks';
 import { IMSResponse, IPatient } from '@/interfaces';
-import {
-  ERROR_UPDATING_PATIENT,
-  PATIENT_UPDATED_SUCCESSFULLY,
-} from '@/pages/patients/utils/messages';
 import { usePatientFormDialog } from '@/store';
-import { toastError, toastSuccess } from '@/utils';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
   SchemaPatientType,
@@ -30,52 +25,37 @@ export const usePatientEditSectionDialogModel = ({
   patient,
   updatePatient,
 }: PatientEditSectionDialogModelProps) => {
-  const { id } = useParams<{ id: string }>();
   const { closeModal } = usePatientFormDialog();
-  const queryClient = useQueryClient();
 
-  // hook form
+  const { updatePatientMutation, isPending } = useUpdatePatient({
+    patientId: String(patient?.id),
+    updatePatient,
+  });
+
   const methods = useForm<SchemaPatientType>({
     mode: 'onChange',
     shouldUnregister: false,
-    resolver: schemaPatient,
+    resolver: zodResolver(schemaPatient),
   });
 
   const { handleSubmit, reset } = methods;
 
-  // mutation
-  const { mutateAsync: updatePatientMutation, isPending } = useMutation({
-    mutationFn: async (values: IPatient) =>
-      await updatePatient(String(id), values),
-    onSuccess: (data) => {
-      if (data?.success) {
-        queryClient.invalidateQueries({ queryKey: ['patient'] });
-        toastSuccess(PATIENT_UPDATED_SUCCESSFULLY);
-        closeModal();
-      }
-    },
-    onError: () => toastError(ERROR_UPDATING_PATIENT),
-  });
-
-  // callbacks
-  const submit = React.useCallback(
+  const handleUpdatePatient = React.useCallback(
     async (values: SchemaPatientType) => {
-      await updatePatientMutation(formatPatientProps(values));
+      const response = await updatePatientMutation(formatPatientProps(values));
+
+      if (response?.success) closeModal();
     },
-    [updatePatientMutation],
+    [closeModal, updatePatientMutation],
   );
 
-  // effects
   React.useEffect(() => {
-    if (patient) {
-      reset(formatPatientRequest(patient));
-    }
+    if (patient) reset(formatPatientRequest(patient));
   }, [patient, reset]);
 
   return {
     methods,
-    reset,
-    submit,
+    handleUpdatePatient,
     handleSubmit,
     isPending,
   };

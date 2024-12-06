@@ -5,3 +5,4 @@ export * from './patients';
 export * from './appointment';
 export * from './upload';
 export * from './doctor';
+export * from './modal';

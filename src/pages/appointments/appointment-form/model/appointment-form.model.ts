@@ -79,7 +79,7 @@ export const useAppointmentFormModel = ({
     getAllDoctors,
     isEnabled: !isCreatingNewAppointment,
   });
-  const { create, isPending } = useCreateAppointment({
+  const { createAppointmentMutation, isPending } = useCreateAppointment({
     createAppointment,
     patientId: String(patientId),
   });
@@ -97,7 +97,7 @@ export const useAppointmentFormModel = ({
     defaultValues: query,
   });
   const patientFormMethods = useForm<IPatient>({
-    resolver: schemaPatient,
+    resolver: zodResolver(schemaPatient),
     shouldUnregister: false,
   });
 
@@ -126,9 +126,9 @@ export const useAppointmentFormModel = ({
         scheduled_date: formatDateWithCurrentTime(values.scheduled_date) as any,
       };
 
-      await create(payload);
+      await createAppointmentMutation(payload);
     },
-    [create],
+    [createAppointmentMutation],
   );
 
   React.useEffect(() => {

@@ -17,5 +17,7 @@ export * from './appointment/update-appointment-status';
 
 export * from './patient/get-patient';
 export * from './patient/get-all-patients';
+export * from './patient/create-patient';
+export * from './patient/update-patient';
 
 export * from './doctor/get-all-doctors';

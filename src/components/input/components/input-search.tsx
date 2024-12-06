@@ -3,7 +3,7 @@ import { Controller } from 'react-hook-form';
 
 import { twMerge } from 'tailwind-merge';
 
-import { MagnifyingGlass } from '@phosphor-icons/react';
+import { CircleNotch, MagnifyingGlass } from '@phosphor-icons/react';
 
 import { InputSearchProps } from './interfaces';
 
@@ -44,14 +44,24 @@ export const InputSearch: React.FC<InputSearchProps> = ({
 
       <button
         type="submit"
+        disabled={rest.disabled}
         className="flex items-center bg-sky-600 disabled:bg-sky-700 outline-offset-0 outline-sky-500 rounded-r-lg py-1 px-2.5 h-[36px] hover:bg-sky-500"
       >
-        <MagnifyingGlass
-          data-testid="icon-search"
-          weight="bold"
-          color="white"
-          className="size-5"
-        />
+        {rest.disabled ? (
+          <CircleNotch
+            data-testid="icon-loading"
+            weight="bold"
+            color="white"
+            className="size-5 animate-spin"
+          />
+        ) : (
+          <MagnifyingGlass
+            data-testid="icon-search"
+            weight="bold"
+            color="white"
+            className="size-5"
+          />
+        )}
       </button>
     </div>
   );

@@ -85,16 +85,14 @@ export const useAppointmentDetailsModel = ({
   } = useGetAllDoctors({
     getAllDoctors,
   });
+  const { updateAppointmentMutation, isPending: isPendingUpdateAppointment } =
+    useUpdateAppointment({
+      updateAppointment,
+      patientId: String(patientId),
+      appointmentId: Number(appointmentId),
+    });
   const {
-    update: updateAppointmentMutation,
-    isPending: isPendingUpdateAppointment,
-  } = useUpdateAppointment({
-    updateAppointment,
-    patientId: String(patientId),
-    appointmentId: Number(appointmentId),
-  });
-  const {
-    updateStatus: updateAppointmentStatusMutation,
+    updateAppointmentStatusMutation,
     isPending: isPendingUpdateAppointmentStatus,
   } = useUpdateAppointmentStatus({
     updateAppointmentStatus,

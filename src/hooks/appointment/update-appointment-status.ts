@@ -34,7 +34,7 @@ export const useUpdateAppointmentStatus = ({
     });
 
   return {
-    updateStatus: updateAppointmentStatusMutation,
+    updateAppointmentStatusMutation,
     isPending,
   };
 };

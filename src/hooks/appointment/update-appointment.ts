@@ -1,3 +1,7 @@
+import {
+  APPOINTMENT_FINISHED_SUCCESSFULLY,
+  ERROR_FINISHED_APPOINTMENT,
+} from '@/constants/messages';
 import { IAppointment, IMSResponse } from '@/interfaces';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
@@ -30,13 +34,14 @@ export const useUpdateAppointment = ({
       queryClient.invalidateQueries({
         queryKey: ['appointments', appointmentId],
       });
-      notify.success('Consulta finalizada com sucesso!');
+      notify.success(APPOINTMENT_FINISHED_SUCCESSFULLY);
       navigateTo({ route: '/appointments' });
     },
+    onError: () => notify.error(ERROR_FINISHED_APPOINTMENT),
   });
 
   return {
-    update: updateAppointmentMutation,
+    updateAppointmentMutation,
     isPending,
   };
 };
