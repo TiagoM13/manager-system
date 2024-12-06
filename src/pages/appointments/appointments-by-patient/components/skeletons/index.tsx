@@ -1,9 +1,8 @@
 import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
-import { PencilSimple } from '@phosphor-icons/react';
-
-import { Button, Table } from '@/components';
+import { Button, StatusActionIcon, Table } from '@/components';
+import { AppointmentStatus } from '@/enums';
 
 export const SkeletonTableAppintmentsByPatient: React.FC = () => {
   return (
@@ -28,9 +27,7 @@ export const SkeletonTableAppintmentsByPatient: React.FC = () => {
           <Table.Cell>
             <Button
               clear
-              icon={
-                <PencilSimple className="size-4 text-sky-600" weight="bold" />
-              }
+              icon={<StatusActionIcon status={AppointmentStatus.PENDING} />}
               className="p-1.5"
               disabled
             />

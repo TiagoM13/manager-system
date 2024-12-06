@@ -2,8 +2,8 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Card, Input, InputMask, Select } from '@/components';
+import { maritalStatusOptions } from '@/constants/select-options';
 import { IPatient } from '@/interfaces';
-import { maritalStatusOptions } from '@/pages/patients/utils/options';
 import { formatCPF } from '@/utils';
 
 export const PatientForm: React.FC<{ loading?: boolean }> = ({ loading }) => {

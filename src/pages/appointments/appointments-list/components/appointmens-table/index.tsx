@@ -14,11 +14,13 @@ type IAppointmentData = {
 type AppointmentTableProps = {
   data?: IAppointmentData;
   loading?: boolean;
+  onEdit: (data: IAppointment) => void;
 };
 
 export const AppointmentsTable: React.FC<AppointmentTableProps> = ({
   data,
   loading,
+  onEdit,
 }) => {
   return (
     <Table.Container>
@@ -40,7 +42,11 @@ export const AppointmentsTable: React.FC<AppointmentTableProps> = ({
         ) : (
           <>
             {data?.['get-all-appointments']?.map((appointment) => (
-              <AppointmentRow key={appointment.id} appointment={appointment} />
+              <AppointmentRow
+                key={appointment.id}
+                appointment={appointment}
+                onEdit={onEdit}
+              />
             ))}
           </>
         )}

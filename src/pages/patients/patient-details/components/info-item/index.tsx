@@ -20,7 +20,9 @@ export const InfoItem: React.FC<InfoItemProps> = ({
       <span className="font-semibold text-sm text-slate-400">{label}</span>
 
       {loading ? (
-        <CustomLoadingSkeleton className="h-3 w-full max-w-44" />
+        <div data-testid="loading-skeleton">
+          <CustomLoadingSkeleton className="h-3 w-full max-w-44" />
+        </div>
       ) : (
         <span className="text-sm">{hasValue ? value : '-'}</span>
       )}

@@ -1,7 +1,8 @@
 import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
-import { Table } from '@/components';
+import { Button, StatusActionIcon, Table } from '@/components';
+import { AppointmentStatus } from '@/enums';
 
 export const SkeletonTableAppintments: React.FC = () => {
   return (
@@ -31,6 +32,14 @@ export const SkeletonTableAppintments: React.FC = () => {
         </Table.Cell>
         <Table.Cell style={{ width: 150 }}>
           <Skeleton containerClassName="flex-1" className="max-w-20 w-full" />
+        </Table.Cell>
+        <Table.Cell>
+          <Button
+            clear
+            icon={<StatusActionIcon status={AppointmentStatus.PENDING} />}
+            className="p-1.5"
+            disabled
+          />
         </Table.Cell>
       </Table.Row>
     </SkeletonTheme>

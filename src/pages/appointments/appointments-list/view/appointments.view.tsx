@@ -11,14 +11,19 @@ type AppointmentsListViewProps = ReturnType<typeof useAppointmentsListModel>;
 export const AppointmentsListView: React.FC<AppointmentsListViewProps> = (
   props,
 ) => {
-  const { allAppointmentsResponse, isLoading, handleNewRegister, methods } =
-    props;
+  const {
+    isLoading,
+    allAppointmentsResponse,
+    handleNewRegister,
+    handleEdiAppointment,
+    methods,
+  } = props;
 
   return (
     <FormProvider {...methods}>
       <div className="flex flex-col">
         <Header
-          title="Lista de Consultas"
+          title="Consultas"
           actionLabel="adicionar consulta"
           onRegister={handleNewRegister}
         />
@@ -28,6 +33,7 @@ export const AppointmentsListView: React.FC<AppointmentsListViewProps> = (
 
           <AppointmentsTable
             data={allAppointmentsResponse}
+            onEdit={handleEdiAppointment}
             loading={isLoading}
           />
         </Card>
