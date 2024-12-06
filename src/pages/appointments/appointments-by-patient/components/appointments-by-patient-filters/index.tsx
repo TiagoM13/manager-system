@@ -4,9 +4,10 @@ import { useFormContext } from 'react-hook-form';
 import { MagnifyingGlass } from '@phosphor-icons/react';
 
 import { Button, FormContainer, Input, Select } from '@/components';
+import { appointmentTypeOptions } from '@/constants/select-options';
 import { useQueryParams } from '@/hooks';
 import { IAppointmentFilters } from '@/interfaces';
-import { formatDateToISODate, selectOptions } from '@/utils';
+import { formatDateToISODate } from '@/utils';
 
 type IAppointmentsByPatientFilters = Omit<IAppointmentFilters, 'name'> & {};
 
@@ -56,7 +57,7 @@ export const AppointmentsByPatientFilters: React.FC<
         <div className="flex gap-2.5">
           <Select
             name="appointment_type"
-            options={selectOptions}
+            options={appointmentTypeOptions}
             control={control}
             disabled={loading}
             isSearchable
