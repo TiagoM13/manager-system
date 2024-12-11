@@ -22,7 +22,6 @@ export const authenticateUser = async (
 
     const response = await signInService(client, values);
 
-    console.log(response);
     setAuthTokens(response.token!);
     setCurrentUser(response.user!);
 
