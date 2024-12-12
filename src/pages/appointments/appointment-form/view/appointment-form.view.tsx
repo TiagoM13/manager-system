@@ -3,9 +3,8 @@ import { FormProvider } from 'react-hook-form';
 
 import { Check } from '@phosphor-icons/react';
 
-import { Header, Card, Button } from '@/components';
+import { Header, Card, Button, PatientHeader } from '@/components';
 import { BreadcrumbItem } from '@/interfaces';
-import { PatientHeader } from '@/pages/patients/patient-details/components';
 
 import { NotFoundPatient, PatientCard } from '../components';
 import {
@@ -59,7 +58,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
           <Card bordered>
             <div className="space-y-4 p-2">
               {allPatientsResponse &&
-              allPatientsResponse.patients.length > 0 ? (
+                allPatientsResponse.patients.length > 0 ? (
                 <>
                   <h2 className="text-xl font-semibold">
                     Pacientes Encontrados

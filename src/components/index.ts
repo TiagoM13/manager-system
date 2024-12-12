@@ -22,3 +22,4 @@ export * from './form-container';
 export * from './error-message';
 export * from './status-icon';
 export * from './status-action-icon';
+export * from './patient-header';

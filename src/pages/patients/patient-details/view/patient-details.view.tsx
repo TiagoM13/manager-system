@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { Header, Card } from '@/components';
+import { Header, Card, PatientHeader } from '@/components';
 import { BreadcrumbItem } from '@/interfaces';
 
 import {
-  PatientHeader,
   PatientCompletionStatus,
   PatientInfoSections,
   AppointmentsHistory,
