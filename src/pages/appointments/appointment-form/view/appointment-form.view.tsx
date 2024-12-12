@@ -6,7 +6,7 @@ import { Check } from '@phosphor-icons/react';
 import { Header, Card, Button, PatientHeader } from '@/components';
 import { BreadcrumbItem } from '@/interfaces';
 
-import { NotFoundPatient, PatientCard } from '../components';
+import { PatientCardList } from '../components/patient-card-list';
 import {
   AppointmentForm,
   HealthInformationForm,
@@ -55,25 +55,11 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
         )}
 
         {!!hasValidQuery && isCreatingNewAppointment && (
-          <Card bordered>
-            <div className="space-y-4 p-2">
-              {allPatientsResponse &&
-                allPatientsResponse.patients.length > 0 ? (
-                <>
-                  <h2 className="text-xl font-semibold">
-                    Pacientes Encontrados
-                  </h2>
-                  {allPatientsResponse.patients.map((patient) => (
-                    <PatientCard key={patient.id} patient={patient} />
-                  ))}
-                </>
-              ) : (
-                <NotFoundPatient
-                  onNavigate={() => navigateTo({ route: '/patients/new' })}
-                />
-              )}
-            </div>
-          </Card>
+          <PatientCardList
+            patients={allPatientsResponse?.patients}
+            onNavigateToNotFound={() => navigateTo({ route: '/patients/new' })}
+            loading={isLoading}
+          />
         )}
 
         {!isCreatingNewAppointment && (
