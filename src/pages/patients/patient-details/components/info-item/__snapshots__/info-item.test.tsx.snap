@@ -8,12 +8,12 @@ exports[`<InfoItem /> renders the label and value correctly 1`] = `
     <span
       class="font-semibold text-sm text-slate-400"
     >
-      voluptas
+      teste label
     </span>
     <span
       class="text-sm"
     >
-      titulus-umerus-cohibeo
+      teste value
     </span>
   </div>
 </DocumentFragment>

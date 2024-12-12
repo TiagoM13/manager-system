@@ -7,8 +7,8 @@ import { InfoItem } from '.';
 
 describe('<InfoItem />', () => {
   it('renders the label and value correctly', () => {
-    const label = faker.lorem.word();
-    const value = faker.lorem.slug();
+    const label = 'teste label';
+    const value = 'teste value';
 
     const { asFragment } = render(
       <InfoItem label={label} value={value} loading={false} />,
