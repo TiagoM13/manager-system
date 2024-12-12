@@ -38,14 +38,20 @@ export const PatientCompletionStatus: React.FC<
         {!loading && <EditButton onClick={() => onEdit('patient-info')} />}
       </div>
 
-      <span className="block text-xs">
-        Informações preenchidas:{' '}
-        <strong
-          className={`${isMinimumCompleted ? 'text-red-600' : 'text-sky-600'}`}
-        >
-          {loading ? '0%' : `${completionPercentage}%`}
-        </strong>
-      </span>
+      {loading ? (
+        <div>
+          <CustomLoadingSkeleton className="h-2 w-44" />
+        </div>
+      ) : (
+        <span className="block text-xs">
+          Informações preenchidas:{' '}
+          <strong
+            className={`${isMinimumCompleted ? 'text-red-600' : 'text-sky-600'}`}
+          >
+            {loading ? '0%' : `${completionPercentage}%`}
+          </strong>
+        </span>
+      )}
     </div>
   );
 };
