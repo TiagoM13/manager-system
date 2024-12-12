@@ -52,6 +52,11 @@ export const useAppointmentFormModel = ({
     [patientId],
   );
 
+  const hasValidQuery = React.useMemo(
+    () => query.name || query.cns || query.cpf,
+    [query.cns, query.cpf, query.name],
+  );
+
   const {
     allPatientsResponse,
     isLoading: isLoadingAllPatients,
@@ -138,6 +143,7 @@ export const useAppointmentFormModel = ({
 
   return {
     query,
+    hasValidQuery,
     goBack,
     navigateTo,
     handleCreateNewAppointment,

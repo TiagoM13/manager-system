@@ -1,11 +1,12 @@
 import React from 'react';
 
+import { Check } from '@phosphor-icons/react';
+
 import { Avatar } from '../avatar';
 import { Button } from '../button';
 import { FormContainer } from '../form-container';
 import { CloseButton } from '../icon-button';
 import { FileUploadInput, Input, InputPassword } from '../input';
-import { StatusIcon } from '../status-icon';
 import { useAccountSettingsModel } from './profile.model';
 
 import { StyledProfileMenu } from './styles';
@@ -118,9 +119,10 @@ export const ProfileView: React.FC<IProfileProps> = (props) => {
               <Button
                 type="submit"
                 label="Salvar dados"
-                icon={<StatusIcon loading={loading} />}
+                icon={<Check className="size-4" weight="bold" />}
                 className="w-full disabled:cursor-not-allowed"
                 disabled={disableSubmitButton}
+                loading={loading}
               />
             </div>
           </div>

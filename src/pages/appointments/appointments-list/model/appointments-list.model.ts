@@ -53,10 +53,21 @@ export const useAppointmentsListModel = ({
     navigateTo({ route: '/appointments/new', state: location.state });
   }, [location.state, navigateTo]);
 
+  const handleEdiAppointment = React.useCallback(
+    (appointment: IAppointment) => {
+      navigateTo({
+        route: `/appointments/${appointment.patient_id}/appointment/${appointment.id}`,
+        state: location.state,
+      });
+    },
+    [location.state, navigateTo],
+  );
+
   return {
     methods,
     allAppointmentsResponse,
     handleNewRegister,
+    handleEdiAppointment,
     isLoading,
     isMobile,
   };

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
 
-import { Eye } from '@phosphor-icons/react';
+import { PencilSimple } from '@phosphor-icons/react';
 
 import { Avatar, Badge, Button, Table } from '@/components';
 import { IPatient } from '@/interfaces';
@@ -11,23 +10,17 @@ import { Card, Text } from './styles';
 
 interface PatientItemProps {
   patient: IPatient;
-  onEdit?: (data: IPatient) => void;
+  onEdit: (data: IPatient) => void;
 }
 
-export const PatientRow: React.FC<PatientItemProps> = ({ patient }) => {
-  const location = useLocation();
-
+export const PatientRow: React.FC<PatientItemProps> = ({ patient, onEdit }) => {
   return (
     <Table.Row hoverable>
       <Table.Cell>
-        <Link
-          to={`/patients/${patient.id}`}
-          state={{ from: location }}
-          className="flex items-center gap-3 hover:text-sky-500 transition-all"
-        >
+        <div className="flex items-center gap-3">
           <Avatar color="dark" name={patient.name} imageUrl={null} small />
           <span className="text-sm font-semibold">{patient.name}</span>
-        </Link>
+        </div>
       </Table.Cell>
       <Table.Cell>{formatDate(patient.birth_date)}</Table.Cell>
       <Table.Cell>{calculateAge(patient.birth_date)} anos</Table.Cell>
@@ -39,6 +32,14 @@ export const PatientRow: React.FC<PatientItemProps> = ({ patient }) => {
       <Table.Cell>
         <Badge type={patient.status} />
       </Table.Cell>
+      <Table.Cell>
+        <Button
+          clear
+          icon={<PencilSimple className="size-4" weight="bold" />}
+          onClick={() => onEdit(patient)}
+          className="p-1.5"
+        />
+      </Table.Cell>
     </Table.Row>
   );
 };
@@ -47,14 +48,6 @@ export const PatientCard: React.FC<PatientItemProps> = ({
   patient,
   onEdit,
 }) => {
-  const handleEditPatient = (patient: IPatient) => {
-    if (onEdit) {
-      onEdit(patient);
-    }
-
-    return;
-  };
-
   return (
     <Card>
       <div>
@@ -90,9 +83,9 @@ export const PatientCard: React.FC<PatientItemProps> = ({
 
       <div>
         <Button
-          label="visualizar"
-          icon={<Eye className="size-4" weight="bold" />}
-          onClick={() => handleEditPatient(patient)}
+          label="editar"
+          icon={<PencilSimple className="size-4" weight="bold" />}
+          onClick={() => onEdit(patient)}
         />
       </div>
     </Card>
