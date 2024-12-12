@@ -59,7 +59,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
           <Card bordered>
             <div className="space-y-4 p-2">
               {allPatientsResponse &&
-                allPatientsResponse.patients.length > 0 ? (
+              allPatientsResponse.patients.length > 0 ? (
                 <>
                   <h2 className="text-xl font-semibold">
                     Pacientes Encontrados
