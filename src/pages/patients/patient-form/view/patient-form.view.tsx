@@ -4,7 +4,7 @@ import { FormProvider } from 'react-hook-form';
 import { ArrowLeft, ArrowRight, Check } from '@phosphor-icons/react';
 
 import { FormContainer, Header, Card, Button } from '@/components';
-import { BreadcrumbItem } from '@/components/header/interfaces';
+import { BreadcrumbItem } from '@/interfaces';
 
 import { steps } from '../../utils/constants';
 import { FormProgress } from '../components/form-progress';

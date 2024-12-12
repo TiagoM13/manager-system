@@ -4,8 +4,8 @@ import { FormProvider } from 'react-hook-form';
 import { Check, CircleNotch, X } from '@phosphor-icons/react';
 
 import { Header, Card, Button } from '@/components';
-import { BreadcrumbItem } from '@/components/header/interfaces';
 import { AppointmentStatus } from '@/enums';
+import { BreadcrumbItem } from '@/interfaces';
 import { PatientHeader } from '@/pages/patients/patient-details/components';
 
 import { AppointmentForm } from '../../appointment-form/forms';

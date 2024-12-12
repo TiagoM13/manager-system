@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Header, Card } from '@/components';
-import { BreadcrumbItem } from '@/components/header/interfaces';
+import { BreadcrumbItem } from '@/interfaces';
 
 import {
   PatientHeader,

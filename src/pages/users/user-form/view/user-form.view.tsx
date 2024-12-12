@@ -2,7 +2,7 @@ import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import { FormContainer, Header } from '@/components';
-import { BreadcrumbItem } from '@/components/header/interfaces';
+import { BreadcrumbItem } from '@/interfaces';
 
 import { UserForm, StatusForm } from '../forms';
 import { useUserFormModel } from '../model/user-form.model';

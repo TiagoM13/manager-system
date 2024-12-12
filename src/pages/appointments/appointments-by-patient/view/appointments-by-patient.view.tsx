@@ -2,7 +2,7 @@ import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import { Header, Card } from '@/components';
-import { BreadcrumbItem } from '@/components/header/interfaces';
+import { BreadcrumbItem } from '@/interfaces';
 import { PatientHeader } from '@/pages/patients/patient-details/components';
 
 import {
