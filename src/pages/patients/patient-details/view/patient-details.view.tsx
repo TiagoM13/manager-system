@@ -63,7 +63,7 @@ export const PatientDetailsView: React.FC<PatientDetailsViewProps> = (
             loading={loading}
           />
 
-          <HospitalizationsHistory />
+          <HospitalizationsHistory loading={loading} />
         </div>
       </div>
 
