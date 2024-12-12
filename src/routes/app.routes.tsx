@@ -43,13 +43,10 @@ export const Router: React.FC = () => {
       ) {
         navigate('/dashboard', { replace: true });
       }
-    }
-    if (!isAuthenticated) {
-      if (['/'].includes(window.location.pathname)) {
-        navigate('/sign-in', { replace: true });
-      }
-
-      if (window.location.pathname !== '/forgot-password') {
+    } else {
+      if (
+        !['/sign-in', '/forgot-password'].includes(window.location.pathname)
+      ) {
         navigate('/sign-in', { replace: true });
       }
     }
@@ -59,7 +56,6 @@ export const Router: React.FC = () => {
     <AppWrapper>
       <React.Suspense fallback={<InitializerLoader />}>
         <Routes>
-          {/* public routes */}
           <Route
             path="/sign-in"
             element={
@@ -77,7 +73,6 @@ export const Router: React.FC = () => {
             }
           />
 
-          {/* private routes */}
           <Route
             path="/dashboard"
             element={

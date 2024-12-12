@@ -44,14 +44,12 @@ export const SkeletonTablePatients: React.FC = () => {
           <Skeleton containerClassName="flex-1" className="max-w-28 w-full" />
         </Table.Cell>
         <Table.Cell style={{ width: 50 }}>
-          <Table.Cell>
-            <Button
-              clear
-              icon={<PencilSimple className="size-4" weight="bold" />}
-              className="p-1.5"
-              disabled
-            />
-          </Table.Cell>
+          <Button
+            clear
+            icon={<PencilSimple className="size-4" weight="bold" />}
+            className="p-1.5"
+            disabled
+          />
         </Table.Cell>
       </Table.Row>
     </SkeletonTheme>
