@@ -24,7 +24,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
   props,
 ) => {
   const {
-    query,
+    hasValidQuery,
     goBack,
     navigateTo,
     isCreatingNewAppointment,
@@ -55,10 +55,11 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
           </FormProvider>
         )}
 
-        {!!query && allPatientsResponse && isCreatingNewAppointment && (
+        {!!hasValidQuery && isCreatingNewAppointment && (
           <Card bordered>
             <div className="space-y-4 p-2">
-              {allPatientsResponse.patients.length > 0 ? (
+              {allPatientsResponse &&
+              allPatientsResponse.patients.length > 0 ? (
                 <>
                   <h2 className="text-xl font-semibold">
                     Pacientes Encontrados

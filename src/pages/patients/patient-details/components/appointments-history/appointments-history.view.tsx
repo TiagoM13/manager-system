@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Plus } from '@phosphor-icons/react';
+import { CircleNotch, Plus } from '@phosphor-icons/react';
 
 import { Card, Button } from '@/components';
 import { IAppointment } from '@/interfaces';
 
 import { AppointmentInfoCard } from '../appointment-info-card';
-import { LoadingSkeletonAppointmentHistory } from '../skeletons';
 import { useAppointmentsHistoryModel } from './appointments-history.model';
 
 type AppointmentsHistoryViewProps = ReturnType<
@@ -35,18 +34,21 @@ export const AppointmentsHistoryView: React.FC<AppointmentsHistoryViewProps> = (
     <Card title="Histórico de consultas" className="px-6 space-y-2 h-full">
       <div className="space-y-2">
         {loading ? (
-          <>
-            <LoadingSkeletonAppointmentHistory />
-          </>
+          <div className="flex items-center justify-center min-h-[100px]">
+            <CircleNotch
+              weight="bold"
+              className="text-sky-600 size-8 animate-spin"
+            />
+          </div>
         ) : (
           <>
-            <div className="flex items-center justify-between">
-              {!isNotHaveAppointments && (
+            {!isNotHaveAppointments && (
+              <div className="flex items-center justify-between">
                 <span className="text-sm">
                   total de consultas: {appointments?.length}
                 </span>
-              )}
-            </div>
+              </div>
+            )}
             <div className="flex flex-col items-center space-y-4">
               {isNotHaveAppointments ? (
                 <div className="flex flex-col justify-center items-center space-y-2">
