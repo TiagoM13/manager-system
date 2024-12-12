@@ -3,8 +3,7 @@ import {
   ERROR_CREATING_PATIENT,
 } from '@/constants/messages';
 import { IMSResponse, IPatient } from '@/interfaces';
-import { queryClient } from '@/services';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useAppNavigation } from '../navigate';
 import { useNotification } from '../notification';
@@ -17,6 +16,7 @@ interface UseCreatePatientProps {
 
 export const useCreatePatient = ({ createPatient }: UseCreatePatientProps) => {
   const notify = useNotification();
+  const queryClient = useQueryClient();
   const { navigateTo } = useAppNavigation();
 
   const { mutateAsync: createPatientMutation, isPending } = useMutation({

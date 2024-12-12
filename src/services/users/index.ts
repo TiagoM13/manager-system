@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 
 import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
 import { IMSResponse, IUser, IUsersFilters } from '@/interfaces';
-import { handleAPIErrors } from '@/utils/common';
+import { handleAPIErrors } from '@/utils';
 
 export const getAllUsersService = async (
   client: IHttpClient,

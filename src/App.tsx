@@ -10,8 +10,8 @@ import 'dayjs/locale/pt-br';
 
 import { ConfirmDialog, InitializerLoader } from '@/components';
 import { useUserRoleObservable, useUserStatusObservable } from '@/hooks';
+import { queryClient } from '@/infra/query';
 import { Router } from '@/routes';
-import { queryClient } from '@/services';
 import { userObservable } from '@/utils';
 import { QueryClientProvider } from '@tanstack/react-query';
 
@@ -26,11 +26,11 @@ const App = () => {
   useUserStatusObservable();
 
   React.useEffect(() => {
-    const checkUserupdates = async () => {
+    const checkUserUpdates = async () => {
       await userObservable();
     };
 
-    const intervalId = setInterval(checkUserupdates, 1800000); // 3min
+    const intervalId = setInterval(checkUserUpdates, 1800000); // 3min
     setReady(true);
 
     return () => clearInterval(intervalId);

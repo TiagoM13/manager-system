@@ -3,8 +3,7 @@ import {
   PATIENT_UPDATED_SUCCESSFULLY,
 } from '@/constants/messages';
 import { IMSResponse, IPatient } from '@/interfaces';
-import { queryClient } from '@/services';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useNotification } from '../notification';
 
@@ -20,6 +19,7 @@ export const useUpdatePatient = ({
   updatePatient,
   patientId,
 }: UseUpdatePatientProps) => {
+  const queryClient = useQueryClient();
   const notify = useNotification();
 
   const { mutateAsync: updatePatientMutation, isPending } = useMutation({

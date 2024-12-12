@@ -1,6 +1,6 @@
 import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
 import { IDoctor, IMSResponse } from '@/interfaces';
-import { handleAPIErrors } from '@/utils/common';
+import { handleAPIErrors } from '@/utils';
 
 interface IDoctorFirters {
   name?: string;

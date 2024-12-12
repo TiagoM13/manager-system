@@ -6,15 +6,15 @@ import {
   logout,
 } from '@/store/modules/auth/actions';
 
-export const makeMs = (baseURL: string) => {
-  const ms = axios.create({
+export const createApiClient = (baseURL: string) => {
+  const apiClient = axios.create({
     baseURL,
     paramsSerializer: (params) => {
       return new URLSearchParams(params).toString();
     },
   });
 
-  ms.interceptors.request.use((oldConfigs) => {
+  apiClient.interceptors.request.use((oldConfigs) => {
     const config = { ...oldConfigs };
 
     const token = getAuthTokens();
@@ -24,16 +24,16 @@ export const makeMs = (baseURL: string) => {
       config.headers.Authorization = bearerToken;
     }
 
-    const user = getCurrentUser();
+    const currentUser = getCurrentUser();
 
-    if (typeof user?.role !== 'undefined') {
-      config.headers.role = user.role;
+    if (typeof currentUser?.role !== 'undefined') {
+      config.headers.role = currentUser.role;
     }
 
     return config;
   });
 
-  ms.interceptors.response.use(
+  apiClient.interceptors.response.use(
     (response) => response,
     (error) => {
       if (
@@ -52,7 +52,9 @@ export const makeMs = (baseURL: string) => {
     },
   );
 
-  return ms;
+  return apiClient;
 };
 
-export const msHosp = makeMs(process.env.URL_API_HOSP || '');
+export const hospitalServiceClient = createApiClient(
+  process.env.URL_API_HOSP || '',
+);

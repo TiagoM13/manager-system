@@ -9,3 +9,4 @@ export * from './calculate-age';
 export * from './schemas';
 export * from './validate-cns';
 export * from './common';
+export * from './resolver';
