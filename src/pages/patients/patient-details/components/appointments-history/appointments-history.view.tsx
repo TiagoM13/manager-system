@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { CircleNotch, Plus } from '@phosphor-icons/react';
 
-import { Card, Button } from '@/components';
+import { Card, Button } from '@/components/_ui';
 import { IAppointment } from '@/interfaces';
 
 import { AppointmentInfoCard } from '../appointment-info-card';
@@ -31,13 +31,13 @@ export const AppointmentsHistoryView: React.FC<AppointmentsHistoryViewProps> = (
   } = props;
 
   return (
-    <Card title="Histórico de consultas" className="px-6 space-y-2 h-full">
+    <Card title="Histórico de consultas" className="h-full space-y-2 px-6">
       <div className="space-y-2">
         {loading ? (
-          <div className="flex items-center justify-center min-h-[100px]">
+          <div className="flex min-h-[100px] items-center justify-center">
             <CircleNotch
               weight="bold"
-              className="text-sky-600 size-8 animate-spin"
+              className="size-8 animate-spin text-sky-600"
             />
           </div>
         ) : (
@@ -51,7 +51,7 @@ export const AppointmentsHistoryView: React.FC<AppointmentsHistoryViewProps> = (
             )}
             <div className="flex flex-col items-center space-y-4">
               {isNotHaveAppointments ? (
-                <div className="flex flex-col justify-center items-center space-y-2">
+                <div className="flex flex-col items-center justify-center space-y-2">
                   <span className="text-sm">Nenhuma consulta encontrada</span>
                 </div>
               ) : (
@@ -71,7 +71,7 @@ export const AppointmentsHistoryView: React.FC<AppointmentsHistoryViewProps> = (
                 <Link
                   to={`/appointments/${patientId}/list`}
                   state={{ from: location }}
-                  className="text-sm text-sky-600 font-medium hover:underline"
+                  className="text-sm font-medium text-sky-600 hover:underline"
                 >
                   visualizar mais
                 </Link>

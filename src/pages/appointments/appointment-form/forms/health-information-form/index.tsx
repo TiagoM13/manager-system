@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Card, Input, Select } from '@/components';
+import { Card, Input, Select } from '@/components/_ui';
 import {
   healthAgentOptions,
   medicalConditionsOptions,
@@ -22,7 +22,7 @@ export const HealthInformationForm: React.FC<{ loading?: boolean }> = ({
         <h2 className="text-xl font-semibold">
           Preencha as informações de saúde
         </h2>
-        <div className="w-full grid grid-cols-2 gap-6 mt-3">
+        <div className="mt-3 grid w-full grid-cols-2 gap-6">
           <Select
             name="health_agent"
             label="Agente de sáude"

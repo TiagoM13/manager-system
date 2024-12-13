@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Badge } from '@/components';
+import { Badge } from '@/components/_ui';
 import { IAppointment } from '@/interfaces';
 import { formatAppointmentDate } from '@/utils';
 
@@ -12,9 +12,9 @@ export const AppointmentInfoCard: React.FC<AppointmentInfoCardProps> = ({
   appointment,
 }) => {
   return (
-    <div className="w-full bg-slate-200 flex justify-between items-center rounded-xl py-2.5 px-4">
+    <div className="flex w-full items-center justify-between rounded-xl bg-slate-200 px-4 py-2.5">
       <div className="space-y-1">
-        <span className="text-sm text-slate-600 font-medium">
+        <span className="text-sm font-medium text-slate-600">
           {appointment.appointment_type}
         </span>
         <h4 className="text-sm font-semibold">Sheron Sttephany</h4>

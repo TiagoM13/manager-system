@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { FormContainer, InputSearch } from '@/components';
+import { FormContainer, InputSearch } from '@/components/_ui';
 import { useQueryParams } from '@/hooks';
 import { IUsersFilters } from '@/interfaces';
 

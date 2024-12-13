@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { Variables } from '@/components';
+import { Variables } from '@/components/_ui';
 
 import { closeDialog, confirmDialog, openDialog } from './actions';
 

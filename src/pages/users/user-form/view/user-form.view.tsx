@@ -1,8 +1,9 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { FormContainer, Header } from '@/components';
-import { BreadcrumbItem } from '@/components/header/interfaces';
+import { Header } from '@/components';
+import { FormContainer } from '@/components/_ui';
+import { BreadcrumbItem } from '@/interfaces';
 
 import { UserForm, StatusForm } from '../forms';
 import { useUserFormModel } from '../model/user-form.model';
@@ -40,7 +41,7 @@ export const UserFormView: React.FC<UserFormViewProps> = (props) => {
             isSubmit
           />
 
-          <div className="max-w-[1440px] flex gap-5 mt-4  max-md:flex-col">
+          <div className="mt-4 flex max-w-[1440px] gap-5 max-md:flex-col">
             <div className="w-[60%] max-md:w-full">
               <UserForm
                 isUpdatingItself={isUpdatingItself}

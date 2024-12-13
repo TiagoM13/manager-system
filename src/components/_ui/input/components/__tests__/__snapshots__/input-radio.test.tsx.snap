@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InputRadio/> should render correctly component 1`] = `
+<DocumentFragment>
+  <label
+    class="mb-2 block text-sm text-slate-600"
+  >
+    Teste de seleção 
+  </label>
+  <div
+    class="flex gap-6"
+  >
+    <div
+      class="flex items-center gap-2.5"
+    >
+      <input
+        class="h-[12px] w-[12px] cursor-pointer appearance-none rounded-full border border-slate-600 transition-all duration-500 ease-in checked:bg-sky-600 checked:hover:bg-sky-500 disabled:cursor-auto disabled:opacity-60 hover:bg-sky-200"
+        id="sim"
+        type="radio"
+        value="Sim"
+      />
+      <label
+        class="cursor-pointer capitalize text-slate-600 "
+        for="sim"
+      >
+        Sim
+      </label>
+    </div>
+    <div
+      class="flex items-center gap-2.5"
+    >
+      <input
+        class="h-[12px] w-[12px] cursor-pointer appearance-none rounded-full border border-slate-600 transition-all duration-500 ease-in checked:bg-sky-600 checked:hover:bg-sky-500 disabled:cursor-auto disabled:opacity-60 hover:bg-sky-200"
+        id="não"
+        type="radio"
+        value="Não"
+      />
+      <label
+        class="cursor-pointer capitalize text-slate-600 "
+        for="não"
+      >
+        Não
+      </label>
+    </div>
+  </div>
+</DocumentFragment>
+`;

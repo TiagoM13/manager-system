@@ -1,14 +1,13 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-import { msHosp } from '@/services';
-
+import { hospitalServiceClient } from './axios';
 import { HttpMethod, IHttpClient } from './http-client-contract';
 
 export class HttpClient implements IHttpClient {
   private axiosInstance: AxiosInstance;
 
   constructor() {
-    this.axiosInstance = msHosp;
+    this.axiosInstance = hospitalServiceClient;
   }
 
   async sendRequest<T>(

@@ -3,11 +3,11 @@ import { FormProvider } from 'react-hook-form';
 
 import { Check } from '@phosphor-icons/react';
 
-import { Header, Card, Button } from '@/components';
-import { BreadcrumbItem } from '@/components/header/interfaces';
-import { PatientHeader } from '@/pages/patients/patient-details/components';
+import { Header, PatientHeader } from '@/components';
+import { Card, Button } from '@/components/_ui';
+import { BreadcrumbItem } from '@/interfaces';
 
-import { NotFoundPatient, PatientCard } from '../components';
+import { PatientCardList } from '../components/patient-card-list';
 import {
   AppointmentForm,
   HealthInformationForm,
@@ -48,7 +48,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
         goBack={() => goBack('/appointments')}
       />
 
-      <div className="max-w-[1440px] mt-6 space-y-6">
+      <div className="mt-6 max-w-[1440px] space-y-6">
         {isCreatingNewAppointment && (
           <FormProvider {...searchFormMethods}>
             <PatientSearchForm loading={isLoading} />
@@ -56,25 +56,11 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
         )}
 
         {!!hasValidQuery && isCreatingNewAppointment && (
-          <Card bordered>
-            <div className="space-y-4 p-2">
-              {allPatientsResponse &&
-              allPatientsResponse.patients.length > 0 ? (
-                <>
-                  <h2 className="text-xl font-semibold">
-                    Pacientes Encontrados
-                  </h2>
-                  {allPatientsResponse.patients.map((patient) => (
-                    <PatientCard key={patient.id} patient={patient} />
-                  ))}
-                </>
-              ) : (
-                <NotFoundPatient
-                  onNavigate={() => navigateTo({ route: '/patients/new' })}
-                />
-              )}
-            </div>
-          </Card>
+          <PatientCardList
+            patients={allPatientsResponse?.patients}
+            onNavigateToNotFound={() => navigateTo({ route: '/patients/new' })}
+            loading={isLoading}
+          />
         )}
 
         {!isCreatingNewAppointment && (
@@ -95,13 +81,13 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
             <div className="max-w-[1440px]">
               <Card bordered>
                 <div className="flex gap-6 p-2">
-                  <div className="w-full flex flex-col justify-between">
+                  <div className="flex w-full flex-col justify-between">
                     <AppointmentForm
                       loading={isLoading || isPending}
                       doctors={doctorOptions}
                     />
 
-                    <div className="flex ml-auto gap-2 p-2">
+                    <div className="ml-auto flex gap-2 p-2">
                       <Button
                         type="button"
                         label="salvar consulta"

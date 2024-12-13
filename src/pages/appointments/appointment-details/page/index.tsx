@@ -2,7 +2,7 @@ import React from 'react';
 
 import { House, CheckSquare, IdentificationBadge } from '@phosphor-icons/react';
 
-import { CustomLoadingSkeleton } from '@/components';
+import { CustomLoadingSkeleton } from '@/components/_ui';
 import { HttpClient } from '@/infra/http/http-client';
 import {
   getAllDoctorsPaginatedService,

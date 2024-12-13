@@ -1,6 +1,6 @@
 import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
 import { IUploadFile } from '@/interfaces';
-import { handleAPIErrors } from '@/utils/common';
+import { handleAPIErrors } from '@/utils';
 
 export const uploadFileService = async (
   client: IHttpClient,

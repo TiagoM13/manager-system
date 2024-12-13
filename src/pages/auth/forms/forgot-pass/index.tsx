@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { CircleNotch } from '@phosphor-icons/react';
 
-import { Button, Input } from '@/components';
+import { Button, Input } from '@/components/_ui';
 import { useAuth } from '@/hooks';
 
 import { FormAuthProps } from '../../types/auth.types';
@@ -44,7 +44,7 @@ export const ForgotPasswodForm: React.FC = () => {
         <button
           type="button"
           onClick={redirectLogin}
-          className="block ml-auto  text-sm font-semibold cursor-pointer hover:text-sky-600 transition-all duration-500"
+          className="ml-auto block cursor-pointer text-sm font-semibold transition-all duration-500 hover:text-sky-600"
         >
           Fazer login
         </button>

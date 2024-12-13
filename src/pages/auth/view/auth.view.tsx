@@ -2,7 +2,7 @@ import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import BgLogin from '@/assets/img/background-login.jpg';
-import { FormContainer } from '@/components';
+import { FormContainer } from '@/components/_ui';
 
 import { useAuthModel } from '../model/auth.model';
 
@@ -20,18 +20,18 @@ export const AuthPageView: React.FC<AuthPageViewProps> = (props) => {
         onSubmit={handleSubmit(submit)}
         className="overflow-auto"
       >
-        <div className="flex h-screen items-center justify-between bg-slate-100 relative max-lg:justify-center">
-          <div className="w-full max-w-[50%] flex justify-center items-center relative max-lg:max-w-full max-lg:mx-8">
+        <div className="relative flex h-screen items-center justify-between bg-slate-100 max-lg:justify-center">
+          <div className="relative flex w-full max-w-[50%] items-center justify-center max-lg:mx-8 max-lg:max-w-full">
             {children}
           </div>
 
-          <div className="h-full w-full max-w-[50%] max-lg:hidden relative">
+          <div className="relative h-full w-full max-w-[50%] max-lg:hidden">
             <img
               src={BgLogin}
               alt="login"
-              className="object-cover w-full h-full block border-0"
+              className="block h-full w-full border-0 object-cover"
             />
-            <div className="w-full h-full bg-slate-700/10 absolute z-10 inset-0" />
+            <div className="absolute inset-0 z-10 h-full w-full bg-slate-700/10" />
           </div>
         </div>
       </FormContainer>

@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { SignOut, UserCircle, CircleNotch } from '@phosphor-icons/react';
 
-import { UserProfile } from '@/components';
+import { UserProfile } from '@/components/_ui';
 import { useAuth, useCurrentUser } from '@/hooks';
 import { useDialog, useMenu, useMenuProfile } from '@/store';
 import { menus } from '@/utils';
@@ -42,14 +42,14 @@ export const SideBar: React.FC = () => {
         'Você realmente deseja sair da aplicação? Todas as alterações não salvas serão perdidas.',
       acceptLabel: 'sair',
       rejectLabel: 'cancelar',
-      acceptIcon: <SignOut className="text-white size-4" />,
+      acceptIcon: <SignOut className="size-4 text-white" />,
       accept: handleExit,
     });
   }, [confirmDialog, handleExit]);
 
   return (
     <>
-      <div className="flex flex-col justify-between w-full h-full ml-1 p-2">
+      <div className="ml-1 flex h-full w-full flex-col justify-between p-2">
         <div>
           <UserProfile
             color="light"
@@ -81,7 +81,7 @@ export const SideBar: React.FC = () => {
               toggle(true);
               toggleMenu();
             }}
-            className="flex gap-2 text-sm text-zinc-400 hover:text-sky-500 transition"
+            className="flex gap-2 text-sm text-zinc-400 transition hover:text-sky-500"
           >
             <div className="flex flex-wrap">
               <UserCircle className="size-5" />
@@ -98,7 +98,7 @@ export const SideBar: React.FC = () => {
               toggleMenu();
             }}
             id="btn-signup"
-            className="flex gap-2 text-sm text-zinc-400 hover:text-sky-500 transition"
+            className="flex gap-2 text-sm text-zinc-400 transition hover:text-sky-500"
           >
             {!!loading ? (
               <CircleNotch className="size-5" />

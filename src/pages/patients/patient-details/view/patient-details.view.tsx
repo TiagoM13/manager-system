@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { Header, Card } from '@/components';
-import { BreadcrumbItem } from '@/components/header/interfaces';
+import { Header, PatientHeader } from '@/components';
+import { Card } from '@/components/_ui';
+import { BreadcrumbItem } from '@/interfaces';
 
 import {
-  PatientHeader,
   PatientCompletionStatus,
   PatientInfoSections,
   AppointmentsHistory,
@@ -38,7 +38,7 @@ export const PatientDetailsView: React.FC<PatientDetailsViewProps> = (
         breadcrumbItems={breadcrumbsPathItems}
       />
 
-      <div className="max-w-[1440px] space-y-6 mt-6">
+      <div className="mt-6 max-w-[1440px] space-y-6">
         <Card>
           <div className="flex items-center justify-between">
             <PatientHeader patient={patient} loading={loading} />

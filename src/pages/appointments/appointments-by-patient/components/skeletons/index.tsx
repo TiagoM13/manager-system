@@ -1,7 +1,7 @@
 import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
-import { Button, StatusActionIcon, Table } from '@/components';
+import { Button, StatusActionIcon, Table } from '@/components/_ui';
 import { AppointmentStatus } from '@/enums';
 
 export const SkeletonTableAppintmentsByPatient: React.FC = () => {
@@ -9,21 +9,21 @@ export const SkeletonTableAppintmentsByPatient: React.FC = () => {
     <SkeletonTheme baseColor="var(--sky-100)" highlightColor="var(--sky-200)">
       <Table.Row>
         <Table.Cell style={{ width: 250 }}>
-          <Skeleton containerClassName="flex-1" className="max-w-36 w-full" />
+          <Skeleton containerClassName="flex-1" className="w-full max-w-36" />
         </Table.Cell>
         <Table.Cell style={{ width: 200 }}>
-          <Skeleton containerClassName="flex-1" className="max-w-20 w-full" />
+          <Skeleton containerClassName="flex-1" className="w-full max-w-20" />
         </Table.Cell>
         <Table.Cell style={{ width: 350 }}>
-          <Skeleton containerClassName="flex-1" className="max-w-44 w-full" />
+          <Skeleton containerClassName="flex-1" className="w-full max-w-44" />
         </Table.Cell>
         <Table.Cell style={{ width: 300 }}>
-          <Skeleton containerClassName="flex-1" className="max-w-40 w-full" />
+          <Skeleton containerClassName="flex-1" className="w-full max-w-40" />
         </Table.Cell>
         <Table.Cell style={{ width: 300 }}>
-          <Skeleton containerClassName="flex-1" className="max-w-32 w-full" />
+          <Skeleton containerClassName="flex-1" className="w-full max-w-32" />
         </Table.Cell>
-        <Table.Cell style={{ width: 300 }} className="max-w-24 w-full">
+        <Table.Cell style={{ width: 300 }} className="w-full max-w-24">
           <Table.Cell>
             <Button
               clear

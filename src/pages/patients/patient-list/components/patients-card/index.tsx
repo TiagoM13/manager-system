@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Pagination } from '@/components';
+import { Pagination } from '@/components/_ui';
 import { IPatient, IResponseMeta } from '@/interfaces';
 
 import { PatientCard } from '../patient-item';
@@ -29,7 +29,7 @@ export const PatientsCard: React.FC<PatientCardProps> = ({
         <PatientCard key={patient.id} patient={patient} onEdit={onEdit} />
       ))}
 
-      <div className="flex items-center justify-between p-4 border-t border-t-slate-400">
+      <div className="flex items-center justify-between border-t border-t-slate-400 p-4">
         <Pagination.Label
           currentPageData={data?.meta?.total_current_records! || 0}
           totalItems={data?.meta?.total_records || 0}

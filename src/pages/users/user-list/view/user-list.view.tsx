@@ -1,7 +1,8 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { Header, Card } from '@/components';
+import { Header } from '@/components';
+import { Card } from '@/components/_ui';
 
 import { UsersFilters, UsersTable, UsersCard } from '../components';
 import { useUserListModel } from '../model/user-list.model';
