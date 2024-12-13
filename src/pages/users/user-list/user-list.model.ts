@@ -2,10 +2,14 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
-import { useQueryParams, useAppNavigation, useWindowSize } from '@/hooks';
+import {
+  useQueryParams,
+  useAppNavigation,
+  useWindowSize,
+  useNotification,
+} from '@/hooks';
 import { IUsersFilters, IUser, IMSResponse } from '@/interfaces';
 import { useDialog } from '@/store';
-import { toastSuccess, toastError } from '@/utils';
 import {
   useQuery,
   useQueryClient,
@@ -28,6 +32,7 @@ export const useUserListModel = ({
   deleteUser,
 }: UserListModelProps) => {
   const location = useLocation();
+  const notify = useNotification();
   const { navigateTo } = useAppNavigation();
   const [query, setQuery] = useQueryParams<IUsersFilters>();
   const { confirmDialog } = useDialog();
@@ -43,10 +48,10 @@ export const useUserListModel = ({
   const { mutateAsync: deleteUserFn, isPending } = useMutation({
     mutationFn: async (id: number) => deleteUser(id),
     onSuccess: () => {
-      toastSuccess(USER_DELETE_SUCCESS);
+      notify.success(USER_DELETE_SUCCESS);
       queryClient.invalidateQueries({ queryKey: ['users'] });
     },
-    onError: () => toastError(USER_DELETE_ERROR),
+    onError: () => notify.error(USER_DELETE_ERROR),
   });
 
   const methods = useForm({

@@ -4,7 +4,12 @@ import { useLocation } from 'react-router-dom';
 
 import { AxiosResponse } from 'axios';
 
-import { useCurrentUser, useAuth, useAppNavigation } from '@/hooks';
+import {
+  useCurrentUser,
+  useAuth,
+  useAppNavigation,
+  useNotification,
+} from '@/hooks';
 import {
   IUser,
   IChangePasswordData,
@@ -12,7 +17,6 @@ import {
   IUploadFile,
 } from '@/interfaces';
 import { useMenuProfile } from '@/store';
-import { toastSuccess, toastError, toastWarning } from '@/utils';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import {
@@ -43,13 +47,12 @@ export const useAccountSettingsModel = ({
   uploadFile,
   changePassword,
 }: IAccountSettingsModelProps) => {
-  // states
   const [initialAvatarUrl, setInitialAvatarUrl] = React.useState<string | null>(
     null,
   );
   const [showPasswordInput, setShowPasswordInput] = React.useState(false);
 
-  // hooks
+  const notify = useNotification();
   const location = useLocation();
   const user = useCurrentUser();
   const queryClient = useQueryClient();
@@ -57,7 +60,6 @@ export const useAccountSettingsModel = ({
   const { navigateTo } = useAppNavigation();
   const { show, toggle, avatarUrl, setAvatarUrl } = useMenuProfile();
 
-  // hook form
   const methods = useForm<IUserProfile>({
     resolver: profileSchema,
     shouldUnregister: false,
@@ -77,10 +79,8 @@ export const useAccountSettingsModel = ({
     'confirm_password',
   ]);
 
-  // refs
   const profileRef = React.useRef<HTMLDivElement>(null);
 
-  // mutations
   const { mutateAsync: updateUserMutation, isPending: isLoadingUpdateUser } =
     useMutation({
       mutationFn: async (values: IUser) =>
@@ -88,12 +88,12 @@ export const useAccountSettingsModel = ({
       onSuccess: (data) => {
         if (data?.success) {
           queryClient.invalidateQueries({ queryKey: ['users'] });
-          toastSuccess(UPDATED_PROFILE_SUCCESS);
+          notify.success(UPDATED_PROFILE_SUCCESS);
           toggle(false);
         }
       },
       onError: () => {
-        toastError(ERROR_UPDATING_PROFILE);
+        notify.error(ERROR_UPDATING_PROFILE);
         toggle(false);
       },
     });
@@ -101,7 +101,7 @@ export const useAccountSettingsModel = ({
     useMutation({
       mutationFn: uploadFile,
       onSuccess: () => queryClient.invalidateQueries({ queryKey: ['users'] }),
-      onError: () => toastError(ERROR_PROCESSING_IMAGE),
+      onError: () => notify.error(ERROR_PROCESSING_IMAGE),
     });
   const {
     mutateAsync: changePasswordMutation,
@@ -111,7 +111,7 @@ export const useAccountSettingsModel = ({
       changePassword(Number(user.id), values),
     onSuccess: (data) => {
       if (data) {
-        toastWarning(LOGIN_AGAIN);
+        notify.warning(LOGIN_AGAIN);
         toggle(false);
       }
     },
@@ -125,7 +125,6 @@ export const useAccountSettingsModel = ({
     }
   };
 
-  // callbacks
   const handleFileUpload = React.useCallback(
     async (form: HTMLFormElement) => {
       const formData = new FormData(form);
@@ -166,12 +165,10 @@ export const useAccountSettingsModel = ({
 
       let uploadedImageUrl = null;
 
-      // Updated avatar
       if (avatarUrl !== initialAvatarUrl) {
         uploadedImageUrl = await handleFileUpload(formElement);
       }
 
-      // Updated username
       if (values.name !== user.name || avatarUrl !== initialAvatarUrl) {
         const response = await updateUserMutation({
           ...user,
@@ -184,7 +181,6 @@ export const useAccountSettingsModel = ({
         }
       }
 
-      // Change password
       if (values.password && values.confirm_password) {
         const response = await changePasswordMutation({
           password: values.password,
@@ -208,7 +204,6 @@ export const useAccountSettingsModel = ({
     ],
   );
 
-  // memos
   const loading = React.useMemo(
     () => isLoadingUpdateUser || isLoadingUploadFile || isLoadingChangePassword,
     [isLoadingChangePassword, isLoadingUpdateUser, isLoadingUploadFile],
@@ -232,7 +227,6 @@ export const useAccountSettingsModel = ({
     ],
   );
 
-  // effects
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

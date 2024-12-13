@@ -4,10 +4,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { ERROR_PROCESSING_IMAGE } from '@/components/profile/profile.messages';
 import { Role } from '@/enums';
-import { useAppNavigation, useCurrentUser } from '@/hooks';
+import { useAppNavigation, useCurrentUser, useNotification } from '@/hooks';
 import { IMSResponse, IUploadFile, IUser } from '@/interfaces';
 import { useImageUrl, useName } from '@/store';
-import { toastError, toastSuccess } from '@/utils';
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
 
 import {
@@ -36,7 +35,6 @@ export const useUserFormModel = ({
   updateUserStatus,
   uploadFile,
 }: IUserFormModelProps) => {
-  // Hooks
   const navigate = useNavigate();
   const { goBack } = useAppNavigation();
   const { setImageUrl } = useImageUrl();
@@ -44,27 +42,26 @@ export const useUserFormModel = ({
   const { id } = useParams<{ id: string }>();
   const currentUser = useCurrentUser();
   const queryClient = useQueryClient();
+  const notify = useNotification();
 
   const isCreatingNewUser = React.useMemo(() => id === 'new', [id]);
 
-  // Queries
   const { data: user, isLoading: isLoadingUser } = useQuery<UserDataResponse>({
     queryKey: ['user'],
     queryFn: async () => await getUser(Number(id)),
     enabled: !isCreatingNewUser,
   });
-  // Mutations
   const { mutateAsync: createUserMutation, isPending: isLoadingCreate } =
     useMutation({
       mutationFn: async (values: IUser) => await createUser(values),
       onSuccess: (data) => {
         if (data?.success) {
           queryClient.invalidateQueries({ queryKey: ['users'] });
-          toastSuccess(USER_CREATED_SUCCESSFULLY);
+          notify.success(USER_CREATED_SUCCESSFULLY);
           navigate('/users');
         }
       },
-      onError: () => toastError(ERROR_CREATING_USER),
+      onError: () => notify.error(ERROR_CREATING_USER),
     });
   const { mutateAsync: updateUserMutation, isPending: isLoadingUpdate } =
     useMutation({
@@ -72,11 +69,11 @@ export const useUserFormModel = ({
       onSuccess: (data) => {
         if (data?.success) {
           queryClient.invalidateQueries({ queryKey: ['user', id] });
-          toastSuccess(USER_UPDATED_SUCCESSFULLY);
+          notify.success(USER_UPDATED_SUCCESSFULLY);
           navigate('/users');
         }
       },
-      onError: () => toastError(ERROR_UPDATING_USER),
+      onError: () => notify.error(ERROR_UPDATING_USER),
     });
   const { mutateAsync: updateUserStatusMutation, isPending: isLoadingStatus } =
     useMutation({
@@ -90,17 +87,15 @@ export const useUserFormModel = ({
       mutationFn: uploadFile,
       onSuccess: () =>
         queryClient.invalidateQueries({ queryKey: ['user', id] }),
-      onError: () => toastError(ERROR_PROCESSING_IMAGE),
+      onError: () => notify.error(ERROR_PROCESSING_IMAGE),
     });
 
-  // Hook Form
   const methods = useForm<UserDataSchemaType>({
     resolver: userDataSchema as any,
     shouldUnregister: false,
   });
   const { handleSubmit, reset } = methods;
 
-  // memos
   const isLoading = React.useMemo(
     () =>
       isLoadingUser ||
@@ -117,7 +112,6 @@ export const useUserFormModel = ({
     ],
   );
 
-  // callbacks
   const handleFileUpload = React.useCallback(
     async (form: HTMLFormElement) => {
       const formData = new FormData(form);
