@@ -2,7 +2,7 @@ import React from 'react';
 
 import { CaretLeft } from '@phosphor-icons/react';
 
-import { Divider } from '@/components';
+import { Divider } from '@/components/_ui';
 
 import { Breadcrumb } from './components/breadcrumb';
 import { ButtonAction } from './components/button-actions';
@@ -28,7 +28,7 @@ export const Header: React.FC<HeaderProps> = ({
               type="button"
               onClick={goBack}
               data-testid="btn-cancel"
-              className="bg-slate-300 rounded-md p-2 hover:brightness-95"
+              className="rounded-md bg-slate-300 p-2 hover:brightness-95"
             >
               <CaretLeft className="size-8" />
             </button>

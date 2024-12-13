@@ -1,12 +1,12 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Input, InputMask, Select } from '@/components';
-import { IPatient } from '@/interfaces';
+import { Input, InputMask, Select } from '@/components/_ui';
 import {
   maritalStatusOptions,
-  sexOptions,
-} from '@/pages/patients/utils/options';
+  genderOptions,
+} from '@/constants/select-options';
+import { IPatient } from '@/interfaces';
 import { formatCPF } from '@/utils';
 
 export const FormStepOne: React.FC<{ loading?: boolean }> = ({ loading }) => {
@@ -20,7 +20,7 @@ export const FormStepOne: React.FC<{ loading?: boolean }> = ({ loading }) => {
       <h2 className="text-xl font-semibold">
         Preencha as informações do paciente
       </h2>
-      <div className="w-full grid grid-cols-2 gap-6 mt-3">
+      <div className="mt-3 grid w-full grid-cols-2 gap-6">
         <Input
           name="name"
           control={control}
@@ -67,7 +67,7 @@ export const FormStepOne: React.FC<{ loading?: boolean }> = ({ loading }) => {
           label="Sexo"
           placeholder="Selecione o sexo"
           control={control}
-          options={sexOptions}
+          options={genderOptions}
           error={errors.sex}
           disabled={loading}
           required

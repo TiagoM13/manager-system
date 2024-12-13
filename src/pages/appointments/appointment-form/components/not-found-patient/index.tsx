@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Plus } from '@phosphor-icons/react';
 
-import { Button } from '@/components';
+import { Button } from '@/components/_ui';
 
 export const NotFoundPatient: React.FC<{ onNavigate: () => void }> = ({
   onNavigate,

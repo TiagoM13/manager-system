@@ -27,7 +27,6 @@ export const useUserListModel = ({
   getAllUsers,
   deleteUser,
 }: UserListModelProps) => {
-  // hooks
   const location = useLocation();
   const { navigateTo } = useAppNavigation();
   const [query, setQuery] = useQueryParams<IUsersFilters>();
@@ -35,13 +34,12 @@ export const useUserListModel = ({
   const [, , isMobile] = useWindowSize();
   const queryClient = useQueryClient();
 
-  // queries
   const { data, isLoading } = useQuery({
     queryKey: ['users', query],
     queryFn: async () => await getAllUsers(query),
     placeholderData: keepPreviousData,
   });
-  // mutations
+
   const { mutateAsync: deleteUserFn, isPending } = useMutation({
     mutationFn: async (id: number) => deleteUser(id),
     onSuccess: () => {
@@ -51,7 +49,6 @@ export const useUserListModel = ({
     onError: () => toastError(USER_DELETE_ERROR),
   });
 
-  // Hook Form
   const methods = useForm({
     defaultValues: query,
     mode: 'onChange',
@@ -64,7 +61,6 @@ export const useUserListModel = ({
     [isLoading, isPending],
   );
 
-  // callbacks
   const handleNewRegister = React.useCallback(() => {
     navigateTo({ route: '/users/new', state: location.state });
   }, [location.state, navigateTo]);
@@ -72,9 +68,10 @@ export const useUserListModel = ({
   const handleDelete = React.useCallback(
     (id: number) => {
       confirmDialog({
-        header: 'Você esta prestes a excluir!',
-        message: 'Tem certeza de que deseja excluir este usuário?',
-        acceptLabel: 'confirmar',
+        header: 'Confirmação de Exclusão',
+        message:
+          'Você tem certeza de que deseja excluir este usuário? Esta ação não poderá ser desfeita.',
+        acceptLabel: 'excluir',
         rejectLabel: 'cancelar',
         accept: async () => await deleteUserFn(id),
       });
@@ -89,7 +86,6 @@ export const useUserListModel = ({
     [location.state, navigateTo],
   );
 
-  // effects
   React.useEffect(() => {
     if (data?.users && data?.meta?.total_current_records === 0) {
       setQuery({ page: 1 });

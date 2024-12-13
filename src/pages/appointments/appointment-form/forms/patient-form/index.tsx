@@ -1,9 +1,9 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Card, Input, InputMask, Select } from '@/components';
+import { Card, Input, InputMask, Select } from '@/components/_ui';
+import { maritalStatusOptions } from '@/constants/select-options';
 import { IPatient } from '@/interfaces';
-import { maritalStatusOptions } from '@/pages/patients/utils/options';
 import { formatCPF } from '@/utils';
 
 export const PatientForm: React.FC<{ loading?: boolean }> = ({ loading }) => {
@@ -18,7 +18,7 @@ export const PatientForm: React.FC<{ loading?: boolean }> = ({ loading }) => {
         <h2 className="text-xl font-semibold">
           Preencha as informações do paciente
         </h2>
-        <div className="w-full grid grid-cols-2 gap-6 mt-3">
+        <div className="mt-3 grid w-full grid-cols-2 gap-6">
           <InputMask
             name="cpf"
             label="CPF"

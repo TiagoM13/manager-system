@@ -6,8 +6,7 @@ import {
   IAppointmentFiltersWithoutName,
   IMSResponse,
 } from '@/interfaces';
-import { handleAPIErrors } from '@/utils/common';
-import { delayPromise } from '@/utils/resolver';
+import { handleAPIErrors, delayPromise } from '@/utils';
 
 export const getAllAppointmentsService = async (
   client: IHttpClient,
@@ -17,7 +16,7 @@ export const getAllAppointmentsService = async (
 
   try {
     const response = await client.sendRequest<
-      IMSResponse<IAppointment[], 'list-all-appointments'>
+      IMSResponse<IAppointment[], 'get-all-appointments'>
     >(HttpMethod.GET, '/appointments', {
       params: {
         ...params,
@@ -46,7 +45,7 @@ export const getAppointmentsByPatientService = async (
 
   try {
     const response = await client.sendRequest<
-      IMSResponse<IAppointment[], 'get-all-appointments'>
+      IMSResponse<IAppointment[], 'appointments'>
     >(HttpMethod.GET, `/appointments/${patientId}/list`, {
       params: {
         ...params,

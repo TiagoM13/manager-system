@@ -8,7 +8,6 @@ import {
   MAX_LENGTH_TEXT,
   MIN_LENGTH_TEXT,
 } from '@/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 export const appointmentDetailsSchema = z.object({
   appointment_type: z
@@ -47,5 +46,4 @@ export const appointmentDetailsSchema = z.object({
     .nullable(),
 });
 
-export const appointmentDetailsResolver = zodResolver(appointmentDetailsSchema);
 export type AppointmentDetailsType = z.infer<typeof appointmentDetailsSchema>;

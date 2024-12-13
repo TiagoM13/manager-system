@@ -1,11 +1,17 @@
 import React from 'react';
 
-import { Avatar } from '../avatar';
-import { Button } from '../button';
-import { FormContainer } from '../form-container';
-import { CloseButton } from '../icon-button';
-import { FileUploadInput, Input, InputPassword } from '../input';
-import { StatusIcon } from '../status-icon';
+import { Check } from '@phosphor-icons/react';
+
+import {
+  Avatar,
+  Button,
+  FormContainer,
+  CloseButton,
+  Input,
+  InputPassword,
+  FileUploadInput,
+} from '@/components/_ui';
+
 import { useAccountSettingsModel } from './profile.model';
 
 import { StyledProfileMenu } from './styles';
@@ -49,7 +55,7 @@ export const ProfileView: React.FC<IProfileProps> = (props) => {
           onSubmit={methods.handleSubmit(submit)}
         >
           <div className="flex flex-col items-center justify-center px-2">
-            <h3 className="text-slate-400 text-lg my-4">Editar Perfil</h3>
+            <h3 className="my-4 text-lg text-slate-400">Editar Perfil</h3>
 
             <div className="flex flex-col items-center gap-5">
               <Avatar
@@ -65,7 +71,7 @@ export const ProfileView: React.FC<IProfileProps> = (props) => {
               />
             </div>
 
-            <div className="w-full max-w-[250px] mt-4 space-y-5 input-wrapper">
+            <div className="input-wrapper mt-4 w-full max-w-[250px] space-y-5">
               <Input
                 id="name"
                 name="name"
@@ -118,9 +124,10 @@ export const ProfileView: React.FC<IProfileProps> = (props) => {
               <Button
                 type="submit"
                 label="Salvar dados"
-                icon={<StatusIcon loading={loading} />}
+                icon={<Check className="size-4" weight="bold" />}
                 className="w-full disabled:cursor-not-allowed"
                 disabled={disableSubmitButton}
+                loading={loading}
               />
             </div>
           </div>

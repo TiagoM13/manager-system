@@ -1,10 +1,9 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Select, Input, Textarea } from '@/components';
+import { Select, Input, Textarea } from '@/components/_ui';
+import { appointmentTypeOptions } from '@/constants/select-options';
 import { IAppointment } from '@/interfaces';
-
-import { optionsAppointmentType } from '../../utils/options';
 
 interface AppointmentFormProps {
   loading?: boolean;
@@ -32,13 +31,13 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
           ? 'Atualizar e finalizar o atendimento'
           : 'Preencha as informações de atendimento'}
       </h2>
-      <div className="w-full grid grid-cols-2 gap-6 mt-3">
+      <div className="mt-3 grid w-full grid-cols-2 gap-6">
         <Select
           name="appointment_type"
           label="Tipo de atendimento"
           placeholder="Selecione uma opção"
           defaultValue=""
-          options={optionsAppointmentType}
+          options={appointmentTypeOptions}
           disabled={loading}
           control={control}
           error={errors.appointment_type}

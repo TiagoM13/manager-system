@@ -4,19 +4,25 @@ import { useParams } from 'react-router-dom';
 
 import dayjs from 'dayjs';
 
-import { Status } from '@/enums';
 import { formatPatientRequest } from '@/helpers/format-patient-request';
-import { useAppNavigation, useQueryParams } from '@/hooks';
+import {
+  useAppNavigation,
+  useGetAllDoctors,
+  useGetAllPatients,
+  useGetPatient,
+  useQueryParams,
+  useCreateAppointment,
+} from '@/hooks';
 import { IAppointment, IDoctor, IMSResponse, IPatient } from '@/interfaces';
 import { schemaPatient } from '@/pages/patients/patient-form/patient-form.schema';
-import { formatDateWithCurrentTime, toastSuccess } from '@/utils';
-import { useQueryClient, useQuery, useMutation } from '@tanstack/react-query';
+import { formatDateWithCurrentTime } from '@/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
   PatientSearchType,
   AppointmentFormType,
-  appointmentFormResolver,
-  patientSearchResolver,
+  appointmentFormSchema,
+  patientSearchSchema,
 } from '../appointment-form.schema';
 
 interface AppointmentFormModelProps {
@@ -37,93 +43,68 @@ export const useAppointmentFormModel = ({
   getAllDoctors,
   createAppointment,
 }: AppointmentFormModelProps) => {
-  const queryClient = useQueryClient();
+  const [query] = useQueryParams<PatientSearchType>();
   const { goBack, navigateTo } = useAppNavigation();
   const { patientId } = useParams<{ patientId: string }>();
-  const [query] = useQueryParams<PatientSearchType>();
 
   const isCreatingNewAppointment = React.useMemo(
     () => patientId === 'new',
     [patientId],
   );
 
-  // appointment form
+  const hasValidQuery = React.useMemo(
+    () => query.name || query.cns || query.cpf,
+    [query.cns, query.cpf, query.name],
+  );
+
+  const {
+    allPatientsResponse,
+    isLoading: isLoadingAllPatients,
+    isFetching: isFetchingAllPatients,
+  } = useGetAllPatients({
+    getAllPatients: getAllPatients,
+    query,
+    isEnabled: !!query.name,
+  });
+  const {
+    patientResponse,
+    isLoading: isLoadingPatient,
+    isFetching: isFetchingPatient,
+  } = useGetPatient({
+    getPatient,
+    patientId: String(patientId),
+    isEnabled: !isCreatingNewAppointment,
+  });
+  const {
+    doctorsResponse,
+    isLoading: isLoadingDoctors,
+    isFetching: isFetchingDoctors,
+    doctorOptions,
+  } = useGetAllDoctors({
+    getAllDoctors,
+    isEnabled: !isCreatingNewAppointment,
+  });
+  const { createAppointmentMutation, isPending } = useCreateAppointment({
+    createAppointment,
+    patientId: String(patientId),
+  });
+
   const formMethods = useForm<AppointmentFormType>({
-    resolver: appointmentFormResolver,
+    resolver: zodResolver(appointmentFormSchema),
     shouldUnregister: false,
     defaultValues: {
       scheduled_date: dayjs().format('YYYY-MM-DD') as any,
     },
   });
-  // search patient form
   const searchFormMethods = useForm<PatientSearchType>({
-    resolver: patientSearchResolver,
+    resolver: zodResolver(patientSearchSchema),
     shouldUnregister: false,
     defaultValues: query,
   });
-  // patient form
   const patientFormMethods = useForm<IPatient>({
-    resolver: schemaPatient,
+    resolver: zodResolver(schemaPatient),
     shouldUnregister: false,
   });
-
-  // (queries)
-  const { data: allPatientsResponse, isLoading: isLoadingAllPatients } =
-    useQuery({
-      queryKey: ['patients', query.name],
-      queryFn: async () => {
-        if (!query.name) return null;
-        return await getAllPatients({ name: String(query.name) });
-      },
-      enabled: !!query.name,
-    });
-  const {
-    data: patientResponse,
-    isLoading: isLoadingPatient,
-    isFetching: isFetchingPatient,
-  } = useQuery({
-    queryKey: ['patient'],
-    queryFn: async () => await getPatient(String(patientId)),
-    enabled: !isCreatingNewAppointment,
-  });
-  const {
-    data: doctorResponse,
-    isLoading: isLoadingDoctors,
-    isFetching: isFetchingDoctors,
-  } = useQuery({
-    queryKey: ['doctors'],
-    queryFn: async () => await getAllDoctors(),
-    enabled: !isCreatingNewAppointment,
-  });
-  // create appointment
-  const { mutateAsync: createAppointmentMutation, isPending } = useMutation({
-    mutationFn: async (values: IAppointment) =>
-      await createAppointment(String(patientId), values),
-    onSuccess: (data) => {
-      if (data) {
-        toastSuccess('Consulta adicionada com sucesso!');
-        queryClient.invalidateQueries({ queryKey: ['appointments'] });
-        navigateTo({ route: '/appointments' });
-      }
-    },
-    onMutate: (newAppointment) => {
-      queryClient.setQueryData(['appointments'], (old: any) => [
-        ...(old || []),
-        newAppointment,
-      ]);
-    },
-  });
-
-  const doctorOptions = React.useMemo(
-    () =>
-      doctorResponse
-        ?.filter((doctor) => doctor.status !== Status.INACTIVE)
-        .map((doctor) => ({
-          label: doctor.name,
-          value: Number(doctor.id),
-        })),
-    [doctorResponse],
-  );
 
   const isLoading = React.useMemo(
     () =>
@@ -131,17 +112,19 @@ export const useAppointmentFormModel = ({
       isFetchingDoctors ||
       isLoadingPatient ||
       isFetchingPatient ||
-      isLoadingAllPatients,
+      isLoadingAllPatients ||
+      isFetchingAllPatients,
     [
       isLoadingDoctors,
       isFetchingDoctors,
       isLoadingPatient,
       isFetchingPatient,
       isLoadingAllPatients,
+      isFetchingAllPatients,
     ],
   );
 
-  const submit = React.useCallback(
+  const handleCreateNewAppointment = React.useCallback(
     async (values: AppointmentFormType) => {
       const payload: IAppointment = {
         ...values,
@@ -160,16 +143,20 @@ export const useAppointmentFormModel = ({
 
   return {
     query,
+    hasValidQuery,
     goBack,
     navigateTo,
-    submit,
+    handleCreateNewAppointment,
     isLoading,
     isPending,
+    isLoadingDoctors,
+    isLoadingPatient,
+    isLoadingAllPatients,
     formMethods,
     searchFormMethods,
     patientFormMethods,
     isCreatingNewAppointment,
-    doctorResponse,
+    doctorsResponse,
     patientResponse,
     allPatientsResponse,
     doctorOptions,

@@ -28,6 +28,9 @@ const AppointmentForm = React.lazy(
 const AppointmentDetails = React.lazy(
   () => import('@/pages/appointments/appointment-details/page'),
 );
+const AppointmentByPatient = React.lazy(
+  () => import('@/pages/appointments/appointments-by-patient/page'),
+);
 
 export const Router: React.FC = () => {
   const isAuthenticated = useIsAuthenticated();
@@ -40,13 +43,10 @@ export const Router: React.FC = () => {
       ) {
         navigate('/dashboard', { replace: true });
       }
-    }
-    if (!isAuthenticated) {
-      if (['/'].includes(window.location.pathname)) {
-        navigate('/sign-in', { replace: true });
-      }
-
-      if (window.location.pathname !== '/forgot-password') {
+    } else {
+      if (
+        !['/sign-in', '/forgot-password'].includes(window.location.pathname)
+      ) {
         navigate('/sign-in', { replace: true });
       }
     }
@@ -56,7 +56,6 @@ export const Router: React.FC = () => {
     <AppWrapper>
       <React.Suspense fallback={<InitializerLoader />}>
         <Routes>
-          {/* public routes */}
           <Route
             path="/sign-in"
             element={
@@ -74,7 +73,6 @@ export const Router: React.FC = () => {
             }
           />
 
-          {/* private routes */}
           <Route
             path="/dashboard"
             element={
@@ -122,7 +120,7 @@ export const Router: React.FC = () => {
             }
           />
           <Route
-            path="/patients/:id"
+            path="/patients/:patientId"
             element={
               <PrivateRoute
                 allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
@@ -142,7 +140,7 @@ export const Router: React.FC = () => {
             }
           />
           <Route
-            path="/appointments/:patientId/"
+            path="/appointments/:patientId"
             element={
               <PrivateRoute
                 allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
@@ -158,6 +156,16 @@ export const Router: React.FC = () => {
                 allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
               >
                 <AppointmentDetails />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/appointments/:patientId/list"
+            element={
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
+                <AppointmentByPatient />
               </PrivateRoute>
             }
           />

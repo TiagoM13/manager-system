@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Plus } from '@phosphor-icons/react';
+import { Check, Plus } from '@phosphor-icons/react';
 
-import { Button, StatusIcon } from '@/components';
+import { Button } from '@/components/_ui';
 
 import { HeaderProps } from '../../interfaces';
 
@@ -31,7 +31,11 @@ export const ButtonAction: React.FC<HeaderProps> = ({
         id="btn-submit"
         type="submit"
         data-testid="btn-submit"
-        icon={<StatusIcon loading={loading} />}
+        icon={
+          <Check data-testid="icon-check" className="size-5" weight="bold" />
+        }
+        loading={loading}
+        disabled={loading}
         label={actionLabel}
       />
     );

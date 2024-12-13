@@ -2,7 +2,7 @@ import React from 'react';
 
 import { House, User, UsersFour } from '@phosphor-icons/react';
 
-import { CustomLoadingSkeleton } from '@/components';
+import { CustomLoadingSkeleton } from '@/components/_ui';
 import { HttpClient } from '@/infra/http/http-client';
 import { getPatientService } from '@/services';
 
@@ -18,26 +18,29 @@ const PatientDetails: React.FC = () => {
 
   const { patient, loading } = methods;
 
-  const breadcrumbsPathItems = [
-    {
-      label: 'Início',
-      path: '/',
-      icon: <House className="size-4" />,
-    },
-    {
-      label: 'Pacientes',
-      path: '/patients',
-      icon: <UsersFour className="size-4" />,
-    },
-    {
-      label: loading ? (
-        <CustomLoadingSkeleton className="h-5 w-40 rounded-lg" />
-      ) : (
-        patient?.name
-      ),
-      icon: <User className="size-4" />,
-    },
-  ];
+  const breadcrumbsPathItems = React.useMemo(
+    () => [
+      {
+        label: 'Início',
+        path: '/',
+        icon: <House className="size-4" />,
+      },
+      {
+        label: 'Pacientes',
+        path: '/patients',
+        icon: <UsersFour className="size-4" />,
+      },
+      {
+        label: loading ? (
+          <CustomLoadingSkeleton className="h-5 w-40 rounded-lg" />
+        ) : (
+          patient?.name
+        ),
+        icon: <User className="size-4" />,
+      },
+    ],
+    [loading, patient?.name],
+  );
 
   return (
     <PatientDetailsView

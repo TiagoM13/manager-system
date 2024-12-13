@@ -2,7 +2,7 @@ import React from 'react';
 
 import { PencilSimple } from '@phosphor-icons/react';
 
-import { Button } from '@/components';
+import { Button } from '@/components/_ui';
 
 interface Props {
   onClick?: () => void;
@@ -11,7 +11,6 @@ interface Props {
 export const EditButton: React.FC<Props> = ({ onClick }) => {
   return (
     <Button
-      label=""
       onClick={onClick}
       icon={<PencilSimple className="size-4 text-sky-600" weight="bold" />}
       className="p-1"

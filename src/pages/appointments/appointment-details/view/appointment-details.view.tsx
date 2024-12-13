@@ -1,23 +1,25 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { CircleNotch } from '@phosphor-icons/react';
+import { Check, CircleNotch, X } from '@phosphor-icons/react';
 
-import { Header, Card } from '@/components';
-import { BreadcrumbItem } from '@/components/header/interfaces';
-import { PatientHeader } from '@/pages/patients/patient-details/components';
+import { Header, PatientHeader } from '@/components';
+import { Card, Button } from '@/components/_ui';
+import { AppointmentStatus } from '@/enums';
+import { BreadcrumbItem } from '@/interfaces';
 
+import { AppointmentForm } from '../../appointment-form/forms';
 import {
   PatientDetailsCard,
   HealthInformationDetailsCard,
   AppointmentDetailsCard,
 } from '../components';
-import { AppointmentDetailsForm } from '../forms/appointment-details-form';
 import { useAppointmentDetailsModel } from '../model/appointment-details.model';
 
 type AppointmentDetailsViewProps = ReturnType<
   typeof useAppointmentDetailsModel
 > & {
+  title: string;
   breadcrumbsPathItems: BreadcrumbItem[];
 };
 
@@ -33,18 +35,19 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
   isPendingUpdateAppointmentStatus,
   handleCancelAppointment,
   isAppointmentPending,
-  submit,
   breadcrumbsPathItems,
+  handleUpdateAppointment,
+  title,
 }) => {
   return (
     <div className="max-w-[1440px]">
       <Header
-        title="Atualizar consulta"
+        title={title}
         goBack={() => goBack('/appointments')}
         breadcrumbItems={breadcrumbsPathItems}
       />
 
-      <div className="max-w-[1440px] mt-6 space-y-6">
+      <div className="mt-6 max-w-[1440px] space-y-6">
         <Card>
           <PatientHeader patient={patientResponse} loading={isLoading} />
         </Card>
@@ -57,10 +60,10 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
 
         {isLoading && (
           <Card bordered>
-            <div className="flex items-center justify-center min-h-[200px]">
+            <div className="flex min-h-[200px] items-center justify-center">
               <CircleNotch
                 weight="bold"
-                className="text-sky-600 size-8 animate-spin"
+                className="size-8 animate-spin text-sky-600"
               />
             </div>
           </Card>
@@ -68,19 +71,42 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
 
         {!isLoading && isAppointmentPending && (
           <FormProvider {...methods}>
-            <AppointmentDetailsForm
-              isLoading={isLoading}
-              isPending={isPending}
-              isAppointmentPending={isAppointmentPending}
-              isPendingUpdateAppointment={isPendingUpdateAppointment}
-              isPendingUpdateAppointmentStatus={
-                isPendingUpdateAppointmentStatus
-              }
-              doctorOptions={doctorOptions}
-              handleCancelAppointment={handleCancelAppointment}
-              methods={methods}
-              submit={submit}
-            />
+            <Card bordered>
+              <div className="flex gap-6 p-2">
+                <div className="flex w-full flex-col justify-between">
+                  <AppointmentForm
+                    loading={isLoading || isPending}
+                    isUpdating={isAppointmentPending}
+                    doctors={doctorOptions}
+                  />
+
+                  <div className="ml-auto flex gap-2 p-2">
+                    <Button
+                      type="button"
+                      variable="danger"
+                      label="encerrar consulta"
+                      onClick={() =>
+                        handleCancelAppointment(AppointmentStatus.CANCELLED)
+                      }
+                      icon={<X className="size-5" weight="bold" />}
+                      className="min-w-28 justify-between px-4 disabled:cursor-not-allowed"
+                      disabled={isLoading || isPending}
+                      loading={isPendingUpdateAppointmentStatus}
+                    />
+
+                    <Button
+                      type="button"
+                      label="finalizar consulta"
+                      onClick={methods.handleSubmit(handleUpdateAppointment)}
+                      icon={<Check className="size-5" weight="bold" />}
+                      className="min-w-28 justify-between px-4 disabled:cursor-not-allowed"
+                      disabled={isLoading || isPending}
+                      loading={isPendingUpdateAppointment}
+                    />
+                  </div>
+                </div>
+              </div>
+            </Card>
           </FormProvider>
         )}
 

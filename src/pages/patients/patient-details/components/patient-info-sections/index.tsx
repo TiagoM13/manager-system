@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { Card } from '@/components';
-import { IPatient } from '@/interfaces';
+import { Card } from '@/components/_ui';
+import { InfoItem } from '@/components';
+import { IPatient, ModalSection } from '@/interfaces';
 import { formatPhone, calculateAge, formatDate } from '@/utils';
 
-import { EditButton, InfoItem } from '..';
-
-import { ModalSection } from '../../types/modal';
+import { EditButton } from '..';
 
 interface PatientInfoSectionsProps {
   patient?: IPatient;
@@ -24,7 +23,7 @@ export const PatientInfoSections: React.FC<PatientInfoSectionsProps> = ({
       <div className="flex space-x-6">
         <Card
           title="Informações de contato"
-          className="px-6 space-y-4 relative"
+          className="relative space-y-4 px-6"
         >
           {!loading && (
             <div className="absolute right-4 top-0">
@@ -63,7 +62,7 @@ export const PatientInfoSections: React.FC<PatientInfoSectionsProps> = ({
           />
         </Card>
 
-        <Card title="Informações gerais" className="px-6 space-y-4 relative">
+        <Card title="Informações gerais" className="relative space-y-4 px-6">
           {!loading && (
             <div className="absolute right-4 top-0">
               <EditButton onClick={() => onEdit('general-info')} />
@@ -85,7 +84,7 @@ export const PatientInfoSections: React.FC<PatientInfoSectionsProps> = ({
               />
             </div>
 
-            <div className="w-full border-l border-slate-300 px-4 space-y-4">
+            <div className="w-full space-y-4 border-l border-slate-300 px-4">
               <InfoItem
                 label="Profissão"
                 value={patient?.occupation}
@@ -111,14 +110,14 @@ export const PatientInfoSections: React.FC<PatientInfoSectionsProps> = ({
         </Card>
       </div>
 
-      <Card title="Informações médicas" className="px-6 space-y-4 relative">
+      <Card title="Informações médicas" className="relative space-y-4 px-6">
         {!loading && (
           <div className="absolute right-4 top-0">
             <EditButton onClick={() => onEdit('medical-info')} />
           </div>
         )}
 
-        <div className="flex justify-between mr-10">
+        <div className="mr-10 flex justify-between">
           <InfoItem
             label="Altura"
             value={patient?.height ? `${patient.height} cm` : '-'}

@@ -11,7 +11,6 @@ import {
   INVALID_DATE_FIELD,
   POSITIVE_NUMBER,
 } from '@/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 const OptionalStringField = z
   .string()
@@ -38,7 +37,7 @@ const stringToNumber = (value: string | number | null | undefined) => {
   return isNaN(parsed) ? null : parsed;
 };
 
-const SchemaPatient = z.object({
+export const schemaPatient = z.object({
   name: NameFieldRequired,
   birth_date: z
     .preprocess(
@@ -109,6 +108,4 @@ const SchemaPatient = z.object({
     .optional(),
 });
 
-export type SchemaPatientType = z.infer<typeof SchemaPatient>;
-
-export const schemaPatient = zodResolver(SchemaPatient);
+export type SchemaPatientType = z.infer<typeof schemaPatient>;

@@ -10,7 +10,7 @@ const AppointmentsList: React.FC = () => {
   const http = new HttpClient();
 
   const methods = useAppointmentsListModel({
-    listAllAppointments: (filters) => getAllAppointmentsService(http, filters),
+    getAllAppointments: (filters) => getAllAppointmentsService(http, filters),
   });
 
   return <AppointmentsListView {...methods} />;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Input, InputMask } from '@/components';
+import { Input, InputMask } from '@/components/_ui';
 import { IPatient } from '@/interfaces';
 import { formatPhone } from '@/utils';
 
@@ -16,7 +16,7 @@ export const FormStepTwo: React.FC<{ loading?: boolean }> = ({ loading }) => {
       <h2 className="text-xl font-semibold">
         Preencha as informações de contato
       </h2>
-      <div className="w-full grid grid-cols-2 gap-6 mt-3">
+      <div className="mt-3 grid w-full grid-cols-2 gap-6">
         <Input
           name="address"
           label="Endereço"

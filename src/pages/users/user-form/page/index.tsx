@@ -6,7 +6,7 @@ import {
   Users as UsersIcon,
 } from '@phosphor-icons/react';
 
-import { CustomLoadingSkeleton } from '@/components';
+import { CustomLoadingSkeleton } from '@/components/_ui';
 import { HttpClient } from '@/infra/http/http-client';
 import { IUser } from '@/interfaces';
 import {

@@ -2,58 +2,73 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
-import { useAppNavigation, useQueryParams, useWindowSize } from '@/hooks';
+import {
+  useAppNavigation,
+  useGetAllAppointments,
+  useQueryParams,
+  useWindowSize,
+} from '@/hooks';
 import { IAppointment, IAppointmentFilters, IMSResponse } from '@/interfaces';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
-  appointmentFiltersSchemaResolver,
+  appointmentFiltersSchema,
   AppointmentFiltersSchemaType,
 } from '../appointments-list.schema';
 
 interface AppointmentsListModelProps {
-  listAllAppointments: (
+  getAllAppointments: (
     params: IAppointmentFilters,
-  ) => Promise<
-    IMSResponse<IAppointment[], 'list-all-appointments'> | undefined
-  >;
+  ) => Promise<IMSResponse<IAppointment[], 'get-all-appointments'> | undefined>;
 }
 
 export const useAppointmentsListModel = ({
-  listAllAppointments,
+  getAllAppointments: listAllAppointments,
 }: AppointmentsListModelProps) => {
   const location = useLocation();
   const [, isMobile] = useWindowSize();
   const { navigateTo } = useAppNavigation();
   const [query] = useQueryParams<IAppointmentFilters>();
 
-  const methods = useForm<AppointmentFiltersSchemaType>({
-    defaultValues: {
-      name: query.name || '',
-      appointment_type: query.appointment_type || '',
-      start_date: query.start_date,
-      end_date: query.end_date,
-    },
-    mode: 'onChange',
-    resolver: appointmentFiltersSchemaResolver,
-    shouldUnregister: false,
+  const { allAppointmentsResponse, isLoading } = useGetAllAppointments({
+    getAllAppointments: listAllAppointments,
+    query,
   });
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['appointments', query],
-    queryFn: async () => await listAllAppointments(query),
-    placeholderData: keepPreviousData,
+  const defaultValues: AppointmentFiltersSchemaType = {
+    name: query.name || '',
+    appointment_type: query.appointment_type || '',
+    start_date: query.start_date,
+    end_date: query.end_date,
+  };
+
+  const methods = useForm<AppointmentFiltersSchemaType>({
+    defaultValues,
+    mode: 'onChange',
+    resolver: zodResolver(appointmentFiltersSchema),
+    shouldUnregister: false,
   });
 
   const handleNewRegister = React.useCallback(() => {
     navigateTo({ route: '/appointments/new', state: location.state });
   }, [location.state, navigateTo]);
 
+  const handleEdiAppointment = React.useCallback(
+    (appointment: IAppointment) => {
+      navigateTo({
+        route: `/appointments/${appointment.patient_id}/appointment/${appointment.id}`,
+        state: location.state,
+      });
+    },
+    [location.state, navigateTo],
+  );
+
   return {
-    data,
-    isMobile,
-    handleNewRegister,
-    isLoading,
     methods,
+    allAppointmentsResponse,
+    handleNewRegister,
+    handleEdiAppointment,
+    isLoading,
+    isMobile,
   };
 };

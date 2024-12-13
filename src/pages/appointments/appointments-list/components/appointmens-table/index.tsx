@@ -1,24 +1,26 @@
 import React from 'react';
 
-import { Pagination, Table } from '@/components';
+import { Pagination, Table } from '@/components/_ui';
 import { IAppointment, IResponseMeta } from '@/interfaces';
 
 import { AppointmentRow } from '../appointment-item';
 import { SkeletonTableAppintments } from '../skeletons';
 
 type IAppointmentData = {
-  'list-all-appointments': IAppointment[];
+  'get-all-appointments': IAppointment[];
   meta?: IResponseMeta;
 };
 
 type AppointmentTableProps = {
   data?: IAppointmentData;
   loading?: boolean;
+  onEdit: (data: IAppointment) => void;
 };
 
 export const AppointmentsTable: React.FC<AppointmentTableProps> = ({
   data,
   loading,
+  onEdit,
 }) => {
   return (
     <Table.Container>
@@ -39,8 +41,12 @@ export const AppointmentsTable: React.FC<AppointmentTableProps> = ({
           ))
         ) : (
           <>
-            {data?.['list-all-appointments'].map((appointment) => (
-              <AppointmentRow key={appointment.id} appointment={appointment} />
+            {data?.['get-all-appointments']?.map((appointment) => (
+              <AppointmentRow
+                key={appointment.id}
+                appointment={appointment}
+                onEdit={onEdit}
+              />
             ))}
           </>
         )}

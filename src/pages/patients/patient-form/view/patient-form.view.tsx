@@ -1,10 +1,11 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
+import { ArrowLeft, ArrowRight, Check } from '@phosphor-icons/react';
 
-import { FormContainer, Header, Card, Button, StatusIcon } from '@/components';
-import { BreadcrumbItem } from '@/components/header/interfaces';
+import { Header } from '@/components';
+import { FormContainer, Card, Button } from '@/components/_ui';
+import { BreadcrumbItem } from '@/interfaces';
 
 import { steps } from '../../utils/constants';
 import { FormProgress } from '../components/form-progress';
@@ -12,19 +13,15 @@ import { FormStepOne, FormStepTwo, FormStepThree } from '../forms';
 import { usePatientFormModel } from '../model/patient-form.model';
 
 type PatientFormViewProps = ReturnType<typeof usePatientFormModel> & {
-  handleNextStep: () => Promise<void>;
   breadcrumbsPathItems: BreadcrumbItem[];
-  currentStep: number;
-  isLastStep: boolean;
-  prevStep: () => void;
 };
 
 export const PatientFormView: React.FC<PatientFormViewProps> = (props) => {
   const {
     methods,
     goBack,
-    IsLoading,
-    submit,
+    isPending,
+    handleCreateNewPatient,
     handleSubmit,
     handleNextStep,
     breadcrumbsPathItems,
@@ -47,12 +44,12 @@ export const PatientFormView: React.FC<PatientFormViewProps> = (props) => {
             <div className="flex gap-6 p-2">
               <FormProgress currentStep={currentStep} steps={steps} />
 
-              <div className="w-full flex flex-col justify-between">
+              <div className="flex w-full flex-col justify-between">
                 {currentStep === 0 && <FormStepOne />}
                 {currentStep === 1 && <FormStepTwo />}
                 {isLastStep && <FormStepThree />}
 
-                <div className="flex ml-auto gap-2 p-2">
+                <div className="ml-auto flex gap-2 p-2">
                   {currentStep > 0 && (
                     <Button
                       label="anterior"
@@ -60,6 +57,7 @@ export const PatientFormView: React.FC<PatientFormViewProps> = (props) => {
                       variable="secondary"
                       icon={<ArrowLeft className="size-4 text-white" />}
                       onClick={prevStep}
+                      disabled={isPending}
                       className="min-w-28 justify-between px-4"
                     />
                   )}
@@ -67,14 +65,17 @@ export const PatientFormView: React.FC<PatientFormViewProps> = (props) => {
                     <Button
                       label="finalizar"
                       type="button"
-                      icon={<StatusIcon loading={IsLoading} />}
+                      loading={isPending}
+                      disabled={isPending}
+                      icon={<Check className="size-4" weight="bold" />}
                       className="min-w-28 justify-between px-4"
-                      onClick={handleSubmit(submit)}
+                      onClick={handleSubmit(handleCreateNewPatient)}
                     />
                   ) : (
                     <Button
                       label="próximo"
                       type="button"
+                      disabled={isPending}
                       icon={<ArrowRight className="size-4 text-white" />}
                       onClick={handleNextStep}
                       iconPosition="right"

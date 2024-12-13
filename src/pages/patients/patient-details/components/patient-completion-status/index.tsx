@@ -1,11 +1,9 @@
 import React from 'react';
 
-import { CustomLoadingSkeleton } from '@/components';
-import { IPatient } from '@/interfaces';
+import { CustomLoadingSkeleton } from '@/components/_ui';
+import { IPatient, ModalSection } from '@/interfaces';
 import { calculateCompletionPercentage } from '@/pages/patients/utils/percentage';
 import { formatDateTime } from '@/utils';
-
-import { ModalSection } from '../../types/modal';
 
 import { EditButton } from '..';
 
@@ -40,14 +38,20 @@ export const PatientCompletionStatus: React.FC<
         {!loading && <EditButton onClick={() => onEdit('patient-info')} />}
       </div>
 
-      <span className="block text-xs">
-        Informações preenchidas:{' '}
-        <strong
-          className={`${isMinimumCompleted ? 'text-red-600' : 'text-sky-600'}`}
-        >
-          {loading ? '0%' : `${completionPercentage}%`}
-        </strong>
-      </span>
+      {loading ? (
+        <div>
+          <CustomLoadingSkeleton className="h-2 w-44" />
+        </div>
+      ) : (
+        <span className="block text-xs">
+          Informações preenchidas:{' '}
+          <strong
+            className={`${isMinimumCompleted ? 'text-red-600' : 'text-sky-600'}`}
+          >
+            {loading ? '0%' : `${completionPercentage}%`}
+          </strong>
+        </span>
+      )}
     </div>
   );
 };

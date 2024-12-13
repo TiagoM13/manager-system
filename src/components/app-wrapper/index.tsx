@@ -2,10 +2,10 @@ import React from 'react';
 
 import { ListDashes } from '@phosphor-icons/react';
 
+import { CloseButton } from '@/components/_ui';
 import { useIsAuthenticated, useWindowSize } from '@/hooks';
 import { useMenu } from '@/store';
 
-import { CloseButton } from '../icon-button';
 import { Profile } from '../profile';
 import { SideBar } from './components/sidebar';
 import { ToggleButton } from './components/toggle-button';
@@ -15,7 +15,6 @@ import { AppBar, Aside, Container, Main, StyledSidebar } from './styles';
 export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  // Hooks
   const { showMenu, showingActionBar, toggleMenu, toggleSideBar } = useMenu();
   const [width] = useWindowSize();
   const isAuthenticated = useIsAuthenticated();
@@ -24,10 +23,8 @@ export const AppWrapper: React.FC<{ children: React.ReactNode }> = ({
 
   const isMobile = Number(width) <= 960;
 
-  // Memo
   const renderSideBar = React.useMemo(() => <SideBar />, []);
 
-  // Effects
   React.useEffect(() => {
     if (isMobile) {
       toggleMenu(false);

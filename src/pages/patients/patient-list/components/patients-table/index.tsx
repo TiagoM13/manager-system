@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Pagination, Table } from '@/components';
+import { Pagination, Table } from '@/components/_ui';
 import { IPatient, IResponseMeta } from '@/interfaces';
 
 import { PatientRow } from '../patient-item';
@@ -14,11 +14,13 @@ type IPatientData = {
 type PatientTableProps = {
   data?: IPatientData;
   loading?: boolean;
+  onEdit: (data: IPatient) => void;
 };
 
 export const PatientsTable: React.FC<PatientTableProps> = ({
   data,
   loading,
+  onEdit,
 }) => {
   return (
     <Table.Container>
@@ -43,14 +45,14 @@ export const PatientsTable: React.FC<PatientTableProps> = ({
         ) : (
           <>
             {data?.patients.map((patient, index) => (
-              <PatientRow key={index} patient={patient} />
+              <PatientRow key={index} patient={patient} onEdit={onEdit} />
             ))}
           </>
         )}
       </tbody>
       <tfoot>
         <Table.Row border={false}>
-          <Table.Cell colSpan={3}>
+          <Table.Cell colSpan={4}>
             <Pagination.Label
               currentPageData={data?.meta?.total_current_records || 0}
               totalItems={data?.meta?.total_records || 0}

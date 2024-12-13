@@ -2,7 +2,7 @@ import React from 'react';
 
 import { House, CheckSquare, IdentificationBadge } from '@phosphor-icons/react';
 
-import { CustomLoadingSkeleton } from '@/components';
+import { CustomLoadingSkeleton } from '@/components/_ui';
 import { HttpClient } from '@/infra/http/http-client';
 import {
   getAllDoctorsPaginatedService,
@@ -53,8 +53,17 @@ const AppointmentDetails: React.FC = () => {
     [methods.isLoading, methods.patientResponse?.name],
   );
 
+  const title = React.useMemo(() => {
+    if (methods.isLoading) return 'Carregando...';
+
+    if (methods.isAppointmentPending) return 'Atualizar consulta';
+
+    return 'Detalhes da consulta';
+  }, [methods.isAppointmentPending, methods.isLoading]);
+
   return (
     <AppointmentDetailsView
+      title={title}
       breadcrumbsPathItems={breadcrumbsPathItems}
       {...methods}
     />

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Input, Select } from '@/components';
-import { IPatient } from '@/interfaces';
+import { Input, Select } from '@/components/_ui';
 import {
-  optionsHealthAgent,
-  conditionsOptions,
-} from '@/pages/patients/utils/options';
+  healthAgentOptions,
+  medicalConditionsOptions,
+} from '@/constants/select-options';
+import { IPatient } from '@/interfaces';
 
 interface MedicalInfoFormProps {
   loading?: boolean;
@@ -50,7 +50,7 @@ export const MedicalInfoForm: React.FC<MedicalInfoFormProps> = ({
         placeholder="Selecione o agent de sáude"
         labelAs="label"
         valueAs="value"
-        options={optionsHealthAgent}
+        options={healthAgentOptions}
         control={control}
         error={errors.health_agent}
         disabled={loading}
@@ -62,7 +62,7 @@ export const MedicalInfoForm: React.FC<MedicalInfoFormProps> = ({
         placeholder="Selecione as condições"
         labelAs="label"
         valueAs="value"
-        options={conditionsOptions}
+        options={medicalConditionsOptions}
         disabled={loading}
       />
     </>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TextTitle } from '@/components';
+import { TextTitle } from '@/components/_ui';
 
 const Dashboard: React.FC = () => {
   return (

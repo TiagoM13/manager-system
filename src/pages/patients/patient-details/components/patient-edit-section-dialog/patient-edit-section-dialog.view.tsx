@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { X } from '@phosphor-icons/react';
+import { Check, X } from '@phosphor-icons/react';
 
-import { Dialog, FormContainer, Button, StatusIcon } from '@/components';
+import { Dialog, FormContainer, Button } from '@/components/_ui';
 
 import { usePatientEditSectionDialogModel } from './patient-edit-section-dialog.model';
 
@@ -16,11 +16,10 @@ type Props = ReturnType<typeof usePatientEditSectionDialogModel> & {
 
 export const PatientEditSectionDialogView: React.FC<Props> = (props) => {
   const {
-    handleSubmit,
-    isPending,
     methods,
-    reset,
-    submit,
+    handleSubmit,
+    handleUpdatePatient,
+    isPending,
     activeSection,
     renderDialogTitle,
     renderFormContent,
@@ -30,33 +29,37 @@ export const PatientEditSectionDialogView: React.FC<Props> = (props) => {
   return (
     <Dialog isOpen={activeSection} contentClassNames="max-w-[650px]">
       <FormProvider {...methods}>
-        <FormContainer className="p-3" onSubmit={handleSubmit(submit)}>
-          <h3 className="font-bold text-xl leading-5">{renderDialogTitle}</h3>
+        <FormContainer
+          className="p-3"
+          onSubmit={handleSubmit(handleUpdatePatient)}
+        >
+          <h3 className="text-xl font-bold leading-5">{renderDialogTitle}</h3>
 
-          <div className="mt-6 py-2 grid grid-cols-2 gap-8">
+          <div className="mt-6 grid grid-cols-2 gap-8 py-2">
             {renderFormContent}
           </div>
 
-          <div className="flex items-center justify-end gap-4 mt-8">
+          <div className="mt-8 flex items-center justify-end gap-4">
             <Button
               id="cancel"
               type="button"
               variable="danger"
-              icon={<X className="size-5" weight="bold" />}
+              icon={<X className="size-4" weight="bold" />}
               label="cancelar"
               onClick={() => {
                 onClose();
-                reset();
+                methods.reset();
               }}
               disabled={isPending}
             />
             <Button
               id="saved"
               type="submit"
-              icon={<StatusIcon loading={isPending} />}
+              icon={<Check className="size-4" weight="bold" />}
               className="min-w-[100px]"
               label="atualizar"
               disabled={isPending}
+              loading={isPending}
             />
           </div>
         </FormContainer>
