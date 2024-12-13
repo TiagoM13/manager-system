@@ -4,32 +4,30 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { AppWrapper, InitializerLoader } from '@/components';
 import { Role } from '@/enums';
 import { useIsAuthenticated } from '@/hooks';
-import { ForgotPasswordPage, SignInPage } from '@/pages/auth/page';
+import { ForgotPasswordPage, SignInPage } from '@/pages/auth';
 
 import { PrivateRoute } from './private.route';
 import { PublicRoute } from './public.route';
 
 const Dashboard = React.lazy(() => import('@/pages/dashboard'));
-const Users = React.lazy(() => import('@/pages/users/user-list/page'));
-const User = React.lazy(() => import('@/pages/users/user-form/page'));
-const Patients = React.lazy(() => import('@/pages/patients/patient-list/page'));
-const PatientForm = React.lazy(
-  () => import('@/pages/patients/patient-form/page'),
-);
+const Users = React.lazy(() => import('@/pages/users/user-list'));
+const User = React.lazy(() => import('@/pages/users/user-form'));
+const Patients = React.lazy(() => import('@/pages/patients/patient-list'));
+const PatientForm = React.lazy(() => import('@/pages/patients/patient-form'));
 const PatientDetails = React.lazy(
-  () => import('@/pages/patients/patient-details/page'),
+  () => import('@/pages/patients/patient-details'),
 );
 const Appointments = React.lazy(
-  () => import('@/pages/appointments/appointments-list/page'),
+  () => import('@/pages/appointments/appointments-list'),
 );
 const AppointmentForm = React.lazy(
-  () => import('@/pages/appointments/appointment-form/page'),
+  () => import('@/pages/appointments/appointment-form'),
 );
 const AppointmentDetails = React.lazy(
-  () => import('@/pages/appointments/appointment-details/page'),
+  () => import('@/pages/appointments/appointment-details'),
 );
 const AppointmentByPatient = React.lazy(
-  () => import('@/pages/appointments/appointments-by-patient/page'),
+  () => import('@/pages/appointments/appointments-by-patient'),
 );
 
 export const Router: React.FC = () => {
