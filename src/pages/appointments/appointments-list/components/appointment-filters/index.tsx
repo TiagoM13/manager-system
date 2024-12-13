@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { FormContainer, Input, InputSearch, Select } from '@/components';
+import { FormContainer, Input, InputSearch, Select } from '@/components/_ui';
 import { appointmentTypeOptions } from '@/constants/select-options';
 import { useQueryParams } from '@/hooks';
 import { IAppointmentFilters } from '@/interfaces';

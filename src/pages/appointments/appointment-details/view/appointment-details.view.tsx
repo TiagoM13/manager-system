@@ -3,7 +3,8 @@ import { FormProvider } from 'react-hook-form';
 
 import { Check, CircleNotch, X } from '@phosphor-icons/react';
 
-import { Header, Card, Button, PatientHeader } from '@/components';
+import { Header, PatientHeader } from '@/components';
+import { Card, Button } from '@/components/_ui';
 import { AppointmentStatus } from '@/enums';
 import { BreadcrumbItem } from '@/interfaces';
 
@@ -46,7 +47,7 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
         breadcrumbItems={breadcrumbsPathItems}
       />
 
-      <div className="max-w-[1440px] mt-6 space-y-6">
+      <div className="mt-6 max-w-[1440px] space-y-6">
         <Card>
           <PatientHeader patient={patientResponse} loading={isLoading} />
         </Card>
@@ -59,10 +60,10 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
 
         {isLoading && (
           <Card bordered>
-            <div className="flex items-center justify-center min-h-[200px]">
+            <div className="flex min-h-[200px] items-center justify-center">
               <CircleNotch
                 weight="bold"
-                className="text-sky-600 size-8 animate-spin"
+                className="size-8 animate-spin text-sky-600"
               />
             </div>
           </Card>
@@ -72,14 +73,14 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
           <FormProvider {...methods}>
             <Card bordered>
               <div className="flex gap-6 p-2">
-                <div className="w-full flex flex-col justify-between">
+                <div className="flex w-full flex-col justify-between">
                   <AppointmentForm
                     loading={isLoading || isPending}
                     isUpdating={isAppointmentPending}
                     doctors={doctorOptions}
                   />
 
-                  <div className="flex ml-auto gap-2 p-2">
+                  <div className="ml-auto flex gap-2 p-2">
                     <Button
                       type="button"
                       variable="danger"

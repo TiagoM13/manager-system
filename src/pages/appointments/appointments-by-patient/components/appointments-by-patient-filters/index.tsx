@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { MagnifyingGlass } from '@phosphor-icons/react';
 
-import { Button, FormContainer, Input, Select } from '@/components';
+import { Button, FormContainer, Input, Select } from '@/components/_ui';
 import { appointmentTypeOptions } from '@/constants/select-options';
 import { useQueryParams } from '@/hooks';
 import { IAppointmentFilters } from '@/interfaces';

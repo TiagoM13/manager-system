@@ -2,9 +2,9 @@ import React from 'react';
 
 import { DownloadSimple, Printer } from '@phosphor-icons/react';
 
-import { Badge, Button, Card } from '@/components';
+import { InfoItem } from '@/components';
+import { Badge, Button, Card } from '@/components/_ui';
 import { IAppointment } from '@/interfaces';
-import { InfoItem } from '@/pages/patients/patient-details/components';
 import { formatAppointmentDate, toastSuccess } from '@/utils';
 
 interface AppointmentDetailsCardProps {
@@ -21,7 +21,7 @@ export const AppointmentDetailsCard = ({
       <div className="p-2">
         <h2 className="text-xl font-semibold">Informações do atendimento</h2>
 
-        <div className="w-full grid grid-cols-2 gap-6 mt-3">
+        <div className="mt-3 grid w-full grid-cols-2 gap-6">
           <InfoItem
             label="Tipo de Atendimento"
             value={appointment?.appointment_type}
@@ -49,7 +49,7 @@ export const AppointmentDetailsCard = ({
           />
         </div>
 
-        <div className="w-full flex justify-end items-end gap-2 mt-8">
+        <div className="mt-8 flex w-full items-end justify-end gap-2">
           <Button
             label="imprimir"
             variable="secondary"

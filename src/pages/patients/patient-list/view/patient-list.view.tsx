@@ -1,7 +1,8 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { Header, Card } from '@/components';
+import { Header } from '@/components';
+import { Card } from '@/components/_ui';
 
 import { PatientFilters, PatientsCard, PatientsTable } from '../components';
 import { usePatientListModel } from '../model/patient-list.model';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CustomLoadingSkeleton } from '@/components';
+import { CustomLoadingSkeleton } from '@/components/_ui';
 import { IPatient, ModalSection } from '@/interfaces';
 import { calculateCompletionPercentage } from '@/pages/patients/utils/percentage';
 import { formatDateTime } from '@/utils';

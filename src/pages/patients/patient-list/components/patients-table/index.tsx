@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Pagination, Table } from '@/components';
+import { Pagination, Table } from '@/components/_ui';
 import { IPatient, IResponseMeta } from '@/interfaces';
 
 import { PatientRow } from '../patient-item';

@@ -8,7 +8,7 @@ import {
   Table as T,
   ButtonActions,
   Button,
-} from '@/components';
+} from '@/components/_ui';
 import { useCurrentUser } from '@/hooks';
 import { IUser } from '@/interfaces';
 import { formatDate, formatDateTime } from '@/utils';

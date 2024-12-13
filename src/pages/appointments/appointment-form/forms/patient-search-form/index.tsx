@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { CircleNotch, MagnifyingGlass } from '@phosphor-icons/react';
 
-import { Card, Input, InputMask, Button } from '@/components';
+import { Card, Input, InputMask, Button } from '@/components/_ui';
 import { useQueryParams } from '@/hooks';
 import { formatCPF } from '@/utils';
 
@@ -58,7 +58,7 @@ export const PatientSearchForm: React.FC<PatientSearchFormProps> = ({
         <h2 className="text-xl font-semibold">
           Buscar paciente para adicionar uma nova consulta
         </h2>
-        <div className="flex items-end justify-between space-x-4 mt-3">
+        <div className="mt-3 flex items-end justify-between space-x-4">
           <Input
             name="name"
             label="Nome do Paciente"

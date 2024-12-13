@@ -3,7 +3,8 @@ import { FormProvider } from 'react-hook-form';
 
 import { ArrowLeft, ArrowRight, Check } from '@phosphor-icons/react';
 
-import { FormContainer, Header, Card, Button } from '@/components';
+import { Header } from '@/components';
+import { FormContainer, Card, Button } from '@/components/_ui';
 import { BreadcrumbItem } from '@/interfaces';
 
 import { steps } from '../../utils/constants';
@@ -43,12 +44,12 @@ export const PatientFormView: React.FC<PatientFormViewProps> = (props) => {
             <div className="flex gap-6 p-2">
               <FormProgress currentStep={currentStep} steps={steps} />
 
-              <div className="w-full flex flex-col justify-between">
+              <div className="flex w-full flex-col justify-between">
                 {currentStep === 0 && <FormStepOne />}
                 {currentStep === 1 && <FormStepTwo />}
                 {isLastStep && <FormStepThree />}
 
-                <div className="flex ml-auto gap-2 p-2">
+                <div className="ml-auto flex gap-2 p-2">
                   {currentStep > 0 && (
                     <Button
                       label="anterior"

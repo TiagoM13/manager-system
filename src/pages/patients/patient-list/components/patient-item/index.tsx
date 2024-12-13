@@ -2,7 +2,7 @@ import React from 'react';
 
 import { PencilSimple } from '@phosphor-icons/react';
 
-import { Avatar, Badge, Button, Table } from '@/components';
+import { Avatar, Badge, Button, Table } from '@/components/_ui';
 import { IPatient } from '@/interfaces';
 import { calculateAge, formatCPF, formatDate } from '@/utils';
 

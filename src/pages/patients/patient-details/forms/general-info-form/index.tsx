@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Input, Select } from '@/components';
+import { Input, Select } from '@/components/_ui';
 import {
   genderOptions,
   maritalStatusOptions,

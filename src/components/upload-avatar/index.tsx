@@ -2,10 +2,8 @@ import React from 'react';
 import { Control, FieldError } from 'react-hook-form';
 
 import defaultImageAvatar from '@/assets/avatars/avatar-user.jpg';
+import { FileUploadInput, Avatar } from '@/components/_ui';
 import { useImageUrl, useName } from '@/store';
-
-import { Avatar } from '../avatar';
-import { FileUploadInput } from '../input/components/input-file';
 
 interface InputFileProps {
   placeholder?: string;
@@ -54,7 +52,7 @@ export const UploadAvatar: React.FC<InputFileProps> = ({
 
   return (
     <div
-      className={`flex ${flexCol ? 'flex-col' : ''} items-center gap-5 mt-4`}
+      className={`flex ${flexCol ? 'flex-col' : ''} mt-4 items-center gap-5`}
     >
       {hasPreview && (
         <Avatar

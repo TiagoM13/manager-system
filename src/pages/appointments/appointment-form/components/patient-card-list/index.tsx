@@ -2,7 +2,7 @@ import React from 'react';
 
 import { CircleNotch } from '@phosphor-icons/react';
 
-import { Card } from '@/components';
+import { Card } from '@/components/_ui';
 import { IPatient } from '@/interfaces';
 
 import { NotFoundPatient } from '../not-found-patient';
@@ -22,10 +22,10 @@ export const PatientCardList: React.FC<PatientCardListProps> = ({
   return (
     <Card bordered>
       {loading ? (
-        <div className="flex items-center justify-center min-h-[100px]">
+        <div className="flex min-h-[100px] items-center justify-center">
           <CircleNotch
             weight="bold"
-            className="text-sky-600 size-8 animate-spin"
+            className="size-8 animate-spin text-sky-600"
           />
         </div>
       ) : (

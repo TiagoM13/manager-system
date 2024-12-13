@@ -21,8 +21,8 @@ export const MenuItem = ({ title, icon: Icon, url }: MenuItemProps) => {
       to={url}
       className={({ isActive }) =>
         isActive
-          ? 'text-sky-600 text-sm text-wrap font-medium flex items-center gap-4'
-          : 'text-zinc-400 text-sm text-wrap flex items-center gap-4 transition-all duration-500 ease-in-out hover:text-sky-500'
+          ? 'flex items-center gap-4 text-wrap text-sm font-medium text-sky-600'
+          : 'flex items-center gap-4 text-wrap text-sm text-zinc-400 transition-all duration-500 ease-in-out hover:text-sky-500'
       }
     >
       <div className="flex flex-wrap">

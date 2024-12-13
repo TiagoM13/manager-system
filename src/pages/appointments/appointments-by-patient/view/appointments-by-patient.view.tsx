@@ -1,7 +1,8 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { Header, Card, PatientHeader } from '@/components';
+import { Header, PatientHeader } from '@/components';
+import { Card } from '@/components/_ui';
 import { BreadcrumbItem } from '@/interfaces';
 
 import {
@@ -39,7 +40,7 @@ export const AppointmentsByPatientView: React.FC<
         goBack={() => goBack('/appointments')}
       />
 
-      <div className="max-w-[1440px] mt-6 space-y-6">
+      <div className="mt-6 max-w-[1440px] space-y-6">
         <Card>
           <PatientHeader
             patient={patientResponse}

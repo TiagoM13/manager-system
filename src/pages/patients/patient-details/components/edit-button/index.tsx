@@ -2,7 +2,7 @@ import React from 'react';
 
 import { PencilSimple } from '@phosphor-icons/react';
 
-import { Button } from '@/components';
+import { Button } from '@/components/_ui';
 
 interface Props {
   onClick?: () => void;

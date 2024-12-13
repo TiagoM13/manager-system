@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Check, Plus } from '@phosphor-icons/react';
 
-import { Button } from '@/components';
+import { Button } from '@/components/_ui';
 
 import { HeaderProps } from '../../interfaces';
 

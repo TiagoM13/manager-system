@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Card } from '@/components';
+import { InfoItem } from '@/components';
+import { Card } from '@/components/_ui';
 import { IPatient } from '@/interfaces';
-import { InfoItem } from '@/pages/patients/patient-details/components';
 
 interface HealthInformationDetailsCardProps {
   patient?: IPatient;
@@ -17,7 +17,7 @@ export const HealthInformationDetailsCard: React.FC<
       <div className="p-2">
         <h2 className="text-xl font-semibold">Informações médicas</h2>
 
-        <div className="w-full grid grid-cols-2 gap-6 mt-3">
+        <div className="mt-3 grid w-full grid-cols-2 gap-6">
           <InfoItem
             label="Altura"
             value={patient?.height ? `${patient.height} cm` : '-'}

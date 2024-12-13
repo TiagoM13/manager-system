@@ -1,7 +1,8 @@
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { Card, Header } from '@/components';
+import { Header } from '@/components';
+import { Card } from '@/components/_ui';
 
 import { AppointmentFilters, AppointmentsTable } from '../components';
 import { useAppointmentsListModel } from '../model/appointments-list.model';

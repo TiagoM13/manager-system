@@ -7,7 +7,7 @@ import {
   List,
 } from '@phosphor-icons/react';
 
-import { CustomLoadingSkeleton } from '@/components';
+import { CustomLoadingSkeleton } from '@/components/_ui';
 import { HttpClient } from '@/infra/http/http-client';
 import { getAppointmentsByPatientService, getPatientService } from '@/services';
 

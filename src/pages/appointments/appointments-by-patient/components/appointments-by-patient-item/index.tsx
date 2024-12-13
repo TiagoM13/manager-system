@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Badge, Button, StatusActionIcon, Table } from '@/components';
+import { Badge, Button, StatusActionIcon, Table } from '@/components/_ui';
 import { IAppointment } from '@/interfaces';
 import { formatDate, formattedTime } from '@/utils';
 

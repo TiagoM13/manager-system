@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Input, InputMask, Select } from '@/components';
+import { Input, InputMask, Select } from '@/components/_ui';
 import {
   maritalStatusOptions,
   genderOptions,
@@ -20,7 +20,7 @@ export const FormStepOne: React.FC<{ loading?: boolean }> = ({ loading }) => {
       <h2 className="text-xl font-semibold">
         Preencha as informações do paciente
       </h2>
-      <div className="w-full grid grid-cols-2 gap-6 mt-3">
+      <div className="mt-3 grid w-full grid-cols-2 gap-6">
         <Input
           name="name"
           control={control}
