@@ -1,27 +1,27 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import { ERROR_PROCESSING_IMAGE } from '@/components/profile/profile.messages';
 import { Role } from '@/enums';
-import { useAppNavigation, useCurrentUser, useNotification } from '@/hooks';
+import {
+  useAppNavigation,
+  useCreateUser,
+  useCurrentUser,
+  useGetUser,
+  useUpdateUser,
+  useUpdateUserStatus,
+  useUploadFile,
+} from '@/hooks';
 import { IMSResponse, IUploadFile, IUser } from '@/interfaces';
 import { useImageUrl, useName } from '@/store';
-import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import {
-  ERROR_CREATING_USER,
-  ERROR_UPDATING_USER,
-  USER_CREATED_SUCCESSFULLY,
-  USER_UPDATED_SUCCESSFULLY,
-} from './user-form.messages';
-import { userDataSchema, UserDataSchemaType } from './user-form.schema';
+import { UserSchemaType, userSchema } from './user-form.schema';
 
-type UserDataResponse = IUser | undefined;
 type UserRequestResult = IMSResponse<IUser, 'user'> | undefined;
 
 interface IUserFormModelProps {
-  getUser: (id: number) => Promise<UserDataResponse>;
+  getUser: (id: number) => Promise<IUser | undefined>;
   createUser: (data: IUser) => Promise<UserRequestResult>;
   updateUser: (id: number, data: IUser) => Promise<UserRequestResult>;
   uploadFile: (data: FormData) => Promise<IUploadFile | undefined>;
@@ -35,80 +35,55 @@ export const useUserFormModel = ({
   updateUserStatus,
   uploadFile,
 }: IUserFormModelProps) => {
-  const navigate = useNavigate();
   const { goBack } = useAppNavigation();
   const { setImageUrl } = useImageUrl();
   const { setName } = useName();
   const { id } = useParams<{ id: string }>();
   const currentUser = useCurrentUser();
-  const queryClient = useQueryClient();
-  const notify = useNotification();
 
-  const isCreatingNewUser = React.useMemo(() => id === 'new', [id]);
-
-  const { data: user, isLoading: isLoadingUser } = useQuery<UserDataResponse>({
-    queryKey: ['user'],
-    queryFn: async () => await getUser(Number(id)),
-    enabled: !isCreatingNewUser,
-  });
-  const { mutateAsync: createUserMutation, isPending: isLoadingCreate } =
-    useMutation({
-      mutationFn: async (values: IUser) => await createUser(values),
-      onSuccess: (data) => {
-        if (data?.success) {
-          queryClient.invalidateQueries({ queryKey: ['users'] });
-          notify.success(USER_CREATED_SUCCESSFULLY);
-          navigate('/users');
-        }
-      },
-      onError: () => notify.error(ERROR_CREATING_USER),
-    });
-  const { mutateAsync: updateUserMutation, isPending: isLoadingUpdate } =
-    useMutation({
-      mutationFn: async (values: IUser) => await updateUser(Number(id), values),
-      onSuccess: (data) => {
-        if (data?.success) {
-          queryClient.invalidateQueries({ queryKey: ['user', id] });
-          notify.success(USER_UPDATED_SUCCESSFULLY);
-          navigate('/users');
-        }
-      },
-      onError: () => notify.error(ERROR_UPDATING_USER),
-    });
-  const { mutateAsync: updateUserStatusMutation, isPending: isLoadingStatus } =
-    useMutation({
-      mutationFn: async ({ id, status }: { id: number; status: string }) =>
-        await updateUserStatus(id, status),
-      onSuccess: () =>
-        queryClient.invalidateQueries({ queryKey: ['user', id] }),
-    });
-  const { mutateAsync: uploadFileMutation, isPending: isLoadingUpload } =
-    useMutation({
-      mutationFn: uploadFile,
-      onSuccess: () =>
-        queryClient.invalidateQueries({ queryKey: ['user', id] }),
-      onError: () => notify.error(ERROR_PROCESSING_IMAGE),
-    });
-
-  const methods = useForm<UserDataSchemaType>({
-    resolver: userDataSchema as any,
+  const methods = useForm<UserSchemaType>({
+    resolver: zodResolver(userSchema),
     shouldUnregister: false,
   });
   const { handleSubmit, reset } = methods;
 
+  const isCreatingNewUser = React.useMemo(() => id === 'new', [id]);
+
+  const { userResponse, isLoading: isLoadingUser } = useGetUser({
+    getUser,
+    userId: Number(id),
+    isEnabled: !isCreatingNewUser,
+  });
+  const { createUserMutation, isPending: isPendingCreateUser } = useCreateUser({
+    createUser,
+  });
+  const { updateUserMutation, isPending: isPendingUpdateUser } = useUpdateUser({
+    updateUser,
+    userId: Number(id),
+  });
+  const { updateUserStatusMutation, isPending: isPendingUpdateUserStatus } =
+    useUpdateUserStatus({
+      updateUserStatus,
+      userId: Number(id),
+    });
+  const { uploadFileMutation, isPending: isPendingUploadFile } = useUploadFile({
+    uploadFile,
+    queryKeys: ['user', Number(id)],
+  });
+
   const isLoading = React.useMemo(
     () =>
       isLoadingUser ||
-      isLoadingUpload ||
-      isLoadingCreate ||
-      isLoadingUpdate ||
-      isLoadingStatus,
+      isPendingUploadFile ||
+      isPendingCreateUser ||
+      isPendingUpdateUser ||
+      isPendingUpdateUserStatus,
     [
       isLoadingUser,
-      isLoadingCreate,
-      isLoadingUpdate,
-      isLoadingUpload,
-      isLoadingStatus,
+      isPendingCreateUser,
+      isPendingUpdateUser,
+      isPendingUpdateUserStatus,
+      isPendingUploadFile,
     ],
   );
 
@@ -129,35 +104,70 @@ export const useUserFormModel = ({
     [uploadFileMutation],
   );
 
-  const submit = React.useCallback(
-    async (values: UserDataSchemaType) => {
+  const handleImageUpdate = React.useCallback(
+    async (values: UserSchemaType): Promise<string | null | undefined> => {
       const formElement = document.querySelector(
         '#form-user',
       ) as HTMLFormElement;
-      let updatedImageUrl = values.image_url;
-
       const shouldUploadNewImage =
-        values.image_url && values.image_url !== user?.image_url && formElement;
+        values.image_url &&
+        values.image_url !== userResponse?.image_url &&
+        formElement;
 
       if (shouldUploadNewImage) {
-        updatedImageUrl = await handleFileUpload(formElement);
+        return await handleFileUpload(formElement);
       }
 
-      const statusHasChanged = values.status !== user?.status;
+      return values.image_url;
+    },
+    [handleFileUpload, userResponse?.image_url],
+  );
+
+  const hasUserStatusChanged = React.useCallback(
+    (values: UserSchemaType): boolean => {
+      return values.status !== userResponse?.status;
+    },
+    [userResponse?.status],
+  );
+
+  const handleUpdateUserStatus = React.useCallback(
+    async (values: UserSchemaType): Promise<void> => {
+      await updateUserStatusMutation({
+        id: Number(id),
+        status: String(values.status),
+      });
+    },
+    [id, updateUserStatusMutation],
+  );
+
+  const prepareUserPayload = ({
+    values,
+    imageUrl,
+  }: {
+    values: UserSchemaType;
+    imageUrl: string;
+  }): IUser => {
+    return {
+      name: values.name,
+      email: values.email,
+      role: values.role as Role,
+      image_url: imageUrl,
+    };
+  };
+
+  const handleSaveUser = React.useCallback(
+    async (values: UserSchemaType) => {
+      const updatedImageUrl = await handleImageUpdate(values);
+      const statusHasChanged = hasUserStatusChanged(values);
 
       if (!isCreatingNewUser && statusHasChanged) {
-        await updateUserStatusMutation({
-          id: Number(id),
-          status: String(values.status),
-        });
+        await handleUpdateUserStatus(values);
       }
 
-      const savedValues: IUser = {
-        name: values.name,
-        email: values.email,
-        role: values.role as Role,
-        image_url: updatedImageUrl,
-      };
+      const savedValues = prepareUserPayload({
+        values,
+        imageUrl: String(updatedImageUrl),
+      });
 
       if (isCreatingNewUser) {
         await createUserMutation(savedValues);
@@ -166,12 +176,10 @@ export const useUserFormModel = ({
       }
     },
     [
-      id,
-      user?.image_url,
-      user?.status,
+      handleImageUpdate,
+      hasUserStatusChanged,
       isCreatingNewUser,
-      handleFileUpload,
-      updateUserStatusMutation,
+      handleUpdateUserStatus,
       createUserMutation,
       updateUserMutation,
     ],
@@ -183,21 +191,24 @@ export const useUserFormModel = ({
         reset();
         setImageUrl(undefined);
         setName('');
-      } else if (user) {
-        reset(user);
-        setImageUrl(user.image_url);
-        setName(user.name);
+      } else if (userResponse) {
+        reset(userResponse);
+        setImageUrl(userResponse.image_url);
+        setName(userResponse.name);
       }
     }
-  }, [isLoading, isCreatingNewUser, reset, setImageUrl, setName, user]);
+  }, [isCreatingNewUser, isLoading, reset, setImageUrl, setName, userResponse]);
+
+  const isUpdatingItself =
+    !isCreatingNewUser && userResponse?.id === currentUser.id;
 
   return {
-    user,
+    userResponse,
     currentUser,
     isCreatingNewUser,
-    isUpdatingItself: !isCreatingNewUser && user?.id === currentUser.id,
+    isUpdatingItself,
     methods,
-    submit,
+    handleSaveUser,
     handleSubmit,
     isLoading,
     goBack,

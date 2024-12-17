@@ -18,7 +18,7 @@ export const UserFormView: React.FC<UserFormViewProps> = (props) => {
     title,
     methods,
     handleSubmit,
-    submit,
+    handleSaveUser,
     isCreatingNewUser,
     isLoading,
     isUpdatingItself,
@@ -28,7 +28,11 @@ export const UserFormView: React.FC<UserFormViewProps> = (props) => {
 
   return (
     <FormProvider {...methods}>
-      <FormContainer id="form-user" noValidate onSubmit={handleSubmit(submit)}>
+      <FormContainer
+        id="form-user"
+        noValidate
+        onSubmit={handleSubmit(handleSaveUser)}
+      >
         <div className="flex flex-col">
           <Header
             title={title}

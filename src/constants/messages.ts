@@ -43,3 +43,12 @@ export const APPOINTMENT_FINISHED_SUCCESSFULLY =
   'Consulta finalizada com sucesso!';
 export const ERROR_FINISHED_APPOINTMENT =
   'Ocorreu um erro ao tentar finalizar a consulta, tente novamente mais tarde!';
+
+export const USER_DELETE_SUCCESS = 'Usuário deletado com sucesso!';
+export const USER_DELETE_ERROR = 'Erro ao deletar usuário!';
+export const USER_CREATED_SUCCESSFULLY = 'Usuário criado com sucesso!';
+export const ERROR_CREATING_USER = 'Erro ao tentar criar usuário!';
+export const USER_UPDATED_SUCCESSFULLY = 'Usuário atualizado com sucesso!';
+export const ERROR_UPDATING_USER = 'Erro ao tentar atualizar usuário!';
+
+export const ERROR_PROCESSING_IMAGE = 'Falha ao processar imagem!';
