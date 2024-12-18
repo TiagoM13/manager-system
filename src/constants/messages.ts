@@ -26,6 +26,14 @@ export const INVALID_SCHEDULED_DATE =
 
 export const PASSWORD_REQUIRED = 'A senha é obrigatória';
 export const PASSWORD_MIN_LENGTH = 'A senha deve ter no mínimo 6 caracteres';
+export const CONFIRM_PASSWORD = 'Confirme sua senha';
+export const PASSWORDS_DO_NOT_MATCH = 'As senhas não correspondem';
+export const UPDATED_PROFILE_SUCCESS = 'Perfil atualizado com sucesso!';
+export const ERROR_UPDATING_PROFILE =
+  'Não foi possivel atualizar o perfil, por favor tente novamente mais tarde!';
+
+export const LOGIN_AGAIN =
+  'Sua senha foi alterada! Por favor, faça login novamente!';
 
 export const PATIENT_CREATED_SUCCESSFULLY = 'Paciente adicionado com sucesso!';
 export const ERROR_CREATING_PATIENT =
@@ -43,3 +51,12 @@ export const APPOINTMENT_FINISHED_SUCCESSFULLY =
   'Consulta finalizada com sucesso!';
 export const ERROR_FINISHED_APPOINTMENT =
   'Ocorreu um erro ao tentar finalizar a consulta, tente novamente mais tarde!';
+
+export const USER_DELETE_SUCCESS = 'Usuário deletado com sucesso!';
+export const USER_DELETE_ERROR = 'Erro ao deletar usuário!';
+export const USER_CREATED_SUCCESSFULLY = 'Usuário criado com sucesso!';
+export const ERROR_CREATING_USER = 'Erro ao tentar criar usuário!';
+export const USER_UPDATED_SUCCESSFULLY = 'Usuário atualizado com sucesso!';
+export const ERROR_UPDATING_USER = 'Erro ao tentar atualizar usuário!';
+
+export const ERROR_PROCESSING_IMAGE = 'Falha ao processar imagem!';

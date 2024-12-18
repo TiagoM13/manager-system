@@ -33,7 +33,7 @@ export const SkeletonTableAppintments: React.FC = () => {
         <Table.Cell style={{ width: 150 }}>
           <Skeleton containerClassName="flex-1" className="w-full max-w-20" />
         </Table.Cell>
-        <Table.Cell>
+        <Table.Cell style={{ width: 50 }}>
           <Button
             clear
             icon={<StatusActionIcon status={AppointmentStatus.PENDING} />}

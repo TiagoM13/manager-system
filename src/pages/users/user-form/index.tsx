@@ -34,7 +34,7 @@ const User: React.FC = () => {
   };
 
   const methods = useUserFormModel(services);
-  const { user, isLoading, isCreatingNewUser } = methods;
+  const { userResponse, isLoading, isCreatingNewUser } = methods;
 
   const title = React.useMemo(() => {
     if (isCreatingNewUser) return 'Cadastrar usuário';
@@ -59,12 +59,12 @@ const User: React.FC = () => {
         ) : isLoading ? (
           <CustomLoadingSkeleton className="h-5 w-40 rounded-lg" />
         ) : (
-          `${user?.name}`
+          `${userResponse?.name}`
         ),
         icon: <UserIcon className="size-4" />,
       },
     ],
-    [isLoading, isCreatingNewUser, user?.name],
+    [isLoading, isCreatingNewUser, userResponse?.name],
   );
 
   return (

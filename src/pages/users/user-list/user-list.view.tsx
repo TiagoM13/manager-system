@@ -13,10 +13,10 @@ export const UserListView: React.FC<UserListViewProps> = (props) => {
   const {
     methods,
     handleNewRegister,
-    handleDelete,
-    handleEdit,
+    handleDeleteUser,
+    handleEditUser,
+    usersResponse,
     loading,
-    data,
     isMobile,
   } = props;
 
@@ -34,17 +34,17 @@ export const UserListView: React.FC<UserListViewProps> = (props) => {
 
           {!isMobile ? (
             <UsersTable
-              data={data}
+              data={usersResponse}
               loading={loading}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
+              onEdit={handleEditUser}
+              onDelete={handleDeleteUser}
             />
           ) : (
             <UsersCard
-              data={data}
+              data={usersResponse}
               loading={loading}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
+              onEdit={handleEditUser}
+              onDelete={handleDeleteUser}
             />
           )}
         </Card>

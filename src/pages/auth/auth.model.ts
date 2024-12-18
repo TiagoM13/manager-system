@@ -2,10 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
-import { useAppNavigation } from '@/hooks';
+import { useForgotPassword, useSignIn } from '@/hooks/auth/auth';
 import { ISignInData, IRecoverPasswordData } from '@/interfaces';
-import { toastSuccess } from '@/utils';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import { forgotPasswordSchema, loginSchema } from './auth.schema';
 import { FormAuthProps } from './auth.types';
@@ -17,8 +15,6 @@ interface AuthModelProps {
 
 export const useAuthModel = ({ signIn, forgotPassword }: AuthModelProps) => {
   const location = useLocation();
-  const queryClient = useQueryClient();
-  const { navigateTo } = useAppNavigation();
 
   const methods = useForm<FormAuthProps>({
     resolver:
@@ -29,29 +25,10 @@ export const useAuthModel = ({ signIn, forgotPassword }: AuthModelProps) => {
 
   const { handleSubmit } = methods;
 
-  const { mutateAsync: signInMutation } = useMutation({
-    mutationFn: async (values: ISignInData) => await signIn(values),
-    onSuccess: (data) => {
-      if (data) {
-        queryClient.invalidateQueries({ queryKey: ['user'] });
-        toastSuccess('Seja Bem-vindo!');
-        navigateTo({ route: '/dashboard', state: location.state });
-      }
-    },
-  });
-  const { mutateAsync: forgotPasswordMutation } = useMutation({
-    mutationFn: async (values: IRecoverPasswordData) =>
-      await forgotPassword(values),
-    onSuccess: (data) => {
-      if (data) {
-        queryClient.invalidateQueries({ queryKey: ['user'] });
-        toastSuccess('Uma nova senha foi enviada para seu endereço de e-mail.');
-        navigateTo({ route: '/sign-in', state: location.state });
-      }
-    },
-  });
+  const { signInMutation } = useSignIn({ signIn });
+  const { forgotPasswordMutation } = useForgotPassword({ forgotPassword });
 
-  const submit = React.useCallback(
+  const handleAuthAction = React.useCallback(
     async ({ email, password }: FormAuthProps) => {
       if (location.pathname === '/forgot-password') {
         forgotPasswordMutation({ email });
@@ -64,7 +41,7 @@ export const useAuthModel = ({ signIn, forgotPassword }: AuthModelProps) => {
 
   return {
     methods,
-    submit,
+    handleAuthAction,
     handleSubmit,
   };
 };

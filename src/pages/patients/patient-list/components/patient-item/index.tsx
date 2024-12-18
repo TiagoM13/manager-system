@@ -32,7 +32,7 @@ export const PatientRow: React.FC<PatientItemProps> = ({ patient, onEdit }) => {
       <Table.Cell>
         <Badge type={patient.status} />
       </Table.Cell>
-      <Table.Cell>
+      <Table.Cell style={{ width: 50 }}>
         <Button
           clear
           icon={<PencilSimple className="size-4" weight="bold" />}

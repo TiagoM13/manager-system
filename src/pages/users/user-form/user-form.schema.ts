@@ -7,9 +7,8 @@ import {
   REQUIRED_FIELD,
   SELECT_REQUIRED,
 } from '@/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
 
-const userSchema = z.object({
+export const userSchema = z.object({
   name: NameFieldRequired,
   email: z
     .string()
@@ -25,5 +24,4 @@ const userSchema = z.object({
     .optional(),
 });
 
-export type UserDataSchemaType = z.infer<typeof userSchema>;
-export const userDataSchema = zodResolver(userSchema);
+export type UserSchemaType = z.infer<typeof userSchema>;

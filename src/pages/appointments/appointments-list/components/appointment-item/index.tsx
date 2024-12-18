@@ -16,7 +16,7 @@ export const AppointmentRow: React.FC<IAppointmentItem> = ({
   return (
     <Table.Row hoverable>
       <Table.Cell>
-        <span className="text-sm font-semibold">
+        <span className="block text-sm font-semibold">
           {appointment.patient?.name}
         </span>
       </Table.Cell>
@@ -27,7 +27,7 @@ export const AppointmentRow: React.FC<IAppointmentItem> = ({
       <Table.Cell>
         <Badge type={appointment.status} />
       </Table.Cell>
-      <Table.Cell>
+      <Table.Cell style={{ width: 50 }}>
         <Button
           clear
           icon={<StatusActionIcon status={appointment.status} />}
