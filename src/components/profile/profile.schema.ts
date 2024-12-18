@@ -1,13 +1,12 @@
 import { z } from 'zod';
 
+import { CONFIRM_PASSWORD, PASSWORDS_DO_NOT_MATCH } from '@/constants/messages';
 import {
   NameFieldRequired,
   PASSWORD_MIN_LENGTH,
   PASSWORD_REQUIRED,
 } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import { CONFIRM_PASSWORD, PASSWORDS_DO_NOT_MATCH } from './profile.messages';
 
 const schema = z
   .object({

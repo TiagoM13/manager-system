@@ -60,6 +60,7 @@ export const useUserFormModel = ({
   const { updateUserMutation, isPending: isPendingUpdateUser } = useUpdateUser({
     updateUser,
     userId: Number(id),
+    queryKeys: ['user', Number(id)],
   });
   const { updateUserStatusMutation, isPending: isPendingUpdateUserStatus } =
     useUpdateUserStatus({

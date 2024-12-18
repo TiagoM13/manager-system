@@ -23,20 +23,20 @@ type IProfileProps = ReturnType<typeof useAccountSettingsModel> & {
 
 export const ProfileView: React.FC<IProfileProps> = (props) => {
   const {
-    submit,
-    methods,
+    loading,
+    currentUser,
     disableSubmitButton,
     handleToggleMenuProfile,
     handleFileSelected,
-    loading,
+    handleUpdateProfile,
+    handleSubmit,
     profileRef,
     errors,
     control,
-    setShowPasswordInput,
     showPasswordInput,
+    setShowPasswordInput,
     avatarUrl,
     show,
-    user,
   } = props;
 
   return (
@@ -52,7 +52,7 @@ export const ProfileView: React.FC<IProfileProps> = (props) => {
         <FormContainer
           id="form-profile"
           noValidate
-          onSubmit={methods.handleSubmit(submit)}
+          onSubmit={handleSubmit(handleUpdateProfile)}
         >
           <div className="flex flex-col items-center justify-center px-2">
             <h3 className="my-4 text-lg text-slate-400">Editar Perfil</h3>
@@ -62,7 +62,7 @@ export const ProfileView: React.FC<IProfileProps> = (props) => {
                 className="size-32 text-3xl"
                 color="light"
                 imageUrl={avatarUrl || null}
-                name={user.name}
+                name={currentUser.name}
               />
 
               <FileUploadInput

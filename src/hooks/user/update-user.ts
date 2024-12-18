@@ -3,7 +3,7 @@ import {
   USER_UPDATED_SUCCESSFULLY,
 } from '@/constants/messages';
 import { IUser, IMSResponse } from '@/interfaces';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { QueryKey, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useAppNavigation } from '../navigate';
 import { useNotification } from '../notification';
@@ -13,9 +13,14 @@ type UserRequestResult = IMSResponse<IUser, 'user'> | undefined;
 interface UseUpdateUserProps {
   updateUser: (id: number, data: IUser) => Promise<UserRequestResult>;
   userId: number;
+  queryKeys?: QueryKey;
 }
 
-export const useUpdateUser = ({ updateUser, userId }: UseUpdateUserProps) => {
+export const useUpdateUser = ({
+  updateUser,
+  userId,
+  queryKeys,
+}: UseUpdateUserProps) => {
   const notify = useNotification();
   const queryClient = useQueryClient();
   const { navigateTo } = useAppNavigation();
@@ -23,7 +28,7 @@ export const useUpdateUser = ({ updateUser, userId }: UseUpdateUserProps) => {
   const { mutateAsync: updateUserMutation, isPending } = useMutation({
     mutationFn: async (values: IUser) => await updateUser(userId, values),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user', userId] });
+      queryClient.invalidateQueries({ queryKey: queryKeys });
       notify.success(USER_UPDATED_SUCCESSFULLY);
       navigateTo({ route: '/users' });
     },

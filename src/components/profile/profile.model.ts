@@ -8,8 +8,10 @@ import {
   useCurrentUser,
   useAuth,
   useAppNavigation,
-  useNotification,
+  useUploadFile,
+  useUpdateUser,
 } from '@/hooks';
+import { useChangePassword } from '@/hooks/auth/auth';
 import {
   IUser,
   IChangePasswordData,
@@ -17,14 +19,7 @@ import {
   IUploadFile,
 } from '@/interfaces';
 import { useMenuProfile } from '@/store';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
 
-import {
-  ERROR_PROCESSING_IMAGE,
-  ERROR_UPDATING_PROFILE,
-  LOGIN_AGAIN,
-  UPDATED_PROFILE_SUCCESS,
-} from './profile.messages';
 import { profileSchema } from './profile.schema';
 
 type UserRequestResult = IMSResponse<IUser, 'user'> | undefined;
@@ -52,10 +47,8 @@ export const useAccountSettingsModel = ({
   );
   const [showPasswordInput, setShowPasswordInput] = React.useState(false);
 
-  const notify = useNotification();
   const location = useLocation();
-  const user = useCurrentUser();
-  const queryClient = useQueryClient();
+  const currentUser = useCurrentUser();
   const { setCurrentUser, logout } = useAuth();
   const { navigateTo } = useAppNavigation();
   const { show, toggle, avatarUrl, setAvatarUrl } = useMenuProfile();
@@ -81,61 +74,48 @@ export const useAccountSettingsModel = ({
 
   const profileRef = React.useRef<HTMLDivElement>(null);
 
-  const { mutateAsync: updateUserMutation, isPending: isLoadingUpdateUser } =
-    useMutation({
-      mutationFn: async (values: IUser) =>
-        await updateUser(Number(user.id), values),
-      onSuccess: (data) => {
-        if (data?.success) {
-          queryClient.invalidateQueries({ queryKey: ['users'] });
-          notify.success(UPDATED_PROFILE_SUCCESS);
-          toggle(false);
-        }
-      },
-      onError: () => {
-        notify.error(ERROR_UPDATING_PROFILE);
-        toggle(false);
-      },
-    });
-  const { mutateAsync: uploadFileMutation, isPending: isLoadingUploadFile } =
-    useMutation({
-      mutationFn: uploadFile,
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: ['users'] }),
-      onError: () => notify.error(ERROR_PROCESSING_IMAGE),
-    });
-  const {
-    mutateAsync: changePasswordMutation,
-    isPending: isLoadingChangePassword,
-  } = useMutation({
-    mutationFn: async (values: IChangePasswordData) =>
-      changePassword(Number(user.id), values),
-    onSuccess: (data) => {
-      if (data) {
-        notify.warning(LOGIN_AGAIN);
-        toggle(false);
-      }
-    },
+  const { updateUserMutation, isPending: isLoadingUpdateUser } = useUpdateUser({
+    updateUser,
+    userId: Number(currentUser.id),
+    queryKeys: ['users'],
   });
+  const { uploadFileMutation, isPending: isLoadingUploadFile } = useUploadFile({
+    uploadFile,
+    queryKeys: ['users'],
+  });
+  const { changePasswordMutation, isPending: isLoadingChangePassword } =
+    useChangePassword({ changePassword });
 
   const handleFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
-    if (files) {
+
+    if (files && files[0]) {
+      if (avatarUrl) URL.revokeObjectURL(avatarUrl);
+
       const previewURL = URL.createObjectURL(files[0]);
-      setAvatarUrl(previewURL || null);
+      setAvatarUrl(previewURL);
     }
   };
 
   const handleFileUpload = React.useCallback(
-    async (form: HTMLFormElement) => {
+    async (form: HTMLFormElement): Promise<string | null> => {
       const formData = new FormData(form);
       const fileToUpload = formData.get('image_perfil');
+
+      if (!fileToUpload || !(fileToUpload instanceof File)) {
+        return null;
+      }
+
+      if (!fileToUpload.type.startsWith('image/')) {
+        return null;
+      }
 
       if (fileToUpload && fileToUpload instanceof File) {
         const uploadFormData = new FormData();
         uploadFormData.set('file', fileToUpload);
         const uploadResponse = await uploadFileMutation(uploadFormData);
 
-        return uploadResponse?.fileUrl;
+        return uploadResponse?.fileUrl || null;
       }
 
       return null;
@@ -152,56 +132,88 @@ export const useAccountSettingsModel = ({
 
   const handleToggleMenuProfile = React.useCallback(() => {
     toggle(false);
-    setAvatarUrl(user.image_url || null);
-    setInitialAvatarUrl(user.image_url || null);
+    setAvatarUrl(currentUser.image_url || null);
+    setInitialAvatarUrl(currentUser.image_url || null);
     setShowPasswordInput(false);
-  }, [setAvatarUrl, toggle, user.image_url]);
+  }, [setAvatarUrl, toggle, currentUser.image_url]);
 
-  const submit = React.useCallback(
-    async (values: IUserProfile) => {
+  const uploadAvatarIfChanged = React.useCallback(async () => {
+    const hasAvatarChanged = avatarUrl !== initialAvatarUrl;
+
+    if (hasAvatarChanged) {
       const formElement = document.querySelector(
         '#form-profile',
       ) as HTMLFormElement;
 
-      let uploadedImageUrl = null;
+      return await handleFileUpload(formElement);
+    }
 
-      if (avatarUrl !== initialAvatarUrl) {
-        uploadedImageUrl = await handleFileUpload(formElement);
-      }
+    return null;
+  }, [avatarUrl, handleFileUpload, initialAvatarUrl]);
 
-      if (values.name !== user.name || avatarUrl !== initialAvatarUrl) {
+  const updateUserIfChanged = React.useCallback(
+    async (
+      values: IUserProfile,
+      uploadedImageUrl: string | null | undefined,
+    ) => {
+      const hasNameChanged = values.name !== currentUser.name;
+      const hasAvatarChanged = avatarUrl !== initialAvatarUrl;
+
+      if (hasNameChanged || hasAvatarChanged) {
         const response = await updateUserMutation({
-          ...user,
-          name: values.name || user.name,
-          image_url: uploadedImageUrl || user.image_url,
+          name: values.name || currentUser.name,
+          email: currentUser.email,
+          role: currentUser.role,
+          image_url: uploadedImageUrl || currentUser.image_url,
         });
 
         if (response?.success) {
           setCurrentUser(response.user);
-        }
-      }
-
-      if (values.password && values.confirm_password) {
-        const response = await changePasswordMutation({
-          password: values.password,
-          confirm_password: values.confirm_password,
-        });
-
-        if (response) {
-          handleExit();
+          toggle();
         }
       }
     },
     [
       avatarUrl,
-      changePasswordMutation,
-      handleExit,
-      handleFileUpload,
+      currentUser.email,
+      currentUser.image_url,
+      currentUser.name,
+      currentUser.role,
       initialAvatarUrl,
       setCurrentUser,
+      toggle,
       updateUserMutation,
-      user,
     ],
+  );
+
+  const changePasswordIfProvided = React.useCallback(
+    async (values: IUserProfile) => {
+      const hasPasswordConfirmation =
+        values.password && values.confirm_password;
+
+      if (!hasPasswordConfirmation) return;
+
+      const response = await changePasswordMutation({
+        password: values.password,
+        confirm_password: values.confirm_password,
+      });
+
+      if (response) {
+        handleExit();
+      }
+    },
+    [changePasswordMutation, handleExit],
+  );
+
+  const handleUpdateProfile = React.useCallback(
+    async (values: IUserProfile) => {
+      const uploadedImageUrl = await uploadAvatarIfChanged();
+
+      await updateUserIfChanged(values, uploadedImageUrl);
+
+      await changePasswordIfProvided(values);
+    },
+    [uploadAvatarIfChanged, updateUserIfChanged, changePasswordIfProvided],
   );
 
   const loading = React.useMemo(
@@ -212,8 +224,8 @@ export const useAccountSettingsModel = ({
   const disableSubmitButton = React.useMemo(
     () =>
       loading ||
-      (avatarUrl === user.image_url &&
-        name === user.name &&
+      (avatarUrl === currentUser.image_url &&
+        name === currentUser.name &&
         password === undefined &&
         confirm_password === undefined),
     [
@@ -222,8 +234,8 @@ export const useAccountSettingsModel = ({
       loading,
       name,
       password,
-      user.image_url,
-      user.name,
+      currentUser.image_url,
+      currentUser.name,
     ],
   );
 
@@ -241,14 +253,14 @@ export const useAccountSettingsModel = ({
   }, [handleToggleMenuProfile]);
 
   React.useEffect(() => {
-    reset(user);
-    const imageUrl = user.image_url || null;
+    reset(currentUser);
+    const imageUrl = currentUser.image_url || null;
     setAvatarUrl(imageUrl);
     setInitialAvatarUrl(imageUrl);
-  }, [reset, setAvatarUrl, user, show]);
+  }, [reset, setAvatarUrl, currentUser, show]);
 
   return {
-    user,
+    currentUser,
     initialAvatarUrl,
     showPasswordInput,
     setShowPasswordInput,
@@ -261,6 +273,6 @@ export const useAccountSettingsModel = ({
     disableSubmitButton,
     handleToggleMenuProfile,
     handleSubmit,
-    submit,
+    handleUpdateProfile,
   };
 };
