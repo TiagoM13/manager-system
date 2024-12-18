@@ -7,7 +7,7 @@ import { CircleNotch } from '@phosphor-icons/react';
 import { Button, Input, InputPassword } from '@/components/_ui';
 import { useAuth } from '@/hooks';
 
-import { FormAuthProps } from '../../types/auth.types';
+import { FormAuthProps } from '../../auth.types';
 
 import { Container } from '../../styles';
 

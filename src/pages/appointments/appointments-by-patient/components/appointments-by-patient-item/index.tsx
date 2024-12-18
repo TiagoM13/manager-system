@@ -22,7 +22,7 @@ export const AppointmentsByPatientRow: React.FC<IAppointmentItem> = ({
       <Table.Cell>
         <Badge type={appointment.status} />
       </Table.Cell>
-      <Table.Cell>
+      <Table.Cell style={{ width: 50 }}>
         <Button
           clear
           icon={<StatusActionIcon status={appointment.status} />}
