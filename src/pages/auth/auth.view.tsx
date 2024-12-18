@@ -11,13 +11,13 @@ type AuthPageViewProps = ReturnType<typeof useAuthModel> & {
 };
 
 export const AuthPageView: React.FC<AuthPageViewProps> = (props) => {
-  const { methods, handleSubmit, submit, children } = props;
+  const { methods, handleSubmit, handleAuthAction, children } = props;
 
   return (
     <FormProvider {...methods}>
       <FormContainer
         noValidate
-        onSubmit={handleSubmit(submit)}
+        onSubmit={handleSubmit(handleAuthAction)}
         className="overflow-auto"
       >
         <div className="relative flex h-screen items-center justify-between bg-slate-100 max-lg:justify-center">
