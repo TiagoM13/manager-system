@@ -37,6 +37,7 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
   isAppointmentPending,
   breadcrumbsPathItems,
   handleUpdateAppointment,
+  isEdit,
   title,
 }) => {
   return (
@@ -58,7 +59,7 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
           loading={isLoading}
         />
 
-        {isLoading && (
+        {isLoading ? (
           <Card bordered>
             <div className="flex min-h-[200px] items-center justify-center">
               <CircleNotch
@@ -67,54 +68,56 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
               />
             </div>
           </Card>
-        )}
+        ) : (
+          <>
+            {isAppointmentPending && !isEdit ? (
+              <FormProvider {...methods}>
+                <Card bordered>
+                  <div className="flex gap-6 p-2">
+                    <div className="flex w-full flex-col justify-between">
+                      <AppointmentForm
+                        loading={isLoading || isPending}
+                        isUpdating={isAppointmentPending}
+                        doctors={doctorOptions}
+                      />
 
-        {!isLoading && isAppointmentPending && (
-          <FormProvider {...methods}>
-            <Card bordered>
-              <div className="flex gap-6 p-2">
-                <div className="flex w-full flex-col justify-between">
-                  <AppointmentForm
-                    loading={isLoading || isPending}
-                    isUpdating={isAppointmentPending}
-                    doctors={doctorOptions}
-                  />
+                      <div className="ml-auto flex gap-2 p-2">
+                        <Button
+                          type="button"
+                          variable="danger"
+                          label="encerrar consulta"
+                          onClick={() =>
+                            handleCancelAppointment(AppointmentStatus.CANCELLED)
+                          }
+                          icon={<X className="size-5" weight="bold" />}
+                          className="min-w-28 justify-between px-4 disabled:cursor-not-allowed"
+                          disabled={isLoading || isPending}
+                          loading={isPendingUpdateAppointmentStatus}
+                        />
 
-                  <div className="ml-auto flex gap-2 p-2">
-                    <Button
-                      type="button"
-                      variable="danger"
-                      label="encerrar consulta"
-                      onClick={() =>
-                        handleCancelAppointment(AppointmentStatus.CANCELLED)
-                      }
-                      icon={<X className="size-5" weight="bold" />}
-                      className="min-w-28 justify-between px-4 disabled:cursor-not-allowed"
-                      disabled={isLoading || isPending}
-                      loading={isPendingUpdateAppointmentStatus}
-                    />
-
-                    <Button
-                      type="button"
-                      label="finalizar consulta"
-                      onClick={methods.handleSubmit(handleUpdateAppointment)}
-                      icon={<Check className="size-5" weight="bold" />}
-                      className="min-w-28 justify-between px-4 disabled:cursor-not-allowed"
-                      disabled={isLoading || isPending}
-                      loading={isPendingUpdateAppointment}
-                    />
+                        <Button
+                          type="button"
+                          label="finalizar consulta"
+                          onClick={methods.handleSubmit(
+                            handleUpdateAppointment,
+                          )}
+                          icon={<Check className="size-5" weight="bold" />}
+                          className="min-w-28 justify-between px-4 disabled:cursor-not-allowed"
+                          disabled={isLoading || isPending}
+                          loading={isPendingUpdateAppointment}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </Card>
-          </FormProvider>
-        )}
-
-        {!isLoading && !isAppointmentPending && (
-          <AppointmentDetailsCard
-            appointment={appointmentResponse}
-            loading={isLoading}
-          />
+                </Card>
+              </FormProvider>
+            ) : (
+              <AppointmentDetailsCard
+                appointment={appointmentResponse}
+                loading={isLoading}
+              />
+            )}
+          </>
         )}
       </div>
     </div>
