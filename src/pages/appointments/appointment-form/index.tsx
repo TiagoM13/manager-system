@@ -9,6 +9,7 @@ import {
   getAllDoctorsPaginatedService,
   getAllPatientsService,
   getPatientService,
+  updatePatientService,
 } from '@/services';
 
 import { useAppointmentFormModel } from './appointment-form.model';
@@ -23,6 +24,8 @@ const AppointmentForm: React.FC = () => {
     getAllDoctors: () => getAllDoctorsPaginatedService(http),
     createAppointment: (id, values) =>
       createAppointmentService(http, String(id), values),
+    updatePatient: (patientId, values) =>
+      updatePatientService(http, patientId, values),
   });
 
   const { isCreatingNewAppointment, isLoading, patientResponse } = methodsModel;

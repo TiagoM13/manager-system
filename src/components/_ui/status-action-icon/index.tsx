@@ -3,6 +3,7 @@ import React from 'react';
 import { PencilSimple, Eye } from '@phosphor-icons/react';
 
 import { AppointmentStatus } from '@/enums';
+import { usePermissions } from '@/hooks';
 
 export interface StatusActionIconProps {
   status?: AppointmentStatus;
@@ -11,7 +12,9 @@ export interface StatusActionIconProps {
 export const StatusActionIcon: React.FC<StatusActionIconProps> = ({
   status,
 }) => {
-  return status === AppointmentStatus.PENDING ? (
+  const { isEdit } = usePermissions();
+
+  return status === AppointmentStatus.PENDING && !isEdit ? (
     <PencilSimple
       data-testid="icon-edit"
       className="size-4 text-sky-600"

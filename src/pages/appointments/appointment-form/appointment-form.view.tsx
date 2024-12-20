@@ -28,7 +28,6 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
     goBack,
     navigateTo,
     isCreatingNewAppointment,
-    handleCreateNewAppointment,
     formMethods,
     searchFormMethods,
     patientFormMethods,
@@ -38,6 +37,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
     isLoading,
     isPending,
     breadcrumbsPathItems,
+    handleSave,
   } = props;
 
   return (
@@ -91,9 +91,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
                       <Button
                         type="button"
                         label="salvar consulta"
-                        onClick={formMethods.handleSubmit(
-                          handleCreateNewAppointment,
-                        )}
+                        onClick={handleSave}
                         icon={<Check className="size-4" weight="bold" />}
                         className="min-w-28 justify-between px-4 disabled:cursor-not-allowed"
                         disabled={isPending || isLoading}

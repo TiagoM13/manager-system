@@ -7,10 +7,10 @@ import { Header } from '@/components';
 import { FormContainer, Card, Button } from '@/components/_ui';
 import { BreadcrumbItem } from '@/interfaces';
 
-import { steps } from '../utils/constants';
 import { FormProgress } from './components/form-progress';
 import { FormStepOne, FormStepTwo, FormStepThree } from './forms';
 import { usePatientFormModel } from './patient-form.model';
+import { steps } from './utils/steps';
 
 type PatientFormViewProps = ReturnType<typeof usePatientFormModel> & {
   breadcrumbsPathItems: BreadcrumbItem[];

@@ -5,7 +5,6 @@ import { Check } from '@phosphor-icons/react';
 interface StepProps {
   stepNumber: number;
   title: string;
-  description: string;
   isActive: boolean;
   isComplete: boolean;
   showLine: boolean;
@@ -13,7 +12,6 @@ interface StepProps {
 
 export const Step: React.FC<StepProps> = ({
   title,
-  description,
   stepNumber,
   isActive,
   isComplete,
@@ -43,7 +41,7 @@ export const Step: React.FC<StepProps> = ({
         ) : isActive ? (
           <span className="text-xs text-sky-600">Em progresso</span>
         ) : (
-          <span className="text-xs text-slate-400">{description}</span>
+          <span className="text-xs text-red-600">Pendente</span>
         )}
       </div>
     </div>

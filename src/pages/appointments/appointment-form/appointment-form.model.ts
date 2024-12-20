@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import dayjs from 'dayjs';
 
+import { formatPatientProps } from '@/helpers/format-patient-props';
 import { formatPatientRequest } from '@/helpers/format-patient-request';
 import {
   useAppNavigation,
@@ -12,10 +13,11 @@ import {
   useGetPatient,
   useQueryParams,
   useCreateAppointment,
+  useUpdatePatient,
 } from '@/hooks';
 import { IAppointment, IDoctor, IMSResponse, IPatient } from '@/interfaces';
 import { schemaPatient } from '@/pages/patients/patient-form/patient-form.schema';
-import { formatDateWithCurrentTime } from '@/utils';
+import { formatDateWithCurrentTime, getOnlyModifiedFields } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
@@ -35,6 +37,10 @@ interface AppointmentFormModelProps {
     id: string,
     values: IAppointment,
   ) => Promise<IMSResponse<IAppointment, 'appointment'> | undefined>;
+  updatePatient: (
+    patientId: string,
+    values: IPatient,
+  ) => Promise<IMSResponse<IPatient, 'patient'> | undefined>;
 }
 
 export const useAppointmentFormModel = ({
@@ -42,6 +48,7 @@ export const useAppointmentFormModel = ({
   getPatient,
   getAllDoctors,
   createAppointment,
+  updatePatient,
 }: AppointmentFormModelProps) => {
   const [query] = useQueryParams<PatientSearchType>();
   const { goBack, navigateTo } = useAppNavigation();
@@ -84,10 +91,16 @@ export const useAppointmentFormModel = ({
     getAllDoctors,
     isEnabled: !isCreatingNewAppointment,
   });
-  const { createAppointmentMutation, isPending } = useCreateAppointment({
-    createAppointment,
-    patientId: String(patientId),
-  });
+  const { createAppointmentMutation, isPending: isPendingCreateAppointment } =
+    useCreateAppointment({
+      createAppointment,
+      patientId: String(patientId),
+    });
+  const { updatePatientMutation, isPending: isPedingUpdatePatient } =
+    useUpdatePatient({
+      updatePatient,
+      patientId: String(patientId),
+    });
 
   const formMethods = useForm<AppointmentFormType>({
     resolver: zodResolver(appointmentFormSchema),
@@ -105,6 +118,10 @@ export const useAppointmentFormModel = ({
     resolver: zodResolver(schemaPatient),
     shouldUnregister: false,
   });
+  const {
+    reset,
+    formState: { dirtyFields },
+  } = patientFormMethods;
 
   const isLoading = React.useMemo(
     () =>
@@ -123,18 +140,36 @@ export const useAppointmentFormModel = ({
       isFetchingAllPatients,
     ],
   );
-
-  const handleCreateNewAppointment = React.useCallback(
-    async (values: AppointmentFormType) => {
-      const payload: IAppointment = {
-        ...values,
-        scheduled_date: formatDateWithCurrentTime(values.scheduled_date) as any,
-      };
-
-      await createAppointmentMutation(payload);
-    },
-    [createAppointmentMutation],
+  const isPending = React.useMemo(
+    () => isPendingCreateAppointment || isPedingUpdatePatient,
+    [isPedingUpdatePatient, isPendingCreateAppointment],
   );
+
+  const handleUpdatePatientIfChanged = patientFormMethods.handleSubmit(
+    (values) => {
+      const formattedValues = formatPatientProps(values);
+      const payload = getOnlyModifiedFields(dirtyFields, formattedValues);
+
+      if (!Object.keys(payload).length) {
+        return reset();
+      }
+
+      updatePatientMutation(payload);
+    },
+  );
+
+  const handleCreateNewAppointment = formMethods.handleSubmit((data) => {
+    const payload: IAppointment = {
+      ...data,
+      scheduled_date: formatDateWithCurrentTime(data.scheduled_date) as any,
+    };
+    createAppointmentMutation(payload);
+  });
+
+  const handleSave = React.useCallback(async () => {
+    handleUpdatePatientIfChanged();
+    handleCreateNewAppointment();
+  }, [handleCreateNewAppointment, handleUpdatePatientIfChanged]);
 
   React.useEffect(() => {
     if (patientResponse)
@@ -146,7 +181,6 @@ export const useAppointmentFormModel = ({
     hasValidQuery,
     goBack,
     navigateTo,
-    handleCreateNewAppointment,
     isLoading,
     isPending,
     isLoadingDoctors,
@@ -160,5 +194,6 @@ export const useAppointmentFormModel = ({
     patientResponse,
     allPatientsResponse,
     doctorOptions,
+    handleSave,
   };
 };

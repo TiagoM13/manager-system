@@ -11,6 +11,7 @@ import {
   useGetAppointment,
   useGetPatient,
   useNotification,
+  usePermissions,
   useUpdateAppointment,
   useUpdateAppointmentStatus,
 } from '@/hooks';
@@ -55,6 +56,7 @@ export const useAppointmentDetailsModel = ({
   updateAppointmentStatus,
 }: AppointmentDetailsModelProps) => {
   const notify = useNotification();
+  const { isEdit } = usePermissions();
   const { goBack, navigateTo } = useAppNavigation();
   const { patientId, appointmentId } = useParams<{
     patientId: string;
@@ -84,6 +86,7 @@ export const useAppointmentDetailsModel = ({
     doctorOptions,
   } = useGetAllDoctors({
     getAllDoctors,
+    isEnabled: !isEdit,
   });
   const { updateAppointmentMutation, isPending: isPendingUpdateAppointment } =
     useUpdateAppointment({
@@ -198,6 +201,7 @@ export const useAppointmentDetailsModel = ({
     isLoading,
     methods,
     doctorOptions,
+    isEdit,
     isPending,
     isPendingUpdateAppointment,
     isPendingUpdateAppointmentStatus,
