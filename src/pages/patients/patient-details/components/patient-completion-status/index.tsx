@@ -2,10 +2,11 @@ import React from 'react';
 
 import { CustomLoadingSkeleton } from '@/components/_ui';
 import { IPatient, ModalSection } from '@/interfaces';
-import { calculateCompletionPercentage } from '@/pages/patients/utils/percentage';
 import { formatDateTime } from '@/utils';
 
 import { EditButton } from '..';
+
+import { calculateCompletionPercentage } from '../../utils/percentage';
 
 interface PatientCompletionStatusProps {
   patient?: IPatient;

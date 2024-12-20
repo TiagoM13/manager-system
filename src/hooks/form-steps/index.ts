@@ -2,7 +2,6 @@ import React from 'react';
 
 interface Step {
   title: string;
-  description: string;
 }
 
 export const useFormSteps = (steps: Step[]) => {

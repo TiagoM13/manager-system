@@ -6,8 +6,8 @@ import { useAppNavigation, useCreatePatient, useFormSteps } from '@/hooks';
 import { IMSResponse, IPatient, IPatientForm } from '@/interfaces';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { steps } from '../utils/constants';
 import { SchemaPatientType, schemaPatient } from './patient-form.schema';
+import { steps } from './utils/steps';
 
 interface PatientFormModelProps {
   createPatient: (
