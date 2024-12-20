@@ -11,15 +11,20 @@ describe('<InputRadio/>', () => {
       opt2: 'Não',
     };
 
+    const labels = {
+      label1: 'Sim',
+      label2: 'Não',
+    };
+
     const label = 'Teste de seleção';
 
     const { getByText, asFragment } = render(
-      <InputRadio label={label} options={opts} />,
+      <InputRadio label={label} options={opts} optionLabels={labels} />,
     );
 
     expect(getByText(label)).toBeInTheDocument();
-    expect(getByText(opts.opt1)).toBeInTheDocument();
-    expect(getByText(opts.opt2)).toBeInTheDocument();
+    expect(getByText(labels.label1)).toBeInTheDocument();
+    expect(getByText(labels.label2)).toBeInTheDocument();
 
     expect(asFragment()).toMatchSnapshot();
   });

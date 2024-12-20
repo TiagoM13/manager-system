@@ -27,6 +27,10 @@ export interface InputRadioProps {
     opt1: string;
     opt2: string;
   };
+  optionLabels: {
+    label1: string;
+    label2: string;
+  };
   error?: FieldError | undefined;
 }
 

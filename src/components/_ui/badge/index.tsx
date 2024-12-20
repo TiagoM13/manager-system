@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { AppointmentStatus, Role, Status } from '@/enums';
+import { getLabelForType } from '@/utils/get-label-type';
 
 export type BadgeProps = {
   type: Status | Role | AppointmentStatus | undefined;
@@ -32,7 +33,7 @@ export const Badge: React.FC<BadgeProps> = ({ type }) => {
       data-testid="badge-container"
       className={`${bg_color} w-fit rounded-xl px-3 py-1.5 text-center text-xs font-medium`}
     >
-      <span className="capitalize">{type}</span>
+      <span className="capitalize">{getLabelForType(type!)}</span>
     </div>
   );
 };

@@ -119,7 +119,7 @@ export const useUserFormModel = ({
         return await handleFileUpload(formElement);
       }
 
-      return values.image_url;
+      return values.image_url || null;
     },
     [handleFileUpload, userResponse?.image_url],
   );
@@ -146,7 +146,7 @@ export const useUserFormModel = ({
     imageUrl,
   }: {
     values: UserSchemaType;
-    imageUrl: string;
+    imageUrl: string | null | undefined;
   }): IUser => {
     return {
       name: values.name,
@@ -167,7 +167,7 @@ export const useUserFormModel = ({
 
       const savedValues = prepareUserPayload({
         values,
-        imageUrl: String(updatedImageUrl),
+        imageUrl: updatedImageUrl,
       });
 
       if (isCreatingNewUser) {

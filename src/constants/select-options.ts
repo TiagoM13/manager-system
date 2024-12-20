@@ -1,25 +1,27 @@
 import { AppointmentType } from '@/enums';
 
+import { APPOINTMENT_TYPE_LABELS } from './labels';
+
 export const appointmentTypeOptions = [
   {
-    label: 'Consulta',
     value: AppointmentType.QUERY,
+    label: APPOINTMENT_TYPE_LABELS.QUERY,
   },
   {
     label: 'Acidente de trânsito',
-    value: AppointmentType.ACCIDENT,
+    value: APPOINTMENT_TYPE_LABELS.ACCIDENT,
   },
   {
     label: 'Ferimento por arma branca',
-    value: AppointmentType.WHITE_WEAPON_INJURY,
+    value: APPOINTMENT_TYPE_LABELS.WHITE_WEAPON_INJURY,
   },
   {
     label: 'Ferimento por arma de fogo',
-    value: AppointmentType.FIREARM_INJURY,
+    value: APPOINTMENT_TYPE_LABELS.FIREARM_INJURY,
   },
   {
     label: 'Outros',
-    value: AppointmentType.OTHER,
+    value: APPOINTMENT_TYPE_LABELS.OTHER,
   },
 ];
 
