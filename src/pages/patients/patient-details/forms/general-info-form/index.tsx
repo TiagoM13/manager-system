@@ -53,14 +53,14 @@ export const GeneralInfoForm: React.FC<GeneralInfoFormProps> = ({
       />
 
       <Select
-        name="material_status"
+        name="marital_status"
         label="Estado cívil"
-        placeholder="Selecione o sexo"
+        placeholder="Selecione o estado civil"
         options={maritalStatusOptions}
         valueAs="value"
         labelAs="label"
         control={control}
-        error={errors.material_status}
+        error={errors.marital_status}
         disabled={loading}
       />
 

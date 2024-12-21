@@ -10,7 +10,7 @@ export const calculateCompletionPercentage = (patient: IPatient) => {
     patient?.address,
     patient?.mother_name,
     patient?.father_name,
-    patient?.material_status,
+    patient?.marital_status,
     patient?.occupation,
     patient?.email,
     patient?.phone,

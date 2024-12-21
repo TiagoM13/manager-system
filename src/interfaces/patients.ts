@@ -1,4 +1,6 @@
 import { Status } from '@/enums';
+import { MaritalStatus } from '@/enums/marital-status';
+import { Sex } from '@/enums/sex';
 
 import { IAppointment } from './appointment';
 
@@ -6,13 +8,13 @@ export interface IPatient {
   id?: string;
   name: string;
   birth_date: Date;
-  sex: string;
+  sex: Sex;
   cpf?: string | null;
   cns?: string | null;
   address?: string | null;
   mother_name?: string | null;
   father_name?: string | null;
-  material_status?: string | null;
+  marital_status?: MaritalStatus | null;
   occupation?: string | null;
   email?: string | null;
   phone?: string | null;

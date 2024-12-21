@@ -2,6 +2,7 @@ import React from 'react';
 
 import { InfoItem } from '@/components';
 import { Card } from '@/components/_ui';
+import { MARITAL_STATUS_LABELS, SEX_LABELS } from '@/constants/labels';
 import { IPatient } from '@/interfaces';
 import { formatDate, formatPhone } from '@/utils';
 
@@ -25,7 +26,11 @@ export const PatientDetailsCard: React.FC<PatientDetailsCardProps> = ({
             label="Data de Nascimento"
             value={formatDate(patient?.birth_date as Date)}
           />
-          <InfoItem loading={loading} label="Sexo" value={patient?.sex} />
+          <InfoItem
+            loading={loading}
+            label="Sexo"
+            value={SEX_LABELS[patient?.sex!]}
+          />
           <InfoItem
             loading={loading}
             label="Nome da Mãe"
@@ -54,7 +59,7 @@ export const PatientDetailsCard: React.FC<PatientDetailsCardProps> = ({
           <InfoItem
             loading={loading}
             label="Estado Civil"
-            value={patient?.material_status}
+            value={MARITAL_STATUS_LABELS[patient?.marital_status!]}
           />
         </div>
       </div>

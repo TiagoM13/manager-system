@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Badge, Button, Table, StatusActionIcon } from '@/components/_ui';
+import { APPOINTMENT_TYPE_LABELS } from '@/constants/labels';
 import { IAppointment } from '@/interfaces';
 import { formatDate, formattedTime } from '@/utils';
 
@@ -23,7 +24,9 @@ export const AppointmentRow: React.FC<IAppointmentItem> = ({
       <Table.Cell>{formatDate(appointment.scheduled_date)}</Table.Cell>
       <Table.Cell>{formattedTime(appointment.scheduled_date)}</Table.Cell>
       <Table.Cell>{appointment.doctor?.name}</Table.Cell>
-      <Table.Cell>{appointment.appointment_type}</Table.Cell>
+      <Table.Cell>
+        {APPOINTMENT_TYPE_LABELS[appointment.appointment_type]}
+      </Table.Cell>
       <Table.Cell>
         <Badge type={appointment.status} />
       </Table.Cell>

@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { MaritalStatus } from '@/enums/marital-status';
+import { Sex } from '@/enums/sex';
 import {
   validateCNS,
   NameFieldRequired,
@@ -59,11 +61,7 @@ export const schemaPatient = z.object({
     .refine((data) => calculateAge(data) <= 105, {
       message: MAX_DATE_FIELD,
     }),
-  sex: z
-    .string({ required_error: REQUIRED_FIELD })
-    .refine((data) => data.trim() !== '', {
-      message: INVALID_SELECT,
-    }),
+  sex: z.nativeEnum(Sex, { message: INVALID_SELECT }),
   cpf: OptionalStringField.refine((value) => !value || value.length === 14, {
     message: MIN_LENGTH_CPF,
   }),
@@ -71,7 +69,7 @@ export const schemaPatient = z.object({
   address: OptionalStringField,
   mother_name: OptionalStringField,
   father_name: OptionalStringField,
-  material_status: OptionalStringField,
+  marital_status: z.nativeEnum(MaritalStatus).nullable().optional(),
   occupation: OptionalStringField,
   email: OptionalStringField,
   phone: OptionalStringField,

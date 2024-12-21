@@ -74,12 +74,12 @@ export const FormStepOne: React.FC<{ loading?: boolean }> = ({ loading }) => {
         />
 
         <Select
-          name="material_status"
+          name="marital_status"
           label="Estado cívil"
-          placeholder="Selecione o sexo"
+          placeholder="Selecione o estado civil"
           control={control}
           options={maritalStatusOptions}
-          error={errors.material_status}
+          error={errors.marital_status}
           disabled={loading}
         />
         <Input

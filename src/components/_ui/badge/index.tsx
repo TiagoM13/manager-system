@@ -15,7 +15,7 @@ export const Badge: React.FC<BadgeProps> = ({ type }) => {
   const bg_appointment_canceled =
     type === AppointmentStatus.CANCELLED ? 'bg-red-400' : null;
   const bg_appointment_completed =
-    type === AppointmentStatus.CONPLETED ? 'bg-emerald-400' : null;
+    type === AppointmentStatus.COMPLETED ? 'bg-emerald-400' : null;
   const bg_appointment_pending =
     type === AppointmentStatus.PENDING ? 'bg-orange-300' : null;
 

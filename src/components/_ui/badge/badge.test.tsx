@@ -1,6 +1,8 @@
 import React from 'react';
 
+import { STATUS_LABELS } from '@/constants/labels';
 import { Role, Status } from '@/enums';
+import { ROLE_LABELS } from '@/pages/users/user-form/utils/options';
 import { render } from '@testing-library/react';
 
 import { Badge } from '.';
@@ -11,7 +13,7 @@ describe('<Badge />', () => {
 
     const container = getByTestId('badge-container');
 
-    expect(getByText(Role.ADMIN)).toBeTruthy();
+    expect(getByText(ROLE_LABELS.ADMIN)).toBeTruthy();
     expect(container).toHaveClass('bg-purple-500');
   });
 
@@ -20,7 +22,7 @@ describe('<Badge />', () => {
 
     const container = getByTestId('badge-container');
 
-    expect(getByText(Role.EDITOR)).toBeTruthy();
+    expect(getByText(ROLE_LABELS.EDITOR)).toBeTruthy();
     expect(container).toHaveClass('bg-blue-500');
     expect(container).not.toHaveClass('bg-purple-500');
   });
@@ -32,8 +34,8 @@ describe('<Badge />', () => {
 
     const container = getByTestId('badge-container');
 
-    expect(getByText(Status.ACTIVE)).toBeTruthy();
-    expect(queryAllByText(Status.INACTIVE).length).not.toBeTruthy();
+    expect(getByText(STATUS_LABELS.ACTIVE)).toBeTruthy();
+    expect(queryAllByText(STATUS_LABELS.INACTIVE).length).not.toBeTruthy();
     expect(container).toHaveClass('bg-emerald-400');
     expect(container).not.toHaveClass('bg-slate-300');
 

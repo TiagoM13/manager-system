@@ -1,6 +1,12 @@
 import { AppointmentType } from '@/enums';
+import { MaritalStatus } from '@/enums/marital-status';
+import { Sex } from '@/enums/sex';
 
-import { APPOINTMENT_TYPE_LABELS } from './labels';
+import {
+  APPOINTMENT_TYPE_LABELS,
+  MARITAL_STATUS_LABELS,
+  SEX_LABELS,
+} from './labels';
 
 export const appointmentTypeOptions = [
   {
@@ -8,54 +14,54 @@ export const appointmentTypeOptions = [
     label: APPOINTMENT_TYPE_LABELS.QUERY,
   },
   {
-    label: 'Acidente de trânsito',
-    value: APPOINTMENT_TYPE_LABELS.ACCIDENT,
+    value: AppointmentType.ACCIDENT,
+    label: APPOINTMENT_TYPE_LABELS.ACCIDENT,
   },
   {
-    label: 'Ferimento por arma branca',
-    value: APPOINTMENT_TYPE_LABELS.WHITE_WEAPON_INJURY,
+    value: AppointmentType.WHITE_WEAPON_INJURY,
+    label: APPOINTMENT_TYPE_LABELS.WHITE_WEAPON_INJURY,
   },
   {
-    label: 'Ferimento por arma de fogo',
-    value: APPOINTMENT_TYPE_LABELS.FIREARM_INJURY,
+    value: AppointmentType.FIREARM_INJURY,
+    label: APPOINTMENT_TYPE_LABELS.FIREARM_INJURY,
   },
   {
-    label: 'Outros',
-    value: APPOINTMENT_TYPE_LABELS.OTHER,
+    value: AppointmentType.OTHER,
+    label: APPOINTMENT_TYPE_LABELS.OTHER,
   },
 ];
 
 export const genderOptions = [
   {
-    label: 'Masculino',
-    value: 'masculino',
+    value: Sex.MALE,
+    label: SEX_LABELS.MALE,
   },
   {
-    label: 'Feminino',
-    value: 'feminino',
+    value: Sex.FEMALE,
+    label: SEX_LABELS.FEMALE,
   },
 ];
 
 export const maritalStatusOptions = [
   {
-    label: 'Solteiro(a)',
-    value: 'solteiro(a)',
+    value: MaritalStatus.SINGLE,
+    label: MARITAL_STATUS_LABELS.SINGLE,
   },
   {
-    label: 'Casado(a)',
-    value: 'casado(a)',
+    value: MaritalStatus.MARRIED,
+    label: MARITAL_STATUS_LABELS.MARRIED,
   },
   {
-    label: 'Divorciado(a)',
-    value: 'divorciado(a)',
+    value: MaritalStatus.DIVORCED,
+    label: MARITAL_STATUS_LABELS.DIVORCED,
   },
   {
-    label: 'Viúvo(a)',
-    value: 'viuvo(a)',
+    value: MaritalStatus.WIDOWED,
+    label: MARITAL_STATUS_LABELS.WIDOWED,
   },
   {
-    label: 'Separado(a)',
-    value: 'separado(a)',
+    value: MaritalStatus.SEPARATED,
+    label: MARITAL_STATUS_LABELS.SEPARATED,
   },
 ];
 

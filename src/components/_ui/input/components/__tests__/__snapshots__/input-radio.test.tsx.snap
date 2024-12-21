@@ -16,6 +16,7 @@ exports[`<InputRadio/> should render correctly component 1`] = `
       <input
         class="h-[12px] w-[12px] cursor-pointer appearance-none rounded-full border border-slate-600 transition-all duration-500 ease-in checked:bg-sky-600 checked:hover:bg-sky-500 disabled:cursor-auto disabled:opacity-60 hover:bg-sky-200"
         id="sim"
+        optionlabel="Sim"
         type="radio"
         value="Sim"
       />
@@ -32,6 +33,7 @@ exports[`<InputRadio/> should render correctly component 1`] = `
       <input
         class="h-[12px] w-[12px] cursor-pointer appearance-none rounded-full border border-slate-600 transition-all duration-500 ease-in checked:bg-sky-600 checked:hover:bg-sky-500 disabled:cursor-auto disabled:opacity-60 hover:bg-sky-200"
         id="não"
+        optionlabel="Não"
         type="radio"
         value="Não"
       />

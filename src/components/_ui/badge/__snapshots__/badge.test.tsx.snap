@@ -9,7 +9,7 @@ exports[`<Badge /> should render correctly status active 1`] = `
     <span
       class="capitalize"
     >
-      ativo
+      Ativo
     </span>
   </div>
 </DocumentFragment>

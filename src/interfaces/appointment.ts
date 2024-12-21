@@ -1,11 +1,11 @@
-import { AppointmentStatus } from '@/enums';
+import { AppointmentStatus, AppointmentType } from '@/enums';
 
 import { IDoctor } from './doctor';
 import { IPatient } from './patients';
 
 export interface IAppointment {
   id?: number;
-  appointment_type: string;
+  appointment_type: AppointmentType;
   examination?: string | null;
   diagnosis_summary?: string | null;
   scheduled_date: Date;

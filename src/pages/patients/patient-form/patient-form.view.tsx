@@ -22,7 +22,6 @@ export const PatientFormView: React.FC<PatientFormViewProps> = (props) => {
     goBack,
     isPending,
     handleCreateNewPatient,
-    handleSubmit,
     handleNextStep,
     breadcrumbsPathItems,
     currentStep,
@@ -69,7 +68,7 @@ export const PatientFormView: React.FC<PatientFormViewProps> = (props) => {
                       disabled={isPending}
                       icon={<Check className="size-4" weight="bold" />}
                       className="min-w-28 justify-between px-4"
-                      onClick={handleSubmit(handleCreateNewPatient)}
+                      onClick={handleCreateNewPatient}
                     />
                   ) : (
                     <Button

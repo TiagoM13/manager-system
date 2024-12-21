@@ -98,9 +98,7 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
                         <Button
                           type="button"
                           label="finalizar consulta"
-                          onClick={methods.handleSubmit(
-                            handleUpdateAppointment,
-                          )}
+                          onClick={handleUpdateAppointment}
                           icon={<Check className="size-5" weight="bold" />}
                           className="min-w-28 justify-between px-4 disabled:cursor-not-allowed"
                           disabled={isLoading || isPending}

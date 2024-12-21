@@ -3,6 +3,7 @@ import React from 'react';
 import { PencilSimple } from '@phosphor-icons/react';
 
 import { Avatar, Badge, Button, Table } from '@/components/_ui';
+import { SEX_LABELS } from '@/constants/labels';
 import { IPatient } from '@/interfaces';
 import { calculateAge, formatCPF, formatDate } from '@/utils';
 
@@ -24,7 +25,7 @@ export const PatientRow: React.FC<PatientItemProps> = ({ patient, onEdit }) => {
       </Table.Cell>
       <Table.Cell>{formatDate(patient.birth_date)}</Table.Cell>
       <Table.Cell>{calculateAge(patient.birth_date)} anos</Table.Cell>
-      <Table.Cell>{patient.sex}</Table.Cell>
+      <Table.Cell>{SEX_LABELS[patient.sex]}</Table.Cell>
       <Table.Cell>
         {patient.cpf ? formatCPF(String(patient.cpf)) : '-'}
       </Table.Cell>
@@ -61,7 +62,7 @@ export const PatientCard: React.FC<PatientItemProps> = ({
         </Text>
         <Text>
           <strong>Sexo:</strong>
-          <span>{patient.sex}</span>
+          <span>{SEX_LABELS[patient.sex]}</span>
         </Text>
         <Text>
           <strong>Data de Nasc.:</strong>
