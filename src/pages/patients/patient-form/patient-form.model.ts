@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import { formatPatientProps } from '@/helpers/format-patient-props';
 import { useAppNavigation, useCreatePatient, useFormSteps } from '@/hooks';
-import { IMSResponse, IPatient, IPatientForm } from '@/interfaces';
+import { IMSResponse, IPatient } from '@/interfaces';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { SchemaPatientType, schemaPatient } from './patient-form.schema';
@@ -33,12 +33,9 @@ export const usePatientFormModel = ({
 
   const { handleSubmit } = methods;
 
-  const handleCreateNewPatient = React.useCallback(
-    async (values: IPatientForm) => {
-      if (values) await createPatientMutation(formatPatientProps(values));
-    },
-    [createPatientMutation],
-  );
+  const handleCreateNewPatient = handleSubmit((values) => {
+    createPatientMutation(formatPatientProps(values));
+  });
 
   const handleNextStep = React.useCallback(async () => {
     const isValid = await methods.trigger();

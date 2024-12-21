@@ -4,6 +4,7 @@ import { DownloadSimple, Printer } from '@phosphor-icons/react';
 
 import { InfoItem } from '@/components';
 import { Badge, Button, Card } from '@/components/_ui';
+import { APPOINTMENT_TYPE_LABELS } from '@/constants/labels';
 import { IAppointment } from '@/interfaces';
 import { formatAppointmentDate, toastSuccess } from '@/utils';
 
@@ -24,7 +25,7 @@ export const AppointmentDetailsCard = ({
         <div className="mt-3 grid w-full grid-cols-2 gap-6">
           <InfoItem
             label="Tipo de Atendimento"
-            value={appointment?.appointment_type}
+            value={APPOINTMENT_TYPE_LABELS[appointment?.appointment_type!]}
             loading={loading}
           />
           <InfoItem

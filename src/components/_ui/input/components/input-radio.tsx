@@ -11,6 +11,7 @@ export const InputRadio: React.FC<InputRadioProps> = ({
   label = 'Selecione uma opção',
   control,
   options,
+  optionLabels,
   name,
   error,
 }) => {
@@ -28,6 +29,7 @@ export const InputRadio: React.FC<InputRadioProps> = ({
           control={control}
           id={options.opt1}
           value={options.opt1}
+          optionLabel={optionLabels.label1}
           disabled={disabled}
         />
         <OptionRadio
@@ -35,6 +37,7 @@ export const InputRadio: React.FC<InputRadioProps> = ({
           control={control}
           id={options.opt2}
           value={options.opt2}
+          optionLabel={optionLabels.label2}
           disabled={disabled}
         />
       </div>
@@ -48,6 +51,7 @@ type OptionRadioProps = React.ComponentProps<'input'> & {
   control?: Control<any>;
   defaultValue?: any;
   name?: string;
+  optionLabel: string;
 };
 
 const OptionRadio = ({
@@ -87,7 +91,7 @@ const OptionRadio = ({
         htmlFor={props.id?.toLowerCase()}
         className={`cursor-pointer capitalize text-slate-600 ${props.disabled ? 'cursor-auto opacity-60' : ''}`}
       >
-        {props.value}
+        {props.optionLabel}
       </label>
     </div>
   );

@@ -29,5 +29,5 @@ Pending.args = {
 
 export const Completed = Template.bind({});
 Completed.args = {
-  status: AppointmentStatus.CONPLETED,
+  status: AppointmentStatus.COMPLETED,
 };

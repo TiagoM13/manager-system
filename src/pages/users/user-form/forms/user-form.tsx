@@ -3,8 +3,9 @@ import { useFormContext } from 'react-hook-form';
 
 import { UploadAvatar } from '@/components';
 import { Card, Select, Input } from '@/components/_ui';
-import { Role } from '@/enums';
 import { IUser } from '@/interfaces';
+
+import { roleOptions } from '../utils/options';
 
 interface UserFormProps {
   isNew?: boolean;
@@ -22,12 +23,6 @@ export const UserForm: React.FC<UserFormProps> = ({
     setValue,
     formState: { errors },
   } = useFormContext<IUser>();
-
-  const selectOptions = [
-    { value: Role.ADMIN, label: 'Administrador' },
-    { value: Role.EDITOR, label: 'Editor' },
-    { value: Role.CLINICAL, label: 'Clínico' },
-  ];
 
   return (
     <Card title="Informações do usuário" className="px-6" bordered>
@@ -75,7 +70,7 @@ export const UserForm: React.FC<UserFormProps> = ({
             label="Tipo de usuário"
             defaultValue=""
             placeholder="Selcione um tipo de usuário"
-            options={selectOptions}
+            options={roleOptions}
             disabled={loading || isUpdatingItself}
             setValue={setValue}
             error={errors.role}

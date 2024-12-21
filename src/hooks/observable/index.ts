@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useObservable } from 'observable-hooks';
 
+import { Status } from '@/enums';
 import { getCurrentUser, logout } from '@/store/modules/auth/actions';
 import { userRole$, userStatus$ } from '@/utils';
 
@@ -37,7 +38,7 @@ export const useUserStatusObservable = () => {
     const subscription = userStatus$.subscribe(async (serverStatus) => {
       const localUser = getCurrentUser();
 
-      if (localUser && serverStatus === 'inativo') {
+      if (localUser && serverStatus === Status.INACTIVE) {
         const response = await logout();
         if (response) {
           notify.info(

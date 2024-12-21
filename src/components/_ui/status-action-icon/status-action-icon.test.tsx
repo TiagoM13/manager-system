@@ -18,7 +18,7 @@ describe('<StatusActionIcon />', () => {
 
   it('renders Eye icon for COMPLETED status', () => {
     const { container, getByTestId, asFragment } = render(
-      <StatusActionIcon status={AppointmentStatus.CONPLETED} />,
+      <StatusActionIcon status={AppointmentStatus.COMPLETED} />,
     );
     const icon = getByTestId('icon-view');
 

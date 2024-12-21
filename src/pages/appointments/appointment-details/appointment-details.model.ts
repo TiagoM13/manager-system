@@ -108,6 +108,8 @@ export const useAppointmentDetailsModel = ({
     shouldUnregister: false,
   });
 
+  const { handleSubmit } = methods;
+
   const isAppointmentPending = React.useMemo(
     () =>
       appointmentResponse &&
@@ -152,24 +154,17 @@ export const useAppointmentDetailsModel = ({
     [appointmentResponse?.scheduled_date],
   );
 
-  const handleUpdateAppointment = React.useCallback(
-    async (values: AppointmentDetailsType) => {
-      const scheduledDate = validateScheduledDate(values);
+  const handleUpdateAppointment = handleSubmit((values) => {
+    const scheduledDate = validateScheduledDate(values);
 
-      const payload: IAppointment = {
-        ...values,
-        scheduled_date: scheduledDate as Date,
-      };
+    const payload: IAppointment = {
+      ...values,
+      scheduled_date: scheduledDate as Date,
+    };
 
-      await updateAppointmentMutation(payload);
-      await updateAppointmentStatusMutation(AppointmentStatus.CONPLETED);
-    },
-    [
-      updateAppointmentMutation,
-      updateAppointmentStatusMutation,
-      validateScheduledDate,
-    ],
-  );
+    updateAppointmentMutation(payload);
+    updateAppointmentStatusMutation(AppointmentStatus.COMPLETED);
+  });
 
   const handleCancelAppointment = React.useCallback(
     async (values: AppointmentStatus) => {

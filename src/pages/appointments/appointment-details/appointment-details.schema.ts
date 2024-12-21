@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { AppointmentType } from '@/enums';
 import {
   INVALID_DATE_FIELD,
   REQUIRED_FIELD,
@@ -10,9 +11,7 @@ import {
 } from '@/utils';
 
 export const appointmentDetailsSchema = z.object({
-  appointment_type: z
-    .string()
-    .refine((data) => data.trim() !== '', SELECT_REQUIRED),
+  appointment_type: z.nativeEnum(AppointmentType, { message: SELECT_REQUIRED }),
   scheduled_date: z.preprocess(
     (arg) => {
       if (typeof arg === 'string') {

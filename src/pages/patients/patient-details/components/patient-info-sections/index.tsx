@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { Card } from '@/components/_ui';
 import { InfoItem } from '@/components';
+import { Card } from '@/components/_ui';
+import { MARITAL_STATUS_LABELS, SEX_LABELS } from '@/constants/labels';
 import { IPatient, ModalSection } from '@/interfaces';
 import { formatPhone, calculateAge, formatDate } from '@/utils';
 
@@ -71,7 +72,11 @@ export const PatientInfoSections: React.FC<PatientInfoSectionsProps> = ({
 
           <div className="flex">
             <div className="w-full space-y-4">
-              <InfoItem label="Sexo" value={patient?.sex} loading={loading} />
+              <InfoItem
+                label="Sexo"
+                value={patient?.sex && SEX_LABELS[patient?.sex]}
+                loading={loading}
+              />
               <InfoItem
                 label="Idade"
                 value={`${calculateAge(String(patient?.birth_date))} anos`}
@@ -92,7 +97,10 @@ export const PatientInfoSections: React.FC<PatientInfoSectionsProps> = ({
               />
               <InfoItem
                 label="Estado Civil"
-                value={patient?.material_status}
+                value={
+                  patient?.marital_status &&
+                  MARITAL_STATUS_LABELS[patient.marital_status]
+                }
                 loading={loading}
               />
               <InfoItem

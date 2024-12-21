@@ -1,3 +1,5 @@
+import { Status } from '@/enums';
+
 export interface IDoctor {
   id?: number;
   name: string;
@@ -10,7 +12,7 @@ export interface IDoctor {
   specialty: string;
   appointment_id?: string | null;
   working_days: number[];
-  status?: string;
+  status?: Status;
 
   created_at?: Date;
   updated_at?: Date;
