@@ -12,6 +12,7 @@ import {
   REQUIRED_FIELD,
   INVALID_DATE_FIELD,
   POSITIVE_NUMBER,
+  MAX_LENGTH_FIELD_PHONE,
 } from '@/utils';
 
 const OptionalStringField = z
@@ -38,6 +39,8 @@ const stringToNumber = (value: string | number | null | undefined) => {
   const parsed = parseFloat(value as string);
   return isNaN(parsed) ? null : parsed;
 };
+
+const removeNonNumeric = (value: string) => value.replace(/\D/g, '');
 
 export const schemaPatient = z.object({
   name: NameFieldRequired,
@@ -72,8 +75,30 @@ export const schemaPatient = z.object({
   marital_status: z.nativeEnum(MaritalStatus).nullable().optional(),
   occupation: OptionalStringField,
   email: OptionalStringField,
-  phone: OptionalStringField,
-  contact_emergency: OptionalStringField,
+  phone: OptionalStringField.refine(
+    (value) => {
+      if (!value) return true;
+      const numericValue = removeNonNumeric(value);
+
+      console.log(numericValue.length);
+      return numericValue.length === 11;
+    },
+    {
+      message: MAX_LENGTH_FIELD_PHONE,
+    },
+  ),
+  contact_emergency: OptionalStringField.refine(
+    (value) => {
+      if (!value) return true;
+      const numericValue = removeNonNumeric(value);
+
+      console.log(numericValue.length);
+      return numericValue.length === 11;
+    },
+    {
+      message: MAX_LENGTH_FIELD_PHONE,
+    },
+  ),
   name_contact_emergency: OptionalStringField,
   health_agent: OptionalStringField,
   height: z

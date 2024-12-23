@@ -9,6 +9,8 @@ import { useQueryParams } from '@/hooks';
 import { IAppointmentFilters } from '@/interfaces';
 import { formatDateToISODate } from '@/utils';
 
+import { AppointmentsByPatientFiltersSchemaType } from '../../appointments-by-patient.schema';
+
 type IAppointmentsByPatientFilters = Omit<IAppointmentFilters, 'name'> & {};
 
 type AppointmentsByPatientFiltersProps = {
@@ -21,35 +23,25 @@ export const AppointmentsByPatientFilters: React.FC<
   const {
     control,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors },
   } = useFormContext<IAppointmentFilters>();
   const [_, setQuery] = useQueryParams<IAppointmentsByPatientFilters>();
 
-  const appointment_type = watch('appointment_type');
-
   const handleFilterAppointments = React.useCallback(
-    (filters: IAppointmentsByPatientFilters) => {
+    (filters: AppointmentsByPatientFiltersSchemaType) => {
       const { appointment_type, start_date, end_date } = filters;
 
-      const startDate = formatDateToISODate(start_date as any);
-      const endDate = formatDateToISODate(end_date as any);
-      setQuery({
-        appointment_type,
-        start_date: startDate as any,
-        end_date: endDate as any,
+      const normalizedFilters = {
+        appointment_type: appointment_type || '',
+        start_date: formatDateToISODate(start_date as Date) as any,
+        end_date: formatDateToISODate(end_date as Date) as any,
         page: 1,
-      });
+      };
+
+      setQuery(normalizedFilters);
     },
     [setQuery],
   );
-
-  React.useEffect(() => {
-    if (appointment_type === null) {
-      setValue('appointment_type', '');
-    }
-  }, [appointment_type, setValue]);
 
   return (
     <FormContainer onSubmit={handleSubmit(handleFilterAppointments)}>
