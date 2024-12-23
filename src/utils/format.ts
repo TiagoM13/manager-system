@@ -5,11 +5,15 @@ export const formatCPF = (value: string): string => {
 };
 
 export const formatPhone = (value: string): string => {
-  value = value.replace(/\D/g, '');
+  const clearValue = value.replace(/[^\d]/g, '');
 
-  if (value.length <= 10) {
-    return value.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
-  } else {
-    return value.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+  if (clearValue.length <= 10) {
+    return clearValue.replace(/(\d{2})(\d{4})(\d{0,4})/, (_, p1, p2, p3) =>
+      p3 ? `(${p1}) ${p2}-${p3}` : `(${p1}) ${p2}`,
+    );
   }
+
+  return clearValue.replace(/(\d{2})(\d{5})(\d{0,4})/, (_, p1, p2, p3) =>
+    p3 ? `(${p1}) ${p2}-${p3}` : `(${p1}) ${p2}`,
+  );
 };
