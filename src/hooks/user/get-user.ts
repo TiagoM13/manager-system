@@ -8,7 +8,11 @@ interface UseGetUserProps {
 }
 
 export const useGetUser = ({ getUser, userId, isEnabled }: UseGetUserProps) => {
-  const { data: userResponse, isLoading } = useQuery({
+  const {
+    data: userResponse,
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: ['user'],
     queryFn: async () => await getUser(userId),
     enabled: isEnabled,
@@ -17,5 +21,6 @@ export const useGetUser = ({ getUser, userId, isEnabled }: UseGetUserProps) => {
   return {
     userResponse,
     isLoading,
+    isFetching,
   };
 };
