@@ -10,10 +10,9 @@ import 'dayjs/locale/pt-br';
 
 import { ConfirmDialog, InitializerLoader } from '@/components';
 import { useUserRoleObservable, useUserStatusObservable } from '@/hooks';
-import { queryClient } from '@/infra/query';
+import { ReactQueryProvider } from '@/provider/query-client';
 import { Router } from '@/routes';
 import { userObservable } from '@/utils';
-import { QueryClientProvider } from '@tanstack/react-query';
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
@@ -41,13 +40,13 @@ const App = () => {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <ReactQueryProvider>
       <BrowserRouter>
         <ConfirmDialog />
         <Router />
         <ToastContainer theme="colored" />
       </BrowserRouter>
-    </QueryClientProvider>
+    </ReactQueryProvider>
   );
 };
 
