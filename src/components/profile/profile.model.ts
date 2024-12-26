@@ -4,14 +4,16 @@ import { useLocation } from 'react-router-dom';
 
 import { AxiosResponse } from 'axios';
 
+import { LOGIN_AGAIN } from '@/constants/messages';
 import {
   useCurrentUser,
   useAuth,
   useAppNavigation,
   useUploadFile,
   useUpdateUser,
+  useNotification,
 } from '@/hooks';
-import { useChangePassword } from '@/hooks/auth/auth';
+import { useChangePassword } from '@/hooks/auth/actions/change-password';
 import {
   IUser,
   IChangePasswordData,
@@ -29,18 +31,18 @@ interface IUserProfile extends IChangePasswordData {
 }
 
 interface IAccountSettingsModelProps {
-  updateUser: (id: number, data: IUser) => Promise<UserRequestResult>;
-  uploadFile: (data: FormData) => Promise<IUploadFile | undefined>;
-  changePassword: (
+  updateUserService: (id: number, data: IUser) => Promise<UserRequestResult>;
+  uploadFileService: (data: FormData) => Promise<IUploadFile | undefined>;
+  changePasswordService: (
     id: number,
     data: IChangePasswordData,
   ) => Promise<AxiosResponse<IUser> | undefined>;
 }
 
 export const useAccountSettingsModel = ({
-  updateUser,
-  uploadFile,
-  changePassword,
+  updateUserService,
+  uploadFileService,
+  changePasswordService,
 }: IAccountSettingsModelProps) => {
   const [initialAvatarUrl, setInitialAvatarUrl] = React.useState<string | null>(
     null,
@@ -49,6 +51,7 @@ export const useAccountSettingsModel = ({
 
   const location = useLocation();
   const currentUser = useCurrentUser();
+  const notify = useNotification();
   const { setCurrentUser, logout } = useAuth();
   const { navigateTo } = useAppNavigation();
   const { show, toggle, avatarUrl, setAvatarUrl } = useMenuProfile();
@@ -75,16 +78,25 @@ export const useAccountSettingsModel = ({
   const profileRef = React.useRef<HTMLDivElement>(null);
 
   const { updateUserMutation, isPending: isLoadingUpdateUser } = useUpdateUser({
-    updateUser,
+    updateUser: updateUserService,
     userId: Number(currentUser.id),
     queryKeys: ['users'],
   });
   const { uploadFileMutation, isPending: isLoadingUploadFile } = useUploadFile({
-    uploadFile,
+    uploadFile: uploadFileService,
     queryKeys: ['users'],
   });
-  const { changePasswordMutation, isPending: isLoadingChangePassword } =
-    useChangePassword({ changePassword });
+  const {
+    mutateAsync: changePasswordMutation,
+    isPending: isLoadingChangePassword,
+  } = useChangePassword({
+    service: changePasswordService,
+    userId: Number(currentUser.id),
+    onSuccess: () => {
+      notify.warning(LOGIN_AGAIN);
+      toggle(false);
+    },
+  });
 
   const handleFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;

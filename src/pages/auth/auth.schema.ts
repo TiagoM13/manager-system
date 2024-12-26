@@ -8,7 +8,7 @@ import {
 } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const schema = z.object({
+const loginValidationSchema = z.object({
   email: z
     .string()
     .trim()
@@ -23,12 +23,17 @@ const schema = z.object({
     .min(6, PASSWORD_MIN_LENGTH),
 });
 
-export const forgotSchema = z.object({
+export const forgotPasswordValidationSchema = z.object({
   email: z
     .string({ required_error: REQUIRED_FIELD })
     .min(1, REQUIRED_FIELD)
     .email(INVALID_EMAIL),
 });
 
-export const loginSchema = zodResolver(schema);
-export const forgotPasswordSchema = zodResolver(forgotSchema);
+export const loginSchema = zodResolver(loginValidationSchema);
+export const forgotPasswordSchema = zodResolver(forgotPasswordValidationSchema);
+
+export type SchemaLoginType = z.infer<typeof loginValidationSchema>;
+export type SchemaForgotPasswordType = z.infer<
+  typeof forgotPasswordValidationSchema
+>;

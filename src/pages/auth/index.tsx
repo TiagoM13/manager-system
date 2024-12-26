@@ -15,8 +15,8 @@ const AuthPage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const http = new HttpClient();
 
   const methods = useAuthModel({
-    signIn: (data) => authenticateUser(http, data),
-    forgotPassword: (data) => requestPasswordRecovery(http, data),
+    signInService: (data) => authenticateUser(http, data),
+    forgotPasswordService: (data) => requestPasswordRecovery(http, data),
   });
 
   return <AuthPageView {...methods}>{children}</AuthPageView>;
