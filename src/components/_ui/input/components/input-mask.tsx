@@ -1,6 +1,7 @@
 import React from 'react';
 import { Controller, FieldValues } from 'react-hook-form';
 
+import { ErrorMessage } from '../../error-message';
 import { InputProps } from './interfaces';
 
 interface InputMaskProps<T extends FieldValues> extends InputProps<T> {
@@ -58,6 +59,8 @@ export const InputMask = <T extends FieldValues>({
           className={`${className} w-full rounded-md border border-slate-400 px-4 py-2 text-sm text-slate-600 outline-sky-500 disabled:opacity-60`}
         />
       )}
+
+      <ErrorMessage error={error?.message} />
     </div>
   );
 };

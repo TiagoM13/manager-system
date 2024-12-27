@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 
 import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
 import { IMSResponse, IUser, IUsersFilters } from '@/interfaces';
-import { handleAPIErrors } from '@/utils';
+import { delayPromise, handleAPIErrors } from '@/utils';
 
 export const getAllUsersService = async (
   client: IHttpClient,
@@ -23,6 +23,9 @@ export const getAllUsersService = async (
       },
     );
 
+    // TO-DO
+    await delayPromise(2000);
+
     return response;
   } catch (error) {
     handleAPIErrors(error);
@@ -37,6 +40,9 @@ export const getUserService = async (client: IHttpClient, id: number) => {
       `/users/${id}`,
     );
 
+    // TO-DO
+    await delayPromise(2000);
+
     return user;
   } catch (error) {
     handleAPIErrors(error);
@@ -46,6 +52,9 @@ export const getUserService = async (client: IHttpClient, id: number) => {
 
 export const createUserService = async (client: IHttpClient, data: IUser) => {
   try {
+    // TO-DO
+    await delayPromise(2000);
+
     return await client.sendRequest<IMSResponse<IUser, 'user'>>(
       HttpMethod.POST,
       '/users',
@@ -63,6 +72,9 @@ export const updateUserService = async (
   data: IUser,
 ) => {
   try {
+    // TO-DO
+    await delayPromise(2000);
+
     return await client.sendRequest<IMSResponse<IUser, 'user'>>(
       HttpMethod.PUT,
       `/users/${id}`,
@@ -88,6 +100,9 @@ export const updateUserStatusService = async (
       },
     );
 
+    // TO-DO
+    await delayPromise(2000);
+
     return response.data;
   } catch (error) {
     handleAPIErrors(error);
@@ -97,6 +112,9 @@ export const updateUserStatusService = async (
 
 export const deleteUserService = async (client: IHttpClient, id: number) => {
   try {
+    // TO-DO
+    await delayPromise(2000);
+
     return await client.sendRequest<IMSResponse<IUser, 'user'>>(
       HttpMethod.DELETE,
       `/users/${id}`,

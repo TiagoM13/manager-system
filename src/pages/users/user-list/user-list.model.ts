@@ -6,7 +6,7 @@ import {
   useQueryParams,
   useAppNavigation,
   useWindowSize,
-  useAllUsers,
+  useGetAllUsers,
   useDeleteUser,
 } from '@/hooks';
 import { IUsersFilters, IUser, IMSResponse } from '@/interfaces';
@@ -31,7 +31,7 @@ export const useUserListModel = ({
   const { confirmDialog } = useDialog();
   const [, , isMobile] = useWindowSize();
 
-  const { usersResponse, isLoading } = useAllUsers({
+  const { usersResponse, isLoading } = useGetAllUsers({
     getAllUsers,
     query,
   });

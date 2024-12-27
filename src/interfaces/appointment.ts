@@ -24,7 +24,7 @@ export interface IAppointmentFilters {
   page_size?: number;
   start_date?: Date;
   end_date?: Date;
-  appointment_type?: string;
+  appointment_type?: AppointmentType | string;
 }
 
 export interface IAppointmentFiltersWithoutName

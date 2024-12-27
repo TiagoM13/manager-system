@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { AppointmentType } from '@/enums';
 import {
   INVALID_END_DATE_FIELD,
   INVALID_START_DATE_FIELD,
@@ -24,7 +25,14 @@ export const appointmentsByPatientFiltersSchema = z
       .max(500)
       .default(10)
       .optional(),
-    appointment_type: z.string().nullable().optional(),
+    appointment_type: z
+      .union([
+        z.nativeEnum(AppointmentType),
+        z.undefined(),
+        z.null(),
+        z.string(),
+      ])
+      .optional(),
     start_date: z.preprocess(
       (val) => (isValidDate(val) ? new Date(val as string) : undefined),
       z

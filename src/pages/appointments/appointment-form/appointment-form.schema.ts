@@ -2,8 +2,6 @@ import { z } from 'zod';
 
 import { AppointmentType } from '@/enums';
 import {
-  validateCNS,
-  OptionalStringField,
   INVALID_DATE_FIELD,
   REQUIRED_FIELD,
   SELECT_REQUIRED,
@@ -37,11 +35,4 @@ export const appointmentFormSchema = z.object({
     .int(),
 });
 
-export const patientSearchSchema = z.object({
-  name: z.string().optional(),
-  cpf: OptionalStringField,
-  cns: OptionalStringField.superRefine(validateCNS),
-});
-
 export type AppointmentFormType = z.infer<typeof appointmentFormSchema>;
-export type PatientSearchType = z.infer<typeof patientSearchSchema>;

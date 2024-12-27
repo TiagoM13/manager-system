@@ -39,6 +39,7 @@ export const useUserFormModel = ({
   const { setImageUrl } = useImageUrl();
   const { setName } = useName();
   const { id } = useParams<{ id: string }>();
+  const { navigateTo } = useAppNavigation();
   const currentUser = useCurrentUser();
 
   const methods = useForm<UserSchemaType>({
@@ -49,7 +50,11 @@ export const useUserFormModel = ({
 
   const isCreatingNewUser = React.useMemo(() => id === 'new', [id]);
 
-  const { userResponse, isLoading: isLoadingUser } = useGetUser({
+  const {
+    userResponse,
+    isLoading: isLoadingUser,
+    isFetching: isFetchingUser,
+  } = useGetUser({
     getUser,
     userId: Number(id),
     isEnabled: !isCreatingNewUser,
@@ -73,14 +78,17 @@ export const useUserFormModel = ({
   });
 
   const isLoading = React.useMemo(
+    () => isLoadingUser || isFetchingUser,
+    [isFetchingUser, isLoadingUser],
+  );
+
+  const isPending = React.useMemo(
     () =>
-      isLoadingUser ||
       isPendingUploadFile ||
       isPendingCreateUser ||
       isPendingUpdateUser ||
       isPendingUpdateUserStatus,
     [
-      isLoadingUser,
       isPendingCreateUser,
       isPendingUpdateUser,
       isPendingUpdateUserStatus,
@@ -175,11 +183,14 @@ export const useUserFormModel = ({
       } else {
         await updateUserMutation(savedValues);
       }
+
+      navigateTo({ route: '/users' });
     },
     [
       handleImageUpdate,
       hasUserStatusChanged,
       isCreatingNewUser,
+      navigateTo,
       handleUpdateUserStatus,
       createUserMutation,
       updateUserMutation,
@@ -212,6 +223,7 @@ export const useUserFormModel = ({
     handleSaveUser,
     handleSubmit,
     isLoading,
+    isPending,
     goBack,
   };
 };

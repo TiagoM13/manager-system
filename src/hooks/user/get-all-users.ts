@@ -3,12 +3,12 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 type UserListModelResponse = IMSResponse<IUser[], 'users'> | undefined;
 
-interface UseAllUsersProps {
+interface UseGetAllUsersProps {
   getAllUsers: (query: IUsersFilters) => Promise<UserListModelResponse>;
   query: IUsersFilters;
 }
 
-export const useAllUsers = ({ getAllUsers, query }: UseAllUsersProps) => {
+export const useGetAllUsers = ({ getAllUsers, query }: UseGetAllUsersProps) => {
   const {
     data: usersResponse,
     isLoading,

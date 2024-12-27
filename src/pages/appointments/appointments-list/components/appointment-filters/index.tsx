@@ -17,36 +17,26 @@ export const AppointmentFilters: React.FC<AppointmentFiltersProps> = ({
   const {
     control,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors },
   } = useFormContext<IAppointmentFilters>();
   const [_, setQuery] = useQueryParams<IAppointmentFilters>();
-
-  const appointment_type = watch('appointment_type');
 
   const handleFilterAppointments = React.useCallback(
     (filters: IAppointmentFilters) => {
       const { name, appointment_type, start_date, end_date } = filters;
 
-      const startDate = formatDateToISODate(start_date as any);
-      const endDate = formatDateToISODate(end_date as any);
-      setQuery({
+      const normalizedFilters = {
         name,
-        appointment_type,
-        start_date: startDate as any,
-        end_date: endDate as any,
+        appointment_type: appointment_type || '',
+        start_date: formatDateToISODate(start_date as Date) as any,
+        end_date: formatDateToISODate(end_date as Date) as any,
         page: 1,
-      });
+      };
+
+      setQuery(normalizedFilters);
     },
     [setQuery],
   );
-
-  React.useEffect(() => {
-    if (appointment_type === null) {
-      setValue('appointment_type', '');
-    }
-  }, [appointment_type, setValue]);
 
   return (
     <FormContainer onSubmit={handleSubmit(handleFilterAppointments)}>

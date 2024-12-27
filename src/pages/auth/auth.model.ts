@@ -2,19 +2,33 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
-import { useForgotPassword, useSignIn } from '@/hooks/auth/auth';
-import { ISignInData, IRecoverPasswordData } from '@/interfaces';
+import { useAppNavigation, useNotification } from '@/hooks';
+import { useForgotPassword } from '@/hooks/auth/actions/forgot-password';
+import { useSignIn } from '@/hooks/auth/actions/sign-in';
+import { IRecoverPasswordData } from '@/interfaces';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { forgotPasswordSchema, loginSchema } from './auth.schema';
+import { REQUEST_PASSWORD, WELCOME_MESSAGE } from './auth.messages';
+import {
+  forgotPasswordSchema,
+  loginSchema,
+  SchemaLoginType,
+} from './auth.schema';
 import { FormAuthProps } from './auth.types';
 
 interface AuthModelProps {
-  signIn: (data: ISignInData) => Promise<boolean>;
-  forgotPassword: (values: IRecoverPasswordData) => Promise<boolean>;
+  signInService: (data: SchemaLoginType) => Promise<boolean>;
+  forgotPasswordService: (values: IRecoverPasswordData) => Promise<boolean>;
 }
 
-export const useAuthModel = ({ signIn, forgotPassword }: AuthModelProps) => {
+export const useAuthModel = ({
+  signInService,
+  forgotPasswordService,
+}: AuthModelProps) => {
   const location = useLocation();
+  const queryClient = useQueryClient();
+  const notify = useNotification();
+  const { navigateTo } = useAppNavigation();
 
   const methods = useForm<FormAuthProps>({
     resolver:
@@ -25,15 +39,28 @@ export const useAuthModel = ({ signIn, forgotPassword }: AuthModelProps) => {
 
   const { handleSubmit } = methods;
 
-  const { signInMutation } = useSignIn({ signIn });
-  const { forgotPasswordMutation } = useForgotPassword({ forgotPassword });
+  const { mutate: signInMutation } = useSignIn({
+    service: signInService,
+    onSuccess: (data) => {
+      queryClient.setQueryData(['user'], data);
+      navigateTo({ route: '/dashboard', state: location.state });
+      notify.success(WELCOME_MESSAGE);
+    },
+  });
+  const { mutate: forgotPasswordMutation } = useForgotPassword({
+    service: forgotPasswordService,
+    onSuccess: () => {
+      notify.success(REQUEST_PASSWORD);
+      navigateTo({ route: '/sign-in', state: location.state });
+    },
+  });
 
   const handleAuthAction = React.useCallback(
-    async ({ email, password }: FormAuthProps) => {
+    async ({ email, password }: SchemaLoginType) => {
       if (location.pathname === '/forgot-password') {
         forgotPasswordMutation({ email });
       } else {
-        signInMutation({ email, password } as ISignInData);
+        signInMutation({ email, password });
       }
     },
     [location.pathname, forgotPasswordMutation, signInMutation],

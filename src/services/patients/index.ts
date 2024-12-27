@@ -7,13 +7,15 @@ export const getAllPatientsService = async (
   params: IPatientFilters,
 ) => {
   try {
-    const { name = '', page = 1, page_size = 10 } = params;
+    const { name = '', page = 1, page_size = 10, cns = '', cpf = '' } = params;
 
     const response = await client.sendRequest<
       IMSResponse<IPatient[], 'patients'>
     >(HttpMethod.GET, '/patients', {
       params: {
         name,
+        cns,
+        cpf,
         page,
         page_size,
       },
