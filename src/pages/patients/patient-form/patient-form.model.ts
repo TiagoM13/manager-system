@@ -19,7 +19,7 @@ export const usePatientFormModel = ({
   createPatient,
 }: PatientFormModelProps) => {
   const { currentStep, isLastStep, nextStep, prevStep } = useFormSteps(steps);
-  const { goBack } = useAppNavigation();
+  const { goBack, navigateTo } = useAppNavigation();
 
   const { createPatientMutation, isPending } = useCreatePatient({
     createPatient,
@@ -33,8 +33,10 @@ export const usePatientFormModel = ({
 
   const { handleSubmit } = methods;
 
-  const handleCreateNewPatient = handleSubmit((values) => {
-    createPatientMutation(formatPatientProps(values));
+  const handleCreateNewPatient = handleSubmit(async (values) => {
+    const response = await createPatientMutation(formatPatientProps(values));
+
+    if (response) navigateTo({ route: `/patients/${response?.patient.id}` });
   });
 
   const handleNextStep = React.useCallback(async () => {

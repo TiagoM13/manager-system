@@ -15,21 +15,29 @@ import {
   useCreateAppointment,
   useUpdatePatient,
 } from '@/hooks';
-import { IAppointment, IDoctor, IMSResponse, IPatient } from '@/interfaces';
+import {
+  IAppointment,
+  IDoctor,
+  IMSResponse,
+  IPatient,
+  IPatientFilters,
+} from '@/interfaces';
 import { schemaPatient } from '@/pages/patients/patient-form/patient-form.schema';
 import { formatDateWithCurrentTime, getOnlyModifiedFields } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
-  PatientSearchType,
   AppointmentFormType,
   appointmentFormSchema,
-  patientSearchSchema,
 } from './appointment-form.schema';
+import {
+  patientSearchFormSchema,
+  PatientSearchFormType,
+} from './forms/patient-search-form/patient-search-form.schema';
 
 interface AppointmentFormModelProps {
   getAllPatients: (
-    values: PatientSearchType,
+    values: PatientSearchFormType,
   ) => Promise<IMSResponse<IPatient[], 'patients'> | undefined>;
   getPatient: (id: string) => Promise<IPatient | undefined>;
   getAllDoctors: () => Promise<IDoctor[] | undefined>;
@@ -50,7 +58,7 @@ export const useAppointmentFormModel = ({
   createAppointment,
   updatePatient,
 }: AppointmentFormModelProps) => {
-  const [query] = useQueryParams<PatientSearchType>();
+  const [query] = useQueryParams<PatientSearchFormType>();
   const { goBack, navigateTo } = useAppNavigation();
   const { patientId } = useParams<{ patientId: string }>();
 
@@ -71,7 +79,7 @@ export const useAppointmentFormModel = ({
   } = useGetAllPatients({
     getAllPatients: getAllPatients,
     query,
-    isEnabled: !!query.name,
+    isEnabled: !!hasValidQuery,
   });
   const {
     patientResponse,
@@ -109,8 +117,8 @@ export const useAppointmentFormModel = ({
       scheduled_date: dayjs().format('YYYY-MM-DD') as any,
     },
   });
-  const searchFormMethods = useForm<PatientSearchType>({
-    resolver: zodResolver(patientSearchSchema),
+  const searchFormMethods = useForm<PatientSearchFormType>({
+    resolver: zodResolver(patientSearchFormSchema),
     shouldUnregister: false,
     defaultValues: query,
   });
