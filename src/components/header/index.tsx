@@ -2,7 +2,7 @@ import React from 'react';
 
 import { CaretLeft } from '@phosphor-icons/react';
 
-import { Divider } from '@/components';
+import { Divider } from '@/components/_ui';
 
 import { Breadcrumb } from './components/breadcrumb';
 import { ButtonAction } from './components/button-actions';
@@ -12,7 +12,6 @@ import { HeaderContainer } from './styles';
 
 export const Header: React.FC<HeaderProps> = ({
   title,
-  subtitle,
   goBack,
   breadcrumbItems,
   onRegister,
@@ -29,17 +28,19 @@ export const Header: React.FC<HeaderProps> = ({
               type="button"
               onClick={goBack}
               data-testid="btn-cancel"
-              className="bg-slate-300 rounded-md p-2 hover:brightness-95"
+              className="rounded-md bg-slate-300 p-2 hover:brightness-95"
             >
               <CaretLeft className="size-8" />
             </button>
           )}
           <div>
-            {subtitle && (
-              <span className="text-sm text-slate-600">{subtitle}</span>
+            {!!goBack && (
+              <span className="text-sm text-slate-600">
+                Voltar à página anterior
+              </span>
             )}
             <h2
-              className={`${subtitle ? 'text-2xl' : 'text-3xl'} font-semibold`}
+              className={`${!!goBack ? 'text-2xl' : 'text-3xl'} font-semibold`}
             >
               {title}
             </h2>

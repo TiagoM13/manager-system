@@ -1,12 +1,12 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Input, Select } from '@/components';
-import { IPatient } from '@/interfaces';
+import { Input, Select } from '@/components/_ui';
 import {
+  genderOptions,
   maritalStatusOptions,
-  sexOptions,
-} from '@/pages/patients/patient-form/utils/options';
+} from '@/constants/select-options';
+import { IPatient } from '@/interfaces';
 
 interface GeneralInfoFormProps {
   loading?: boolean;
@@ -26,7 +26,7 @@ export const GeneralInfoForm: React.FC<GeneralInfoFormProps> = ({
         name="sex"
         label="Sexo"
         placeholder="Selecione o sexo"
-        options={sexOptions}
+        options={genderOptions}
         control={control}
         error={errors.sex}
         disabled={loading}
@@ -53,14 +53,14 @@ export const GeneralInfoForm: React.FC<GeneralInfoFormProps> = ({
       />
 
       <Select
-        name="material_status"
+        name="marital_status"
         label="Estado cívil"
-        placeholder="Selecione o sexo"
+        placeholder="Selecione o estado civil"
         options={maritalStatusOptions}
         valueAs="value"
         labelAs="label"
         control={control}
-        error={errors.material_status}
+        error={errors.marital_status}
         disabled={loading}
       />
 

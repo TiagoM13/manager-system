@@ -10,14 +10,24 @@ import { PrivateRoute } from './private.route';
 import { PublicRoute } from './public.route';
 
 const Dashboard = React.lazy(() => import('@/pages/dashboard'));
-const Users = React.lazy(() => import('@/pages/users/user-list/page'));
-const User = React.lazy(() => import('@/pages/users/user-form/page'));
-const Patients = React.lazy(() => import('@/pages/patients/patient-list/page'));
-const PatientForm = React.lazy(
-  () => import('@/pages/patients/patient-form/page'),
-);
+const Users = React.lazy(() => import('@/pages/users/user-list'));
+const User = React.lazy(() => import('@/pages/users/user-form'));
+const Patients = React.lazy(() => import('@/pages/patients/patient-list'));
+const PatientForm = React.lazy(() => import('@/pages/patients/patient-form'));
 const PatientDetails = React.lazy(
-  () => import('@/pages/patients/patient-details/page'),
+  () => import('@/pages/patients/patient-details'),
+);
+const Appointments = React.lazy(
+  () => import('@/pages/appointments/appointments-list'),
+);
+const AppointmentForm = React.lazy(
+  () => import('@/pages/appointments/appointment-form'),
+);
+const AppointmentDetails = React.lazy(
+  () => import('@/pages/appointments/appointment-details'),
+);
+const AppointmentByPatient = React.lazy(
+  () => import('@/pages/appointments/appointments-by-patient'),
 );
 
 export const Router: React.FC = () => {
@@ -31,13 +41,10 @@ export const Router: React.FC = () => {
       ) {
         navigate('/dashboard', { replace: true });
       }
-    }
-    if (!isAuthenticated) {
-      if (['/'].includes(window.location.pathname)) {
-        navigate('/sign-in', { replace: true });
-      }
-
-      if (window.location.pathname !== '/forgot-password') {
+    } else {
+      if (
+        !['/sign-in', '/forgot-password'].includes(window.location.pathname)
+      ) {
         navigate('/sign-in', { replace: true });
       }
     }
@@ -47,7 +54,6 @@ export const Router: React.FC = () => {
     <AppWrapper>
       <React.Suspense fallback={<InitializerLoader />}>
         <Routes>
-          {/* public routes */}
           <Route
             path="/sign-in"
             element={
@@ -65,7 +71,6 @@ export const Router: React.FC = () => {
             }
           />
 
-          {/* private routes */}
           <Route
             path="/dashboard"
             element={
@@ -113,12 +118,52 @@ export const Router: React.FC = () => {
             }
           />
           <Route
-            path="/patients/:id"
+            path="/patients/:patientId"
             element={
               <PrivateRoute
                 allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
               >
                 <PatientDetails />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/appointments"
+            element={
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
+                <Appointments />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/appointments/:patientId"
+            element={
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
+                <AppointmentForm />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/appointments/:patientId/appointment/:appointmentId"
+            element={
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
+                <AppointmentDetails />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/appointments/:patientId/list"
+            element={
+              <PrivateRoute
+                allowedRoles={[Role.ADMIN, Role.EDITOR, Role.CLINICAL]}
+              >
+                <AppointmentByPatient />
               </PrivateRoute>
             }
           />

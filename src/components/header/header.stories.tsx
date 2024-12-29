@@ -17,7 +17,7 @@ export default {
 export const Header = () => {
   return (
     <BrowserRouter>
-      <div className="p-4 bg-slate-300">
+      <div className="bg-slate-300 p-4">
         <HeaderComponent
           title="Cabeçalho"
           actionLabel="cadastrar novo post"

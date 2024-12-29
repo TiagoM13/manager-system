@@ -1,10 +1,15 @@
-import { handleAPIErrors } from '@/utils/common';
+import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
+import { IUploadFile } from '@/interfaces';
+import { handleAPIErrors } from '@/utils';
 
-import { msHosp } from '../api';
-
-export const upladFileService = async (upload: FormData) => {
+export const uploadFileService = async (
+  client: IHttpClient,
+  upload: FormData,
+): Promise<IUploadFile | undefined> => {
   try {
-    return await msHosp.post('/upload', upload);
+    return await client.sendRequest(HttpMethod.POST, '/upload', {
+      data: upload,
+    });
   } catch (error) {
     handleAPIErrors(error);
     return;

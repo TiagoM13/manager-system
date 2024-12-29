@@ -1,16 +1,20 @@
 import { Status } from '@/enums';
+import { MaritalStatus } from '@/enums/marital-status';
+import { Sex } from '@/enums/sex';
+
+import { IAppointment } from './appointment';
 
 export interface IPatient {
   id?: string;
   name: string;
   birth_date: Date;
-  sex: string;
+  sex: Sex;
   cpf?: string | null;
   cns?: string | null;
   address?: string | null;
   mother_name?: string | null;
   father_name?: string | null;
-  material_status?: string | null;
+  marital_status?: MaritalStatus | null;
   occupation?: string | null;
   email?: string | null;
   phone?: string | null;
@@ -20,6 +24,7 @@ export interface IPatient {
   name_contact_emergency?: string | null;
   height?: number | null;
   weight?: number | null;
+  appointments?: IAppointment[];
 
   created_at?: Date;
   updated_at?: Date;
@@ -29,6 +34,8 @@ export interface IPatientForm extends Omit<IPatient, 'status'> {}
 
 export interface IPatientFilters {
   name?: string;
+  cpf?: string;
+  cns?: string;
   page?: number;
   page_size?: number;
 }

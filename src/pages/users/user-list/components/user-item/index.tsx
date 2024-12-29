@@ -8,7 +8,7 @@ import {
   Table as T,
   ButtonActions,
   Button,
-} from '@/components';
+} from '@/components/_ui';
 import { useCurrentUser } from '@/hooks';
 import { IUser } from '@/interfaces';
 import { formatDate, formatDateTime } from '@/utils';
@@ -42,7 +42,7 @@ export const UserRow: React.FC<UserItemProps> = ({
       <T.Cell>
         <Badge type={user.role} />
       </T.Cell>
-      <T.Cell>{formatDate(user.created_at)}</T.Cell>
+      <T.Cell>{formatDate(user.created_at as Date)}</T.Cell>
       <T.Cell>
         <Badge type={user.status} />
       </T.Cell>
@@ -53,7 +53,7 @@ export const UserRow: React.FC<UserItemProps> = ({
         {currentUser.id !== user.id && (
           <ButtonActions
             onEdit={() => onEdit(user)}
-            onDelete={() => onDelete(user.id)}
+            onDelete={() => onDelete(Number(user.id))}
           />
         )}
       </T.Cell>
@@ -85,7 +85,7 @@ export const UserCard: React.FC<UserItemProps> = ({
         </Text>
         <Text>
           <strong>Data de registro:</strong>
-          <span>{formatDate(user.created_at)}</span>
+          <span>{formatDate(user.created_at as Date)}</span>
         </Text>
         <Text>
           <strong>Status:</strong>
@@ -113,7 +113,7 @@ export const UserCard: React.FC<UserItemProps> = ({
               label="deletar"
               variable="danger"
               icon={<Trash className="size-4" weight="bold" />}
-              onClick={() => onDelete(user.id)}
+              onClick={() => onDelete(Number(user.id))}
             />
           </>
         )}

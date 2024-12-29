@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Input, InputMask } from '@/components';
+import { Input, InputMask } from '@/components/_ui';
 import { IPatient } from '@/interfaces';
 import { formatCPF } from '@/utils';
 

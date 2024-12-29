@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Badge /> should render correctly status active 1`] = `
+<DocumentFragment>
+  <div
+    class="bg-emerald-400 w-fit rounded-xl px-3 py-1.5 text-center text-xs font-medium"
+    data-testid="badge-container"
+  >
+    <span
+      class="capitalize"
+    >
+      Ativo
+    </span>
+  </div>
+</DocumentFragment>
+`;

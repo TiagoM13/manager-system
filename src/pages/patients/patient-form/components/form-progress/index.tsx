@@ -4,7 +4,7 @@ import { Step } from '../step';
 
 interface FormProgressProps {
   currentStep: number;
-  steps: { title: string; description: string }[];
+  steps: { title: string }[];
 }
 
 export const FormProgress = ({ currentStep, steps }: FormProgressProps) => {
@@ -14,7 +14,6 @@ export const FormProgress = ({ currentStep, steps }: FormProgressProps) => {
         <Step
           key={index}
           title={step.title}
-          description={step.description}
           stepNumber={index + 1}
           isActive={index === currentStep}
           isComplete={index < currentStep}

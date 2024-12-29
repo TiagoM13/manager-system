@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { CircleNotch } from '@phosphor-icons/react';
 
-import { Button, Input, InputPassword } from '@/components';
+import { Button, Input, InputPassword } from '@/components/_ui';
 import { useAuth } from '@/hooks';
 
-import { FormAuthProps } from '../../interfaces';
+import { FormAuthProps } from '../../auth.types';
 
 import { Container } from '../../styles';
 
@@ -58,7 +58,7 @@ export const SignInForm: React.FC = () => {
         <button
           type="button"
           onClick={redirectForgotPassword}
-          className="block ml-auto text-sm font-semibold cursor-pointer hover:text-sky-600 transition-all duration-500"
+          className="ml-auto block cursor-pointer text-sm font-semibold transition-all duration-500 hover:text-sky-600"
         >
           Equeceu a senha?
         </button>

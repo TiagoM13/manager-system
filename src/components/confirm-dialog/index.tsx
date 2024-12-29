@@ -2,23 +2,21 @@ import React from 'react';
 
 import { Trash, WarningCircle, X } from '@phosphor-icons/react';
 
+import { Dialog, Button } from '@/components/_ui';
 import { useDialog } from '@/store';
-
-import { Button } from '../button';
-import { Dialog } from '../dialog';
 
 export const ConfirmDialog: React.FC = () => {
   const { isOpenDialog: isOpen, closeDialog, config } = useDialog();
 
   return (
     <Dialog isOpen={isOpen} onClose={closeDialog}>
-      <div className="flex flex-col items-center w-full">
-        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-500/10">
+      <div className="flex w-full flex-col items-center">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-500/10">
           {config?.icon || (
             <WarningCircle className="size-10 text-red-400" weight="regular" />
           )}
         </div>
-        <div className="text-center mt-4">
+        <div className="mt-4 text-center">
           <h2 className="text-xl font-semibold">
             {config?.header || 'Atenção'}
           </h2>
@@ -26,7 +24,7 @@ export const ConfirmDialog: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex justify-end gap-4 mt-10">
+      <div className="mt-10 flex justify-end gap-4">
         {config?.rejectLabel && (
           <Button
             label={config?.rejectLabel || 'Não'}

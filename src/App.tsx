@@ -5,16 +5,17 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import utc from 'dayjs/plugin/utc';
 import 'dayjs/locale/pt-br';
 
 import { ConfirmDialog, InitializerLoader } from '@/components';
 import { useUserRoleObservable, useUserStatusObservable } from '@/hooks';
+import { ReactQueryProvider } from '@/provider/query-client';
 import { Router } from '@/routes';
-import { queryClient } from '@/services';
 import { userObservable } from '@/utils';
-import { QueryClientProvider } from '@tanstack/react-query';
 
 dayjs.extend(relativeTime);
+dayjs.extend(utc);
 dayjs.locale('pt-br');
 
 const App = () => {
@@ -24,11 +25,11 @@ const App = () => {
   useUserStatusObservable();
 
   React.useEffect(() => {
-    const checkUserupdates = async () => {
+    const checkUserUpdates = async () => {
       await userObservable();
     };
 
-    const intervalId = setInterval(checkUserupdates, 1800000); // 3min
+    const intervalId = setInterval(checkUserUpdates, 1800000); // 3min
     setReady(true);
 
     return () => clearInterval(intervalId);
@@ -39,13 +40,13 @@ const App = () => {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <ReactQueryProvider>
       <BrowserRouter>
         <ConfirmDialog />
         <Router />
         <ToastContainer theme="colored" />
       </BrowserRouter>
-    </QueryClientProvider>
+    </ReactQueryProvider>
   );
 };
 

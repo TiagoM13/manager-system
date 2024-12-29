@@ -1,7 +1,8 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Card, InputRadio } from '@/components';
+import { Card, InputRadio } from '@/components/_ui';
+import { STATUS_LABELS } from '@/constants/labels';
 import { Status } from '@/enums';
 import { IUser } from '@/interfaces';
 
@@ -21,7 +22,7 @@ export const StatusForm: React.FC<StatusFormProps> = ({
 
   return (
     <Card title="Status do usuário" className="px-6" bordered>
-      <div className="py-2 mt-4">
+      <div className="mt-4 py-2">
         <InputRadio
           name="status"
           label="Status"
@@ -29,6 +30,10 @@ export const StatusForm: React.FC<StatusFormProps> = ({
           options={{
             opt1: Status.ACTIVE,
             opt2: Status.INACTIVE,
+          }}
+          optionLabels={{
+            label1: STATUS_LABELS[Status.ACTIVE],
+            label2: STATUS_LABELS[Status.INACTIVE],
           }}
           error={errors.status}
           disabled={loading || isUpdatingItself}

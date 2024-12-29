@@ -14,7 +14,7 @@ export const ToggleButton: React.FC<ToggleButtonProps> = ({
   return (
     <button
       onClick={toggleSideBar}
-      className="bg-black flex gap-2 text-sm text-zinc-400 transition-all duration-500 absolute bottom-16 -right-4 rounded-md p-2 shadow-sm shadow-slate-400 hover:text-sky-500 hover:shadow-sky-500"
+      className="absolute -right-4 bottom-16 flex gap-2 rounded-md bg-black p-2 text-sm text-zinc-400 shadow-sm shadow-slate-400 transition-all duration-500 hover:text-sky-500 hover:shadow-sky-500"
     >
       <ArrowLeft
         weight="bold"
