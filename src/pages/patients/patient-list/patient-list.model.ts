@@ -38,12 +38,12 @@ export const usePatientListModel = ({
   });
 
   const methods = useForm<SchemaFilterPatientType>({
-    defaultValues: {
-      name: query.name,
-      page: String(query.page),
-    },
-    mode: 'onChange',
     resolver: zodResolver(schemaFilterPatient),
+    defaultValues: {
+      name: query.name ?? '',
+      cns: query.cns ?? '',
+      cpf: query.cpf ?? '',
+    },
   });
 
   const handleNewRegister = React.useCallback(() => {

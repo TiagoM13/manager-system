@@ -1,10 +1,13 @@
 import { z } from 'zod';
 
-import { MAX_LENGTH_TEXT } from '@/utils';
+import { validateCNS } from '@/utils';
 
 export const schemaFilterPatient = z.object({
-  name: z.string().trim().max(255, MAX_LENGTH_TEXT).optional(),
-  page: z.string().optional(),
+  name: z.string().optional(),
+  cpf: z.string().optional(),
+  cns: z.string().optional().superRefine(validateCNS),
+  page: z.number().optional(),
+  page_size: z.number().optional(),
 });
 
 export type SchemaFilterPatientType = z.infer<typeof schemaFilterPatient>;

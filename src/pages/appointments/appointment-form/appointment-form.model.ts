@@ -15,13 +15,7 @@ import {
   useCreateAppointment,
   useUpdatePatient,
 } from '@/hooks';
-import {
-  IAppointment,
-  IDoctor,
-  IMSResponse,
-  IPatient,
-  IPatientFilters,
-} from '@/interfaces';
+import { IAppointment, IDoctor, IMSResponse, IPatient } from '@/interfaces';
 import { schemaPatient } from '@/pages/patients/patient-form/patient-form.schema';
 import { formatDateWithCurrentTime, getOnlyModifiedFields } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';

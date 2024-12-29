@@ -79,8 +79,6 @@ export const schemaPatient = z.object({
     (value) => {
       if (!value) return true;
       const numericValue = removeNonNumeric(value);
-
-      console.log(numericValue.length);
       return numericValue.length === 11;
     },
     {
