@@ -38,8 +38,8 @@ export const useAppointmentsListModel = ({
   const defaultValues: AppointmentFiltersSchemaType = {
     name: query.name || '',
     appointment_type: query.appointment_type || '',
-    start_date: query.start_date,
-    end_date: query.end_date,
+    status: query.status || '',
+    scheduled_date: query.scheduled_date,
   };
 
   const methods = useForm<AppointmentFiltersSchemaType>({

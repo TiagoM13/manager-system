@@ -1,11 +1,7 @@
 import { z } from 'zod';
 
-import { AppointmentType } from '@/enums';
-import {
-  INVALID_END_DATE_FIELD,
-  INVALID_START_DATE_FIELD,
-  START_DATE_CANNOT_BE_GREATER_THAN_END_DATE,
-} from '@/utils';
+import { AppointmentStatus, AppointmentType } from '@/enums';
+import { INVALID_DATE_FIELD } from '@/utils';
 
 const isValidDate = (val: unknown) => {
   if (typeof val === 'string') {
@@ -15,53 +11,29 @@ const isValidDate = (val: unknown) => {
   return val instanceof Date;
 };
 
-export const appointmentsByPatientFiltersSchema = z
-  .object({
-    page: z.number().int().positive().default(1).optional(),
-    page_size: z.coerce
-      .number()
-      .int()
-      .positive()
-      .max(500)
-      .default(10)
+export const appointmentsByPatientFiltersSchema = z.object({
+  page: z.number().int().positive().default(1).optional(),
+  page_size: z.coerce.number().int().positive().max(500).default(10).optional(),
+  appointment_type: z
+    .union([z.nativeEnum(AppointmentType), z.undefined(), z.null(), z.string()])
+    .optional(),
+  scheduled_date: z.preprocess(
+    (val) => (isValidDate(val) ? new Date(val as string) : undefined),
+    z
+      .date({
+        invalid_type_error: INVALID_DATE_FIELD,
+      })
       .optional(),
-    appointment_type: z
-      .union([
-        z.nativeEnum(AppointmentType),
-        z.undefined(),
-        z.null(),
-        z.string(),
-      ])
-      .optional(),
-    start_date: z.preprocess(
-      (val) => (isValidDate(val) ? new Date(val as string) : undefined),
-      z
-        .date({
-          invalid_type_error: INVALID_START_DATE_FIELD,
-        })
-        .optional(),
-    ),
-    end_date: z.preprocess(
-      (val) => (isValidDate(val) ? new Date(val as string) : undefined),
-      z
-        .date({
-          invalid_type_error: INVALID_END_DATE_FIELD,
-        })
-        .optional(),
-    ),
-  })
-  .refine(
-    (data) => {
-      if (data.start_date && data.end_date) {
-        return data.start_date <= data.end_date;
-      }
-      return true;
-    },
-    {
-      message: START_DATE_CANNOT_BE_GREATER_THAN_END_DATE,
-      path: ['start_date'],
-    },
-  );
+  ),
+  status: z
+    .union([
+      z.nativeEnum(AppointmentStatus),
+      z.undefined(),
+      z.null(),
+      z.string(),
+    ])
+    .optional(),
+});
 
 export type AppointmentsByPatientFiltersSchemaType = z.infer<
   typeof appointmentsByPatientFiltersSchema

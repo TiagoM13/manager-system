@@ -14,7 +14,8 @@ export const usePatientSearchFormModel = () => {
       if (params) {
         setQuery({
           ...params,
-          cpf: removeCpfMask(String(params.cpf)),
+          cns: params.cns || '',
+          cpf: removeCpfMask(String(params.cpf)) || '',
           page: 1,
         });
       }

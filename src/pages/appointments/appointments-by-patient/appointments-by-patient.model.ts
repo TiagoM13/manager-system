@@ -63,8 +63,8 @@ export const useAppointmentsByPatientModel = ({
   const methods = useForm<AppointmentsByPatientFiltersSchemaType>({
     defaultValues: {
       appointment_type: query.appointment_type || '',
-      start_date: query.start_date,
-      end_date: query.end_date,
+      scheduled_date: query.scheduled_date,
+      status: query.status,
     },
     mode: 'all',
     resolver: zodResolver(appointmentsByPatientFiltersSchema),

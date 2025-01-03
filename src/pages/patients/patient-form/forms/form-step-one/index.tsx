@@ -7,7 +7,6 @@ import {
   genderOptions,
 } from '@/constants/select-options';
 import { IPatient } from '@/interfaces';
-import { formatCPF } from '@/utils';
 
 export const FormStepOne: React.FC<{ loading?: boolean }> = ({ loading }) => {
   const {
@@ -34,10 +33,9 @@ export const FormStepOne: React.FC<{ loading?: boolean }> = ({ loading }) => {
         <InputMask
           name="cpf"
           label="CPF"
+          mask="cpf"
           placeholder="Digite o CPF do paciente"
-          mask={formatCPF}
           control={control}
-          maxLength={14}
           error={errors.cpf}
           disabled={loading}
         />
@@ -52,11 +50,11 @@ export const FormStepOne: React.FC<{ loading?: boolean }> = ({ loading }) => {
           required
         />
 
-        <Input
+        <InputMask
           name="cns"
           label="CNS (cartão do sus)"
           placeholder="Digite o CNS do paciente"
-          maxLength={15}
+          mask="cns"
           control={control}
           error={errors.cns}
           disabled={loading}

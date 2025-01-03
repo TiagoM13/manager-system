@@ -3,7 +3,6 @@ import { useFormContext } from 'react-hook-form';
 
 import { Input, InputMask } from '@/components/_ui';
 import { IPatient } from '@/interfaces';
-import { formatCPF } from '@/utils';
 
 interface PatientInfoFormProps {
   loading?: boolean;
@@ -32,7 +31,7 @@ export const PatientInfoForm: React.FC<PatientInfoFormProps> = ({
       <InputMask
         name="cpf"
         label="CPF"
-        mask={formatCPF}
+        mask="cpf"
         placeholder="Digite o CPF do paciente"
         control={control}
         error={errors.cpf}

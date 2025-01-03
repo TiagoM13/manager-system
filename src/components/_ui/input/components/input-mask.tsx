@@ -1,32 +1,45 @@
 import React from 'react';
-import { Controller, FieldValues } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  FieldError,
+  FieldValues,
+  Path,
+  PathValue,
+} from 'react-hook-form';
+import ReactInputMask from 'react-input-mask';
 
 import { ErrorMessage } from '../../error-message';
-import { InputProps } from './interfaces';
+import { inputMasks } from './utils';
 
-interface InputMaskProps<T extends FieldValues> extends InputProps<T> {
-  mask: (value: string) => string;
+export interface IInputProps<Fields extends FieldValues>
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'children'> {
+  label?: string;
+  error?: FieldError;
+  name: Path<Fields>;
+  control?: Control<Fields>;
+  defaultValue?: PathValue<Fields, Path<Fields>>;
+  placeholder?: string;
+  shouldUnregister?: boolean;
+  multiline?: boolean;
+  mask?: 'cpf' | 'cns' | 'phone' | 'date';
+  customMask?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement> | string) => void;
 }
 
 export const InputMask = <T extends FieldValues>({
   label,
-  required = false,
-  className = '',
-  control,
-  name,
   mask,
+  name,
+  required,
+  control,
   defaultValue,
+  className,
+  customMask,
   error,
   ...props
-}: InputMaskProps<T>) => {
-  const handleInputMask = (
-    mask: (value: string) => string,
-    e: React.ChangeEvent<HTMLInputElement>,
-    onChange: (value: any) => void,
-  ) => {
-    const formattedValue = mask(e.target.value);
-    onChange(formattedValue);
-  };
+}: IInputProps<T>) => {
+  const maskPattern = customMask || inputMasks[mask as keyof typeof inputMasks];
 
   return (
     <div className="w-full">
@@ -40,23 +53,26 @@ export const InputMask = <T extends FieldValues>({
         <Controller
           name={name}
           control={control}
-          defaultValue={defaultValue || ''}
+          defaultValue={defaultValue}
           render={({ field }) => (
-            <input
-              {...field}
-              {...props}
-              value={field.value || ''}
-              data-testid={`input-${name}`}
-              onChange={(e) => handleInputMask(mask, e, field.onChange)}
-              className={`${className} w-full rounded-md border border-slate-400 px-4 py-2 text-sm text-slate-600 outline-sky-500 disabled:opacity-60`}
-            />
+            <>
+              <ReactInputMask
+                {...props}
+                {...field}
+                data-testid={name}
+                value={field.value || ''}
+                mask={maskPattern}
+                className={`${className} min-h-[36px] w-full rounded-md border border-slate-400 px-4 py-2 text-sm text-slate-600 outline-sky-500 disabled:opacity-60`}
+              />
+            </>
           )}
         />
       ) : (
-        <input
+        <ReactInputMask
           {...props}
-          data-testid={`input-${name}`}
-          className={`${className} w-full rounded-md border border-slate-400 px-4 py-2 text-sm text-slate-600 outline-sky-500 disabled:opacity-60`}
+          data-testid={name}
+          mask={maskPattern}
+          className={`${className} min-h-[36px] w-full rounded-md border border-slate-400 px-4 py-2 text-sm text-slate-600 outline-sky-500 disabled:opacity-60`}
         />
       )}
 

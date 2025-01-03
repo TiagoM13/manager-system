@@ -65,9 +65,7 @@ export const schemaPatient = z.object({
       message: MAX_DATE_FIELD,
     }),
   sex: z.nativeEnum(Sex, { message: INVALID_SELECT }),
-  cpf: OptionalStringField.refine((value) => !value || value.length === 14, {
-    message: MIN_LENGTH_CPF,
-  }),
+  cpf: OptionalStringField,
   cns: OptionalStringField.superRefine(validateCNS),
   address: OptionalStringField,
   mother_name: OptionalStringField,
