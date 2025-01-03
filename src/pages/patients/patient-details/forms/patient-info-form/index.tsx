@@ -36,11 +36,11 @@ export const PatientInfoForm: React.FC<PatientInfoFormProps> = ({
         control={control}
         error={errors.cpf}
         disabled={loading}
-        maxLength={11}
       />
 
-      <Input
+      <InputMask
         name="cns"
+        mask="cns"
         label="CNS (cartão do sus)"
         placeholder="Digite o CNS do paciente"
         control={control}
