@@ -1,8 +1,9 @@
-import { AppointmentType } from '@/enums';
+import { AppointmentStatus, AppointmentType } from '@/enums';
 import { MaritalStatus } from '@/enums/marital-status';
 import { Sex } from '@/enums/sex';
 
 import {
+  APPOINTMENT_STATUS_LABELS,
   APPOINTMENT_TYPE_LABELS,
   MARITAL_STATUS_LABELS,
   SEX_LABELS,
@@ -28,6 +29,21 @@ export const appointmentTypeOptions = [
   {
     value: AppointmentType.OTHER,
     label: APPOINTMENT_TYPE_LABELS.OTHER,
+  },
+];
+
+export const appointmentStatusOptions = [
+  {
+    value: AppointmentStatus.PENDING,
+    label: APPOINTMENT_STATUS_LABELS.PENDING,
+  },
+  {
+    value: AppointmentStatus.COMPLETED,
+    label: APPOINTMENT_STATUS_LABELS.COMPLETED,
+  },
+  {
+    value: AppointmentStatus.CANCELLED,
+    label: APPOINTMENT_STATUS_LABELS.CANCELLED,
   },
 ];
 

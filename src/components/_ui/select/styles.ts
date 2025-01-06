@@ -10,7 +10,7 @@ export const Container = styled.div`
     border-radius: 0.5rem;
     border: 1px solid var(--slate-400);
     color: var(--slate-600);
-    height: 35px;
+    height: 36px;
 
     [class$='-menu'],
     [class$='-menuList'] {
@@ -25,11 +25,13 @@ export const Container = styled.div`
     [class$='-singleValue'] {
       color: var(--slate-600);
       font-size: 0.875rem;
+      line-height: 1.25;
     }
 
     [class$='-placeholder'] {
       color: var(--slate-400);
       font-size: 0.875rem;
+      line-height: 1.25;
     }
 
     [class$='-ValueContainer'],
@@ -59,6 +61,7 @@ export const SelectContent = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  height: 36px;
 
   #content {
     width: 100%;

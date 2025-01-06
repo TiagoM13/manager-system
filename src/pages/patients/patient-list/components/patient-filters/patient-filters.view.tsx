@@ -19,10 +19,11 @@ export const PatientFiltersView: React.FC<PatientFiltersViewProps> = ({
 }) => {
   return (
     <FormContainer>
-      <div className="flex items-end justify-between space-x-4">
+      <div className="flex justify-between space-x-4">
         <div className="flex w-full items-baseline justify-between space-x-4">
           <Input
             name="name"
+            label="Nome do paciente"
             placeholder="Buscar pelo nome do paciente"
             control={control}
             error={errors.name}
@@ -31,32 +32,35 @@ export const PatientFiltersView: React.FC<PatientFiltersViewProps> = ({
 
           <InputMask
             name="cpf"
+            label="CPF"
             placeholder="Buscar pelo CPF"
-            mask={formatCPF}
-            maxLength={14}
+            mask="cpf"
             control={control}
             error={errors.cpf}
             disabled={loading}
           />
 
-          <Input
+          <InputMask
             name="cns"
+            label="CNS (cartão do sus)"
             placeholder="Buscar pelo CNS (cartão do sus)"
-            maxLength={15}
+            mask="cns"
             control={control}
             error={errors.cns}
             disabled={loading}
           />
         </div>
 
-        <Button
-          type="button"
-          label="buscar"
-          onClick={onSearch}
-          icon={<MagnifyingGlass className="size-4" weight="bold" />}
-          loading={loading}
-          disabled={loading}
-        />
+        <div className="flex items-end">
+          <Button
+            type="button"
+            label="buscar"
+            onClick={onSearch}
+            icon={<MagnifyingGlass className="size-4" weight="bold" />}
+            loading={loading}
+            disabled={loading}
+          />
+        </div>
       </div>
     </FormContainer>
   );

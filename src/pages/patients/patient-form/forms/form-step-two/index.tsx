@@ -3,7 +3,6 @@ import { useFormContext } from 'react-hook-form';
 
 import { Input, InputMask } from '@/components/_ui';
 import { IPatient } from '@/interfaces';
-import { formatPhone } from '@/utils';
 
 export const FormStepTwo: React.FC<{ loading?: boolean }> = ({ loading }) => {
   const {
@@ -39,7 +38,7 @@ export const FormStepTwo: React.FC<{ loading?: boolean }> = ({ loading }) => {
         <InputMask
           name="phone"
           label="Telefone"
-          mask={formatPhone}
+          mask="phone"
           placeholder="Digite um número de telefone"
           control={control}
           error={errors.phone}
@@ -50,7 +49,7 @@ export const FormStepTwo: React.FC<{ loading?: boolean }> = ({ loading }) => {
           name="contact_emergency"
           label="Telefone de emergência"
           placeholder="Digite um número de telefone"
-          mask={formatPhone}
+          mask="phone"
           control={control}
           error={errors.contact_emergency}
           disabled={loading}
