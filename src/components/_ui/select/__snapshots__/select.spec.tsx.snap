@@ -3,7 +3,7 @@
 exports[`<Select/> should render select component with correct label and options 1`] = `
 <DocumentFragment>
   <div
-    class="sc-braxZu geiSZL"
+    class="sc-braxZu vvicA"
   >
     <label
       class="mb-2 block text-sm text-slate-600"
@@ -11,7 +11,7 @@ exports[`<Select/> should render select component with correct label and options
       Test Select 
     </label>
     <div
-      class="sc-gJhJTp iicclB"
+      class="sc-gJhJTp OTngM"
     >
       <div
         id="content"
