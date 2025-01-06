@@ -30,7 +30,7 @@ interface IUserProfile extends IChangePasswordData {
   name: string;
 }
 
-interface IAccountSettingsModelProps {
+export interface IAccountSettingsModelProps {
   updateUserService: (id: number, data: IUser) => Promise<UserRequestResult>;
   uploadFileService: (data: FormData) => Promise<IUploadFile | undefined>;
   changePasswordService: (

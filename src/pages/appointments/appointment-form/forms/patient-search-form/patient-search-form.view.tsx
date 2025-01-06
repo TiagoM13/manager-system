@@ -3,7 +3,6 @@ import React from 'react';
 import { MagnifyingGlass } from '@phosphor-icons/react';
 
 import { Card, InputMask, Button, Input } from '@/components/_ui';
-import { formatCPF } from '@/utils';
 
 import { usePatientSearchFormModel } from './patient-search-form.model';
 
@@ -40,18 +39,17 @@ export const PatientSearchFormView: React.FC<PatientSearchFormViewProps> = ({
               name="cpf"
               label="CPF"
               placeholder="Buscar pelo CPF"
-              mask={formatCPF}
-              maxLength={14}
+              mask="cpf"
               control={control}
               error={errors.cpf}
               disabled={loading}
             />
 
-            <Input
+            <InputMask
               name="cns"
               label="CNS (cartão do sus)"
               placeholder="Buscar pelo CNS (cartão do sus)"
-              maxLength={15}
+              mask="cns"
               control={control}
               error={errors.cns}
               disabled={loading}

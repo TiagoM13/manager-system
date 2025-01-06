@@ -20,11 +20,11 @@ export interface IAppointment {
 
 export interface IAppointmentFilters {
   name?: string;
+  scheduled_date?: Date;
+  appointment_type?: AppointmentType | string;
+  status?: AppointmentStatus | string;
   page?: number;
   page_size?: number;
-  start_date?: Date;
-  end_date?: Date;
-  appointment_type?: AppointmentType | string;
 }
 
 export interface IAppointmentFiltersWithoutName

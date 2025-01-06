@@ -4,7 +4,6 @@ import { useFormContext } from 'react-hook-form';
 import { Card, Input, InputMask, Select } from '@/components/_ui';
 import { maritalStatusOptions } from '@/constants/select-options';
 import { IPatient } from '@/interfaces';
-import { formatCPF } from '@/utils';
 
 export const PatientForm: React.FC<{ loading?: boolean }> = ({ loading }) => {
   const {
@@ -23,7 +22,7 @@ export const PatientForm: React.FC<{ loading?: boolean }> = ({ loading }) => {
             name="cpf"
             label="CPF"
             placeholder="Digite o CPF do paciente"
-            mask={formatCPF}
+            mask="cpf"
             control={control}
             maxLength={14}
             error={errors.cpf}
@@ -59,12 +58,12 @@ export const PatientForm: React.FC<{ loading?: boolean }> = ({ loading }) => {
           />
 
           <Select
-            name="material_status"
+            name="marital_status"
             label="Estado cívil"
             placeholder="Selecione o sexo"
             control={control}
             options={maritalStatusOptions}
-            error={errors.material_status}
+            error={errors.marital_status}
             disabled={loading}
           />
 

@@ -3,7 +3,6 @@ import { useFormContext } from 'react-hook-form';
 
 import { Input, InputMask } from '@/components/_ui';
 import { IPatient } from '@/interfaces';
-import { formatPhone } from '@/utils';
 
 interface ContactInfoFormProps {
   loading?: boolean;
@@ -22,7 +21,7 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({
       <InputMask
         name="phone"
         label="Telefone"
-        mask={formatPhone}
+        mask="phone"
         placeholder="Digite um número de telefone"
         control={control}
         error={errors.phone}
@@ -52,7 +51,7 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({
         name="contact_emergency"
         label="Telefone de emergência"
         placeholder="Digite um número de telefone"
-        mask={formatPhone}
+        mask="phone"
         control={control}
         error={errors.contact_emergency}
         disabled={loading}
