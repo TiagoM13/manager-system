@@ -56,5 +56,5 @@ export const createApiClient = (baseURL: string) => {
 };
 
 export const hospitalServiceClient = createApiClient(
-  process.env.URL_API_HOSP || '',
+  process.env.VITE_BASE_URL_API || '',
 );

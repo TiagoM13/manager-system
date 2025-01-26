@@ -161,10 +161,10 @@ export const useAppointmentFormModel = ({
   );
 
   const handleCreateNewAppointment = formMethods.handleSubmit((data) => {
-    const payload: IAppointment = {
+    const payload = {
       ...data,
       scheduled_date: formatDateWithCurrentTime(data.scheduled_date) as any,
-    };
+    } as IAppointment;
     createAppointmentMutation(payload);
   });
 

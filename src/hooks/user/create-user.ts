@@ -2,6 +2,7 @@ import {
   ERROR_CREATING_USER,
   USER_CREATED_SUCCESSFULLY,
 } from '@/constants/messages';
+import { CacheKeys } from '@/enums';
 import { IUser, IMSResponse } from '@/interfaces';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -20,7 +21,7 @@ export const useCreateUser = ({ createUser }: UseCreateUserProps) => {
   const { mutateAsync: createUserMutation, isPending } = useMutation({
     mutationFn: async (values: IUser) => await createUser(values),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.invalidateQueries({ queryKey: [CacheKeys.USERS] });
       notify.success(USER_CREATED_SUCCESSFULLY);
     },
     onError: () => notify.error(ERROR_CREATING_USER),

@@ -1,4 +1,5 @@
 import { USER_DELETE_SUCCESS, USER_DELETE_ERROR } from '@/constants/messages';
+import { CacheKeys } from '@/enums';
 import { IMSResponse, IUser } from '@/interfaces';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -16,7 +17,7 @@ export const useDeleteUser = ({ deleteUser }: UseDeleteUserProps) => {
     mutationFn: async (id: number) => deleteUser(id),
     onSuccess: () => {
       notify.success(USER_DELETE_SUCCESS);
-      queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.invalidateQueries({ queryKey: [CacheKeys.USERS] });
     },
     onError: () => notify.error(USER_DELETE_ERROR),
   });

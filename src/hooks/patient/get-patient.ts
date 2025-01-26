@@ -19,7 +19,7 @@ export const useGetPatient = ({
     isLoading,
     isFetching,
   }: UseQueryResult<IPatient | undefined> = useQuery({
-    queryKey: ['patient'],
+    queryKey: ['patient', patientId],
     queryFn: async () => await getPatient(patientId),
     enabled: isEnabled,
   });

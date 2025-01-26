@@ -1,3 +1,4 @@
+import { CacheKeys } from '@/enums';
 import { IUser } from '@/interfaces';
 import { useQuery } from '@tanstack/react-query';
 
@@ -13,7 +14,7 @@ export const useGetUser = ({ getUser, userId, isEnabled }: UseGetUserProps) => {
     isLoading,
     isFetching,
   } = useQuery({
-    queryKey: ['user'],
+    queryKey: [CacheKeys.USER],
     queryFn: async () => await getUser(userId),
     enabled: isEnabled,
   });

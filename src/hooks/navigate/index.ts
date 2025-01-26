@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import { backWithQuery } from '@/utils';
 
-interface NavigationOptions {
+export interface NavigationOptions {
   route: string;
   state?: Record<string, unknown>;
 }

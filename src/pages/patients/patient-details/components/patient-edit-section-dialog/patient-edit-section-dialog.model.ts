@@ -42,7 +42,9 @@ export const usePatientEditSectionDialogModel = ({
 
   const handleUpdatePatient = React.useCallback(
     async (values: SchemaPatientType) => {
-      const response = await updatePatientMutation(formatPatientProps(values));
+      const response = await updatePatientMutation(
+        formatPatientProps(values as IPatient),
+      );
 
       if (response?.success) closeModal();
     },

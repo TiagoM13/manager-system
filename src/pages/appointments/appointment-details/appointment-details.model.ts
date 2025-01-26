@@ -157,10 +157,10 @@ export const useAppointmentDetailsModel = ({
   const handleUpdateAppointment = handleSubmit((values) => {
     const scheduledDate = validateScheduledDate(values);
 
-    const payload: IAppointment = {
+    const payload = {
       ...values,
       scheduled_date: scheduledDate as Date,
-    };
+    } as IAppointment;
 
     updateAppointmentMutation(payload);
     updateAppointmentStatusMutation(AppointmentStatus.COMPLETED);

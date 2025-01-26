@@ -34,7 +34,7 @@ export const useQueryParams: IUseQueryParams = <
 
   const setQuery = React.useCallback(
     (query: SetQuery<T>) => {
-      const currentParams = parseQueryString(location.search) || {};
+      const currentParams = parseQueryString(location.search);
 
       let updatedParams: T;
 

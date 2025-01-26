@@ -1,3 +1,4 @@
+import { CacheKeys } from '@/enums';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface UseUpdateUserStatusProps {
@@ -15,7 +16,7 @@ export const useUpdateUserStatus = ({
     mutationFn: async ({ id, status }: { id: number; status: string }) =>
       await updateUserStatus(id, status),
     onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ['user', userId] }),
+      queryClient.invalidateQueries({ queryKey: [CacheKeys.USER, userId] }),
   });
 
   return {

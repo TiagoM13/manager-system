@@ -1,3 +1,4 @@
+import { CacheKeys } from '@/enums';
 import { IMSResponse, IUser, IUsersFilters } from '@/interfaces';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
@@ -14,7 +15,7 @@ export const useGetAllUsers = ({ getAllUsers, query }: UseGetAllUsersProps) => {
     isLoading,
     isFetching,
   } = useQuery({
-    queryKey: ['users', query],
+    queryKey: [CacheKeys.USERS, query],
     queryFn: async () => await getAllUsers(query),
     placeholderData: keepPreviousData,
   });
