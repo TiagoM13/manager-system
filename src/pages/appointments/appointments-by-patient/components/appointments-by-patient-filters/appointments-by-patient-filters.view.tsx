@@ -54,7 +54,7 @@ export const AppointmentsByPatientFiltersView: React.FC<
             clearable
           />
 
-          <div className="flex items-center">
+          <div className="flex items-end">
             <Button
               type="button"
               label="buscar"
