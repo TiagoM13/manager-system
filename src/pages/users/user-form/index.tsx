@@ -8,7 +8,6 @@ import {
 
 import { CustomLoadingSkeleton } from '@/components/_ui';
 import { HttpClient } from '@/infra/http/http-client';
-import { IUser } from '@/shared/interfaces';
 import { uploadFileService } from '@/shared/api';
 import {
   getUserService,
@@ -16,6 +15,7 @@ import {
   updateUserService,
   updateUserStatusService,
 } from '@/shared/api';
+import { IUser } from '@/shared/interfaces';
 
 import { useUserFormModel } from './user-form.model';
 import { UserFormView } from './user-form.view';

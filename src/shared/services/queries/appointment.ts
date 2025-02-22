@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { IAppointmentFilters, IMSResponse, IAppointment } from '@/shared/interfaces';
+import {
+  IAppointmentFilters,
+  IMSResponse,
+  IAppointment,
+} from '@/shared/interfaces';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 
 import { CacheKeys } from '../cache-keys';

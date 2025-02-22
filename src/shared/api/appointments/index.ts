@@ -1,5 +1,5 @@
-import { AppointmentStatus } from '@/shared/enums';
 import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
+import { AppointmentStatus } from '@/shared/enums';
 import {
   IAppointment,
   IAppointmentFilters,

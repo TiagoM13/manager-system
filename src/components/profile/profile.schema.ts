@@ -1,6 +1,9 @@
 import { z } from 'zod';
 
-import { CONFIRM_PASSWORD, PASSWORDS_DO_NOT_MATCH } from '@/shared/constants/messages';
+import {
+  CONFIRM_PASSWORD,
+  PASSWORDS_DO_NOT_MATCH,
+} from '@/shared/constants/messages';
 import {
   NameFieldRequired,
   PASSWORD_MIN_LENGTH,

@@ -28,4 +28,4 @@ export interface IAppointmentFilters {
 }
 
 export interface IAppointmentFiltersWithoutName
-  extends Omit<IAppointmentFilters, 'name'> { }
+  extends Omit<IAppointmentFilters, 'name'> {}

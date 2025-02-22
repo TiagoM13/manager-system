@@ -1,10 +1,10 @@
 import { AxiosResponse } from 'axios';
 
-import { IChangePasswordData, IUser } from '@/shared/interfaces';
 import {
   SchemaForgotPasswordType,
   SchemaLoginType,
 } from '@/pages/auth/auth.schema';
+import { IChangePasswordData, IUser } from '@/shared/interfaces';
 import { useMutation, MutationOptions } from '@tanstack/react-query';
 
 interface IUseSignInProps
