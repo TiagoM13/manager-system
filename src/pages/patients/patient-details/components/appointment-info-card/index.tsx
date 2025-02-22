@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { Badge } from '@/components/_ui';
-import { APPOINTMENT_TYPE_LABELS } from '@/constants/labels';
-import { IAppointment } from '@/interfaces';
-import { formatAppointmentDate } from '@/utils';
+import { APPOINTMENT_TYPE_LABELS } from '@/shared/constants/labels';
+import { IAppointment } from '@/shared/interfaces';
+import { formatAppointmentDate } from '@/shared/utils';
 
 interface AppointmentInfoCardProps {
   appointment: IAppointment;

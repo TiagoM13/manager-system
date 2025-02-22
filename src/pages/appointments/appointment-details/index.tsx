@@ -10,7 +10,7 @@ import {
   getPatientService,
   updateAppointmentService,
   updateAppointmentStatusService,
-} from '@/services';
+} from '@/shared/api';
 
 import { useAppointmentDetailsModel } from './appointment-details.model';
 import { AppointmentDetailsView } from './appointment-details.view';

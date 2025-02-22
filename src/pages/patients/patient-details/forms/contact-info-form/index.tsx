@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Input, InputMask } from '@/components/_ui';
-import { IPatient } from '@/interfaces';
+import { IPatient } from '@/shared/interfaces';
 
 interface ContactInfoFormProps {
   loading?: boolean;

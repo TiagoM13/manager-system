@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { user } from '@/__mocks__';
-import * as hooksModule from '@/hooks';
+import * as hooksModule from '@/shared/hooks';
 import { render, screen } from '@testing-library/react';
 
 import { Avatar } from '.';
 
-jest.mock('@/hooks');
+jest.mock('@/shared/hooks');
 const useImageLazyLoaderSpy = jest.spyOn(hooksModule, 'useImageLazyLoader');
 
 describe('<Avatar />', () => {

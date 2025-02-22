@@ -1,7 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
 
-import { useAppNavigation } from '@/hooks';
-import { IAppointment } from '@/interfaces';
+import { useAppNavigation } from '@/shared/hooks';
+import { IAppointment } from '@/shared/interfaces';
 
 export const useAppointmentsHistoryModel = ({
   appointments,

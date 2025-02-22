@@ -1,8 +1,8 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Role } from '@/enums';
-import { useCurrentUser, useIsAuthenticated } from '@/hooks';
+import { Role } from '@/shared/enums';
+import { useCurrentUser, useIsAuthenticated } from '@/shared/hooks';
 
 type PrivateRouteProps = {
   children: JSX.Element;

@@ -5,8 +5,8 @@ import { Card, Input, Select } from '@/components/_ui';
 import {
   healthAgentOptions,
   medicalConditionsOptions,
-} from '@/constants/select-options';
-import { IPatient } from '@/interfaces';
+} from '@/shared/constants/select-options';
+import { IPatient } from '@/shared/interfaces';
 
 export const HealthInformationForm: React.FC<{ loading?: boolean }> = ({
   loading,

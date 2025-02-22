@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, Check } from '@phosphor-icons/react';
 
 import { Header } from '@/components';
 import { FormContainer, Card, Button } from '@/components/_ui';
-import { BreadcrumbItem } from '@/interfaces';
+import { BreadcrumbItem } from '@/shared/interfaces';
 
 import { FormProgress } from './components/form-progress';
 import { FormStepOne, FormStepTwo, FormStepThree } from './forms';

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { CustomLoadingSkeleton } from '@/components/_ui';
-import { IPatient, ModalSection } from '@/interfaces';
-import { formatDateTime } from '@/utils';
+import { IPatient, ModalSection } from '@/shared/interfaces';
+import { formatDateTime } from '@/shared/utils';
 
 import { EditButton } from '..';
 

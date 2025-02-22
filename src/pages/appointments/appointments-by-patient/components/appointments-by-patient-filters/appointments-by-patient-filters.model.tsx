@@ -1,9 +1,9 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useQueryParams } from '@/hooks';
-import { IAppointmentFilters } from '@/interfaces';
-import { formatDateToISODate } from '@/utils';
+import { useQueryParams } from '@/shared/hooks';
+import { IAppointmentFilters } from '@/shared/interfaces';
+import { formatDateToISODate } from '@/shared/utils';
 
 import { AppointmentsByPatientFiltersSchemaType } from '../../appointments-by-patient.schema';
 

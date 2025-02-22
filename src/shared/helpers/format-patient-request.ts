@@ -1,0 +1,18 @@
+import { IPatient, IPatientForm } from '@/shared/interfaces';
+import { formatCPF, formatDateToISODate, formatPhone } from '@/shared/utils';
+
+export const formatPatientRequest = (patientForm: IPatientForm): IPatient => {
+  const patient = patientForm;
+
+  if (patient.birth_date)
+    patient.birth_date = formatDateToISODate(patient.birth_date) as any;
+
+  if (patient.cpf) patient.cpf = formatCPF(patient.cpf);
+
+  if (patient.phone) patient.phone = formatPhone(patient.phone);
+
+  if (patient.contact_emergency)
+    patient.contact_emergency = formatPhone(patient.contact_emergency);
+
+  return patient;
+};

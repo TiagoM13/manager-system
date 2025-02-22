@@ -1,4 +1,4 @@
-import { IPatient } from '@/interfaces';
+import { IPatient } from '@/shared/interfaces';
 
 export const calculateCompletionPercentage = (patient: IPatient) => {
   const fieldsToCheck = [

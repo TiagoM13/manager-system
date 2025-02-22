@@ -4,7 +4,7 @@ import { House, User, UsersFour } from '@phosphor-icons/react';
 
 import { CustomLoadingSkeleton } from '@/components/_ui';
 import { HttpClient } from '@/infra/http/http-client';
-import { getPatientService } from '@/services';
+import { getPatientService } from '@/shared/api';
 
 import { usePatientDetailsModel } from './patient-details.model';
 import { PatientDetailsView } from './patient-details.view';

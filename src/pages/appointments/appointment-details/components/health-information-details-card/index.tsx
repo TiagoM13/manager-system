@@ -2,7 +2,7 @@ import React from 'react';
 
 import { InfoItem } from '@/components';
 import { Card } from '@/components/_ui';
-import { IPatient } from '@/interfaces';
+import { IPatient } from '@/shared/interfaces';
 
 interface HealthInformationDetailsCardProps {
   patient?: IPatient;

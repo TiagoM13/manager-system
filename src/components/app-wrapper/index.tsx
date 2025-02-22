@@ -3,7 +3,7 @@ import React from 'react';
 import { ListDashes } from '@phosphor-icons/react';
 
 import { CloseButton } from '@/components/_ui';
-import { useIsAuthenticated, useWindowSize } from '@/hooks';
+import { useIsAuthenticated, useWindowSize } from '@/shared/hooks';
 import { useMenu } from '@/store';
 
 import { Profile } from '../profile';

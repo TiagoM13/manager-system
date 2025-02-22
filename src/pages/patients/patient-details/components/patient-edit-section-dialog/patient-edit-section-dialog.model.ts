@@ -1,10 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { formatPatientProps } from '@/helpers/format-patient-props';
-import { formatPatientRequest } from '@/helpers/format-patient-request';
-import { useUpdatePatient } from '@/hooks';
-import { IMSResponse, IPatient } from '@/interfaces';
+import { formatPatientProps } from '@/shared/helpers/format-patient-props';
+import { formatPatientRequest } from '@/shared/helpers/format-patient-request';
+import { IMSResponse, IPatient } from '@/shared/interfaces';
+import { useUpdatePatient } from '@/shared/services/mutations';
 import { usePatientFormDialog } from '@/store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -42,7 +42,9 @@ export const usePatientEditSectionDialogModel = ({
 
   const handleUpdatePatient = React.useCallback(
     async (values: SchemaPatientType) => {
-      const response = await updatePatientMutation(formatPatientProps(values));
+      const response = await updatePatientMutation(
+        formatPatientProps(values as IPatient),
+      );
 
       if (response?.success) closeModal();
     },

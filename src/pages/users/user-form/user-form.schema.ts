@@ -6,7 +6,7 @@ import {
   NameFieldRequired,
   REQUIRED_FIELD,
   SELECT_REQUIRED,
-} from '@/utils';
+} from '@/shared/utils';
 
 export const userSchema = z.object({
   name: NameFieldRequired,

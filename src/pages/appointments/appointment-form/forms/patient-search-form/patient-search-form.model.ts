@@ -1,8 +1,8 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useQueryParams } from '@/hooks';
-import { removeCpfMask } from '@/utils';
+import { useQueryParams } from '@/shared/hooks';
+import { removeCpfMask } from '@/shared/utils';
 
 import { PatientSearchFormType } from './patient-search-form.schema';
 

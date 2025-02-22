@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AppointmentStatus } from '@/enums';
+import { AppointmentStatus } from '@/shared/enums';
 import { Meta, StoryFn } from '@storybook/react';
 
 import { StatusActionIcon, StatusActionIconProps } from '.';

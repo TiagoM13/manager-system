@@ -4,20 +4,29 @@ import { useParams } from 'react-router-dom';
 
 import dayjs from 'dayjs';
 
-import { formatPatientProps } from '@/helpers/format-patient-props';
-import { formatPatientRequest } from '@/helpers/format-patient-request';
+import { schemaPatient } from '@/pages/patients/patient-form/patient-form.schema';
+import { formatPatientProps } from '@/shared/helpers/format-patient-props';
+import { formatPatientRequest } from '@/shared/helpers/format-patient-request';
+import { useAppNavigation, useQueryParams } from '@/shared/hooks';
 import {
-  useAppNavigation,
-  useGetAllDoctors,
-  useGetAllPatients,
-  useGetPatient,
-  useQueryParams,
+  IAppointment,
+  IDoctor,
+  IMSResponse,
+  IPatient,
+} from '@/shared/interfaces';
+import {
   useCreateAppointment,
   useUpdatePatient,
-} from '@/hooks';
-import { IAppointment, IDoctor, IMSResponse, IPatient } from '@/interfaces';
-import { schemaPatient } from '@/pages/patients/patient-form/patient-form.schema';
-import { formatDateWithCurrentTime, getOnlyModifiedFields } from '@/utils';
+} from '@/shared/services/mutations';
+import {
+  useGetAllPatients,
+  useGetPatient,
+  useGetAllDoctors,
+} from '@/shared/services/queries';
+import {
+  formatDateWithCurrentTime,
+  getOnlyModifiedFields,
+} from '@/shared/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
@@ -71,7 +80,7 @@ export const useAppointmentFormModel = ({
     isLoading: isLoadingAllPatients,
     isFetching: isFetchingAllPatients,
   } = useGetAllPatients({
-    getAllPatients: getAllPatients,
+    getAllPatients,
     query,
     isEnabled: !!hasValidQuery,
   });
@@ -88,7 +97,7 @@ export const useAppointmentFormModel = ({
     doctorsResponse,
     isLoading: isLoadingDoctors,
     isFetching: isFetchingDoctors,
-    doctorOptions,
+    DOCTORS_SELECT_OPTIONS,
   } = useGetAllDoctors({
     getAllDoctors,
     isEnabled: !isCreatingNewAppointment,
@@ -161,10 +170,10 @@ export const useAppointmentFormModel = ({
   );
 
   const handleCreateNewAppointment = formMethods.handleSubmit((data) => {
-    const payload: IAppointment = {
+    const payload = {
       ...data,
       scheduled_date: formatDateWithCurrentTime(data.scheduled_date) as any,
-    };
+    } as IAppointment;
     createAppointmentMutation(payload);
   });
 
@@ -195,7 +204,7 @@ export const useAppointmentFormModel = ({
     doctorsResponse,
     patientResponse,
     allPatientsResponse,
-    doctorOptions,
+    DOCTORS_SELECT_OPTIONS,
     handleSave,
   };
 };

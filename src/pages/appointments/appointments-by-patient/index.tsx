@@ -9,7 +9,10 @@ import {
 
 import { CustomLoadingSkeleton } from '@/components/_ui';
 import { HttpClient } from '@/infra/http/http-client';
-import { getAppointmentsByPatientService, getPatientService } from '@/services';
+import {
+  getAppointmentsByPatientService,
+  getPatientService,
+} from '@/shared/api';
 
 import { useAppointmentsByPatientModel } from './appointments-by-patient.model';
 import { AppointmentsByPatientView } from './appointments-by-patient.view';

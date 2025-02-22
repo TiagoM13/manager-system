@@ -3,9 +3,9 @@ import React from 'react';
 import { PencilSimple } from '@phosphor-icons/react';
 
 import { Avatar, Badge, Button, Table } from '@/components/_ui';
-import { SEX_LABELS } from '@/constants/labels';
-import { IPatient } from '@/interfaces';
-import { calculateAge, formatCPF, formatDate } from '@/utils';
+import { SEX_LABELS } from '@/shared/constants/labels';
+import { IPatient } from '@/shared/interfaces';
+import { calculateAge, formatCPF, formatDate } from '@/shared/utils';
 
 import { Card, Text } from './styles';
 

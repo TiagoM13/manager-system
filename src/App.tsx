@@ -9,10 +9,11 @@ import utc from 'dayjs/plugin/utc';
 import 'dayjs/locale/pt-br';
 
 import { ConfirmDialog, InitializerLoader } from '@/components';
-import { useUserRoleObservable, useUserStatusObservable } from '@/hooks';
 import { ReactQueryProvider } from '@/provider/query-client';
 import { Router } from '@/routes';
-import { userObservable } from '@/utils';
+import { userObservable } from '@/shared/utils';
+
+import { useUserRoleObservable, useUserStatusObservable } from './shared/hooks';
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);

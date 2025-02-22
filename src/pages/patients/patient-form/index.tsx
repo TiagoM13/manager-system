@@ -3,7 +3,7 @@ import React from 'react';
 import { House, UserPlus, UsersFour } from '@phosphor-icons/react';
 
 import { HttpClient } from '@/infra/http/http-client';
-import { createPatientService } from '@/services';
+import { createPatientService } from '@/shared/api';
 
 import { usePatientFormModel } from './patient-form.model';
 import { PatientFormView } from './patient-form.view';

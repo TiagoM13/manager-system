@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Status, Role } from '@/enums';
+import { Status, Role } from '@/shared/enums';
 import { Meta, StoryFn } from '@storybook/react';
 
 import { Badge as BadgeComponent, BadgeProps } from '.';

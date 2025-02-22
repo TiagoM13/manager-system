@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { CircleNotch, Plus } from '@phosphor-icons/react';
 
 import { Card, Button } from '@/components/_ui';
-import { IAppointment } from '@/interfaces';
+import { IAppointment } from '@/shared/interfaces';
 
 import { AppointmentInfoCard } from '../appointment-info-card';
 import { useAppointmentsHistoryModel } from './appointments-history.model';

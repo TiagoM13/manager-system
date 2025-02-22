@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { HttpClient } from '@/infra/http/http-client';
-import { getAllAppointmentsService } from '@/services';
+import { getAllAppointmentsService } from '@/shared/api';
 
 import { useAppointmentsListModel } from './appointments-list.model';
 import { AppointmentsListView } from './appointments.view';

@@ -10,7 +10,7 @@ import {
   getAllPatientsService,
   getPatientService,
   updatePatientService,
-} from '@/services';
+} from '@/shared/api';
 
 import { useAppointmentFormModel } from './appointment-form.model';
 import { AppointmentFormView } from './appointment-form.view';

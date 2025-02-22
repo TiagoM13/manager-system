@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { STATUS_LABELS } from '@/constants/labels';
-import { Role, Status } from '@/enums';
 import { ROLE_LABELS } from '@/pages/users/user-form/utils/options';
+import { STATUS_LABELS } from '@/shared/constants/labels';
+import { Role, Status } from '@/shared/enums';
 import { render } from '@testing-library/react';
 
 import { Badge } from '.';

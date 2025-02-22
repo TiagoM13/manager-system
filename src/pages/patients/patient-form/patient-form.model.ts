@@ -1,9 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { formatPatientProps } from '@/helpers/format-patient-props';
-import { useAppNavigation, useCreatePatient, useFormSteps } from '@/hooks';
-import { IMSResponse, IPatient } from '@/interfaces';
+import { formatPatientProps } from '@/shared/helpers/format-patient-props';
+import { useAppNavigation, useFormSteps } from '@/shared/hooks';
+import { IMSResponse, IPatient } from '@/shared/interfaces';
+import { useCreatePatient } from '@/shared/services/mutations';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { SchemaPatientType, schemaPatient } from './patient-form.schema';
@@ -34,7 +35,9 @@ export const usePatientFormModel = ({
   const { handleSubmit } = methods;
 
   const handleCreateNewPatient = handleSubmit(async (values) => {
-    const response = await createPatientMutation(formatPatientProps(values));
+    const response = await createPatientMutation(
+      formatPatientProps(values as IPatient),
+    );
 
     if (response) navigateTo({ route: `/patients/${response?.patient.id}` });
   });

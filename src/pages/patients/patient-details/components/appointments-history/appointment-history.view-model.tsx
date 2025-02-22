@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IAppointment } from '@/interfaces';
+import { IAppointment } from '@/shared/interfaces';
 
 import { useAppointmentsHistoryModel } from './appointments-history.model';
 import { AppointmentsHistoryView } from './appointments-history.view';

@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-import { AppointmentType } from '@/enums';
+import { AppointmentType } from '@/shared/enums';
 import {
   INVALID_DATE_FIELD,
   REQUIRED_FIELD,
   SELECT_REQUIRED,
   INVALID_SCHEDULED_DATE,
-} from '@/utils';
+} from '@/shared/utils';
 
 export const appointmentFormSchema = z.object({
   appointment_type: z.nativeEnum(AppointmentType, { message: SELECT_REQUIRED }),

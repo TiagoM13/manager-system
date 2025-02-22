@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useImageLazyLoader } from '@/hooks';
+import { useImageLazyLoader } from '@/shared/hooks';
 
 import { CustomLoadingSkeleton } from '../loading-skeleton';
 

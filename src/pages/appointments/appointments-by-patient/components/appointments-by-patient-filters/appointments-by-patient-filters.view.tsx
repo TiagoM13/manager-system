@@ -6,7 +6,7 @@ import { FormContainer, Select, Button, Input } from '@/components/_ui';
 import {
   appointmentTypeOptions,
   appointmentStatusOptions,
-} from '@/constants/select-options';
+} from '@/shared/constants/select-options';
 
 import { useAppointmentsByPatientFiltersModel } from './appointments-by-patient-filters.model';
 
@@ -54,7 +54,7 @@ export const AppointmentsByPatientFiltersView: React.FC<
             clearable
           />
 
-          <div className="flex items-center">
+          <div className="flex items-end">
             <Button
               type="button"
               label="buscar"

@@ -4,9 +4,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { SignOut, UserCircle, CircleNotch } from '@phosphor-icons/react';
 
 import { UserProfile } from '@/components/_ui';
-import { useAuth, useCurrentUser } from '@/hooks';
+import { useAuth, useCurrentUser } from '@/shared/hooks';
+import { menus } from '@/shared/utils';
 import { useDialog, useMenu, useMenuProfile } from '@/store';
-import { menus } from '@/utils';
 
 import { MenuItem } from '../menu-item';
 

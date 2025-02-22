@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { AppointmentStatus, Role, Status } from '@/enums';
-import { getLabelForType } from '@/utils/get-label-type';
+import { AppointmentStatus, Role, Status } from '@/shared/enums';
+import { getLabelForType } from '@/shared/utils/get-label-type';
 
 export type BadgeProps = {
   type: Status | Role | AppointmentStatus | undefined;

@@ -5,8 +5,8 @@ import { Input, Select } from '@/components/_ui';
 import {
   healthAgentOptions,
   medicalConditionsOptions,
-} from '@/constants/select-options';
-import { IPatient } from '@/interfaces';
+} from '@/shared/constants/select-options';
+import { IPatient } from '@/shared/interfaces';
 
 interface MedicalInfoFormProps {
   loading?: boolean;

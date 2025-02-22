@@ -2,8 +2,8 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { FormContainer, InputSearch } from '@/components/_ui';
-import { useQueryParams } from '@/hooks';
-import { IUsersFilters } from '@/interfaces';
+import { useQueryParams } from '@/shared/hooks';
+import { IUsersFilters } from '@/shared/interfaces';
 
 type UserFiltersProps = {
   loading?: boolean;
