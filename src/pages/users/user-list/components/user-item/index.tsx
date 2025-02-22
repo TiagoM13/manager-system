@@ -9,9 +9,9 @@ import {
   ButtonActions,
   Button,
 } from '@/components/_ui';
-import { useCurrentUser } from '@/hooks';
-import { IUser } from '@/interfaces';
-import { formatDate, formatDateTime } from '@/utils';
+import { useCurrentUser } from '@/shared/hooks';
+import { IUser } from '@/shared/interfaces';
+import { formatDate, formatDateTime } from '@/shared/utils';
 
 import { Card, Text } from './styles';
 

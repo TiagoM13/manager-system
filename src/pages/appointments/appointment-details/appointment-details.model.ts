@@ -4,19 +4,28 @@ import { useParams } from 'react-router-dom';
 
 import dayjs from 'dayjs';
 
-import { AppointmentStatus } from '@/enums';
+import { AppointmentStatus } from '@/shared/enums';
 import {
+  useNotification,
+  usePermissions,
   useAppNavigation,
+} from '@/shared/hooks';
+import {
+  IAppointment,
+  IDoctor,
+  IMSResponse,
+  IPatient,
+} from '@/shared/interfaces';
+import {
+  useUpdateAppointment,
+  useUpdateAppointmentStatus,
+} from '@/shared/services/mutations';
+import {
   useGetAllDoctors,
   useGetAppointment,
   useGetPatient,
-  useNotification,
-  usePermissions,
-  useUpdateAppointment,
-  useUpdateAppointmentStatus,
-} from '@/hooks';
-import { IAppointment, IDoctor, IMSResponse, IPatient } from '@/interfaces';
-import { formatDate, formatDateWithCurrentTime } from '@/utils';
+} from '@/shared/services/queries';
+import { formatDate, formatDateWithCurrentTime } from '@/shared/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
@@ -83,7 +92,7 @@ export const useAppointmentDetailsModel = ({
   const {
     isLoading: isLoadingDoctors,
     isFetching: isFetchingDoctors,
-    doctorOptions,
+    DOCTORS_SELECT_OPTIONS,
   } = useGetAllDoctors({
     getAllDoctors,
     isEnabled: !isEdit,
@@ -195,7 +204,7 @@ export const useAppointmentDetailsModel = ({
     appointmentResponse,
     isLoading,
     methods,
-    doctorOptions,
+    DOCTORS_SELECT_OPTIONS,
     isEdit,
     isPending,
     isPendingUpdateAppointment,

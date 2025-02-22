@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { HttpClient } from '@/infra/http/http-client';
-import { IPatient, ModalSection } from '@/interfaces';
-import { updatePatientService } from '@/services';
+import { updatePatientService } from '@/shared/api';
+import { IPatient, ModalSection } from '@/shared/interfaces';
 
 import {
   ContactInfoForm,

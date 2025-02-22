@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { BreadcrumbItem } from '@/interfaces';
+import { BreadcrumbItem } from '@/shared/interfaces';
 
 export type HeaderProps = {
   title?: string;

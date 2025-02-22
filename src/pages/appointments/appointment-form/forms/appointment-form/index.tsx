@@ -2,8 +2,8 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Select, Input, Textarea } from '@/components/_ui';
-import { appointmentTypeOptions } from '@/constants/select-options';
-import { IAppointment } from '@/interfaces';
+import { appointmentTypeOptions } from '@/shared/constants/select-options';
+import { IAppointment } from '@/shared/interfaces';
 
 interface AppointmentFormProps {
   loading?: boolean;

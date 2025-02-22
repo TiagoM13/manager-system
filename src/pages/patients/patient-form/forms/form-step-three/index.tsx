@@ -5,8 +5,8 @@ import { Input, Select } from '@/components/_ui';
 import {
   medicalConditionsOptions,
   healthAgentOptions,
-} from '@/constants/select-options';
-import { IPatient } from '@/interfaces';
+} from '@/shared/constants/select-options';
+import { IPatient } from '@/shared/interfaces';
 
 export const FormStepThree: React.FC<{ loading?: boolean }> = ({ loading }) => {
   const {

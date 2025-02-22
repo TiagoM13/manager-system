@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { HttpClient } from '@/infra/http/http-client';
-import { getAllPatientsService } from '@/services';
+import { getAllPatientsService } from '@/shared/api';
 
 import { usePatientListModel } from './patient-list.model';
 import { PatientListView } from './patient-list.view';

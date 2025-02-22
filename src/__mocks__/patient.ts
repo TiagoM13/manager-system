@@ -1,7 +1,7 @@
-import { MaritalStatus, Status } from '@/enums';
-import { Sex } from '@/enums/sex';
-import { IPatient } from '@/interfaces';
-import { sortEnum } from '@/utils';
+import { MaritalStatus, Status } from '@/shared/enums';
+import { Sex } from '@/shared/enums/sex';
+import { IPatient } from '@/shared/interfaces';
+import { sortEnum } from '@/shared/utils';
 import { faker } from '@faker-js/faker';
 
 export const patient: IPatient = {

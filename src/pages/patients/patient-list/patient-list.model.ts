@@ -4,11 +4,11 @@ import { useLocation } from 'react-router-dom';
 
 import {
   useAppNavigation,
-  useGetAllPatients,
   useQueryParams,
   useWindowSize,
-} from '@/hooks';
-import { IMSResponse, IPatient, IPatientFilters } from '@/interfaces';
+} from '@/shared/hooks';
+import { IMSResponse, IPatient, IPatientFilters } from '@/shared/interfaces';
+import { useGetAllPatients } from '@/shared/services/queries';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {

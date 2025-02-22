@@ -4,22 +4,24 @@ import { useLocation } from 'react-router-dom';
 
 import { AxiosResponse } from 'axios';
 
-import { LOGIN_AGAIN } from '@/constants/messages';
+import { LOGIN_AGAIN } from '@/shared/constants/messages';
 import {
   useCurrentUser,
   useAuth,
   useAppNavigation,
-  useUploadFile,
-  useUpdateUser,
   useNotification,
-} from '@/hooks';
-import { useChangePassword } from '@/hooks/auth/actions/change-password';
+} from '@/shared/hooks';
 import {
   IUser,
   IChangePasswordData,
   IMSResponse,
   IUploadFile,
-} from '@/interfaces';
+} from '@/shared/interfaces';
+import {
+  useChangePassword,
+  useUpdateUser,
+  useUploadFile,
+} from '@/shared/services/mutations';
 import { useMenuProfile } from '@/store';
 
 import { profileSchema } from './profile.schema';
@@ -80,7 +82,6 @@ export const useAccountSettingsModel = ({
   const { updateUserMutation, isPending: isLoadingUpdateUser } = useUpdateUser({
     updateUser: updateUserService,
     userId: Number(currentUser.id),
-    queryKeys: ['users'],
   });
   const { uploadFileMutation, isPending: isLoadingUploadFile } = useUploadFile({
     uploadFile: uploadFileService,

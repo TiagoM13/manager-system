@@ -1,8 +1,8 @@
 import { IHttpClient } from '@/infra/http/http-client-contract';
-import { IRecoverPasswordData, IUser } from '@/interfaces';
+import { IRecoverPasswordData, IUser } from '@/shared/interfaces';
 import { SchemaLoginType } from '@/pages/auth/auth.schema';
-import { forgotPasswordService, signInService } from '@/services/auth';
-import { handleAPIErrors } from '@/utils/common';
+import { forgotPasswordService, signInService } from '@/shared/api/auth';
+import { handleAPIErrors } from '@/shared/utils/common';
 
 import { initialState, useAuthStore } from '.';
 

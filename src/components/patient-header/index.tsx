@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Avatar, Badge, CustomLoadingSkeleton } from '@/components/_ui';
-import { IPatient } from '@/interfaces';
-import { formatCPF } from '@/utils';
+import { IPatient } from '@/shared/interfaces';
+import { formatCPF } from '@/shared/utils';
 
 interface PatientHeaderProps {
   patient?: IPatient;

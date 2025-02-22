@@ -1,9 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { formatPatientProps } from '@/helpers/format-patient-props';
-import { useAppNavigation, useCreatePatient, useFormSteps } from '@/hooks';
-import { IMSResponse, IPatient, IPatientForm } from '@/interfaces';
+import { formatPatientProps } from '@/shared/helpers/format-patient-props';
+import { useAppNavigation, useFormSteps } from '@/shared/hooks';
+import { IMSResponse, IPatient } from '@/shared/interfaces';
+import { useCreatePatient } from '@/shared/services/mutations';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { SchemaPatientType, schemaPatient } from './patient-form.schema';

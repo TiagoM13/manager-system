@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { Button } from '@/components/_ui';
-import { useAppNavigation } from '@/hooks';
-import { IPatient } from '@/interfaces';
-import { formatCPF, formatDate } from '@/utils';
+import { useAppNavigation } from '@/shared/hooks';
+import { IPatient } from '@/shared/interfaces';
+import { formatCPF, formatDate } from '@/shared/utils';
 
 interface PatientCardProps {
   patient: IPatient;

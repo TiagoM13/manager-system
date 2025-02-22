@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Pagination, Table } from '@/components/_ui';
-import { IPatient, IResponseMeta } from '@/interfaces';
+import { IPatient, IResponseMeta } from '@/shared/interfaces';
 
 import { PatientRow } from '../patient-item';
 import { SkeletonTablePatients } from '../skeletons';

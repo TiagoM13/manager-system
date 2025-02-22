@@ -6,7 +6,7 @@ import { FormContainer, Input, Select, Button } from '@/components/_ui';
 import {
   appointmentStatusOptions,
   appointmentTypeOptions,
-} from '@/constants/select-options';
+} from '@/shared/constants/select-options';
 
 import { useAppointmentFiltersModel } from './appointment-filters.model';
 

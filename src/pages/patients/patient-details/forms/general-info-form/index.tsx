@@ -5,8 +5,8 @@ import { Input, Select } from '@/components/_ui';
 import {
   genderOptions,
   maritalStatusOptions,
-} from '@/constants/select-options';
-import { IPatient } from '@/interfaces';
+} from '@/shared/constants/select-options';
+import { IPatient } from '@/shared/interfaces';
 
 interface GeneralInfoFormProps {
   loading?: boolean;

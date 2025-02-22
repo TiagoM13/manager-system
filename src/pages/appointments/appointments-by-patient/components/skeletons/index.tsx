@@ -2,7 +2,7 @@ import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 import { Button, StatusActionIcon, Table } from '@/components/_ui';
-import { AppointmentStatus } from '@/enums';
+import { AppointmentStatus } from '@/shared/enums';
 
 export const SkeletonTableAppintmentsByPatient: React.FC = () => {
   return (

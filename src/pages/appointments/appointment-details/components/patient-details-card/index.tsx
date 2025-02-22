@@ -2,9 +2,9 @@ import React from 'react';
 
 import { InfoItem } from '@/components';
 import { Card } from '@/components/_ui';
-import { MARITAL_STATUS_LABELS, SEX_LABELS } from '@/constants/labels';
-import { IPatient } from '@/interfaces';
-import { formatDate, formatPhone } from '@/utils';
+import { MARITAL_STATUS_LABELS, SEX_LABELS } from '@/shared/constants/labels';
+import { IPatient } from '@/shared/interfaces';
+import { formatDate, formatPhone } from '@/shared/utils';
 
 interface PatientDetailsCardProps {
   patient: IPatient | undefined;

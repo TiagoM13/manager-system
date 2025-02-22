@@ -5,7 +5,7 @@ import {
   PASSWORD_MIN_LENGTH,
   PASSWORD_REQUIRED,
   REQUIRED_FIELD,
-} from '@/utils';
+} from '@/shared/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const loginValidationSchema = z.object({

@@ -4,9 +4,9 @@ import { DownloadSimple, Printer } from '@phosphor-icons/react';
 
 import { InfoItem } from '@/components';
 import { Badge, Button, Card } from '@/components/_ui';
-import { APPOINTMENT_TYPE_LABELS } from '@/constants/labels';
-import { IAppointment } from '@/interfaces';
-import { formatAppointmentDate, toastSuccess } from '@/utils';
+import { APPOINTMENT_TYPE_LABELS } from '@/shared/constants/labels';
+import { IAppointment } from '@/shared/interfaces';
+import { formatAppointmentDate, toastSuccess } from '@/shared/utils';
 
 interface AppointmentDetailsCardProps {
   appointment: IAppointment | undefined;

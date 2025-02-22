@@ -1,4 +1,4 @@
-import { Role } from '@/enums';
+import { Role } from '@/shared/enums';
 
 export const ROLE_LABELS = {
   ADMIN: 'Administrador',

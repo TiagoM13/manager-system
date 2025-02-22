@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { INVALID_DATE_FIELD } from '@/constants/messages';
-import { AppointmentStatus, AppointmentType } from '@/enums';
+import { INVALID_DATE_FIELD } from '@/shared/constants/messages';
+import { AppointmentStatus, AppointmentType } from '@/shared/enums';
 
 const isValidDate = (val: unknown) => {
   if (typeof val === 'string') {

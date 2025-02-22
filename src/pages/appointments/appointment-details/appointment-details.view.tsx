@@ -5,8 +5,8 @@ import { Check, CircleNotch, X } from '@phosphor-icons/react';
 
 import { Header, PatientHeader } from '@/components';
 import { Card, Button } from '@/components/_ui';
-import { AppointmentStatus } from '@/enums';
-import { BreadcrumbItem } from '@/interfaces';
+import { AppointmentStatus } from '@/shared/enums';
+import { BreadcrumbItem } from '@/shared/interfaces';
 
 import { AppointmentForm } from '../appointment-form/forms';
 import { useAppointmentDetailsModel } from './appointment-details.model';
@@ -29,7 +29,7 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
   appointmentResponse,
   isLoading,
   methods,
-  doctorOptions,
+  DOCTORS_SELECT_OPTIONS,
   isPending,
   isPendingUpdateAppointment,
   isPendingUpdateAppointmentStatus,
@@ -78,7 +78,7 @@ export const AppointmentDetailsView: React.FC<AppointmentDetailsViewProps> = ({
                       <AppointmentForm
                         loading={isLoading || isPending}
                         isUpdating={isAppointmentPending}
-                        doctors={doctorOptions}
+                        doctors={DOCTORS_SELECT_OPTIONS}
                       />
 
                       <div className="ml-auto flex gap-2 p-2">

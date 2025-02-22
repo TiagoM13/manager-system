@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Pagination, Table } from '@/components/_ui';
-import { IAppointment, IResponseMeta } from '@/interfaces';
+import { IAppointment, IResponseMeta } from '@/shared/interfaces';
 
 import { AppointmentRow } from '../appointment-item';
 import { SkeletonTableAppintments } from '../skeletons';

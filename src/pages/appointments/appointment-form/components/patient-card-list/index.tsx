@@ -3,7 +3,7 @@ import React from 'react';
 import { CircleNotch } from '@phosphor-icons/react';
 
 import { Card } from '@/components/_ui';
-import { IPatient } from '@/interfaces';
+import { IPatient } from '@/shared/interfaces';
 
 import { NotFoundPatient } from '../not-found-patient';
 import { PatientCard } from '../patient-card';

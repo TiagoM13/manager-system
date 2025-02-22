@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Pagination } from '@/components/_ui';
-import { IPatient, IResponseMeta } from '@/interfaces';
+import { IPatient, IResponseMeta } from '@/shared/interfaces';
 
 import { PatientCard } from '../patient-item';
 

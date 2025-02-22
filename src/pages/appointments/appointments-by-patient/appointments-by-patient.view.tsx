@@ -3,7 +3,7 @@ import { FormProvider } from 'react-hook-form';
 
 import { Header, PatientHeader } from '@/components';
 import { Card } from '@/components/_ui';
-import { BreadcrumbItem } from '@/interfaces';
+import { BreadcrumbItem } from '@/shared/interfaces';
 
 import { useAppointmentsByPatientModel } from './appointments-by-patient.model';
 import {

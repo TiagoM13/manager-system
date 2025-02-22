@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { MaritalStatus } from '@/enums/marital-status';
-import { Sex } from '@/enums/sex';
+import { MaritalStatus } from '@/shared/enums/marital-status';
+import { Sex } from '@/shared/enums/sex';
 import {
   validateCNS,
   NameFieldRequired,
@@ -13,7 +13,7 @@ import {
   INVALID_DATE_FIELD,
   POSITIVE_NUMBER,
   MAX_LENGTH_FIELD_PHONE,
-} from '@/utils';
+} from '@/shared/utils';
 
 const OptionalStringField = z
   .string()

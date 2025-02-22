@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Pagination } from '@/components/_ui';
-import { IResponseMeta, IUser } from '@/interfaces';
+import { IResponseMeta, IUser } from '@/shared/interfaces';
 
 import { SkeletonCardUsers } from '../skeletons';
 import { UserCard } from '../user-item';

@@ -2,10 +2,9 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
-import { useAppNavigation, useNotification } from '@/hooks';
-import { useForgotPassword } from '@/hooks/auth/actions/forgot-password';
-import { useSignIn } from '@/hooks/auth/actions/sign-in';
-import { IRecoverPasswordData } from '@/interfaces';
+import { useAppNavigation, useNotification } from '@/shared/hooks';
+import { IRecoverPasswordData } from '@/shared/interfaces';
+import { useSignIn, useForgotPassword } from '@/shared/services/mutations';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { REQUEST_PASSWORD, WELCOME_MESSAGE } from './auth.messages';

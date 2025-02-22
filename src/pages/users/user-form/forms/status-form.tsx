@@ -2,9 +2,9 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Card, InputRadio } from '@/components/_ui';
-import { STATUS_LABELS } from '@/constants/labels';
-import { Status } from '@/enums';
-import { IUser } from '@/interfaces';
+import { STATUS_LABELS } from '@/shared/constants/labels';
+import { Status } from '@/shared/enums';
+import { IUser } from '@/shared/interfaces';
 
 interface StatusFormProps {
   loading?: boolean;

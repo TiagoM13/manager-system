@@ -1,6 +1,6 @@
-import { Status, Role } from '@/enums';
-import { IUser } from '@/interfaces';
-import { sortEnum } from '@/utils';
+import { Status, Role } from '@/shared/enums';
+import { IUser } from '@/shared/interfaces';
+import { sortEnum } from '@/shared/utils';
 import { faker } from '@faker-js/faker';
 
 export const user: IUser = {

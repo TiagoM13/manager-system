@@ -5,7 +5,7 @@ import { Check } from '@phosphor-icons/react';
 
 import { Header, PatientHeader } from '@/components';
 import { Card, Button } from '@/components/_ui';
-import { BreadcrumbItem } from '@/interfaces';
+import { BreadcrumbItem } from '@/shared/interfaces';
 
 import { useAppointmentFormModel } from './appointment-form.model';
 import { PatientCardList } from './components/patient-card-list';
@@ -33,7 +33,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
     patientFormMethods,
     patientResponse,
     allPatientsResponse,
-    doctorOptions,
+    DOCTORS_SELECT_OPTIONS,
     isLoading,
     isPending,
     breadcrumbsPathItems,
@@ -84,7 +84,7 @@ export const AppointmentFormView: React.FC<AppointmentFormViewProps> = (
                   <div className="flex w-full flex-col justify-between">
                     <AppointmentForm
                       loading={isLoading || isPending}
-                      doctors={doctorOptions}
+                      doctors={DOCTORS_SELECT_OPTIONS}
                     />
 
                     <div className="ml-auto flex gap-2 p-2">

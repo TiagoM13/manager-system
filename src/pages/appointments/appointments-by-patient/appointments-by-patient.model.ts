@@ -4,17 +4,19 @@ import { useLocation, useParams } from 'react-router-dom';
 
 import {
   useAppNavigation,
-  useGetPatient,
-  useAppointmentsByPatient,
   useQueryParams,
   useWindowSize,
-} from '@/hooks';
+} from '@/shared/hooks';
 import {
   IAppointment,
   IAppointmentFilters,
   IMSResponse,
   IPatient,
-} from '@/interfaces';
+} from '@/shared/interfaces';
+import {
+  useAppointmentsByPatient,
+  useGetPatient,
+} from '@/shared/services/queries';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {

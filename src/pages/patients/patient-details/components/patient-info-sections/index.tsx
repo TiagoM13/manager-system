@@ -2,9 +2,9 @@ import React from 'react';
 
 import { InfoItem } from '@/components';
 import { Card } from '@/components/_ui';
-import { MARITAL_STATUS_LABELS, SEX_LABELS } from '@/constants/labels';
-import { IPatient, ModalSection } from '@/interfaces';
-import { formatPhone, calculateAge, formatDate } from '@/utils';
+import { MARITAL_STATUS_LABELS, SEX_LABELS } from '@/shared/constants/labels';
+import { IPatient, ModalSection } from '@/shared/interfaces';
+import { formatPhone, calculateAge, formatDate } from '@/shared/utils';
 
 import { EditButton } from '..';
 

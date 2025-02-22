@@ -1,6 +1,6 @@
-import { Status } from '@/enums';
-import { IDoctor } from '@/interfaces';
-import { sortEnum } from '@/utils';
+import { Status } from '@/shared/enums';
+import { IDoctor } from '@/shared/interfaces';
+import { sortEnum } from '@/shared/utils';
 import { faker } from '@faker-js/faker';
 
 export const doctor: IDoctor = {

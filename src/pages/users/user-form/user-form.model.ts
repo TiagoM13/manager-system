@@ -2,17 +2,16 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
-import { Role } from '@/enums';
+import { Role } from '@/shared/enums';
+import { useAppNavigation, useCurrentUser } from '@/shared/hooks';
+import { IMSResponse, IUploadFile, IUser } from '@/shared/interfaces';
 import {
-  useAppNavigation,
   useCreateUser,
-  useCurrentUser,
-  useGetUser,
   useUpdateUser,
   useUpdateUserStatus,
   useUploadFile,
-} from '@/hooks';
-import { IMSResponse, IUploadFile, IUser } from '@/interfaces';
+} from '@/shared/services/mutations';
+import { useGetUser } from '@/shared/services/queries';
 import { useImageUrl, useName } from '@/store';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -50,11 +49,7 @@ export const useUserFormModel = ({
 
   const isCreatingNewUser = React.useMemo(() => id === 'new', [id]);
 
-  const {
-    userResponse,
-    isLoading: isLoadingUser,
-    isFetching: isFetchingUser,
-  } = useGetUser({
+  const { userResponse, isLoading } = useGetUser({
     getUser,
     userId: Number(id),
     isEnabled: !isCreatingNewUser,
@@ -65,22 +60,13 @@ export const useUserFormModel = ({
   const { updateUserMutation, isPending: isPendingUpdateUser } = useUpdateUser({
     updateUser,
     userId: Number(id),
-    queryKeys: ['user', Number(id)],
   });
   const { updateUserStatusMutation, isPending: isPendingUpdateUserStatus } =
-    useUpdateUserStatus({
-      updateUserStatus,
-      userId: Number(id),
-    });
+    useUpdateUserStatus({ updateUserStatus });
   const { uploadFileMutation, isPending: isPendingUploadFile } = useUploadFile({
     uploadFile,
-    queryKeys: ['user', Number(id)],
+    queryKeys: ['user', String(id)],
   });
-
-  const isLoading = React.useMemo(
-    () => isLoadingUser || isFetchingUser,
-    [isFetchingUser, isLoadingUser],
-  );
 
   const isPending = React.useMemo(
     () =>

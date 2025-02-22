@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { CircleNotch } from '@phosphor-icons/react';
 
 import { Button, Input } from '@/components/_ui';
-import { useAuth } from '@/hooks';
+import { useAuth } from '@/shared/hooks';
 
 import { FormAuthProps } from '../../auth.types';
 

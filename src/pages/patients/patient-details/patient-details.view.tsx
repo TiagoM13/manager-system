@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Header, PatientHeader } from '@/components';
 import { Card } from '@/components/_ui';
-import { BreadcrumbItem } from '@/interfaces';
+import { BreadcrumbItem } from '@/shared/interfaces';
 
 import {
   PatientCompletionStatus,

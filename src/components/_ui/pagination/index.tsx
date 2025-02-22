@@ -8,8 +8,8 @@ import {
   CaretDoubleRight,
 } from '@phosphor-icons/react';
 
-import { useQueryParams } from '@/hooks';
-import { IUsersFilters } from '@/interfaces';
+import { useQueryParams } from '@/shared/hooks';
+import { IUsersFilters } from '@/shared/interfaces';
 
 import { IconButton } from '../icon-button';
 

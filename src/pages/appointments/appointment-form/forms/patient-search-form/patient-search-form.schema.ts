@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { validateCNS } from '@/utils';
+import { validateCNS } from '@/shared/utils';
 
 export const patientSearchFormSchema = z.object({
   name: z.string().optional(),

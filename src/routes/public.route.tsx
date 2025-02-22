@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { useIsAuthenticated } from '@/hooks';
+import { useIsAuthenticated } from '@/shared/hooks';
 
 export const PublicRoute: React.FC<{ children: JSX.Element }> = ({
   children,

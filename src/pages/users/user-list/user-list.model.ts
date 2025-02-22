@@ -6,10 +6,10 @@ import {
   useQueryParams,
   useAppNavigation,
   useWindowSize,
-  useGetAllUsers,
-  useDeleteUser,
-} from '@/hooks';
-import { IUsersFilters, IUser, IMSResponse } from '@/interfaces';
+} from '@/shared/hooks';
+import { IUsersFilters, IUser, IMSResponse } from '@/shared/interfaces';
+import { useDeleteUser } from '@/shared/services/mutations';
+import { useGetAllUsers } from '@/shared/services/queries';
 import { useDialog } from '@/store';
 
 import { filterSchema } from './user-list.schema';

@@ -5,8 +5,8 @@ import { Input, InputMask, Select } from '@/components/_ui';
 import {
   maritalStatusOptions,
   genderOptions,
-} from '@/constants/select-options';
-import { IPatient } from '@/interfaces';
+} from '@/shared/constants/select-options';
+import { IPatient } from '@/shared/interfaces';
 
 export const FormStepOne: React.FC<{ loading?: boolean }> = ({ loading }) => {
   const {

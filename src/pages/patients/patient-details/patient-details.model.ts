@@ -1,8 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useAppNavigation, useGetPatient } from '@/hooks';
-import { IPatient } from '@/interfaces';
+import { useAppNavigation } from '@/shared/hooks';
+import { IPatient } from '@/shared/interfaces';
+import { useGetPatient } from '@/shared/services/queries';
 import { usePatientFormDialog } from '@/store';
 
 interface PatientDetailsModelProps {
