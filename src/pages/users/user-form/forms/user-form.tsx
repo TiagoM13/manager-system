@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { UploadAvatar } from '@/components';
-import { Card, Select, Input } from '@/components/_ui';
+import { Card, Input, Select } from '@/components/_ui';
 import { IUser } from '@/shared/interfaces';
 
 import { roleOptions } from '../utils/options';

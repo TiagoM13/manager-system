@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { AppointmentStatus } from '@/shared/enums';
 import { render } from '@testing-library/react';
 

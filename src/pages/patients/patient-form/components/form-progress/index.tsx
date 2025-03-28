@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Step } from '../step';
 
 interface FormProgressProps {

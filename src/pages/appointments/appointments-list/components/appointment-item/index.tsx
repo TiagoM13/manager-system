@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Badge, Button, Table, StatusActionIcon } from '@/components/_ui';
+import { Badge, Button, StatusActionIcon, Table } from '@/components/_ui';
 import { APPOINTMENT_TYPE_LABELS } from '@/shared/constants/labels';
 import { IAppointment } from '@/shared/interfaces';
 import { formatDate, formattedTime } from '@/shared/utils';

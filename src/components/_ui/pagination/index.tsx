@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   CaretDoubleLeft,
+  CaretDoubleRight,
   CaretLeft,
   CaretRight,
-  CaretDoubleRight,
 } from '@phosphor-icons/react';
 
 import { useQueryParams } from '@/shared/hooks';

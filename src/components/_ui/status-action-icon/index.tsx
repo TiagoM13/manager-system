@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PencilSimple, Eye } from '@phosphor-icons/react';
+import { Eye, PencilSimple } from '@phosphor-icons/react';
 
 import { AppointmentStatus } from '@/shared/enums';
 import { usePermissions } from '@/shared/hooks';

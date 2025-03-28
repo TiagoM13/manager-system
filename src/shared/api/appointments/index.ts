@@ -6,7 +6,7 @@ import {
   IAppointmentFiltersWithoutName,
   IMSResponse,
 } from '@/shared/interfaces';
-import { handleAPIErrors, delayPromise } from '@/shared/utils';
+import { delayPromise, handleAPIErrors } from '@/shared/utils';
 
 export const getAllAppointmentsService = async (
   client: IHttpClient,

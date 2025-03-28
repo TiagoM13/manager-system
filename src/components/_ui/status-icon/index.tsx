@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CircleNotch, Check } from '@phosphor-icons/react';
+import { Check, CircleNotch } from '@phosphor-icons/react';
 
 export const StatusIcon: React.FC<{ loading?: boolean }> = ({ loading }) => {
   return (

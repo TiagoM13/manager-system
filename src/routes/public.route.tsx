@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useIsAuthenticated } from '@/shared/hooks';
@@ -12,10 +12,7 @@ export const PublicRoute: React.FC<{ children: JSX.Element }> = ({
 
   React.useEffect(() => {
     if (isAuthenticated) {
-      navigate('/dashboard', {
-        state: location.state,
-        replace: true,
-      });
+      navigate('/dashboard', { state: location.state, replace: true });
     }
   }, [isAuthenticated, location.pathname, location.state, navigate]);
 

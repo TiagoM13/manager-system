@@ -4,7 +4,7 @@ import { InfoItem } from '@/components';
 import { Card } from '@/components/_ui';
 import { MARITAL_STATUS_LABELS, SEX_LABELS } from '@/shared/constants/labels';
 import { IPatient, ModalSection } from '@/shared/interfaces';
-import { formatPhone, calculateAge, formatDate } from '@/shared/utils';
+import { calculateAge, formatDate, formatPhone } from '@/shared/utils';
 
 import { EditButton } from '..';
 

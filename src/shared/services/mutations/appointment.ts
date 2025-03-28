@@ -5,10 +5,10 @@ import {
   ERROR_FINISHED_APPOINTMENT,
 } from '@/shared/constants/messages';
 import { AppointmentStatus } from '@/shared/enums';
-import { useNotification, useAppNavigation } from '@/shared/hooks';
+import { useAppNavigation, useNotification } from '@/shared/hooks';
 import { IAppointment, IMSResponse } from '@/shared/interfaces';
 import { invalidateRelatedQueries } from '@/shared/utils/invalidate-queries';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { CacheKeys } from '../cache-keys';
 

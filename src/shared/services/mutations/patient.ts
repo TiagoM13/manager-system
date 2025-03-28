@@ -1,7 +1,7 @@
 import {
-  PATIENT_CREATED_SUCCESSFULLY,
   ERROR_CREATING_PATIENT,
   ERROR_UPDATING_PATIENT,
+  PATIENT_CREATED_SUCCESSFULLY,
   PATIENT_UPDATED_SUCCESSFULLY,
 } from '@/shared/constants/messages';
 import { useNotification } from '@/shared/hooks';

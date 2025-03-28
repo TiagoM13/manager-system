@@ -1,4 +1,4 @@
-import { Status, Role } from '@/shared/enums';
+import { Role, Status } from '@/shared/enums';
 import { IUser } from '@/shared/interfaces';
 import { sortEnum } from '@/shared/utils';
 import { faker } from '@faker-js/faker';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { MagnifyingGlass } from '@phosphor-icons/react';
 
-import { FormContainer, Input, Select, Button } from '@/components/_ui';
+import { Button, FormContainer, Input, Select } from '@/components/_ui';
 import {
   appointmentStatusOptions,
   appointmentTypeOptions,

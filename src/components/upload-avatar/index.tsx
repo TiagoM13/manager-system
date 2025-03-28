@@ -2,7 +2,7 @@ import React from 'react';
 import { Control, FieldError } from 'react-hook-form';
 
 import defaultImageAvatar from '@/assets/avatars/avatar-user.jpg';
-import { FileUploadInput, Avatar } from '@/components/_ui';
+import { Avatar, FileUploadInput } from '@/components/_ui';
 import { useImageUrl, useName } from '@/store';
 
 interface InputFileProps {

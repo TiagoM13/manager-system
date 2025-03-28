@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useDialog } from '@/store';
 import { fireEvent, render } from '@testing-library/react';
 

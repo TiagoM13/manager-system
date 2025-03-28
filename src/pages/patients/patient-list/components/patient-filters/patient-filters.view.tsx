@@ -3,7 +3,6 @@ import React from 'react';
 import { MagnifyingGlass } from '@phosphor-icons/react';
 
 import { Button, FormContainer, Input, InputMask } from '@/components/_ui';
-import { formatCPF } from '@/shared/utils';
 
 import { usePatientFiltersModel } from './patient-filters.model';
 

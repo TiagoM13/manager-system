@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Role } from '@/shared/enums';
 import { useCurrentUser, useIsAuthenticated } from '@/shared/hooks';
 
-type PrivateRouteProps = {
-  children: JSX.Element;
-  allowedRoles?: Role[];
-};
+type PrivateRouteProps = { children: JSX.Element; allowedRoles?: Role[] };
 
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   children,
@@ -20,16 +17,11 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
 
   React.useEffect(() => {
     if (!isAuthenticated) {
-      navigate('/sign-in', {
-        state: location.state,
-        replace: true,
-      });
+      navigate('/sign-in', { state: location.state, replace: true });
     }
 
     if (isAuthenticated && !allowedRoles?.includes(user.role)) {
-      navigate('/dashboard', {
-        state: location.state,
-      });
+      navigate('/dashboard', { state: location.state });
     }
   }, [
     allowedRoles,

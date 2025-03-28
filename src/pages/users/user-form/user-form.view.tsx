@@ -5,7 +5,7 @@ import { Header } from '@/components';
 import { FormContainer } from '@/components/_ui';
 import { BreadcrumbItem } from '@/shared/interfaces';
 
-import { UserForm, StatusForm } from './forms';
+import { StatusForm, UserForm } from './forms';
 import { useUserFormModel } from './user-form.model';
 
 type UserFormViewProps = ReturnType<typeof useUserFormModel> & {

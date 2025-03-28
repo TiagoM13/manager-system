@@ -4,16 +4,16 @@ import { FormProvider } from 'react-hook-form';
 import { Check, CircleNotch, X } from '@phosphor-icons/react';
 
 import { Header, PatientHeader } from '@/components';
-import { Card, Button } from '@/components/_ui';
+import { Button, Card } from '@/components/_ui';
 import { AppointmentStatus } from '@/shared/enums';
 import { BreadcrumbItem } from '@/shared/interfaces';
 
 import { AppointmentForm } from '../appointment-form/forms';
 import { useAppointmentDetailsModel } from './appointment-details.model';
 import {
-  PatientDetailsCard,
-  HealthInformationDetailsCard,
   AppointmentDetailsCard,
+  HealthInformationDetailsCard,
+  PatientDetailsCard,
 } from './components';
 
 type AppointmentDetailsViewProps = ReturnType<

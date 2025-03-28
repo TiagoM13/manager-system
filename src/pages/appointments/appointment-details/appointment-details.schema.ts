@@ -3,11 +3,11 @@ import { z } from 'zod';
 import { AppointmentType } from '@/shared/enums';
 import {
   INVALID_DATE_FIELD,
-  REQUIRED_FIELD,
   INVALID_SCHEDULED_DATE,
-  SELECT_REQUIRED,
   MAX_LENGTH_TEXT,
   MIN_LENGTH_TEXT,
+  REQUIRED_FIELD,
+  SELECT_REQUIRED,
 } from '@/shared/utils';
 
 export const appointmentDetailsSchema = z.object({

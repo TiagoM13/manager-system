@@ -6,9 +6,9 @@ import dayjs from 'dayjs';
 
 import { AppointmentStatus } from '@/shared/enums';
 import {
+  useAppNavigation,
   useNotification,
   usePermissions,
-  useAppNavigation,
 } from '@/shared/hooks';
 import {
   IAppointment,

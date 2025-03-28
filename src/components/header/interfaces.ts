@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 import { BreadcrumbItem } from '@/shared/interfaces';
 
 export type HeaderProps = {

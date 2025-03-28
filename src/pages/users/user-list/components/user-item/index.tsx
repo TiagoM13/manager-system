@@ -3,11 +3,11 @@ import React from 'react';
 import { PencilSimple, Trash } from '@phosphor-icons/react';
 
 import {
-  UserProfile,
   Badge,
-  Table as T,
-  ButtonActions,
   Button,
+  ButtonActions,
+  Table as T,
+  UserProfile,
 } from '@/components/_ui';
 import { useCurrentUser } from '@/shared/hooks';
 import { IUser } from '@/shared/interfaces';

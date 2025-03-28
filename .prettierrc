@@ -4,7 +4,12 @@
   "tabWidth": 2,
   "useTabs": false,
   "trailingComma": "all",
-  "allowParens": "avoid",
-  "plugins": ["prettier-plugin-tailwindcss"],
-  "tailwindConfig": "./tailwind.config.js"
+  "allowParens": "always",
+  "endOfLine": "lf",
+  "plugins": [
+    "prettier-plugin-tailwindcss",
+    "prettier-plugin-organize-imports"
+  ],
+  "tailwindConfig": "./tailwind.config.cjs",
+  "tailwindPreserveWhitespace": true
 }

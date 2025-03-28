@@ -1,4 +1,4 @@
-import { FieldValues, Control, FieldPath, FieldError } from 'react-hook-form';
+import { Control, FieldError, FieldPath, FieldValues } from 'react-hook-form';
 
 export interface InputProps<T extends FieldValues>
   extends React.ComponentProps<'input'> {

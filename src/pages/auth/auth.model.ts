@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import { useAppNavigation, useNotification } from '@/shared/hooks';
 import { IRecoverPasswordData } from '@/shared/interfaces';
-import { useSignIn, useForgotPassword } from '@/shared/services/mutations';
+import { useForgotPassword, useSignIn } from '@/shared/services/mutations';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { REQUEST_PASSWORD, WELCOME_MESSAGE } from './auth.messages';

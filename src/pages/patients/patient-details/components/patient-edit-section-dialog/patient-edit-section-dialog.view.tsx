@@ -3,7 +3,7 @@ import { FormProvider } from 'react-hook-form';
 
 import { Check, X } from '@phosphor-icons/react';
 
-import { Dialog, FormContainer, Button } from '@/components/_ui';
+import { Button, Dialog, FormContainer } from '@/components/_ui';
 
 import { usePatientEditSectionDialogModel } from './patient-edit-section-dialog.model';
 

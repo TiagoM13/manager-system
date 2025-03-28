@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Table as T, Pagination } from '@/components/_ui';
+import { Pagination, Table as T } from '@/components/_ui';
 import { IResponseMeta, IUser } from '@/shared/interfaces';
 
 import { SkeletonTableUsers } from '../skeletons';

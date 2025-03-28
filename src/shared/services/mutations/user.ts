@@ -1,13 +1,13 @@
 import {
   ERROR_CREATING_USER,
-  USER_CREATED_SUCCESSFULLY,
   ERROR_UPDATING_USER,
-  USER_UPDATED_SUCCESSFULLY,
-  USER_DELETE_SUCCESS,
+  USER_CREATED_SUCCESSFULLY,
   USER_DELETE_ERROR,
+  USER_DELETE_SUCCESS,
+  USER_UPDATED_SUCCESSFULLY,
 } from '@/shared/constants/messages';
 import { useNotification } from '@/shared/hooks';
-import { IUser, IMSResponse } from '@/shared/interfaces';
+import { IMSResponse, IUser } from '@/shared/interfaces';
 import { invalidateRelatedQueries } from '@/shared/utils/invalidate-queries';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 

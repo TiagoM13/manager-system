@@ -6,16 +6,16 @@ import { AxiosResponse } from 'axios';
 
 import { LOGIN_AGAIN } from '@/shared/constants/messages';
 import {
-  useCurrentUser,
-  useAuth,
   useAppNavigation,
+  useAuth,
+  useCurrentUser,
   useNotification,
 } from '@/shared/hooks';
 import {
-  IUser,
   IChangePasswordData,
   IMSResponse,
   IUploadFile,
+  IUser,
 } from '@/shared/interfaces';
 import {
   useChangePassword,

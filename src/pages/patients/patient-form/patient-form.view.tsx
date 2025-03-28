@@ -4,11 +4,11 @@ import { FormProvider } from 'react-hook-form';
 import { ArrowLeft, ArrowRight, Check } from '@phosphor-icons/react';
 
 import { Header } from '@/components';
-import { FormContainer, Card, Button } from '@/components/_ui';
+import { Button, Card, FormContainer } from '@/components/_ui';
 import { BreadcrumbItem } from '@/shared/interfaces';
 
 import { FormProgress } from './components/form-progress';
-import { FormStepOne, FormStepTwo, FormStepThree } from './forms';
+import { FormStepOne, FormStepThree, FormStepTwo } from './forms';
 import { usePatientFormModel } from './patient-form.model';
 import { steps } from './utils/steps';
 

@@ -6,7 +6,7 @@ import {
   Path,
   UseFormSetValue,
 } from 'react-hook-form';
-import { OptionProps, GroupBase } from 'react-select';
+import { GroupBase, OptionProps } from 'react-select';
 import { AsyncProps } from 'react-select/async';
 
 export type Option = {

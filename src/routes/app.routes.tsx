@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { AppWrapper, InitializerLoader } from '@/components';
 import { ForgotPasswordPage, SignInPage } from '@/pages/auth';
@@ -165,6 +165,12 @@ export const Router: React.FC = () => {
               >
                 <AppointmentByPatient />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Navigate to={isAuthenticated ? '/dashboard' : '/sign-in'} />
             }
           />
         </Routes>

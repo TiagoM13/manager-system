@@ -1,9 +1,7 @@
-import React from 'react';
-
 import { IMSResponse, IPatient, IPatientFilters } from '@/shared/interfaces';
 import {
-  useQuery,
   keepPreviousData,
+  useQuery,
   UseQueryResult,
 } from '@tanstack/react-query';
 
@@ -32,10 +30,7 @@ export const useGetAllPatients = ({
     enabled: isEnabled,
   });
 
-  return {
-    allPatientsResponse,
-    ...rest,
-  };
+  return { allPatientsResponse, ...rest };
 };
 
 interface UseGetPatientProps {
@@ -58,8 +53,5 @@ export const useGetPatient = ({
     enabled: isEnabled,
   });
 
-  return {
-    patientResponse,
-    ...rest,
-  };
+  return { patientResponse, ...rest };
 };

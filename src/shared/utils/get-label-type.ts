@@ -3,7 +3,7 @@ import {
   APPOINTMENT_STATUS_LABELS,
   STATUS_LABELS,
 } from '@/shared/constants/labels';
-import { Status, Role, AppointmentStatus } from '@/shared/enums';
+import { AppointmentStatus, Role, Status } from '@/shared/enums';
 
 export const getLabelForType = (type: Status | Role | AppointmentStatus) => {
   const labelMappings: Record<string, Record<string, string>> = {

@@ -3,16 +3,15 @@ import { z } from 'zod';
 import { MaritalStatus } from '@/shared/enums/marital-status';
 import { Sex } from '@/shared/enums/sex';
 import {
-  validateCNS,
-  NameFieldRequired,
+  INVALID_DATE_FIELD,
   INVALID_SELECT,
   MAX_DATE_FIELD,
-  MIN_DATE_FIELD,
-  MIN_LENGTH_CPF,
-  REQUIRED_FIELD,
-  INVALID_DATE_FIELD,
-  POSITIVE_NUMBER,
   MAX_LENGTH_FIELD_PHONE,
+  MIN_DATE_FIELD,
+  NameFieldRequired,
+  POSITIVE_NUMBER,
+  REQUIRED_FIELD,
+  validateCNS,
 } from '@/shared/utils';
 
 const OptionalStringField = z

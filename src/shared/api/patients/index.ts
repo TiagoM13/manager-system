@@ -1,6 +1,6 @@
 import { HttpMethod, IHttpClient } from '@/infra/http/http-client-contract';
 import { IMSResponse, IPatient, IPatientFilters } from '@/shared/interfaces';
-import { handleAPIErrors, delayPromise } from '@/shared/utils';
+import { delayPromise, handleAPIErrors } from '@/shared/utils';
 
 export const getAllPatientsService = async (
   client: IHttpClient,

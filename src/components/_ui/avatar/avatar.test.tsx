@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { user } from '@/__mocks__';
 import * as hooksModule from '@/shared/hooks';
 import { render, screen } from '@testing-library/react';

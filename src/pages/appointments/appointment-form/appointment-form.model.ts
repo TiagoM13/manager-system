@@ -19,9 +19,9 @@ import {
   useUpdatePatient,
 } from '@/shared/services/mutations';
 import {
+  useGetAllDoctors,
   useGetAllPatients,
   useGetPatient,
-  useGetAllDoctors,
 } from '@/shared/services/queries';
 import {
   formatDateWithCurrentTime,
@@ -30,8 +30,8 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
-  AppointmentFormType,
   appointmentFormSchema,
+  AppointmentFormType,
 } from './appointment-form.schema';
 import {
   patientSearchFormSchema,
@@ -157,7 +157,7 @@ export const useAppointmentFormModel = ({
   );
 
   const handleUpdatePatientIfChanged = patientFormMethods.handleSubmit(
-    (values) => {
+    async (values) => {
       const formattedValues = formatPatientProps(values);
       const payload = getOnlyModifiedFields(dirtyFields, formattedValues);
 
@@ -165,7 +165,9 @@ export const useAppointmentFormModel = ({
         return reset();
       }
 
-      updatePatientMutation(payload);
+      await patientFormMethods.trigger();
+
+      await updatePatientMutation(payload);
     },
   );
 

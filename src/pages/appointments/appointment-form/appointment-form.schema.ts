@@ -3,9 +3,9 @@ import { z } from 'zod';
 import { AppointmentType } from '@/shared/enums';
 import {
   INVALID_DATE_FIELD,
+  INVALID_SCHEDULED_DATE,
   REQUIRED_FIELD,
   SELECT_REQUIRED,
-  INVALID_SCHEDULED_DATE,
 } from '@/shared/utils';
 
 export const appointmentFormSchema = z.object({

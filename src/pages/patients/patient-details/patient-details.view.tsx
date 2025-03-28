@@ -5,11 +5,11 @@ import { Card } from '@/components/_ui';
 import { BreadcrumbItem } from '@/shared/interfaces';
 
 import {
-  PatientCompletionStatus,
-  PatientInfoSections,
   AppointmentsHistory,
   HospitalizationsHistory,
+  PatientCompletionStatus,
   PatientEditSectionDialog,
+  PatientInfoSections,
 } from './components';
 import { usePatientDetailsModel } from './patient-details.model';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Select, Input, Textarea } from '@/components/_ui';
+import { Input, Select, Textarea } from '@/components/_ui';
 import { appointmentTypeOptions } from '@/shared/constants/select-options';
 import { IAppointment } from '@/shared/interfaces';
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ROLE_LABELS } from '@/pages/users/user-form/utils/options';
 import { STATUS_LABELS } from '@/shared/constants/labels';
 import { Role, Status } from '@/shared/enums';

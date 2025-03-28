@@ -2,7 +2,7 @@ import React from 'react';
 
 import { MagnifyingGlass } from '@phosphor-icons/react';
 
-import { Card, InputMask, Button, Input } from '@/components/_ui';
+import { Button, Card, Input, InputMask } from '@/components/_ui';
 
 import { usePatientSearchFormModel } from './patient-search-form.model';
 

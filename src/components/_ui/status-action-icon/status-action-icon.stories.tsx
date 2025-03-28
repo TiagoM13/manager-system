@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { AppointmentStatus } from '@/shared/enums';
 import { Meta, StoryFn } from '@storybook/react';
 

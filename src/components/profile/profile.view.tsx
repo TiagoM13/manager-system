@@ -5,11 +5,11 @@ import { Check } from '@phosphor-icons/react';
 import {
   Avatar,
   Button,
-  FormContainer,
   CloseButton,
+  FileUploadInput,
+  FormContainer,
   Input,
   InputPassword,
-  FileUploadInput,
 } from '@/components/_ui';
 
 import { useAccountSettingsModel } from './profile.model';

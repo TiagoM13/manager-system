@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { CircleNotch, Plus } from '@phosphor-icons/react';
 
-import { Card, Button } from '@/components/_ui';
+import { Button, Card } from '@/components/_ui';
 import { IAppointment } from '@/shared/interfaces';
 
 import { AppointmentInfoCard } from '../appointment-info-card';

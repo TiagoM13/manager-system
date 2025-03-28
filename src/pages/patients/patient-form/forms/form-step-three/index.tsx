@@ -3,8 +3,8 @@ import { useFormContext } from 'react-hook-form';
 
 import { Input, Select } from '@/components/_ui';
 import {
-  medicalConditionsOptions,
   healthAgentOptions,
+  medicalConditionsOptions,
 } from '@/shared/constants/select-options';
 import { IPatient } from '@/shared/interfaces';
 

@@ -2,9 +2,9 @@ import React from 'react';
 
 import { HttpClient } from '@/infra/http/http-client';
 import {
+  changePasswordService,
   updateUserService,
   uploadFileService,
-  changePasswordService,
 } from '@/shared/api';
 import { useMenuProfile } from '@/store';
 

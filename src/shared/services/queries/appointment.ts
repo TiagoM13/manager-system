@@ -1,11 +1,9 @@
-import React from 'react';
-
 import {
+  IAppointment,
   IAppointmentFilters,
   IMSResponse,
-  IAppointment,
 } from '@/shared/interfaces';
-import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { CacheKeys } from '../cache-keys';
 
@@ -30,10 +28,7 @@ export const useGetAllAppointments = ({
     placeholderData: keepPreviousData,
   });
 
-  return {
-    allAppointmentsResponse,
-    ...rest,
-  };
+  return { allAppointmentsResponse, ...rest };
 };
 
 type AppointmentsResponse =
@@ -60,10 +55,7 @@ export const useAppointmentsByPatient = ({
     placeholderData: keepPreviousData,
   });
 
-  return {
-    appointmentsResponse,
-    ...rest,
-  };
+  return { appointmentsResponse, ...rest };
 };
 
 interface UseGetAppointmentProps {
@@ -85,8 +77,5 @@ export const useGetAppointment = ({
     queryFn: () => getAppointment(patientId, appointmentId),
   });
 
-  return {
-    appointmentResponse,
-    ...rest,
-  };
+  return { appointmentResponse, ...rest };
 };

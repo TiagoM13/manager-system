@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { SignOut, UserCircle, CircleNotch } from '@phosphor-icons/react';
+import { CircleNotch, SignOut, UserCircle } from '@phosphor-icons/react';
 
 import { UserProfile } from '@/components/_ui';
 import { useAuth, useCurrentUser } from '@/shared/hooks';
@@ -100,7 +100,7 @@ export const SideBar: React.FC = () => {
             id="btn-signup"
             className="flex gap-2 text-sm text-zinc-400 transition hover:text-sky-500"
           >
-            {!!loading ? (
+            {loading ? (
               <CircleNotch className="size-5" />
             ) : (
               <SignOut className="size-5" />

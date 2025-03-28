@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Plus } from '@phosphor-icons/react';
 
 import { render } from '@testing-library/react';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Copy, Plus, Trash } from '@phosphor-icons/react';
 
 import { Meta, StoryFn } from '@storybook/react';

@@ -8,12 +8,12 @@ import {
 
 import { CustomLoadingSkeleton } from '@/components/_ui';
 import { HttpClient } from '@/infra/http/http-client';
-import { uploadFileService } from '@/shared/api';
 import {
-  getUserService,
   createUserService,
+  getUserService,
   updateUserService,
   updateUserStatusService,
+  uploadFileService,
 } from '@/shared/api';
 import { IUser } from '@/shared/interfaces';
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { user } from '@/__mocks__';
 import { Meta, StoryFn } from '@storybook/react';
 

@@ -1,4 +1,4 @@
-import { IPatientForm, IPatient } from '@/shared/interfaces';
+import { IPatient, IPatientForm } from '@/shared/interfaces';
 
 export const formatPatientProps = (patientForm: IPatientForm): IPatient => {
   const patient = patientForm;

@@ -3,7 +3,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 import { PencilSimple, Trash } from '@phosphor-icons/react';
 
-import { ButtonActions, Table, Button } from '@/components/_ui';
+import { Button, ButtonActions, Table } from '@/components/_ui';
 import {
   Card,
   Text,

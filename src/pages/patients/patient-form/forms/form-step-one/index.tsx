@@ -3,8 +3,8 @@ import { useFormContext } from 'react-hook-form';
 
 import { Input, InputMask, Select } from '@/components/_ui';
 import {
-  maritalStatusOptions,
   genderOptions,
+  maritalStatusOptions,
 } from '@/shared/constants/select-options';
 import { IPatient } from '@/shared/interfaces';
 

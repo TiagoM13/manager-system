@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Trash, WarningCircle, X } from '@phosphor-icons/react';
 
-import { Dialog, Button } from '@/components/_ui';
+import { Button, Dialog } from '@/components/_ui';
 import { useDialog } from '@/store';
 
 export const ConfirmDialog: React.FC = () => {

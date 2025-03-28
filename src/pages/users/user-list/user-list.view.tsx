@@ -4,7 +4,7 @@ import { FormProvider } from 'react-hook-form';
 import { Header } from '@/components';
 import { Card } from '@/components/_ui';
 
-import { UsersFilters, UsersTable, UsersCard } from './components';
+import { UsersCard, UsersFilters, UsersTable } from './components';
 import { useUserListModel } from './user-list.model';
 
 type UserListViewProps = ReturnType<typeof useUserListModel> & {};

@@ -4,7 +4,7 @@ import { FormProvider } from 'react-hook-form';
 import { Check } from '@phosphor-icons/react';
 
 import { Header, PatientHeader } from '@/components';
-import { Card, Button } from '@/components/_ui';
+import { Button, Card } from '@/components/_ui';
 import { BreadcrumbItem } from '@/shared/interfaces';
 
 import { useAppointmentFormModel } from './appointment-form.model';

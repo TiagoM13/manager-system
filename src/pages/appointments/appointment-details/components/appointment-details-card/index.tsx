@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { DownloadSimple, Printer } from '@phosphor-icons/react';
 
 import { InfoItem } from '@/components';

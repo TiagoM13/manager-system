@@ -3,11 +3,11 @@ import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
 import {
-  useQueryParams,
   useAppNavigation,
+  useQueryParams,
   useWindowSize,
 } from '@/shared/hooks';
-import { IUsersFilters, IUser, IMSResponse } from '@/shared/interfaces';
+import { IMSResponse, IUser, IUsersFilters } from '@/shared/interfaces';
 import { useDeleteUser } from '@/shared/services/mutations';
 import { useGetAllUsers } from '@/shared/services/queries';
 import { useDialog } from '@/store';

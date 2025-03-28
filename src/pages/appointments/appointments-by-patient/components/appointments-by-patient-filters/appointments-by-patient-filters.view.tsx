@@ -2,10 +2,10 @@ import React from 'react';
 
 import { MagnifyingGlass } from '@phosphor-icons/react';
 
-import { FormContainer, Select, Button, Input } from '@/components/_ui';
+import { Button, FormContainer, Input, Select } from '@/components/_ui';
 import {
-  appointmentTypeOptions,
   appointmentStatusOptions,
+  appointmentTypeOptions,
 } from '@/shared/constants/select-options';
 
 import { useAppointmentsByPatientFiltersModel } from './appointments-by-patient-filters.model';

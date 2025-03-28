@@ -5,7 +5,7 @@ import {
   SchemaLoginType,
 } from '@/pages/auth/auth.schema';
 import { IChangePasswordData, IUser } from '@/shared/interfaces';
-import { useMutation, MutationOptions } from '@tanstack/react-query';
+import { MutationOptions, useMutation } from '@tanstack/react-query';
 
 interface IUseSignInProps
   extends Omit<MutationOptions<boolean, Error, SchemaLoginType>, 'mutationFn'> {

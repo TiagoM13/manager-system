@@ -2,8 +2,8 @@ import React from 'react';
 
 import { HttpClient } from '@/infra/http/http-client';
 import {
-  requestPasswordRecovery,
   authenticateUser,
+  requestPasswordRecovery,
 } from '@/store/modules/auth/actions';
 
 import { useAuthModel } from './auth.model';
