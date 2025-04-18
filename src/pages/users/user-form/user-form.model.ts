@@ -20,11 +20,11 @@ import { UserSchemaType, userSchema } from './user-form.schema';
 type UserRequestResult = IMSResponse<IUser, 'user'> | undefined;
 
 interface IUserFormModelProps {
-  getUser: (id: number) => Promise<IUser | undefined>;
+  getUser: (id: string) => Promise<IUser | undefined>;
   createUser: (data: IUser) => Promise<UserRequestResult>;
-  updateUser: (id: number, data: IUser) => Promise<UserRequestResult>;
+  updateUser: (id: string, data: IUser) => Promise<UserRequestResult>;
   uploadFile: (data: FormData) => Promise<IUploadFile | undefined>;
-  updateUserStatus: (id: number, status: string) => Promise<string | undefined>;
+  updateUserStatus: (id: string, status: string) => Promise<string | undefined>;
 }
 
 export const useUserFormModel = ({
@@ -51,7 +51,7 @@ export const useUserFormModel = ({
 
   const { userResponse, isLoading } = useGetUser({
     getUser,
-    userId: Number(id),
+    userId: String(id),
     isEnabled: !isCreatingNewUser,
   });
   const { createUserMutation, isPending: isPendingCreateUser } = useCreateUser({
@@ -59,7 +59,7 @@ export const useUserFormModel = ({
   });
   const { updateUserMutation, isPending: isPendingUpdateUser } = useUpdateUser({
     updateUser,
-    userId: Number(id),
+    userId: String(id),
   });
   const { updateUserStatusMutation, isPending: isPendingUpdateUserStatus } =
     useUpdateUserStatus({ updateUserStatus });
@@ -128,7 +128,7 @@ export const useUserFormModel = ({
   const handleUpdateUserStatus = React.useCallback(
     async (values: UserSchemaType): Promise<void> => {
       await updateUserStatusMutation({
-        id: Number(id),
+        id: String(id),
         status: String(values.status),
       });
     },
@@ -155,19 +155,31 @@ export const useUserFormModel = ({
       const updatedImageUrl = await handleImageUpdate(values);
       const statusHasChanged = hasUserStatusChanged(values);
 
-      if (!isCreatingNewUser && statusHasChanged) {
-        await handleUpdateUserStatus(values);
-      }
-
       const savedValues = prepareUserPayload({
         values,
         imageUrl: updatedImageUrl,
       });
 
-      if (isCreatingNewUser) {
-        await createUserMutation(savedValues);
+      const originalValues = prepareUserPayload({
+        values: userResponse as UserSchemaType,
+        imageUrl:
+          userResponse?.image_url !== '' ? userResponse?.image_url : null,
+      });
+
+      const hasDataChanged =
+        !isCreatingNewUser &&
+        JSON.stringify(savedValues) !== JSON.stringify(originalValues);
+
+      if (!isCreatingNewUser) {
+        if (statusHasChanged) {
+          await handleUpdateUserStatus(values);
+        }
+
+        if (hasDataChanged) {
+          await updateUserMutation(savedValues);
+        }
       } else {
-        await updateUserMutation(savedValues);
+        await createUserMutation(savedValues);
       }
 
       navigateTo({ route: '/users' });

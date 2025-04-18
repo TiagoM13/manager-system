@@ -18,7 +18,7 @@ import { Card, Text } from './styles';
 interface UserItemProps {
   user: IUser;
   onEdit: (data: IUser) => void;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 export const UserRow: React.FC<UserItemProps> = ({
@@ -53,7 +53,7 @@ export const UserRow: React.FC<UserItemProps> = ({
         {currentUser.id !== user.id && (
           <ButtonActions
             onEdit={() => onEdit(user)}
-            onDelete={() => onDelete(Number(user.id))}
+            onDelete={() => onDelete(String(user.id))}
           />
         )}
       </T.Cell>
@@ -113,7 +113,7 @@ export const UserCard: React.FC<UserItemProps> = ({
               label="deletar"
               variable="danger"
               icon={<Trash className="size-4" weight="bold" />}
-              onClick={() => onDelete(Number(user.id))}
+              onClick={() => onDelete(String(user.id))}
             />
           </>
         )}

@@ -24,8 +24,8 @@ export const useGetAllUsers = ({ getAllUsers, query }: UseGetAllUsersProps) => {
 };
 
 interface UseGetUserProps {
-  getUser: (id: number) => Promise<IUser | undefined>;
-  userId: number;
+  getUser: (id: string) => Promise<IUser | undefined>;
+  userId: string;
   isEnabled?: boolean;
 }
 

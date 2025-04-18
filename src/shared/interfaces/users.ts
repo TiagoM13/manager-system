@@ -1,7 +1,7 @@
 import { Role, Status } from '@/shared/enums';
 
 export interface IUser {
-  id?: number;
+  id?: string;
   name: string;
   email: string;
   image_url?: string | null;

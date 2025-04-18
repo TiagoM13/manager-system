@@ -41,8 +41,8 @@ export const useCreateUser = ({ createUser }: UseCreateUserProps) => {
 };
 
 interface UseUpdateUserProps {
-  updateUser: (id: number, data: IUser) => Promise<UserRequestResult>;
-  userId: number;
+  updateUser: (id: string, data: IUser) => Promise<UserRequestResult>;
+  userId: string;
 }
 
 export const useUpdateUser = ({ updateUser, userId }: UseUpdateUserProps) => {
@@ -65,7 +65,7 @@ export const useUpdateUser = ({ updateUser, userId }: UseUpdateUserProps) => {
 };
 
 interface UseUpdateUserStatusProps {
-  updateUserStatus: (id: number, status: string) => Promise<string | undefined>;
+  updateUserStatus: (id: string, status: string) => Promise<string | undefined>;
 }
 
 export const useUpdateUserStatus = ({
@@ -74,7 +74,7 @@ export const useUpdateUserStatus = ({
   const queryClient = useQueryClient();
 
   const { mutateAsync: updateUserStatusMutation, ...rest } = useMutation({
-    mutationFn: ({ id, status }: { id: number; status: string }) =>
+    mutationFn: ({ id, status }: { id: string; status: string }) =>
       updateUserStatus(id, status),
     onSuccess: invalidateRelatedQueries({
       queryKeys: USER_RELATED_KEYS,
@@ -89,7 +89,7 @@ export const useUpdateUserStatus = ({
 };
 
 interface UseDeleteUserProps {
-  deleteUser: (id: number) => Promise<IMSResponse<IUser, 'user'> | undefined>;
+  deleteUser: (id: string) => Promise<IMSResponse<IUser, 'user'> | undefined>;
 }
 
 export const useDeleteUser = ({ deleteUser }: UseDeleteUserProps) => {

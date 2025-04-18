@@ -24,7 +24,7 @@ export const forgotPasswordService = (
 
 export const changePasswordService = async (
   client: IHttpClient,
-  id: number,
+  id: string,
   data: IChangePasswordData,
 ) => {
   try {

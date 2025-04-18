@@ -4,7 +4,7 @@ import { IDoctor } from './doctor';
 import { IPatient } from './patients';
 
 export interface IAppointment {
-  id?: number;
+  id?: string;
   appointment_type: AppointmentType;
   examination?: string | null;
   diagnosis_summary?: string | null;
@@ -13,7 +13,7 @@ export interface IAppointment {
   updated_at?: Date;
   patient_id?: string;
   patient?: IPatient;
-  doctor_id: number;
+  doctor_id: string;
   doctor?: IDoctor;
   status?: AppointmentStatus;
 }

@@ -24,11 +24,11 @@ const User: React.FC = () => {
   const httpClient = new HttpClient();
 
   const services = {
-    getUser: (id: number) => getUserService(httpClient, id),
+    getUser: (id: string) => getUserService(httpClient, id),
     createUser: (data: IUser) => createUserService(httpClient, data),
-    updateUser: (id: number, data: IUser) =>
+    updateUser: (id: string, data: IUser) =>
       updateUserService(httpClient, id, data),
-    updateUserStatus: (id: number, status: string) =>
+    updateUserStatus: (id: string, status: string) =>
       updateUserStatusService(httpClient, id, status),
     uploadFile: (data: FormData) => uploadFileService(httpClient, data),
   };

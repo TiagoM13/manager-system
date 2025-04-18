@@ -47,10 +47,10 @@ interface UseChangePasswordProps
     'mutationFn'
   > {
   service: (
-    userId: number,
+    userId: string,
     data: IChangePasswordData,
   ) => Promise<AxiosResponse<IUser> | undefined>;
-  userId: number;
+  userId: string;
 }
 
 export const useChangePassword = ({

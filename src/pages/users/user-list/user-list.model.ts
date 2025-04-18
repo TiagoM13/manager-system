@@ -18,7 +18,7 @@ type UserListModelResponse = IMSResponse<IUser[], 'users'> | undefined;
 
 type UserListModelProps = {
   getAllUsers: (query: IUsersFilters) => Promise<UserListModelResponse>;
-  deleteUser: (id: number) => Promise<IMSResponse<IUser, 'user'> | undefined>;
+  deleteUser: (id: string) => Promise<IMSResponse<IUser, 'user'> | undefined>;
 };
 
 export const useUserListModel = ({
@@ -56,7 +56,7 @@ export const useUserListModel = ({
   }, [location.state, navigateTo]);
 
   const handleDeleteUser = React.useCallback(
-    (id: number) => {
+    (id: string) => {
       confirmDialog({
         header: 'Confirmação de Exclusão',
         message:

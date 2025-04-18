@@ -112,7 +112,7 @@ export const createAppointmentService = async (
 export const updateAppointmentService = async (
   client: IHttpClient,
   patientId: string,
-  appointmentId: number,
+  appointmentId: string,
   data: IAppointment,
 ) => {
   try {
@@ -139,7 +139,7 @@ export const updateAppointmentService = async (
 export const updateAppointmentStatusService = async (
   client: IHttpClient,
   patientId: string,
-  appointmentId: number,
+  appointmentId: string,
   status: AppointmentStatus,
 ) => {
   try {

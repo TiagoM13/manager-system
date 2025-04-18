@@ -33,10 +33,10 @@ interface IUserProfile extends IChangePasswordData {
 }
 
 export interface IAccountSettingsModelProps {
-  updateUserService: (id: number, data: IUser) => Promise<UserRequestResult>;
+  updateUserService: (id: string, data: IUser) => Promise<UserRequestResult>;
   uploadFileService: (data: FormData) => Promise<IUploadFile | undefined>;
   changePasswordService: (
-    id: number,
+    id: string,
     data: IChangePasswordData,
   ) => Promise<AxiosResponse<IUser> | undefined>;
 }
@@ -81,7 +81,7 @@ export const useAccountSettingsModel = ({
 
   const { updateUserMutation, isPending: isLoadingUpdateUser } = useUpdateUser({
     updateUser: updateUserService,
-    userId: Number(currentUser.id),
+    userId: String(currentUser.id),
   });
   const { uploadFileMutation, isPending: isLoadingUploadFile } = useUploadFile({
     uploadFile: uploadFileService,
@@ -92,7 +92,7 @@ export const useAccountSettingsModel = ({
     isPending: isLoadingChangePassword,
   } = useChangePassword({
     service: changePasswordService,
-    userId: Number(currentUser.id),
+    userId: String(currentUser.id),
     onSuccess: () => {
       notify.warning(LOGIN_AGAIN);
       toggle(false);

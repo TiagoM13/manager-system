@@ -33,7 +33,7 @@ export const getAllUsersService = async (
   }
 };
 
-export const getUserService = async (client: IHttpClient, id: number) => {
+export const getUserService = async (client: IHttpClient, id: string) => {
   try {
     const { user } = await client.sendRequest<IMSResponse<IUser, 'user'>>(
       HttpMethod.GET,
@@ -68,7 +68,7 @@ export const createUserService = async (client: IHttpClient, data: IUser) => {
 
 export const updateUserService = async (
   client: IHttpClient,
-  id: number,
+  id: string,
   data: IUser,
 ) => {
   try {
@@ -88,7 +88,7 @@ export const updateUserService = async (
 
 export const updateUserStatusService = async (
   client: IHttpClient,
-  id: number,
+  id: string,
   status: string,
 ): Promise<string | undefined> => {
   try {
@@ -110,7 +110,7 @@ export const updateUserStatusService = async (
   }
 };
 
-export const deleteUserService = async (client: IHttpClient, id: number) => {
+export const deleteUserService = async (client: IHttpClient, id: string) => {
   try {
     // TO-DO
     await delayPromise(2000);

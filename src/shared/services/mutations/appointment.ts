@@ -62,11 +62,11 @@ export const useCreateAppointment = ({
 interface UseUpdateAppointmentProps {
   updateAppointment: (
     patientId: string,
-    appointmentId: number,
+    appointmentId: string,
     data: IAppointment,
   ) => Promise<IMSResponse<IAppointment, 'appointment'> | undefined>;
   patientId: string;
-  appointmentId: number;
+  appointmentId: string;
 }
 
 export const useUpdateAppointment = ({
@@ -106,11 +106,11 @@ type StatusResponse = {
 interface UseUpdateAppointmentStatusProps {
   updateAppointmentStatus: (
     patientId: string,
-    appointmentId: number,
+    appointmentId: string,
     data: AppointmentStatus,
   ) => Promise<StatusResponse | undefined>;
   patientId: string;
-  appointmentId: number;
+  appointmentId: string;
 }
 
 export const useUpdateAppointmentStatus = ({

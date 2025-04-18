@@ -1,7 +1,7 @@
 import { Status } from '@/shared/enums';
 
 export interface IDoctor {
-  id?: number;
+  id?: string;
   name: string;
   sex: string;
   birth_date: Date;
