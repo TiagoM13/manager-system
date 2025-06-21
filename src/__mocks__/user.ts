@@ -4,7 +4,7 @@ import { sortEnum } from '@/shared/utils';
 import { faker } from '@faker-js/faker';
 
 export const user: IUser = {
-  id: faker.number.int({ min: 10000, max: 20000 }),
+  id: faker.string.uuid(),
   name: faker.person.fullName(),
   email: faker.internet.email().toLocaleLowerCase(),
   image_url: faker.image.avatar(),

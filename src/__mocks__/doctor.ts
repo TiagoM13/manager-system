@@ -4,7 +4,7 @@ import { sortEnum } from '@/shared/utils';
 import { faker } from '@faker-js/faker';
 
 export const doctor: IDoctor = {
-  id: faker.number.int(),
+  id: faker.string.uuid(),
   name: faker.person.fullName(),
   birth_date: faker.date.past(),
   sex: faker.person.sex(),

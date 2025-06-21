@@ -29,12 +29,10 @@ export const appointmentDetailsSchema = z.object({
         message: INVALID_SCHEDULED_DATE,
       }),
   ),
-  doctor_id: z
-    .number({
-      required_error: SELECT_REQUIRED,
-      invalid_type_error: SELECT_REQUIRED,
-    })
-    .int(),
+  doctor_id: z.string({
+    required_error: SELECT_REQUIRED,
+    invalid_type_error: SELECT_REQUIRED,
+  }),
   diagnosis_summary: z
     .string({
       required_error: REQUIRED_FIELD,

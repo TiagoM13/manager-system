@@ -71,15 +71,22 @@ interface UseUpdateUserStatusProps {
 export const useUpdateUserStatus = ({
   updateUserStatus,
 }: UseUpdateUserStatusProps) => {
+  const notify = useNotification();
   const queryClient = useQueryClient();
 
   const { mutateAsync: updateUserStatusMutation, ...rest } = useMutation({
     mutationFn: ({ id, status }: { id: string; status: string }) =>
       updateUserStatus(id, status),
-    onSuccess: invalidateRelatedQueries({
-      queryKeys: USER_RELATED_KEYS,
-      queryClient,
-    }),
+    onSuccess: () => {
+      invalidateRelatedQueries({
+        queryKeys: USER_RELATED_KEYS,
+        queryClient,
+      });
+      notify.info('Status do usuário atualizado com sucesso.');
+    },
+    onError: () => {
+      notify.error('Erro ao atualizar o status do usuário.');
+    },
   });
 
   return {

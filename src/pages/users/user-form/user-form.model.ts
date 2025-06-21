@@ -160,15 +160,18 @@ export const useUserFormModel = ({
         imageUrl: updatedImageUrl,
       });
 
-      const originalValues = prepareUserPayload({
-        values: userResponse as UserSchemaType,
-        imageUrl:
-          userResponse?.image_url !== '' ? userResponse?.image_url : null,
-      });
+      let hasDataChanged = false;
 
-      const hasDataChanged =
-        !isCreatingNewUser &&
-        JSON.stringify(savedValues) !== JSON.stringify(originalValues);
+      if (!isCreatingNewUser && userResponse) {
+        const originalValues = prepareUserPayload({
+          values: userResponse,
+          imageUrl:
+            userResponse.image_url !== '' ? userResponse.image_url : null,
+        });
+
+        hasDataChanged =
+          JSON.stringify(savedValues) !== JSON.stringify(originalValues);
+      }
 
       if (!isCreatingNewUser) {
         if (statusHasChanged) {
@@ -192,6 +195,7 @@ export const useUserFormModel = ({
       handleUpdateUserStatus,
       createUserMutation,
       updateUserMutation,
+      userResponse,
     ],
   );
 

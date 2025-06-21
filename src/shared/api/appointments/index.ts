@@ -67,7 +67,7 @@ export const getAppointmentsByPatientService = async (
 export const getAppointmentService = async (
   client: IHttpClient,
   patientId: string,
-  appointmentId: number,
+  appointmentId: string,
 ) => {
   try {
     const response = await client.sendRequest<

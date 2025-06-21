@@ -27,7 +27,7 @@ export const useGetAllDoctors = ({
         ?.filter((doctor) => doctor.status !== Status.INACTIVE)
         .map((doctor) => ({
           label: doctor.name,
-          value: Number(doctor.id),
+          value: String(doctor.id),
         })),
     [doctorsResponse],
   );

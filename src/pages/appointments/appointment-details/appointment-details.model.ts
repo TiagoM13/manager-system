@@ -42,17 +42,17 @@ interface AppointmentDetailsModelProps {
   getPatient: (id: string) => Promise<IPatient | undefined>;
   getAppointment: (
     patientId: string,
-    appointmentId: number,
+    appointmentId: string,
   ) => Promise<IAppointment | undefined>;
   getAllDoctors: () => Promise<IDoctor[] | undefined>;
   updateAppointment: (
     patientId: string,
-    appointmentId: number,
+    appointmentId: string,
     data: IAppointment,
   ) => Promise<IMSResponse<IAppointment, 'appointment'> | undefined>;
   updateAppointmentStatus: (
     patientId: string,
-    appointmentId: number,
+    appointmentId: string,
     data: AppointmentStatus,
   ) => Promise<StatusResponse | undefined>;
 }
@@ -87,7 +87,7 @@ export const useAppointmentDetailsModel = ({
   } = useGetAppointment({
     getAppointment,
     patientId: String(patientId),
-    appointmentId: Number(appointmentId),
+    appointmentId: String(appointmentId),
   });
   const {
     isLoading: isLoadingDoctors,
@@ -101,7 +101,7 @@ export const useAppointmentDetailsModel = ({
     useUpdateAppointment({
       updateAppointment,
       patientId: String(patientId),
-      appointmentId: Number(appointmentId),
+      appointmentId: String(appointmentId),
     });
   const {
     updateAppointmentStatusMutation,
@@ -109,7 +109,7 @@ export const useAppointmentDetailsModel = ({
   } = useUpdateAppointmentStatus({
     updateAppointmentStatus,
     patientId: String(patientId),
-    appointmentId: Number(appointmentId),
+    appointmentId: String(appointmentId),
   });
 
   const methods = useForm<AppointmentDetailsType>({
@@ -169,6 +169,7 @@ export const useAppointmentDetailsModel = ({
     const payload = {
       ...values,
       scheduled_date: scheduledDate as Date,
+      doctor_id: String(values.doctor_id),
     } as IAppointment;
 
     updateAppointmentMutation(payload);
@@ -187,14 +188,15 @@ export const useAppointmentDetailsModel = ({
   React.useEffect(() => {
     if (appointmentResponse)
       methods.reset({
-        ...appointmentResponse,
         scheduled_date: dayjs
           .utc(appointmentResponse.scheduled_date)
           .format('YYYY-MM-DD') as any,
+        appointment_type: appointmentResponse.appointment_type,
+        doctor_id: String(appointmentResponse.doctor_id),
         diagnosis_summary:
           appointmentResponse.diagnosis_summary === null
             ? ''
-            : appointmentResponse.diagnosis_summary,
+            : (appointmentResponse.diagnosis_summary ?? ''),
       });
   }, [appointmentResponse, methods]);
 

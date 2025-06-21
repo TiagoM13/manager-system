@@ -175,6 +175,7 @@ export const useAppointmentFormModel = ({
     const payload = {
       ...data,
       scheduled_date: formatDateWithCurrentTime(data.scheduled_date) as any,
+      doctor_id: String(data.doctor_id),
     } as IAppointment;
     createAppointmentMutation(payload);
   });

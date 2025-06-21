@@ -29,7 +29,6 @@ export const AppointmentsByPatientView: React.FC<
     appointmentsResponse,
     handleEdiAppointment,
     isLoadingGetPatient,
-    isMobile,
   } = props;
 
   return (

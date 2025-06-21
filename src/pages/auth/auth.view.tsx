@@ -17,7 +17,7 @@ export const AuthPageView: React.FC<AuthPageViewProps> = (props) => {
     <FormProvider {...methods}>
       <FormContainer
         noValidate
-        onSubmit={handleSubmit(handleAuthAction)}
+        onSubmit={handleSubmit(handleAuthAction as any)}
         className="overflow-auto"
       >
         <div className="relative flex h-screen items-center justify-between bg-slate-100 max-lg:justify-center">

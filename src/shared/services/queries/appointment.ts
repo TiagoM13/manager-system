@@ -61,10 +61,10 @@ export const useAppointmentsByPatient = ({
 interface UseGetAppointmentProps {
   getAppointment: (
     patientId: string,
-    appointmentId: number,
+    appointmentId: string,
   ) => Promise<IAppointment | undefined>;
   patientId: string;
-  appointmentId: number;
+  appointmentId: string;
 }
 
 export const useGetAppointment = ({

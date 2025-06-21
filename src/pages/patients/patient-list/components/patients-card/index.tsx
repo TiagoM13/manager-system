@@ -18,11 +18,7 @@ type PatientCardProps = {
   onEdit: (data: IPatient) => void;
 };
 
-export const PatientsCard: React.FC<PatientCardProps> = ({
-  data,
-  loading,
-  onEdit,
-}) => {
+export const PatientsCard: React.FC<PatientCardProps> = ({ data, onEdit }) => {
   return (
     <Container>
       {data?.patients.map((patient) => (
